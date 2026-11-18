@@ -1,0 +1,15 @@
+{
+  "note": "Ảnh hướng dẫn của Trợ lý cài đặt. shots = màn của chính app (tools/wizard_shots.mjs tự chụp). ext = ảnh trang ngoài (Google, Telegram, Cloudflare…) thêm tay vào web/assets/wizard/ext/ rồi ghi tên ô ở đây.",
+  "generated": "2026-11-17",
+  "width": 390,
+  "height": 760,
+  "shots": {
+    "app-setup": "assets/wizard/app-setup.png",
+    "app-connection": "assets/wizard/app-connection.png",
+    "app-security": "assets/wizard/app-security.png",
+    "app-users": "assets/wizard/app-users.png",
+    "app-selftest": "assets/wizard/app-selftest.png",
+    "app-connection-gemini": "assets/wizard/app-connection-gemini.png"
+  },
+  "ext": {}
+}

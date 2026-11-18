@@ -1,0 +1,14 @@
+{
+  "id": "g1_tax",
+  "title": "Thuế phí chuyển nhượng",
+  "pack": "sales",
+  "pack_group": "g1",
+  "screen": "sales",
+  "icon": "🧮",
+  "order": 170,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "48"
+  ]
+}

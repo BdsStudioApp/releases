@@ -1,0 +1,15 @@
+{
+  "id": "g1_policywatch",
+  "title": "Theo dõi chính sách",
+  "pack": "sales",
+  "pack_group": "g1",
+  "screen": "sales",
+  "icon": "🔔",
+  "order": 140,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "44",
+    "62"
+  ]
+}

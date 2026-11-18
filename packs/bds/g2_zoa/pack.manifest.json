@@ -1,0 +1,2 @@
+{ "id": "g2_zoa", "title": "Zalo OA", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "🟦", "order": 290, "status": "thu-nghiem",
+  "items": ["K"], "desc": "Zalo Official Account – API chính thức: gửi tin theo mẫu tới người quan tâm, nhận tin qua Webhook" }

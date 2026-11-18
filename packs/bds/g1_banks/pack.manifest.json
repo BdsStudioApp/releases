@@ -1,0 +1,14 @@
+{
+  "id": "g1_banks",
+  "title": "So sánh ngân hàng",
+  "pack": "sales",
+  "pack_group": "g1",
+  "screen": "sales",
+  "icon": "🏦",
+  "order": 160,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "47"
+  ]
+}

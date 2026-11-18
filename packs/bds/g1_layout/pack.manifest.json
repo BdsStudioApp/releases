@@ -1,0 +1,14 @@
+{
+  "id": "g1_layout",
+  "title": "Đọc layout căn",
+  "pack": "sales",
+  "pack_group": "g1",
+  "screen": "sales",
+  "icon": "📐",
+  "order": 130,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "38"
+  ]
+}

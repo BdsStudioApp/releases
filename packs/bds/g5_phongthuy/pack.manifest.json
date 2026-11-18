@@ -1,0 +1,15 @@
+{
+  "id": "g5_phongthuy",
+  "title": "La bàn phong thuỷ",
+  "pack": "learn",
+  "pack_group": "g5",
+  "screen": "sales",
+  "icon": "🧭",
+  "order": 520,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "35",
+    "50"
+  ]
+}

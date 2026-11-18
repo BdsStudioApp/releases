@@ -1,0 +1,63 @@
+{
+  "version": "1.0.5",
+  "build_id": "d702f9677c08ac15",
+  "gas_build_id": "d4c6911447bcf5dd",
+  "boot_version": 1,
+  "core_build_id": "1f0523a18da481ef",
+  "core_requires_boot": 1,
+  "parts": {
+    "web": "1.0.5",
+    "gas": "1.0.5",
+    "engine": "1.0.5"
+  },
+  "files": [
+    {
+      "path": "downloads/TatCa.gs",
+      "sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
+      "size": 777011
+    },
+    {
+      "path": "downloads/appsscript.json",
+      "sha256": "dbd4895cb6290bde28239175a6bb8b460b96cfae26ecc71012c42a94eb487619",
+      "size": 558
+    },
+    {
+      "path": "downloads/BDS_Studio_Engine.zip",
+      "sha256": "0064043a9e76673ea58338acf163c8399697a8a2a70824dd24c0f23b866f0c55",
+      "size": 8944527
+    },
+    {
+      "path": "version.json",
+      "sha256": "02a0e3f81d03f21085e23268e3566682ff131a300cc598ba3d6c4ed7fca46c30",
+      "size": 44483
+    },
+    {
+      "path": "downloads/CaiDat.gs",
+      "sha256": "1f54de850054f5e8b65f625b008c9fb244cbd407f842e7d1b9ad908ec69016dd",
+      "size": 29277
+    },
+    {
+      "path": "downloads/sheet/appsscript.json",
+      "sha256": "0851a7afd0c8e1b6cd33fae44d5de211ecdc146f063a7287af6ce57282a2928a",
+      "size": 631
+    },
+    {
+      "path": "downloads/ServerCore.js",
+      "sha256": "1f0523a18da481ef2fe6218fe7ce0f62a64f85dd7f5f431eda5071b940c5fe18",
+      "size": 727637
+    },
+    {
+      "path": "downloads/BDS_Studio_Video_Windows.zip",
+      "sha256": "72f33bafe8e5566efb7a7ccbcf7a0c3a066638ae37ee8649ac3bc571b4e26170",
+      "size": 8619616
+    },
+    {
+      "path": "downloads/BDS_Studio_Video_Mac.zip",
+      "sha256": "9dc26c26a53caec0dcd6fa4a0f26cfb4444a4fefeb3225f303b9a68e38852303",
+      "size": 8769438
+    }
+  ],
+  "channel": "sale",
+  "signed": true,
+  "key_id": "573c9201438c4e6c"
+}

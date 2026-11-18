@@ -1,0 +1,34 @@
+{
+  "images": {
+    "ladipage-1": {
+      "file": "ladipage-1.png",
+      "alt": "Trình dựng landing: Tích hợp → Tài khoản liên kết → Thêm mới, chọn loại Webhook/API, dán địa chỉ nhận khách của BDS Studio, bấm Lưu",
+      "caption": "Tích hợp → Tài khoản liên kết → Thêm mới → loại Webhook/API → dán địa chỉ nhận khách → Lưu (tên mục có thể khác chút)."
+    },
+    "ladipage-2": {
+      "file": "ladipage-2.png",
+      "alt": "Trong trang landing: chọn form, mục Lưu data chọn cấu hình gửi về BDS Studio, rồi Xuất bản",
+      "caption": "Bấm vào form → Lưu data → chọn cấu hình vừa tạo → Xuất bản lại trang."
+    },
+    "website": {
+      "file": "website.png",
+      "alt": "Trang quản trị website: khối HTML tuỳ chỉnh, dán đoạn form của BDS Studio, bấm Cập nhật",
+      "caption": "Thêm khối HTML (Custom HTML) → dán \"Đoạn form HTML\" chép ở app → Cập nhật/Đăng trang."
+    },
+    "gforms-1": {
+      "file": "gforms-1.png",
+      "alt": "Google Form: bấm nút ba chấm ở góc trên phải, chọn Apps Script; dán mã BDS Studio rồi bấm Lưu",
+      "caption": "Google Form → ⋮ → Apps Script → xoá chữ có sẵn, dán \"Mã cho Google Forms\" → Lưu."
+    },
+    "gforms-2": {
+      "file": "gforms-2.png",
+      "alt": "Apps Script của Google Form: Trình kích hoạt, Thêm trình kích hoạt, chọn hàm guiVeBDS, nguồn Từ biểu mẫu, loại Khi gửi biểu mẫu, Lưu",
+      "caption": "⏰ Trình kích hoạt → + Thêm trình kích hoạt → hàm guiVeBDS · Từ biểu mẫu · Khi gửi biểu mẫu → Lưu → cho phép quyền."
+    },
+    "make": {
+      "file": "make.png",
+      "alt": "Dịch vụ nối trung gian: luồng 2 bước Facebook Lead Ads khách mới rồi HTTP gửi POST JSON tới địa chỉ nhận khách của BDS Studio",
+      "caption": "Luồng 2 bước: Facebook Lead Ads › khách mới → HTTP › POST tới địa chỉ nhận khách (JSON: name, phone…). Dịch vụ nối có thể tốn phí."
+    }
+  }
+}

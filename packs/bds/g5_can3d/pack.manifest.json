@@ -1,0 +1,15 @@
+{
+  "id": "g5_can3d",
+  "title": "Căn hộ 3D",
+  "pack": "learn",
+  "pack_group": "g5",
+  "screen": "sales",
+  "icon": "🏠",
+  "order": 550,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "43",
+    "26"
+  ]
+}

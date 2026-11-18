@@ -1,0 +1,774 @@
+{
+  "id": "bds",
+  "name": "BDS Studio",
+  "version": "1.0.0",
+  "words": "words.vi.json",
+  "modules": [
+    "brief",
+    "customers",
+    "lead_pool",
+    "members",
+    "care",
+    "zalo",
+    "catalog",
+    "quote",
+    "loan",
+    "policy",
+    "video",
+    "studio",
+    "characters",
+    "ideas",
+    "market",
+    "calendar",
+    "staff",
+    "inbox",
+    "landing_builder",
+    "trang_cua_toi",
+    "g1_banks",
+    "g1_guest",
+    "g1_layout",
+    "g1_policycalc",
+    "g1_policywatch",
+    "g1_rental",
+    "g1_research",
+    "g1_tax",
+    "g2_chamsoc",
+    "g2_crm",
+    "g2_hoso",
+    "g2_lich",
+    "g2_nhom",
+    "g2_taisan",
+    "g2_thitruong",
+    "g2_tuvan",
+    "g2_zoa",
+    "g3_ads",
+    "g3_docs",
+    "g3_events",
+    "g3_groups",
+    "g3_profile",
+    "g3_referral",
+    "g3_roi",
+    "g3_seo",
+    "g4_banggia",
+    "g4_congtruong",
+    "g4_doitac",
+    "g4_giohang",
+    "g4_giucho",
+    "g4_phaply",
+    "g5_can3d",
+    "g5_dandan",
+    "g5_hoc",
+    "g5_huongnang",
+    "g5_luyentuvan",
+    "g5_noithat",
+    "g5_phongthuy",
+    "g5_quyhoach",
+    "videoai_taocanh"
+  ],
+  "meta": {
+    "brief": {
+      "title": "Bảng tin",
+      "icon": "☀️",
+      "screen": "home",
+      "order": 10
+    },
+    "customers": {
+      "title": "Khách hàng",
+      "icon": "👥",
+      "screen": "customers",
+      "order": 10
+    },
+    "care": {
+      "title": "Chăm sóc & Nhắc việc",
+      "icon": "⏰",
+      "screen": "customers",
+      "order": 20
+    },
+    "zalo": {
+      "title": "Mẫu tin Zalo",
+      "icon": "💬",
+      "screen": "customers",
+      "order": 30
+    },
+    "catalog": {
+      "title": "Bảng hàng dự án",
+      "icon": "🏢",
+      "screen": "sales",
+      "order": 10
+    },
+    "quote": {
+      "title": "Báo giá",
+      "icon": "🧾",
+      "screen": "sales",
+      "order": 20
+    },
+    "loan": {
+      "title": "Máy tính vay",
+      "icon": "🏦",
+      "screen": "sales",
+      "order": 30
+    },
+    "policy": {
+      "title": "Cập nhật chính sách",
+      "icon": "📝",
+      "screen": "sales",
+      "order": 40
+    },
+    "video": {
+      "title": "Video bản đồ & nhân vật",
+      "icon": "🎬",
+      "screen": "content",
+      "order": 10,
+      "requires": "video",
+      "video_only": true,
+      "video_online": true
+    },
+    "ideas": {
+      "title": "Ý tưởng nội dung",
+      "icon": "💡",
+      "screen": "content",
+      "order": 20,
+      "requires": "ideas"
+    },
+    "inbox": {
+      "title": "Chờ duyệt",
+      "icon": "📥",
+      "screen": "inbox",
+      "order": 10
+    },
+    "characters": {
+      "title": "Nhân vật",
+      "icon": "🧑‍💼",
+      "screen": "content",
+      "order": 15,
+      "requires": "video",
+      "video_only": true
+    },
+    "calendar": {
+      "title": "Lịch & Đăng",
+      "icon": "🗓️",
+      "screen": "content",
+      "order": 30,
+      "requires": "video"
+    },
+    "staff": {
+      "title": "Nhân viên & Phòng",
+      "icon": "🧑‍💼",
+      "screen": "content",
+      "order": 40,
+      "requires": "video",
+      "video_only": true
+    },
+    "market": {
+      "title": "Phân tích thị trường",
+      "icon": "📊",
+      "screen": "customers",
+      "order": 40,
+      "requires": "video"
+    },
+    "studio": {
+      "title": "Dựng & Sửa",
+      "icon": "✂️",
+      "screen": "content",
+      "order": 12,
+      "requires": "video",
+      "video_only": true
+    },
+    "landing_builder": {
+      "title": "Trình tạo landing",
+      "icon": "🌐",
+      "screen": "customers",
+      "order": 50
+    },
+    "trang_cua_toi": {
+      "title": "Trang của tôi",
+      "icon": "🪪",
+      "screen": "customers",
+      "order": 45,
+      "requires": "landing",
+      "desc": "Trang riêng ten.<tên miền công ty> – khách để lại số vào thẳng danh sách của bạn"
+    },
+    "g1_banks": {
+      "title": "So sánh ngân hàng",
+      "icon": "🏦",
+      "screen": "sales",
+      "order": 160,
+      "pack": "sales"
+    },
+    "g1_guest": {
+      "title": "Chế độ khách xem",
+      "icon": "👁",
+      "screen": "sales",
+      "order": 150,
+      "pack": "sales"
+    },
+    "g1_layout": {
+      "title": "Đọc layout căn",
+      "icon": "📐",
+      "screen": "sales",
+      "order": 130,
+      "pack": "sales"
+    },
+    "g1_policycalc": {
+      "title": "Chính sách nâng cao & tài liệu",
+      "icon": "🧾",
+      "screen": "sales",
+      "order": 110,
+      "pack": "sales"
+    },
+    "g1_policywatch": {
+      "title": "Theo dõi chính sách",
+      "icon": "🔔",
+      "screen": "sales",
+      "order": 140,
+      "pack": "sales"
+    },
+    "g1_rental": {
+      "title": "Đầu tư cho thuê",
+      "icon": "🔑",
+      "screen": "sales",
+      "order": 180,
+      "pack": "sales"
+    },
+    "g1_research": {
+      "title": "AI cập nhật dự án",
+      "icon": "🔎",
+      "screen": "sales",
+      "order": 120,
+      "pack": "sales"
+    },
+    "g1_tax": {
+      "title": "Thuế phí chuyển nhượng",
+      "icon": "🧮",
+      "screen": "sales",
+      "order": 170,
+      "pack": "sales"
+    },
+    "g2_chamsoc": {
+      "title": "Cớ chăm sóc khách cũ",
+      "icon": "📰",
+      "screen": "customers",
+      "order": 270,
+      "pack": "care"
+    },
+    "g2_crm": {
+      "title": "CRM: Phễu & Ghép căn",
+      "icon": "🎯",
+      "screen": "customers",
+      "order": 210,
+      "pack": "care"
+    },
+    "g2_hoso": {
+      "title": "Hồ sơ giao dịch",
+      "icon": "📁",
+      "screen": "customers",
+      "order": 240,
+      "pack": "care"
+    },
+    "g2_lich": {
+      "title": "Lịch xem nhà",
+      "icon": "📅",
+      "screen": "customers",
+      "order": 230,
+      "pack": "care"
+    },
+    "g2_nhom": {
+      "title": "Việc nhóm",
+      "icon": "🤝",
+      "screen": "customers",
+      "order": 250,
+      "pack": "care"
+    },
+    "g2_taisan": {
+      "title": "Sổ tài sản của khách",
+      "icon": "🏠",
+      "screen": "customers",
+      "order": 280,
+      "pack": "care"
+    },
+    "g2_thitruong": {
+      "title": "Thị trường quanh dự án",
+      "icon": "📈",
+      "screen": "customers",
+      "order": 260,
+      "pack": "care"
+    },
+    "g2_tuvan": {
+      "title": "Tư vấn: Trả lời & Kịch bản",
+      "icon": "🗣️",
+      "screen": "customers",
+      "order": 220,
+      "pack": "care"
+    },
+    "g2_zoa": {
+      "title": "Zalo OA",
+      "icon": "🟦",
+      "screen": "customers",
+      "order": 290,
+      "pack": "care"
+    },
+    "g3_ads": {
+      "title": "Hỗ trợ quảng cáo",
+      "icon": "📣",
+      "screen": "customers",
+      "order": 151,
+      "pack": "leads"
+    },
+    "g3_docs": {
+      "title": "Tài liệu đổi số Zalo",
+      "icon": "📄",
+      "screen": "customers",
+      "order": 52,
+      "pack": "leads"
+    },
+    "g3_events": {
+      "title": "Sự kiện & livestream",
+      "icon": "🎤",
+      "screen": "customers",
+      "order": 57,
+      "pack": "leads"
+    },
+    "g3_groups": {
+      "title": "Đăng nhóm cộng đồng",
+      "icon": "👥",
+      "screen": "customers",
+      "order": 152,
+      "pack": "leads"
+    },
+    "g3_profile": {
+      "title": "Hồ sơ năng lực & câu chuyện khách",
+      "icon": "🏅",
+      "screen": "customers",
+      "order": 59,
+      "pack": "leads"
+    },
+    "g3_referral": {
+      "title": "Chương trình giới thiệu",
+      "icon": "🤝",
+      "screen": "customers",
+      "order": 54,
+      "pack": "leads"
+    },
+    "g3_roi": {
+      "title": "Đo hiệu quả tiền marketing",
+      "icon": "📈",
+      "screen": "customers",
+      "order": 153,
+      "pack": "leads"
+    },
+    "g3_seo": {
+      "title": "Đưa trang của bạn lên Google (SEO)",
+      "icon": "🔎",
+      "screen": "customers",
+      "order": 51,
+      "pack": "leads"
+    },
+    "g4_banggia": {
+      "title": "Bảng giá thứ cấp",
+      "icon": "📉",
+      "screen": "sales",
+      "order": 130,
+      "pack": "source"
+    },
+    "g4_congtruong": {
+      "title": "Nhật ký công trường",
+      "icon": "🏗️",
+      "screen": "sales",
+      "order": 160,
+      "pack": "source"
+    },
+    "g4_doitac": {
+      "title": "Sổ đối tác",
+      "icon": "🤝",
+      "screen": "sales",
+      "order": 110
+    },
+    "g4_giohang": {
+      "title": "Giỏ hàng thứ cấp",
+      "icon": "🏷️",
+      "screen": "sales",
+      "order": 120,
+      "pack": "source"
+    },
+    "g4_giucho": {
+      "title": "Giữ chỗ & Hoa hồng",
+      "icon": "🎟️",
+      "screen": "sales",
+      "order": 150,
+      "pack": "source"
+    },
+    "g4_phaply": {
+      "title": "Kiểm tra pháp lý",
+      "icon": "⚖️",
+      "screen": "sales",
+      "order": 140,
+      "pack": "source"
+    },
+    "g5_can3d": {
+      "title": "Căn hộ 3D",
+      "icon": "🏠",
+      "screen": "sales",
+      "order": 550,
+      "pack": "learn"
+    },
+    "g5_dandan": {
+      "title": "Nhân vật dẫn",
+      "icon": "🎙️",
+      "screen": "content",
+      "order": 510,
+      "pack": "learn",
+      "requires": "video",
+      "video_only": true
+    },
+    "g5_hoc": {
+      "title": "Học mỗi ngày",
+      "icon": "📚",
+      "screen": "home",
+      "order": 520,
+      "pack": "learn"
+    },
+    "g5_huongnang": {
+      "title": "Hướng nắng theo giờ & mùa",
+      "icon": "🌤️",
+      "screen": "sales",
+      "order": 530,
+      "pack": "learn"
+    },
+    "g5_luyentuvan": {
+      "title": "Luyện tư vấn với AI",
+      "icon": "🎭",
+      "screen": "home",
+      "order": 510,
+      "pack": "learn"
+    },
+    "g5_noithat": {
+      "title": "Dự toán nội thất",
+      "icon": "🛋️",
+      "screen": "sales",
+      "order": 540,
+      "pack": "learn"
+    },
+    "g5_phongthuy": {
+      "title": "La bàn phong thuỷ",
+      "icon": "🧭",
+      "screen": "sales",
+      "order": 520,
+      "pack": "learn"
+    },
+    "g5_quyhoach": {
+      "title": "Chồng bản đồ quy hoạch",
+      "icon": "🗺️",
+      "screen": "sales",
+      "order": 510,
+      "pack": "learn"
+    },
+    "videoai_taocanh": {
+      "title": "Video AI",
+      "icon": "✨",
+      "screen": "content",
+      "order": 15,
+      "pack": "videoai",
+      "video_only": true,
+      "video_online": true
+    },
+    "lead_pool": {
+      "title": "Kho lead",
+      "icon": "📥",
+      "screen": "customers",
+      "order": 12,
+      "requires": "lead_any"
+    },
+    "members": {
+      "title": "Khách toàn công ty",
+      "icon": "🏢",
+      "screen": "customers",
+      "order": 11,
+      "requires": "mx_view"
+    }
+  },
+  "packs": [
+    {
+      "id": "core",
+      "kind": "core",
+      "version": "1.0.1",
+      "status": "ready",
+      "modules": [
+        "brief",
+        "customers",
+        "lead_pool",
+        "members",
+        "care",
+        "zalo",
+        "inbox",
+        "market",
+        "catalog",
+        "quote",
+        "loan",
+        "policy",
+        "trang_cua_toi",
+        "ideas",
+        "g4_doitac",
+        "landing_builder"
+      ],
+      "features": [
+        "ai_assistant"
+      ],
+      "changelog": [
+        {
+          "version": "1.0.1",
+          "date": "2026-11-17",
+          "items": [
+            "Chờ duyệt → \"Xem & duyệt\" chính sách mở đúng bản nháp; Quản lý chỉ lưu nháp chính sách, Sale/CTV chỉ xem (nói rõ lý do)",
+            "Báo giá, Máy tính vay nêu đúng ô cần nhập; lịch đóng tiền không lưu đợt 0 đồng; ghi chú nhanh trống có báo",
+            "Bảng hàng: gõ tên dự án chưa có thì gợi ý \"Để AI tìm\" (báo phí, chờ đồng ý); dự án AI có nhãn \"nguồn AI – cần kiểm lại\"; sửa chữ \"Mẫu\" đè nhãn chủ đầu tư; \"Khôi phục mặc định\" không còn xoá nhầm dự án",
+            "Sổ đối tác có sẵn trong gói Cơ bản (Báo giá & Dự án → Sổ đối tác, và thẻ Đối tác ở màn Khách hàng): admin dự án, sàn F1/F2, Sale BĐS, Sale ngân hàng, công chứng, chủ nhà; ai giữ quỹ căn nào; nhật ký gọi/nhắn",
+            "Trình tạo landing có trong gói Cơ bản: tạo 1 landing (mẫu dự án, ký gửi, sự kiện, trang cá nhân), đăng lên địa chỉ app của anh/chị bằng 1 bấm, khách về app + Telegram; nhiều trang hơn ở Gói 3 · Tìm khách & Landing (sắp có)"
+          ]
+        },
+        {
+          "version": "1.0.0",
+          "date": "2026-11-16",
+          "items": [
+            "Gói Cơ bản luôn có: Bảng tin, Khách, Chăm sóc, Tin Zalo, Chờ duyệt, Thị trường, Bán hàng (Bảng hàng, Báo giá, Khoản vay, Chính sách), AI trợ lý, Ý tưởng nội dung",
+            "Thị trường chuyển sang màn Khách hàng",
+            "Chưa nối AI nào thì ẩn nút AI; nút Làm bằng Claude/Gemini qua chat luôn có"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "video",
+      "kind": "optional",
+      "version": "1.0.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "video",
+        "studio",
+        "characters",
+        "staff",
+        "calendar"
+      ],
+      "features": [
+        "engine",
+        "brief_video",
+        "ideas21h"
+      ],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-16",
+          "items": [
+            "Tách Video & Ý tưởng thành gói riêng: bật/tắt cho cả công ty, tắt không mất dữ liệu",
+            "Tắt gói: ẩn menu Video, Bảng tin và tin 7h bỏ phần video, không nhắc 21h, không dò máy dựng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sales",
+      "kind": "extension",
+      "no": 1,
+      "version": "0.2.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g1_banks",
+        "g1_guest",
+        "g1_layout",
+        "g1_policycalc",
+        "g1_policywatch",
+        "g1_rental",
+        "g1_research",
+        "g1_tax"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.2.0",
+          "date": "2026-11-17",
+          "items": [
+            "So sánh ngân hàng: nút \"Cập nhật thông tin mới nhất qua AI\" – AI quét lãi vay mua nhà các ngân hàng (≥ 10 nguồn uy tín, báo phí trước), gộp theo tên, giữ dòng nhập tay, ghi ngày cập nhật + chỉ tham khảo",
+            "Thuế phí chuyển nhượng: AI tìm mức thuế/phí/lệ phí mới nhất kèm văn bản căn cứ, ngày hiệu lực; chỉ lưu mục đã duyệt"
+          ]
+        },
+        {
+          "version": "0.1.0",
+          "date": "2026-11-17",
+          "items": [
+            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
+            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
+            "8 module ở màn Báo giá & Dự án"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "care",
+      "kind": "extension",
+      "no": 2,
+      "version": "0.2.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g2_chamsoc",
+        "g2_crm",
+        "g2_hoso",
+        "g2_lich",
+        "g2_nhom",
+        "g2_taisan",
+        "g2_thitruong",
+        "g2_tuvan",
+        "g2_zoa"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.2.0",
+          "date": "2026-11-17",
+          "items": [
+            "Đọc khách: thêm phân loại tính cách D-I-S-C dùng chung với màn Khách hàng, gợi ý cách tư vấn theo nhóm"
+          ]
+        },
+        {
+          "version": "0.1.0",
+          "date": "2026-11-17",
+          "items": [
+            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
+            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
+            "9 module ở màn Khách hàng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "leads",
+      "kind": "extension",
+      "no": 3,
+      "version": "0.2.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g3_ads",
+        "g3_docs",
+        "g3_events",
+        "g3_groups",
+        "g3_profile",
+        "g3_referral",
+        "g3_roi",
+        "g3_seo"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.2.0",
+          "date": "2026-11-17",
+          "items": [
+            "Đổi tên \"Đưa trang của bạn lên Google (SEO)\" – chỉ hỗ trợ đưa trang lên, kèm hướng dẫn việc trước/sau khi đưa",
+            "Bỏ \"Lọc bình luận có ý định mua\" (khách đã thêm giữ nguyên)",
+            "Đăng nhóm cộng đồng: hướng dẫn kết nối Facebook/Zalo đúng chính sách nền tảng",
+            "Đo hiệu quả tiền marketing: phân tích theo từng quảng cáo từ tệp CSV của Trình quản lý quảng cáo, tự sửa lead/hẹn xem/giao dịch/doanh thu → CPL, ROI",
+            "Trình tạo landing: nhắc cập nhật dự án chính xác trước khi tạo trang, cảnh báo dự án còn thiếu thông tin"
+          ]
+        },
+        {
+          "version": "0.1.0",
+          "date": "2026-11-17",
+          "items": [
+            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
+            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
+            "Trình tạo landing + 8 module ở màn Khách hàng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "kind": "extension",
+      "no": 4,
+      "version": "0.1.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g4_banggia",
+        "g4_congtruong",
+        "g4_giohang",
+        "g4_giucho",
+        "g4_phaply"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.1.0",
+          "date": "2026-11-17",
+          "items": [
+            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
+            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
+            "6 module ở màn Báo giá & Dự án"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "kind": "extension",
+      "no": 5,
+      "version": "0.2.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g5_can3d",
+        "g5_dandan",
+        "g5_hoc",
+        "g5_huongnang",
+        "g5_luyentuvan",
+        "g5_noithat",
+        "g5_phongthuy",
+        "g5_quyhoach"
+      ],
+      "trial": true,
+      "module_requires": {
+        "g5_dandan": [
+          "video"
+        ]
+      },
+      "changelog": [
+        {
+          "version": "0.2.0",
+          "date": "2026-11-17",
+          "items": [
+            "Chồng bản đồ quy hoạch: làm theo 4 bước có \"Việc tiếp theo\", cuộn được trên điện thoại, link cổng quy hoạch chính thức, nút \"AI đọc bản đồ\" (báo phí trước, AI không chấm điểm)",
+            "Căn hộ 3D: bắt buộc tải layout mặt bằng (ảnh/PDF); AI quét phòng, kích thước, cửa, hướng hoặc nhập tay; soát số đo rồi mới dựng 3D"
+          ]
+        },
+        {
+          "version": "0.1.0",
+          "date": "2026-11-17",
+          "items": [
+            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
+            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
+            "8 module ở màn Báo giá & Dự án, Bảng tin và Video & Ý tưởng (Nhân vật dẫn cần gói Video & Ý tưởng đang bật)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "videoai",
+      "kind": "extension",
+      "version": "0.1.0",
+      "status": "thu_nghiem",
+      "requires": [
+        "video"
+      ],
+      "modules": [
+        "videoai_taocanh"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.1.0",
+          "date": "2026-11-17",
+          "items": [
+            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
+            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
+            "AI tạo cảnh ở màn Video & Ý tưởng (cần gói Video & Ý tưởng đang bật)"
+          ]
+        }
+      ]
+    }
+  ]
+}

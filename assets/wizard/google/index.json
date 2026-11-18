@@ -1,0 +1,280 @@
+{
+ "note": "Ảnh minh hoạ (vẽ lại, không phải ảnh chụp Google) cho Trợ lý cài đặt – các bước làm trên trang Google (và trang ngoài: Telegram, AI Studio, trang quản lý tên miền – thư mục assets/wizard/ext/), khớp luồng Tạo bản sao / dán tay + hộp Triển khai của CaiDat.gs. Đường dẫn file tính từ web/ (giống shots.json). PNG 1280×800, 1x (trợ lý chưa dùng srcset). Mỗi ảnh có nhãn \"Ảnh minh hoạ\" ở góc phải dưới.",
+ "generated": "2026-11-17",
+ "width": 1280,
+ "height": 800,
+ "scale": 1,
+ "order": [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "copy"
+ ],
+ "steps": {
+  "1": {
+   "title": "Bật Apps Script API",
+   "images": [
+    "script-api"
+   ]
+  },
+  "2": {
+   "title": "Mở dự án Apps Script mới (script.new hoặc + Dự án mới) – không cần tạo Sheet trước",
+   "images": [
+    "script-new",
+    "script-home-new"
+   ]
+  },
+  "3": {
+   "title": "Dán mã cài đặt (CaiMayChu.gs) + Lưu",
+   "images": [
+    "paste-save"
+   ]
+  },
+  "4": {
+   "title": "Hiện và dán tệp kê khai appsscript.json + Lưu",
+   "images": [
+    "manifest-tick",
+    "manifest-paste"
+   ]
+  },
+  "5": {
+   "title": "Chọn hàm caiMayChu + Chạy",
+   "images": [
+    "run"
+   ]
+  },
+  "6": {
+   "title": "Cấp quyền cho Google",
+   "images": [
+    "auth-review",
+    "auth-advanced",
+    "auth-allow"
+   ]
+  },
+  "7": {
+   "title": "Nhật ký thực thi – mở link Sheet máy chủ",
+   "images": [
+    "exec-log"
+   ]
+  },
+  "8": {
+   "title": "Sheet: BDS Studio › Cài đặt (cấp quyền lần 2 = ảnh bước 6)",
+   "images": [
+    "sheet-menu",
+    "auth-review",
+    "auth-advanced",
+    "auth-allow"
+   ]
+  },
+  "9": {
+   "title": "Triển khai máy chủ (Web App) + chép URL …/exec",
+   "images": [
+    "sheet-deploy-dialog",
+    "deploy-menu",
+    "deploy-type",
+    "deploy-config",
+    "deploy-url"
+   ]
+  },
+  "10": {
+   "title": "Chép URL trong hộp của Sheet → dán vào ô \"Địa chỉ máy chủ\" + Kiểm tra bước này",
+   "images": [
+    "app-connect"
+   ]
+  },
+  "11": {
+   "title": "Bấm \"Mở BDS Studio và kết nối\" trong hộp – app tự điền + tự kiểm",
+   "images": [
+    "sheet-open-app"
+   ]
+  },
+  "copy": {
+   "title": "Cách phụ: link Tạo bản sao",
+   "images": [
+    "template-copy"
+   ]
+  }
+ },
+ "images": {
+  "script-api": {
+   "file": "assets/wizard/google/script-api.png",
+   "step": 1,
+   "alt": "Trang cài đặt Apps Script: công tắc Google Apps Script API được gạt sang Bật",
+   "caption": "Mở script.google.com/home/usersettings → gạt \"Google Apps Script API\" sang Bật (On)."
+  },
+  "script-new": {
+   "file": "assets/wizard/google/script-new.png",
+   "step": 2,
+   "part": "1/2",
+   "alt": "Gõ script.new vào thanh địa chỉ của trình duyệt (không gõ vào ô tìm kiếm Google); không cần tạo Sheet trước",
+   "caption": "Cách 1: mở thẻ mới, gõ script.new vào THANH ĐỊA CHỈ trên cùng → Enter (không gõ vào ô tìm kiếm Google). Không cần tạo Sheet trước – mã cài tự tạo Sheet."
+  },
+  "script-home-new": {
+   "file": "assets/wizard/google/script-home-new.png",
+   "step": 2,
+   "part": "2/2",
+   "alt": "Mở script.google.com rồi bấm nút Dự án mới; không cần tạo Sheet trước",
+   "caption": "Cách 2: mở script.google.com → bấm \"+ Dự án mới\" (New project). Không cần tạo Sheet trước – mã cài tự tạo Sheet."
+  },
+  "paste-save": {
+   "file": "assets/wizard/google/paste-save.png",
+   "step": 3,
+   "alt": "Trong tệp Mã.gs (Code.gs) có sẵn ở cột trái: chọn hết, dán đè mã cài đặt đã chép, rồi bấm biểu tượng Lưu",
+   "caption": "Ở cột trái có sẵn 1 tệp tên Mã.gs (tiếng Anh: Code.gs) – bấm vào tệp đó, Ctrl+A rồi dán đè (Ctrl+V) mã đã chép; không cần đổi tên tệp → bấm Lưu (Ctrl+S). Mac dùng ⌘ thay Ctrl."
+  },
+  "manifest-tick": {
+   "file": "assets/wizard/google/manifest-tick.png",
+   "step": 4,
+   "part": "1/2",
+   "alt": "Cài đặt dự án Apps Script: tích ô Hiện tệp kê khai appsscript.json trong trình chỉnh sửa",
+   "caption": "Tick ⚙ Hiện tệp kê khai: bấm bánh răng \"Cài đặt dự án\" (Project Settings) ở cột trái → tích ô \"Hiện tệp kê khai appsscript.json trong trình chỉnh sửa\"."
+  },
+  "manifest-paste": {
+   "file": "assets/wizard/google/manifest-paste.png",
+   "step": 4,
+   "part": "2/2",
+   "alt": "Trở lại Trình chỉnh sửa, mở tệp appsscript.json, chọn hết, dán nội dung tệp kê khai rồi bấm Lưu",
+   "caption": "Quay lại < > (Trình chỉnh sửa – Editor) → bấm tệp appsscript.json mới hiện ra ở cột trái → Ctrl+A → dán (Ctrl+V) tệp kê khai đã chép → bấm Lưu."
+  },
+  "run": {
+   "file": "assets/wizard/google/run.png",
+   "step": 5,
+   "alt": "Ô chọn hàm đang chọn caiMayChu, sau đó bấm nút Chạy",
+   "caption": "Ở ô chọn hàm, chọn caiMayChu → bấm ▷ Chạy (Run). Không thấy caiMayChu trong ô chọn hàm? Bấm Ctrl+S lưu lại rồi chọn."
+  },
+  "auth-review": {
+   "file": "assets/wizard/google/auth-review.png",
+   "step": 6,
+   "part": "1/3",
+   "alt": "Hộp Cần cấp quyền với nút Xem xét quyền, sau đó cửa sổ chọn tài khoản Google",
+   "caption": "Hiện \"Cần cấp quyền\" → bấm \"Xem xét quyền\" → chọn đúng tài khoản Google đang dùng."
+  },
+  "auth-advanced": {
+   "file": "assets/wizard/google/auth-advanced.png",
+   "step": 6,
+   "part": "2/3",
+   "alt": "Trang Google chưa xác minh ứng dụng này: bấm Nâng cao rồi bấm Đi tới (không an toàn)",
+   "caption": "\"Google chưa xác minh ứng dụng này\" là bình thường (mã của chính bạn) → bấm \"Nâng cao\" → \"Đi tới … (không an toàn)\"."
+  },
+  "auth-allow": {
+   "file": "assets/wizard/google/auth-allow.png",
+   "step": 6,
+   "part": "3/3",
+   "alt": "Trang cấp quyền: tích Chọn tất cả rồi bấm Cho phép",
+   "caption": "Nếu có ô \"Chọn tất cả\" thì tích vào → kéo xuống bấm \"Cho phép\" (Allow). Có máy ghi \"Tiếp tục\" (Continue)."
+  },
+  "exec-log": {
+   "file": "assets/wizard/google/exec-log.png",
+   "step": 7,
+   "alt": "Nhật ký thực thi hiện khung XONG – ĐÃ TẠO MÁY CHỦ BDS STUDIO và link Sheet máy chủ",
+   "caption": "Đợi khoảng 1 phút. Nhật ký thực thi hiện khung \"XONG – ĐÃ TẠO MÁY CHỦ BDS STUDIO…\" kèm link Sheet https://docs.google.com/spreadsheets/d/…/edit → mở link đó."
+  },
+  "sheet-menu": {
+   "file": "assets/wizard/google/sheet-menu.png",
+   "step": 8,
+   "alt": "Trong Google Sheet: bấm menu BDS Studio rồi bấm Cài đặt",
+   "caption": "Trong Sheet: đợi 10–20 giây cho menu \"BDS Studio\" hiện → bấm BDS Studio › Cài đặt. Google hỏi quyền lần nữa: làm như bước cấp quyền."
+  },
+  "sheet-deploy-dialog": {
+   "file": "assets/wizard/google/sheet-deploy-dialog.png",
+   "step": 9,
+   "part": "1/5",
+   "alt": "Hộp Triển khai máy chủ trong Sheet: 6 cú bấm, mỗi dòng một việc, rồi nút Tôi đã triển khai xong",
+   "caption": "Hộp \"Triển khai máy chủ\" hiện 6 cú bấm (có ảnh): Triển khai → Tuỳ chọn triển khai mới (New deployment) → ⚙ Ứng dụng web → Thực thi: Tôi → Truy cập: Bất kỳ ai → Triển khai → Cho phép → Sao chép URL. Làm xong bấm \"Tôi đã triển khai xong\" – hộp hiện nút \"Mở BDS Studio và kết nối\"."
+  },
+  "deploy-menu": {
+   "file": "assets/wizard/google/deploy-menu.png",
+   "step": 9,
+   "part": "2/5",
+   "alt": "Trong Apps Script, bấm nút Triển khai góc trên bên phải rồi chọn Tuỳ chọn triển khai mới",
+   "caption": "Trong Apps Script: góc trên bên phải bấm \"Triển khai\" (Deploy) → \"Tuỳ chọn triển khai mới\" (New deployment). Mục \"Quản lý triển khai\" trống là bình thường – bản sao Sheet không mang theo triển khai, mỗi máy chủ phải tạo triển khai mới 1 lần."
+  },
+  "deploy-type": {
+   "file": "assets/wizard/google/deploy-type.png",
+   "step": 9,
+   "part": "3/5",
+   "alt": "Hộp Tuỳ chọn triển khai mới: bấm bánh răng cạnh Chọn loại rồi chọn Ứng dụng web",
+   "caption": "Cạnh chữ \"Chọn loại\" (Select type) bấm bánh răng ⚙ → chọn \"Ứng dụng web\" (Web app)."
+  },
+  "deploy-config": {
+   "file": "assets/wizard/google/deploy-config.png",
+   "step": 9,
+   "part": "4/5",
+   "alt": "Cấu hình ứng dụng web: Thực thi với tư cách Tôi, Người có quyền truy cập Bất kỳ ai, rồi bấm Triển khai",
+   "caption": "Thực thi với tư cách: Tôi (Me) · Người có quyền truy cập: Bất kỳ ai (Anyone) → bấm Triển khai (Deploy). Google hỏi quyền thì làm như bước cấp quyền."
+  },
+  "deploy-url": {
+   "file": "assets/wizard/google/deploy-url.png",
+   "step": 9,
+   "part": "5/5",
+   "alt": "Triển khai xong: ô URL ứng dụng web kết thúc bằng /exec và nút Sao chép",
+   "caption": "Hiện \"URL ứng dụng web\" dạng https://script.google.com/macros/s/…/exec → bấm Sao chép (Copy) → Xong."
+  },
+  "app-connect": {
+   "file": "assets/wizard/google/app-connect.png",
+   "step": 10,
+   "alt": "Trong Trợ lý cài đặt, bước Tạo máy chủ: dán địa chỉ …/exec vào ô Địa chỉ máy chủ (kết thúc bằng /exec) rồi bấm Kiểm tra bước này",
+   "caption": "Hộp trong Sheet chưa có nút \"Mở BDS Studio và kết nối\" (lần đầu, chưa nhập địa chỉ app): bấm \"Chép URL\" trong hộp, rồi ở bước \"Tạo máy chủ\" dán địa chỉ …/exec vào ô \"Địa chỉ máy chủ (kết thúc bằng /exec)\" (Ctrl+V) → bấm \"Kiểm tra bước này\"."
+  },
+  "template-copy": {
+   "file": "assets/wizard/google/template-copy.png",
+   "step": "copy",
+   "alt": "Bấm link Tạo bản sao trong trợ lý, Google hiện trang Sao chép tài liệu, bấm nút Tạo bản sao",
+   "caption": "Cách phụ: bấm \"Mở link Tạo bản sao\" trong trợ lý → Google hỏi tạo bản sao → bấm \"Tạo bản sao\" (Make a copy)."
+  },
+  "ext-botfather": {
+   "file": "assets/wizard/ext/ext-botfather.png",
+   "step": "telegram",
+   "alt": "Telegram: tìm @BotFather, gõ /newbot, đặt tên và tên đăng nhập bot kết thúc bằng bot, BotFather gửi mã bot để chép",
+   "caption": "Telegram → ô tìm kiếm gõ @BotFather → gõ /newbot → đặt tên bot → đặt tên đăng nhập kết thúc bằng \"bot\" → BotFather gửi mã bot dạng 123456:ABC… → chép mã."
+  },
+  "ext-aistudio": {
+   "file": "assets/wizard/ext/ext-aistudio.png",
+   "step": "ai",
+   "alt": "Trang AI Studio tiếng Anh: bấm Get API key (Lấy khoá API), Create API key (Tạo khoá API), rồi Copy (Chép) khoá",
+   "caption": "Trang AI Studio bằng tiếng Anh: \"Get API key\" = Lấy khoá API → \"Create API key\" = Tạo khoá API → \"Copy\" = Chép khoá AIza… → dán vào Cài đặt › Kết nối › Gemini."
+  },
+  "ext-dns-cname": {
+   "file": "assets/wizard/ext/ext-dns-cname.png",
+   "step": "domain",
+   "alt": "Trang quản lý tên miền: Thêm bản ghi, chọn loại CNAME, tên app, trỏ tới giá trị được gửi, TTL tự động, Lưu",
+   "caption": "Trang quản lý tên miền (nhà đăng ký hoặc Cloudflare) → \"Thêm bản ghi\" (Add record) → Loại: CNAME · Tên: app · Trỏ tới: giá trị trong bảng của trợ lý · TTL: Tự động (Auto) → Lưu. Chờ 5 phút–24 giờ."
+  },
+  "ext-google-account": {
+   "file": "assets/wizard/ext/ext-google-account.png",
+   "step": "prepare",
+   "alt": "Trang Google: bấm ảnh đại diện góc trên bên phải, kiểm tra đang dùng tài khoản Workspace của công ty, không dùng Gmail cá nhân",
+   "caption": "Trên trang Google bấm ảnh đại diện góc trên bên phải → phải là tài khoản Workspace CÔNG TY (ghi \"Do tổ chức của bạn quản lý\") – không dùng Gmail cá nhân của nhân viên. Sai thì bấm \"Thêm tài khoản khác\"."
+  },
+  "sheet-open-app": {
+   "file": "assets/wizard/google/sheet-open-app.png",
+   "step": 11,
+   "alt": "Hộp Máy chủ đã sẵn sàng trong Sheet: nút to Mở BDS Studio và kết nối",
+   "caption": "Hộp đã biết địa chỉ app của anh/chị: bấm \"Mở BDS Studio và kết nối\" – app mở ở thẻ mới, tự điền địa chỉ máy chủ, tự kiểm và sang bước tạo tài khoản. Không cần chép gì."
+  }
+ },
+ "slots": {
+  "ext-script-api": "script-api",
+  "ext-google-allow": [
+   "auth-review",
+   "auth-advanced",
+   "auth-allow"
+  ],
+  "ext-sheet-menu": "sheet-menu",
+  "ext-sheet-url": "deploy-url",
+  "ext-google-copy": "template-copy",
+  "ext-botfather": "ext-botfather",
+  "ext-aistudio": "ext-aistudio",
+  "ext-dns-cname": "ext-dns-cname",
+  "ext-google-account": "ext-google-account"
+ },
+ "slotsNote": "Ô ảnh (slot) đang có trong web/core/wizard/steps.js → ảnh tương ứng; nhiều ảnh = chuỗi theo thứ tự. Bước 4 (tệp kê khai) là bước \"3b\" mới chèn sau bước dán mã; các bước sau đã đánh số lại. Ô ext-google-account, ext-botfather, ext-dns-cname, ext-aistudio: ảnh minh hoạ trong assets/wizard/ext/ (vẽ bằng tools/wizard_art/render.mjs). Mọi ảnh vẽ lại – không logo bên thứ ba, không chữ dạng email. (17/11) Cách A (CaiMayChu.gs) đã bỏ – các ảnh bước 1–3, 5–7 (script-api, script-new, paste-save, run, auth-*, exec-log) chỉ còn dùng chỗ khớp (cấp quyền = ext-google-allow; kê khai = bước 4 của cách dán tay)."
+}

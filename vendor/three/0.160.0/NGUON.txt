@@ -1,0 +1,5 @@
+three.js r160 (npm "three@0.160.0") – tệp build/three.module.min.js, giữ nguyên không sửa.
+Giấy phép: MIT (LICENSE.txt, Copyright © 2010-2023 three.js authors).
+Nguồn: https://www.npmjs.com/package/three/v/0.160.0  ·  https://github.com/mrdoob/three.js/tree/r160
+sha256(three.module.min.js) = 3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6
+Chỉ nạp khi mở màn 3D của gói 5 (web/packs/bds/g5_can3d) bằng import() động – không nằm trong vỏ app, không tải từ CDN lúc chạy.

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BDS Studio">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16294A"/>
+      <stop offset="1" stop-color="#0A1527"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E6C77A"/>
+      <stop offset=".55" stop-color="#C9A24A"/>
+      <stop offset="1" stop-color="#A47F2E"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="18" y="18" width="476" height="476" rx="98" fill="none" stroke="#C9A24A" stroke-opacity=".22" stroke-width="4"/>
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M128 250 256 142l128 108" stroke-width="26"/>
+    <path d="M166 232v138h180V232" stroke-width="22"/>
+  </g>
+  <g fill="url(#gold)">
+    <rect x="206" y="262" width="34" height="34" rx="6"/>
+    <rect x="272" y="262" width="34" height="34" rx="6"/>
+    <rect x="206" y="318" width="34" height="52" rx="6"/>
+    <rect x="272" y="318" width="34" height="34" rx="6"/>
+  </g>
+  <path d="M138 396h236" stroke="#F7F3EA" stroke-opacity=".85" stroke-width="10" stroke-linecap="round"/>
+</svg>

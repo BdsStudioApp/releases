@@ -1,0 +1,14 @@
+{
+  "id": "g5_huongnang",
+  "title": "Hướng nắng theo giờ & mùa",
+  "pack": "learn",
+  "pack_group": "g5",
+  "screen": "sales",
+  "icon": "🌤️",
+  "order": 530,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "41"
+  ]
+}

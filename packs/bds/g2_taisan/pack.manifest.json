@@ -1,0 +1,2 @@
+{ "id": "g2_taisan", "title": "Sổ tài sản của khách", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "🏠", "order": 280, "status": "thu-nghiem",
+  "items": ["63"], "desc": "Báo cáo quý: giá trị ước tính có nguồn, giá thuê, tiến độ, hạ tầng mới – xuất ảnh/PDF" }

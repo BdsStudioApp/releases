@@ -1,0 +1,2 @@
+{ "id": "g2_chamsoc", "title": "Cớ chăm sóc khách cũ", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "📰", "order": 270, "status": "thu-nghiem",
+  "items": ["39", "71b"], "desc": "Tin tức thành cớ chăm sóc (giới hạn tần suất), gọi lại khách nguội 30/60/90 ngày với lý do mới" }

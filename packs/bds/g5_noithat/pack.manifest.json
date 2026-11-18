@@ -1,0 +1,14 @@
+{
+  "id": "g5_noithat",
+  "title": "Dự toán nội thất",
+  "pack": "learn",
+  "pack_group": "g5",
+  "screen": "sales",
+  "icon": "🛋️",
+  "order": 540,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "42"
+  ]
+}

@@ -1,0 +1,1 @@
+{ "id": "landing_builder", "title": "Trình tạo landing", "pack": "core", "screen": "customers", "icon": "🌐", "order": 50, "status": "ready", "limit": { "basic_pages": 1, "unlimited_with": "leads" } }

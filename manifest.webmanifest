@@ -1,0 +1,21 @@
+{
+  "name": "BDS Studio",
+  "short_name": "BDS Studio",
+  "description": "Trợ lý công việc cá nhân: khách hàng, báo giá, video và nhắc việc.",
+  "lang": "vi",
+  "dir": "ltr",
+  "id": "./",
+  "start_url": "./#/home",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0F1E33",
+  "theme_color": "#0F1E33",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

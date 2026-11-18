@@ -1,0 +1,14 @@
+{
+  "id": "g5_quyhoach",
+  "title": "Chồng bản đồ quy hoạch",
+  "pack": "learn",
+  "pack_group": "g5",
+  "screen": "sales",
+  "icon": "🗺️",
+  "order": 510,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "items": [
+    "34"
+  ]
+}

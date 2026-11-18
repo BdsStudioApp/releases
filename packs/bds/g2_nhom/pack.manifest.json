@@ -1,0 +1,2 @@
+{ "id": "g2_nhom", "title": "Việc nhóm", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "🤝", "order": 250, "status": "thu-nghiem",
+  "items": ["F–M"], "desc": "Giao việc, bình luận nội bộ, nhắc @người, phân quyền theo vai trò" }

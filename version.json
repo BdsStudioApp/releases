@@ -1,0 +1,692 @@
+{
+  "web": "1.0.5",
+  "gas": "1.0.5",
+  "engine": "1.0.5",
+  "notes": [
+    {
+      "version": "1.0.5",
+      "date": "2026-11-17",
+      "text": "Bản quyền mới: Gói Cơ bản mua 1 lần, dùng vĩnh viễn; mua thêm từng gói mở rộng (vĩnh viễn) hoặc Trọn bộ các gói. Mọi bản cập nhật app, máy chủ và gói luôn miễn phí. Cài đặt › Bản quyền hiện rõ anh/chị đang có gì (Gói Cơ bản ✓ vĩnh viễn, Gói 3 ✓ …) và bảng giá các gói còn mua được; mua vĩnh viễn trong lúc dùng thử là dùng ngay. Key đã mua trước đây giữ nguyên quyền; \"🎁 Có mã tặng?\": người bán tặng mã mở gói (vd TANGVIDEO) – bấm \"🎁 Có mã tặng?\" ở thẻ gói (Cài đặt › Gói chức năng) hoặc ở Cài đặt › Bản quyền, nhập mã, bấm \"Nhận quà\" là gói dùng được ngay. Thẻ gói ghi \"🎁 Tặng tới dd/mm/yyyy\" (hoặc \"vĩnh viễn\"); hết hạn tặng thì gói tắt, dữ liệu giữ nguyên. Mỗi tài khoản Google nhận 1 lần mỗi mã; quà dùng được khi app đang dùng thử hoặc đã có Gói Cơ bản; Gói 🧪 Thử nghiệm dùng thử miễn phí: đang dùng thử app hoặc đã có bản quyền Gói Cơ bản là bấm \"Tải về\" để cài, rồi bấm \"💬 Góp ý gói này\" để góp ý. Bản thử nghiệm có thể còn lỗi – dữ liệu của anh/chị vẫn an toàn. Gói Video thử nghiệm có sẵn phần chọn cách làm video và bộ cài máy dựng trong gói; …",
+      "parts": [
+        "web",
+        "gas",
+        "landing",
+        "engine"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Bản quyền mới: Gói Cơ bản mua 1 lần, dùng vĩnh viễn; mua thêm từng gói mở rộng (vĩnh viễn) hoặc Trọn bộ các gói. Mọi bản cập nhật app, máy chủ và gói luôn miễn phí. Cài đặt › Bản quyền hiện rõ anh/chị đang có gì (Gói Cơ bản ✓ vĩnh viễn, Gói 3 ✓ …) và bảng giá các gói còn mua được; mua vĩnh viễn trong lúc dùng thử là dùng ngay. Key đã mua trước đây giữ nguyên quyền.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "\"🎁 Có mã tặng?\": người bán tặng mã mở gói (vd TANGVIDEO) – bấm \"🎁 Có mã tặng?\" ở thẻ gói (Cài đặt › Gói chức năng) hoặc ở Cài đặt › Bản quyền, nhập mã, bấm \"Nhận quà\" là gói dùng được ngay. Thẻ gói ghi \"🎁 Tặng tới dd/mm/yyyy\" (hoặc \"vĩnh viễn\"); hết hạn tặng thì gói tắt, dữ liệu giữ nguyên. Mỗi tài khoản Google nhận 1 lần mỗi mã; quà dùng được khi app đang dùng thử hoặc đã có Gói Cơ bản.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Gói 🧪 Thử nghiệm dùng thử miễn phí: đang dùng thử app hoặc đã có bản quyền Gói Cơ bản là bấm \"Tải về\" để cài, rồi bấm \"💬 Góp ý gói này\" để góp ý. Bản thử nghiệm có thể còn lỗi – dữ liệu của anh/chị vẫn an toàn. Gói Video thử nghiệm có sẵn phần chọn cách làm video và bộ cài máy dựng trong gói.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Cài đặt xong, trợ lý hiện thẻ \"📲 Đưa BDS Studio ra màn hình điện thoại\": hướng dẫn từng bước cho iPhone/iPad và Android (tự chọn đúng máy đang dùng, có hình nút Chia sẻ và nút ⋮), Android Chrome có nút \"Cài ngay\", đang mở trong Zalo/Facebook thì nhắc mở bằng Safari/Chrome trước. Trên máy tính có mã QR: quét bằng camera điện thoại là mở đúng app. Điện thoại chưa thêm app ra màn hình chính được nhắc gọn ở 3 lần mở app đầu (bấm \"Đã làm xong\" hoặc \"Không nhắc nữa\" là thôi); xem lại hướng dẫn bất kỳ lúc nào ở Cài đặt › Phiên bản & Cập nhật › Cài app ra màn hình chính.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Gói chức năng (Video & Ý tưởng, Bán hàng & Tài chính, Khách hàng & Chăm sóc, Tìm khách & Landing, Nguồn hàng & Giao dịch, Trải nghiệm nâng cao & Học tập, Video AI) đang ở chế độ \"🧪 Thử nghiệm – sắp có\": vẫn hiện ở Cài đặt › Gói chức năng để anh/chị xem trước nội dung, chưa tải về được. Bấm \"🔔 Báo tôi khi có\" để app nhắc khi gói sẵn sàng. Các chức năng cơ bản (khách hàng, chăm sóc, bảng hàng, báo giá, máy tính vay, chính sách, thành viên) dùng bình thường.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Sổ đối tác có sẵn trong gói Cơ bản (Báo giá & Dự án → Sổ đối tác, và thẻ \"Đối tác\" ở màn Khách hàng): lưu admin dự án, sàn F1/F2, Sale BĐS, Sale ngân hàng, công chứng, chủ nhà; xem ai đang giữ quỹ căn nào và ghi nhật ký gọi/nhắn. Không cần cài gói \"Nguồn hàng & Giao dịch\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trình tạo landing có trong gói Cơ bản: tạo 1 landing (mẫu dự án, ký gửi – thứ cấp, sự kiện – mở bán, trang cá nhân), tự điền từ Bảng hàng, xem trước trên điện thoại/máy tính. Sửa và đăng lại trang đó bất cứ lúc nào; muốn nhiều trang hơn: Gói 3 · Tìm khách & Landing (sắp có – bấm \"🔔 Báo tôi khi có\"). Bản Công ty: 1 landing cho cả công ty, \"Trang của tôi\" của từng nhân viên không tính.",
+            "parts": [
+              "web",
+              "gas",
+              "landing"
+            ]
+          },
+          {
+            "text": "\"Đăng lên địa chỉ app của tôi\": app chạy ở tenkhach.bdsstudio.app thì bấm 1 lần là trang landing chạy ở tenkhach.bdsstudio.app/trang/<đường dẫn trang> – không cần tài khoản riêng, không kéo thả, không có dải chữ của Google, chia sẻ Facebook/Zalo hiện tiêu đề và ảnh. Có nút Chép link, Mở trang, Gỡ trang; sửa xong bấm \"Cập nhật trang\". Khách để lại số vẫn về thẳng máy chủ Google của anh/chị + Telegram, link riêng từng sale (?s=<mã>) dùng như cũ. App ở tên miền riêng của công ty: dùng \"Tải gói trang (.zip)\".",
+            "parts": [
+              "web",
+              "landing"
+            ]
+          },
+          {
+            "text": "Bảng hàng: mỗi dự án có nút \"🔍 AI tìm thông tin\" (Chủ và Quản lý). Gemini tìm chủ đầu tư, vị trí, pháp lý, tiến độ, bàn giao, tiện ích, quy mô, giá; báo chi phí trước khi chạy, hiện bảng CŨ → MỚI kèm link nguồn từng dòng, anh/chị tick dòng nào thì lưu dòng đó.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bảng hàng: nút \"📎 Gửi file cập nhật\" và \"➕ Thêm dự án từ file\" (Chủ và Quản lý). Gửi PDF, ảnh, Excel, Word hoặc CSV đến 20 MB (bảng giá, chính sách, mặt bằng); AI đọc rồi hiện bảng CŨ → MỚI, số bất thường có dấu ⚠️. Chính sách thanh toán đọc được chỉ lưu nháp, anh/chị duyệt rồi mới áp dụng.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bản Công ty: người tạo tài khoản đầu tiên là Quản trị (Admin) – toàn quyền (bản Cá nhân vẫn gọi là Chủ). Sau bước Bảo mật 2 lớp có bước \"Đội ngũ\": chọn số nhân viên bán hàng (Sale) và Quản lý muốn tạo sẵn, gõ họ tên, email từng người. Chưa cần thì bấm \"Bỏ qua bước này\".",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Mời nhân viên qua email: thư mời gửi từ chính tài khoản Google của anh/chị; ai chưa nhận được thư thì bấm \"Chép link mời\" hoặc \"Gửi qua Zalo\". Người được mời bấm link, tự đặt mật khẩu, nhập mã 6 số trong email rồi vào app đúng vai trò. Link dùng 1 lần, hết hạn sau 7 ngày.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Cài đặt › Người dùng: xem lời mời đang chờ (Gửi lại, Chép link mời, Gửi qua Zalo, Huỷ), mời thêm nhân viên hoặc thêm Quản trị bất cứ lúc nào. Luôn còn ít nhất 1 Quản trị: Quản trị cuối cùng không hạ vai trò, không khoá được.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Quyền từng phần: vai trò chỉ là bộ quyền mặc định, Quản trị tick hoặc bỏ tick từng phần cho từng người (Xem khách toàn công ty, Chia khách, Xoá dữ liệu khách, Xuất file, Video, Ý tưởng, Bảng hàng, Thêm/sửa dự án, Báo giá, Landing, AI). Ý tưởng dùng được cả khi không có quyền Video; Cộng tác viên mặc định tắt AI và Landing. Phần bị bỏ tick ẩn hẳn trong app của người đó và máy chủ cũng chặn.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Mỗi nhân viên có \"Địa chỉ riêng\" (tự gợi ý theo họ tên, không dấu, không trùng, sửa được) để làm trang phễu khách riêng trên tên miền công ty.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bản Công ty: bước \"Tên miền công ty\" trong Trợ lý cài đặt là bắt buộc – app chạy ở app.tencongty.vn. Đang chờ tên miền chạy (mua tên miền, đổi nameserver có khi mất vài giờ)? Bấm \"Làm tiếp sau\" để làm các bước còn lại và dùng app ngay; bước này vẫn ghi \"chưa xong ⚠\" tới khi làm xong. Công ty đã có website thì app khuyên mua thêm 1 tên miền riêng cho app để website cũ và dữ liệu khách không ảnh hưởng nhau. Nút \"Kiểm tra\" báo tên miền đã chạy, app mở đúng và trang nhân viên đã bật.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "\"Trang của tôi\": mỗi nhân viên có ngay trang riêng ở địa chỉ riêng của mình, vd lan.tencongty.vn – ảnh, lời giới thiệu, nút gọi và Zalo, logo công ty, dự án chọn trong Bảng hàng, màu tự chọn. Sửa, Xem trước, Xuất bản ngay trong app; khách để lại số vào thẳng danh sách khách của chính người đó, người khác không thấy.",
+            "parts": [
+              "web",
+              "gas",
+              "landing"
+            ]
+          },
+          {
+            "text": "Form trang riêng có ô đồng ý theo Luật Bảo vệ dữ liệu cá nhân (Luật số 91/2025/QH15, không tick sẵn), chặn máy quét và giới hạn số lần gửi; trang không hiện thông tin của nhân viên khác.",
+            "parts": [
+              "landing"
+            ]
+          },
+          {
+            "text": "Chỉ người có quyền \"Landing / phễu khách\" thấy \"Trang của tôi\"; Quản trị tắt hoặc bật trang của từng nhân viên.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Gán tên miền riêng cho trang của mình (tuỳ chọn, vd nguyenvanlan.com): app hướng dẫn từng bước, nói rõ chi phí và hỏi lại trước khi mở trang mua tên miền.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bản Công ty: vai trò \"Marketing\" và 3 quyền mới \"Kho lead công ty\", \"Đẩy số\", \"Báo cáo nguồn lead\". Marketing xem kho lead và báo cáo, không xem khách riêng của sale.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Kho lead công ty: khách từ landing công ty, Sheet landing, khoá nhận khách chung (không có mã sale) và tệp Excel/CSV vào kho, kèm nguồn (Facebook, Google, TikTok, Zalo, landing, sự kiện, khác), chiến dịch, quảng cáo, thời điểm, chi phí mỗi lead. Máy chủ bỏ số đã có trong kho và gắn cờ \"Đang là khách của …\" khi số đã có trong danh sách của nhân viên, không lộ thông tin khách đó.",
+            "parts": [
+              "web",
+              "gas",
+              "landing"
+            ]
+          },
+          {
+            "text": "Nút \"Đẩy số\": cấp lead cho 1 nhân viên hoặc 1 Nhóm sale (chia đều, cho người ít lead nhất, hoặc chọn tay). Lead hiện trong danh sách khách của người nhận với nhãn \"🏢 Công ty cấp\" và bộ lọc riêng, kèm nhắc việc trong app và Telegram nếu đã nối. \"Thu hồi\" phải ghi lý do: lead về kho hoặc chuyển cho người khác kèm toàn bộ lịch sử (trạng thái, ghi chú, nhắc việc), người cũ không còn thấy khách. Trưởng nhóm có quyền \"Đẩy số\" thu hồi và chia lại trong nhóm mình. Tự thu hồi khi quá N giờ chưa liên hệ (mặc định tắt). Lead công ty cấp không xoá được, chỉ đổi trạng thái.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Nút \"Trạng thái\" trên lead công ty cấp: chọn Tiến độ (Mới nhận, Đã gọi, Không nghe máy, Quan tâm, Hẹn xem, Đã gặp, Đặt cọc, Chốt; Không nhu cầu và Sai số / Số ảo phải ghi lý do; Trùng) và Mức độ Nóng / Ấm / Lạnh. Kho lead thấy trạng thái, mức độ, giờ liên hệ cuối; lead còn \"Mới nhận\" quá 2 giờ có dấu cảnh báo (đổi số giờ được).",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Báo cáo nguồn lead: lead theo nguồn, chiến dịch, ngày; phễu theo chiến dịch; tỉ lệ số rác; bảng xếp hạng sale (tỉ lệ liên hệ, thời gian gọi lần đầu, số chốt); phân bố Nóng / Ấm / Lạnh. Quản trị và trưởng nhóm bật được tin nhắc khi lead tới Hẹn xem, Đặt cọc hoặc Chốt.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Chúc mừng chốt đơn: lead công ty cấp lên \"Chốt\" thì mọi người trong công ty thấy lời chúc mừng (không có tên, số điện thoại khách), bấm 👏 để khen. Quản trị chọn ai nhận, có hiện dự án và giá trị hay không, có cần xác nhận trước không, và lời chúc riêng. Đổi nhầm khỏi \"Chốt\" trong 30 phút thì lời chúc tự rút lại.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bản Công ty – \"Khách toàn công ty\" (Quản trị và người được tick \"Xem khách toàn công ty\"): chọn nhân viên (lọc theo phòng ban, nhóm) để xem danh sách và hồ sơ khách của người đó – chỉ xem, có dải \"Chỉ xem – khách của …\", không có nút sửa; tìm khách trên toàn công ty theo tên hoặc số điện thoại, mỗi trang 50 khách.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "\"Chuyển khách\": chuyển tất cả hoặc từng khách của một nhân viên (vd người nghỉ việc) sang người khác, bắt buộc ghi lý do, có bước xác nhận và báo số khách đã chuyển; lịch sử, lịch hẹn, báo giá đi theo khách. Khoá tài khoản nhân viên thì app hỏi luôn \"Nhân viên nghỉ – chuyển khách cho …\".",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "\"Số trùng giữa nhân viên\": số điện thoại trùng giữa khách của hai nhân viên (số đã che bớt, tên hai người, ngày), nút \"Đã xem\" và nút xem từng bên (chỉ xem).",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Cài đặt › Người dùng › \"Tình trạng dữ liệu\": Sheet riêng của từng người (đủ, chưa có, đang chia sẻ), nút \"Sửa quyền chia sẻ\", \"Tạo lại Sheet\", \"Chạy tiếp tách dữ liệu\" khi đang chuyển dữ liệu, và báo cáo sau khi tách xong.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bản Công ty – Phòng ban: Cài đặt › Người dùng có các phòng Kinh doanh, Marketing, Hành chính và phòng anh/chị tự đặt; chọn phòng cho từng người, mỗi Nhóm sale thuộc một phòng. Người có vai trò Marketing tự vào phòng Marketing. Quyền vẫn tick ở từng người như cũ.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bản Công ty – gợi ý cài bộ tạo video trên máy mạnh: người có quyền \"Video & Ý tưởng\" ngồi máy cấu hình Mạnh (app tự kiểm 1 lần, nhớ 30 ngày) thấy thẻ \"Máy này đủ mạnh để làm video\" với nút \"Tải bộ cài\" đúng Windows hoặc Mac, \"Để sau\" (14 ngày) và \"Không hỏi lại trên máy này\". Máy Khá có gợi ý nhẹ, máy Cơ bản không gợi ý. Quản trị nhận thông báo, vd \"Lan (Marketing) có máy đủ mạnh để làm video – đã gợi ý cài\" kèm nút Cho phép / Không cho.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Công tắc \"Cho phép nhân viên cài máy dựng\" (mặc định bật). Tắt thì nhân viên bấm \"Xin Quản trị cho phép\" và Quản trị duyệt từng người.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Nhân viên tự liên kết máy dựng cài trên máy của mình: máy đó chỉ làm video do chính người đó gửi từ điện thoại (\"Gửi máy tính dựng (máy của bạn)\"), không nhận video của người khác. Video lưu vào thư mục Drive riêng của người đó, người khác không mở được. Máy dựng hiện trong Cài đặt › Bảo mật › Thiết bị kèm tên người; chính người đó hoặc Quản trị thu hồi được.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Biểu tượng \"BDS Studio\" trên Mac (màn hình nền, Launchpad, Dock) và Windows (màn hình nền, Start Menu): bấm là máy dựng chạy nền và mở app, không còn cửa sổ lệnh.",
+            "parts": [
+              "engine"
+            ]
+          },
+          {
+            "text": "Cài đặt › Kết nối có thẻ \"Bản đồ (nền + tìm địa chỉ)\": anh/chị dán khoá miễn phí của Geoapify (đăng ký không cần thẻ, gói Free 3.000 credit/ngày) để video bản đồ có ảnh nền và tự tìm toạ độ địa điểm. Khoá lưu trên máy tính chạy máy dựng, video tự ghi nguồn bản đồ.",
+            "parts": [
+              "web",
+              "engine"
+            ]
+          },
+          {
+            "text": "Bảng tin có mục \"Tin mới cập nhật\": Chủ/Quản trị và Quản lý (có quyền AI) bấm \"Cập nhật thông tin mới nhất qua AI\" – app báo phí trước, chỉ lưu khi có đủ nguồn uy tín; mỗi tin có tiêu đề, tóm tắt, tên báo, link nguồn và ngày đăng, cả nhóm cùng xem.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Thị trường: gom về một nút \"✨ Viết bản tin\" kèm ô chọn AI (app nhớ lựa chọn lần trước); cạnh nút \"📰 Lấy tin mới\" có ô chọn cách lấy tin (tin RSS, AI tìm trên Google có báo phí, hoặc AI qua chat).",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Các gói thử nghiệm được làm tiếp (đo hiệu quả quảng cáo từ tệp CSV của Trình quản lý quảng cáo Meta, chồng bản đồ quy hoạch đọc được tệp PDF ngay trên máy, Trình tạo landing nhắc dự án còn thiếu thông tin trước khi tạo trang, nút Xoá có hỏi lại, chặn số nhập vô lý…); xem chi tiết ở Cài đặt › Gói chức năng › từng gói.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mỗi tài khoản đăng nhập cùng lúc 1 máy tính và 1 điện thoại (iPad, máy tính bảng tính là điện thoại). Đăng nhập máy thứ hai cùng loại thì app gửi mã 6 số tới email của anh/chị; nhập đúng mã là máy mới vào được và máy cũ cùng loại tự đăng xuất. Máy cũ hiện rõ \"Tài khoản đã đăng nhập trên một máy khác (loại máy, giờ). Máy này đã đăng xuất.\" kèm nút \"Đăng nhập lại\". Đăng nhập lại trên chính máy đang dùng thì không hỏi mã.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Máy bị đăng xuất vì đổi máy không mất dữ liệu: app tự gửi nốt các thay đổi chưa gửi lên máy chủ trước khi đăng xuất; chưa gửi được (mất mạng) thì thay đổi vẫn giữ trên máy, đăng nhập lại đúng tài khoản là tự gửi tiếp.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Cài đặt › Bảo mật › Thiết bị: xem 2 chỗ của mình (Máy tính, Điện thoại / máy tính bảng) và bấm \"Đăng xuất máy này\" để đăng xuất máy kia từ xa (khi mất máy, bán máy). Bản Công ty: Quản trị xem máy đang đăng nhập của từng nhân viên và đăng xuất được máy bất kỳ.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          }
+        ],
+        "fix": [
+          {
+            "text": "Bản Cá nhân: hết báo nhầm \"Có bản mới hơn từ thiết bị khác\" ngay sau khi cài trên một máy; sửa liên tiếp một mục lúc đang đồng bộ không còn bị coi là cũ. Thông báo này chỉ hiện khi máy khác thật sự sửa khác nội dung.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Màn chính hiện ngay tóm tắt hôm nay: số khách mới, cần gọi, quá hạn, hẹn hôm nay và vài dòng đầu mỗi mục (gọi, Zalo một chạm); ô \"Bảng tin đầy đủ\" mở trang chi tiết.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Lời chào ở màn chính và Bảng tin luôn giống nhau, theo giờ Việt Nam, gọi bằng tên (vd \"Chào buổi tối, Mua\").",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bản Cá nhân: bỏ \"Chia khách\", \"Phụ trách\" và lọc \"Của tôi\" – chỉ có ở bản Công ty.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bản Cá nhân: Telegram và khoá AI Gemini ghi \"Tuỳ chọn\", không còn nằm trong \"Còn thiếu\"; Cài đặt › Kết nối đếm riêng mục bắt buộc.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý cài đặt: bước \"Địa chỉ mở app\" đang chờ bên bán tạo địa chỉ riêng hiện ⏳ thay vì ❌; ảnh minh hoạ bước \"Kiểm tra toàn bộ\" không còn dải \"Đang xem thử\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Chưa nối AI: \"Phân loại & lưu\" ở Ý tưởng phân loại bằng từ khoá, không gắn nhãn ✨AI, không hỏi phí; nút \"Chạy tìm (Gemini + Google)\" ẩn đi (vẫn còn \"Làm qua chat\").",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bản Công ty: tin nhắn Zalo OA của khách đã liên kết và khách để lại số ở trang tài liệu, trang đăng ký sự kiện vào đúng danh sách của nhân viên có mã giới thiệu (không có mã → kho chung của công ty); việc chung tạo trước khi tách dữ liệu hiện lại cho Quản trị và người xem khách toàn công ty.",
+            "parts": [
+              "gas"
+            ]
+          },
+          {
+            "text": "Google ngừng một mẫu Gemini: máy chủ tự chuyển sang mẫu mới và thử lại, anh/chị không phải làm gì.",
+            "parts": [
+              "gas"
+            ]
+          },
+          {
+            "text": "Máy chủ ít chạm hạn mức chạy hẹn giờ mỗi ngày của Gmail thường; \"Kiểm tra toàn bộ\" có mục \"Hạn mức chạy hẹn giờ (Google)\".",
+            "parts": [
+              "gas"
+            ]
+          },
+          {
+            "text": "\"Cập nhật máy chủ\" chưa được thì app nói rõ lý do và cách sửa, có mục \"Chi tiết kỹ thuật\" và nút gửi cho bên hỗ trợ (đã bỏ khoá, mật khẩu).",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bảo mật: khách cũ gửi lại form qua link giới thiệu của sale khác không bị chuyển người chăm sóc; mỗi số điện thoại gửi form tối đa 3 lần trong 10 phút.",
+            "parts": [
+              "landing",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bảo mật: CTV không xem/tải được tài liệu gốc của dự án; tin Zalo OA chưa gắn khách chỉ Chủ và Quản lý xem được.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bảo mật: link mời nhân viên và link mở app có kèm địa chỉ máy chủ không còn tự nối. App hiện tên công ty và địa chỉ máy chủ, chỉ nối khi anh/chị bấm \"Đúng máy chủ của tôi\" (1 lần bấm); chưa bấm thì không gửi gì tới máy chủ đó. Bấm xong, link mời mở thẳng màn đặt mật khẩu.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Thông báo nổi không còn che hộp xác nhận chi phí và nút Lưu.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý cài đặt: chưa có địa chỉ app riêng thì không còn bị kẹt – gõ tên muốn dùng, bấm \"Gửi tên cho bên bán\" để giữ tên, rồi bấm \"Làm sau\" và dùng app ngay ở địa chỉ đang mở. Bên bán tạo địa chỉ riêng và gửi email trong vòng 24 giờ, dữ liệu không mất khi chuyển.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý cài đặt, bước \"Tạo máy chủ\": ghi sẵn địa chỉ app đang mở kèm nút Chép (dán vào hộp trong Sheet khi được hỏi); hộp trong Sheet đưa nút \"Chép URL\" lên đầu khi chưa có địa chỉ app.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bước \"Tạo máy chủ\" báo đúng lý do khi chưa nối được: máy đang không có mạng, lúc Triển khai chưa chọn \"Bất kỳ ai\", địa chỉ chép sai hoặc mạng đang chặn Google.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nút Quay lại của trình duyệt đưa về bước trước của Trợ lý cài đặt; rời hẳn Trợ lý thì app hỏi lại trước.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "\"Kiểm tra toàn bộ\": phần không bắt buộc đã bỏ qua (vd Telegram ở bản Cá nhân) ghi \"⏭ Bỏ qua – không bắt buộc\", không còn tính là lỗi.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bước \"Địa chỉ mở app\": chọn \"Địa chỉ mặc định\" thì không còn hiện việc thêm bản ghi CNAME hay gửi email.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Tải lại trang sau khi bấm \"Gửi mã\" vẫn giữ email và ô nhập mã 6 số, không phải gửi lại.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mọi nút trên các màn chính đều có biểu tượng; lời nhắn lỗi của bản Cá nhân chỉ \"báo bên bán\" kèm email hỗ trợ, cách sửa chỉ hiện một lần.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Khôi phục từ bản sao lưu không còn hiện thông báo lỗi đè lên \"Đã khôi phục\" (các cài đặt do máy chủ quản được bỏ qua); mật khẩu tạm app tạo luôn có đủ chữ thường, chữ hoa và số.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Việc AI chạy lâu (tìm thông tin, đọc tệp) được chờ tới 150 giây, không còn báo nhầm \"Không kết nối được máy chủ\" khi AI chưa trả lời xong.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "\"Kiểm tra toàn bộ\": so máy chủ với đúng phiên bản máy chủ mà bản phát hành cần, nên bản web mới không còn đòi cập nhật máy chủ khi không cần; hết báo đỏ nhầm về bộ nhớ đệm của trình duyệt.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Chính sách bán hàng: Quản lý chỉ lưu nháp (nút Duyệt có ghi rõ chỉ Chủ/Quản trị duyệt), Sale và Cộng tác viên chỉ xem chính sách đang áp dụng kèm lời giải thích; mục Chờ duyệt không hiện chính sách cho Sale/Cộng tác viên. Nút \"Xem & duyệt\" ở Chờ duyệt mở đúng bản nháp.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Báo giá và Máy tính vay nói rõ ô nào cần nhập thay vì im lặng; lịch đóng tiền không lưu đợt 0 đồng; ghi chú nhanh để trống có báo.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bảng hàng: nút \"Khôi phục mặc định\" luôn hỏi lại; dự án tự thêm (AI tìm, thêm tay, từ file) hiện nút \"Xoá dự án\" có hỏi lại, không còn bị xoá nhầm. Sửa tên dự án trong lúc AI đang tìm thì kết quả của tên cũ được bỏ, không lưu nhầm.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Dữ liệu mẫu: tên dự án mẫu không lặp chữ \"Mẫu\" ở Báo giá và danh sách khách.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Phím Esc đóng được cửa sổ trượt (vẫn không đóng khi đang gõ dở ở ô khác hoặc có hộp thoại mở bên trên).",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Ô số đọc đúng dấu trừ kiểu \"−\", số dạng \"1e5\"; số quá lớn bị báo lỗi thay vì ra kết quả vô nghĩa.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Điện thoại: nút Back của Android (hoặc vuốt lùi) đóng hộp thoại đang mở trước – vd đang \"Sửa thông tin khách\" thì chỉ đóng hộp sửa, hồ sơ khách vẫn còn; không còn cảnh hồ sơ đóng mà hộp sửa vẫn treo trên màn. Vuốt xuống ở đầu hộp thoại cũng đóng được.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Điện thoại: biểu mẫu Thêm khách và Sửa khách luôn thấy nút \"Lưu khách\" ở đáy màn hình, không phải cuộn xuống cuối mới lưu được. Bàn phím ảo mở thì hộp thoại và trang trượt co lại theo phần màn hình còn thấy, ô đang gõ không bị bàn phím che.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "iPhone: chạm vào ô chọn khách, dự án, loại căn ở Báo giá và ô nguồn tin ở Ý tưởng không còn làm màn hình tự phóng to (chữ trong ô đủ 16 px).",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Điện thoại: các nút nhỏ dễ bấm hơn (tối thiểu 44 px) – nhãn Nóng/Ấm/Lạnh và Tính cách của khách, các chip lọc ở Bảng hàng, các bước của Trợ lý cài đặt, thẻ iPhone/Android, ô tick ở Sổ đối tác. Gói chức năng không còn tràn ngang ở màn 360–390 px.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "iPhone có tai thỏ / thanh Home: khung \"Đang tải dữ liệu lần đầu\", thanh nhắc đổi tên đăng nhập, khung gợi ý máy dựng, thanh trang cài đặt và màn khoá không còn nằm dưới tai thỏ hoặc đè thanh Home.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "Điện thoại, mạng chậm: app mở nhanh hơn – lần mở thường hằng ngày từ khoảng 6,3 giây còn khoảng 4,8 giây trên 4G chậm, lượng mã phải tải giảm khoảng 1/5 (máy chủ giả của chế độ Xem thử chỉ tải khi dùng Xem thử; các phần lõi của app tải song song ngay từ đầu; phông chữ không chặn màn chờ; màn chờ xanh than hiện ngay, không loé trắng).",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mất mạng: chấm đồng bộ ghi \"Mất mạng\" và app báo rõ \"Đang ngoại tuyến – vẫn xem và sửa được, thay đổi giữ trên máy và tự gửi khi có mạng\"; có mạng lại thì báo số thay đổi đang gửi lên.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Điện thoại: gợi ý \"📲 Đưa BDS Studio ra màn hình điện thoại\" chỉ hiện đầy đủ ở Bảng tin; ở các màn khác thu gọn còn 1 dòng (bấm \"Xem cách làm\" để mở), danh sách khách và báo giá không bị đẩy xuống dưới màn hình. Gợi ý nằm sẵn trước khi màn vẽ xong nên nội dung không còn nhảy xuống.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Ô số điện thoại, Zalo, email của khách và đối tác không còn bị trình duyệt gợi ý điền tên/số của chính anh/chị; ô Tìm khách có nút \"Tìm\" trên bàn phím.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bản Công ty – Trợ lý cài đặt: gộp \"Đội ngũ\" và \"Mời nhân viên\" thành một bước (sau Bảo mật 2 lớp), còn 11 bước. Mọi chữ, thông báo và biên bản bàn giao gọi đúng \"Quản trị (Admin)\" như trong app.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý cài đặt: nút nổi \"Trợ lý cài đặt\" ghi cùng số bước với đầu trợ lý (vd \"Bước 7/11\"), nằm ở thanh bên trên máy tính và chừa chỗ cuối trang trên điện thoại – không che ô nhập hay nút. Đã đóng trợ lý thì tải lại trang không tự mở lại nữa; bấm nút nổi để làm tiếp.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý cài đặt: \"Kiểm tra toàn bộ\" và màn hoàn tất ghi rõ bước bắt buộc còn \"chưa xong\" (vd Tên miền công ty), kèm nút \"Làm bước …\" để quay lại đúng bước đó.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý cài đặt: chân trợ lý gọn một hàng trên máy tính, hai hàng đủ chữ trên điện thoại; chưa tới bước Bảo mật 2 lớp thì app không nhắc 2 lớp sớm, câu nhắc hiện đủ không bị cắt.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Khách hàng: thẻ \"📥 Kho lead\" cạnh \"Khách hàng\" và \"Đối tác\" cho người có quyền Kho lead (Quản trị, Marketing).",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "\"Trang của tôi\": khi công ty chưa xong bước Tên miền công ty, app báo rõ \"Cần xong bước Tên miền công ty\" và Quản trị có nút mở thẳng bước đó.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Cài đặt › Người dùng › Tình trạng dữ liệu: công ty mới cài chưa có nhân viên thì báo \"chưa cần tách dữ liệu – Sheet riêng mỗi nhân viên tự tạo khi nhân viên nhận lời mời\", không còn hiện nút \"Chạy tiếp tách dữ liệu\" và \"Chưa có Sheet\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trang cài đặt bản Công ty: không còn \"tạm dùng địa chỉ miễn phí\" – công ty dùng tên miền của mình. Link mua tên miền chỉ ghi \"có thể là link giới thiệu\" khi đúng là link giới thiệu.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Ô đồng ý và các dòng nhắc về dữ liệu khách ghi theo Luật Bảo vệ dữ liệu cá nhân 2025 (Luật số 91/2025/QH15, hiệu lực 01/01/2026).",
+            "parts": [
+              "web",
+              "gas",
+              "landing"
+            ]
+          },
+          {
+            "text": "Trang Chính sách quyền riêng tư (dữ liệu khách nằm trong tài khoản Google của anh/chị, AI chỉ nhận dữ liệu khi anh/chị bấm, cách yêu cầu xoá): link ở Cài đặt › Phiên bản & Cập nhật, Cài đặt › Bản quyền và lúc tạo tài khoản.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý cài đặt gọn hơn: không còn bước chọn cách làm video. Cả bản Cá nhân và Công ty đều cài bản cơ bản ngay từ đầu, không cần tải hay cài thêm gì trên máy tính. Video sẽ có sau dưới dạng gói bổ sung; Ý tưởng & nội dung vẫn dùng bình thường.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Muốn có tính năng mới: bấm \"💬 Góp ý\" → \"Thêm chức năng\"; tính năng mới đến bằng bản cập nhật app hoặc bản cập nhật gói.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mọi nút đều có biểu tượng: nút Huỷ / xác nhận trong mọi hộp thoại, \"Nhập khách landing ngay\", \"Mở Cài đặt › Kết nối\", Gọi và Zalo trên từng dòng khách, \"Xem thay đổi\" ở thẻ gói, \"+ Thêm khách\" (dấu cộng thật), ô lọc danh sách Ý tưởng.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Biểu tượng rõ nghĩa hơn: Ý tưởng & nội dung là bóng đèn; Bản quyền (chìa khoá), Bảo mật (khiên), Bảo trì (cờ lê) mỗi mục một biểu tượng; mỗi gói chức năng một biểu tượng riêng.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Thẻ gói chức năng: tên thống nhất (Gói Cơ bản, Gói 1–5, Gói Video, Gói Video AI), bỏ các số thứ tự nội bộ trong phần mô tả.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Điện thoại: nút \"Góp ý\" tự lánh khi cuộn hoặc khi nằm đè lên nút khác (vd nút Zalo của dòng khách); thông báo nhỏ hiện ở trên cùng, chạm để tắt, không che danh sách.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Tiêu đề màn không còn lặp hai lần (vd \"Khách hàng / Khách hàng\"); hồ sơ khách bỏ nhãn trạng thái trùng với ô chọn trạng thái.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bản Cá nhân dùng cho 1 người: không còn nút thêm người dùng hay mời nhân viên, máy chủ cũng không cho thêm. Muốn cả nhóm cùng dùng: chuyển sang Bản Công ty ở Cài đặt › Bản quyền, dữ liệu giữ nguyên.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Lần đầu chạy bản cập nhật này: tài khoản nào đang đăng nhập trên hơn 1 máy tính hoặc hơn 1 điện thoại thì giữ máy dùng gần nhất của mỗi loại; các máy còn lại đăng xuất kèm lời giải thích, và vẫn gửi được thay đổi chưa gửi trong 7 ngày.",
+            "parts": [
+              "gas"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "sha256": {
+    "downloads/TatCa.gs": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
+    "downloads/BDS_Studio_Engine.zip": "0064043a9e76673ea58338acf163c8399697a8a2a70824dd24c0f23b866f0c55",
+    "downloads/BDS_Studio_Video_Windows.zip": "72f33bafe8e5566efb7a7ccbcf7a0c3a066638ae37ee8649ac3bc571b4e26170",
+    "downloads/BDS_Studio_Video_Mac.zip": "9dc26c26a53caec0dcd6fa4a0f26cfb4444a4fefeb3225f303b9a68e38852303"
+  },
+  "tatca_sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
+  "gas_sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
+  "engine_sha256": "0064043a9e76673ea58338acf163c8399697a8a2a70824dd24c0f23b866f0c55"
+}

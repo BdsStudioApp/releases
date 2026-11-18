@@ -1,0 +1,13 @@
+PDF.js (npm "pdfjs-dist@6.5.438", Mozilla) – bản "legacy" (chạy được cả trình duyệt cũ / iPhone đời cũ), giữ nguyên không sửa.
+Giấy phép: Apache-2.0 (LICENSE.txt). Giấy phép thành phần: wasm/LICENSE_* và standard_fonts/LICENSE_*.
+Nguồn: https://www.npmjs.com/package/pdfjs-dist/v/6.5.438  ·  https://github.com/mozilla/pdf.js
+Phát hành trên npm 2026-11-01 (tag "latest"); tải bằng `npm pack pdfjs-dist@6.5.438` ngày 2026-11-17.
+Tệp lấy từ gói (đường dẫn trong gói → ở đây):
+  legacy/build/pdf.min.mjs         → pdf.min.mjs          sha256 522ad2c83bc8a0010e7f0cc60d0892b77c8d2bf2c9702dc12288311d94270f42
+  legacy/build/pdf.worker.min.mjs  → pdf.worker.min.mjs   sha256 b4c8353ded0d88d2e2009574a29eb4e0c3ff7e942ecdf51ef5f71566a9667f31
+  standard_fonts/                  → standard_fonts/      (phông chuẩn khi PDF không nhúng phông)
+  wasm/*_nowasm_fallback.js        → wasm/                (bộ giải mã ảnh JBIG2 / JPEG2000 bằng JavaScript)
+Cố ý KHÔNG kèm: *.wasm (CSP của app không có 'wasm-unsafe-eval' → app gọi getDocument với useWasm:false và dùng bộ giải mã JavaScript;
+  hệ quả: không dùng quản lý màu ICC, PDF dùng màu ICC được vẽ theo không gian màu dự phòng), quickjs-eval (chạy mã JavaScript nhúng trong PDF – không bao giờ bật),
+  cmaps (phông CJK), iccs (cần wasm), *.map.
+Chỉ nạp khi người dùng chọn tệp PDF ở màn "Chồng bản đồ quy hoạch" (web/packs/bds/g5_lib/pdfmap.js, import() động) – không nằm trong vỏ app, không tải từ CDN lúc chạy.
