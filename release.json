@@ -1,6 +1,6 @@
 {
   "version": "1.0.5",
-  "build_id": "d702f9677c08ac15",
+  "build_id": "b4e3ed5eb3e010f8",
   "gas_build_id": "d4c6911447bcf5dd",
   "boot_version": 1,
   "core_build_id": "1f0523a18da481ef",
@@ -23,12 +23,12 @@
     },
     {
       "path": "downloads/BDS_Studio_Engine.zip",
-      "sha256": "0064043a9e76673ea58338acf163c8399697a8a2a70824dd24c0f23b866f0c55",
-      "size": 8944527
+      "sha256": "9c488087847e34210a3fc4d9390c217464cf3e2096b403310f2cd5e9693c48b5",
+      "size": 8944645
     },
     {
       "path": "version.json",
-      "sha256": "02a0e3f81d03f21085e23268e3566682ff131a300cc598ba3d6c4ed7fca46c30",
+      "sha256": "f77372b8c91c97bdff950ca6a89c9255b18a6d829cb39cc12224f1e4302650a4",
       "size": 44483
     },
     {
@@ -48,13 +48,13 @@
     },
     {
       "path": "downloads/BDS_Studio_Video_Windows.zip",
-      "sha256": "72f33bafe8e5566efb7a7ccbcf7a0c3a066638ae37ee8649ac3bc571b4e26170",
-      "size": 8619616
+      "sha256": "644ca795f74ad69e0065b5c23e98312ac7d0fadc0dc9e24e40ba0b56a37e64a6",
+      "size": 8619734
     },
     {
       "path": "downloads/BDS_Studio_Video_Mac.zip",
-      "sha256": "9dc26c26a53caec0dcd6fa4a0f26cfb4444a4fefeb3225f303b9a68e38852303",
-      "size": 8769438
+      "sha256": "df51b91bff39f5fc87dace65ec11e61842f46f01d16334216f6714bbacae5efb",
+      "size": 8769556
     }
   ],
   "channel": "sale",

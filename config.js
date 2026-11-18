@@ -42,7 +42,7 @@ export default {
   "PORTAL": {
     "host": "cai.bdsstudio.app"
   },
-  "GOOGLE_OAUTH_CLIENT_ID": "",
+  "GOOGLE_OAUTH_CLIENT_ID": "97314285247-d0k2luoqmkioo027hb76ciai7tfba8uo.apps.googleusercontent.com",
   "GOOGLE_OAUTH_VERIFIED": false,
   "PRIVACY_URL": "https://bdsstudio.app/chinh-sach-rieng-tu",
   "SUPPORT": {

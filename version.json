@@ -682,11 +682,11 @@
   ],
   "sha256": {
     "downloads/TatCa.gs": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
-    "downloads/BDS_Studio_Engine.zip": "0064043a9e76673ea58338acf163c8399697a8a2a70824dd24c0f23b866f0c55",
-    "downloads/BDS_Studio_Video_Windows.zip": "72f33bafe8e5566efb7a7ccbcf7a0c3a066638ae37ee8649ac3bc571b4e26170",
-    "downloads/BDS_Studio_Video_Mac.zip": "9dc26c26a53caec0dcd6fa4a0f26cfb4444a4fefeb3225f303b9a68e38852303"
+    "downloads/BDS_Studio_Engine.zip": "9c488087847e34210a3fc4d9390c217464cf3e2096b403310f2cd5e9693c48b5",
+    "downloads/BDS_Studio_Video_Windows.zip": "644ca795f74ad69e0065b5c23e98312ac7d0fadc0dc9e24e40ba0b56a37e64a6",
+    "downloads/BDS_Studio_Video_Mac.zip": "df51b91bff39f5fc87dace65ec11e61842f46f01d16334216f6714bbacae5efb"
   },
   "tatca_sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
   "gas_sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
-  "engine_sha256": "0064043a9e76673ea58338acf163c8399697a8a2a70824dd24c0f23b866f0c55"
+  "engine_sha256": "9c488087847e34210a3fc4d9390c217464cf3e2096b403310f2cd5e9693c48b5"
 }
