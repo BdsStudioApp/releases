@@ -91,7 +91,7 @@
    ]
   },
   "11": {
-   "title": "Bấm \"Mở BDS Studio và kết nối\" trong hộp – app tự điền + tự kiểm",
+   "title": "Bấm \"Quay lại trang cài đặt và kết nối\" trong hộp – trợ lý tự điền + tự kiểm",
    "images": [
     "sheet-open-app"
    ]
@@ -188,7 +188,7 @@
    "step": 9,
    "part": "1/5",
    "alt": "Hộp Triển khai máy chủ trong Sheet: 6 cú bấm, mỗi dòng một việc, rồi nút Tôi đã triển khai xong",
-   "caption": "Hộp \"Triển khai máy chủ\" hiện 6 cú bấm (có ảnh): Triển khai → Tuỳ chọn triển khai mới (New deployment) → ⚙ Ứng dụng web → Thực thi: Tôi → Truy cập: Bất kỳ ai → Triển khai → Cho phép → Sao chép URL. Làm xong bấm \"Tôi đã triển khai xong\" – hộp hiện nút \"Mở BDS Studio và kết nối\"."
+   "caption": "Hộp \"Triển khai máy chủ\" hiện 6 cú bấm (có ảnh): Triển khai → Tuỳ chọn triển khai mới (New deployment) → ⚙ Ứng dụng web → Thực thi: Tôi → Truy cập: Bất kỳ ai → Triển khai → Cho phép → Sao chép URL. Làm xong bấm \"Tôi đã triển khai xong\" – hộp hiện nút \"Quay lại trang cài đặt và kết nối\"."
   },
   "deploy-menu": {
    "file": "assets/wizard/google/deploy-menu.png",
@@ -222,7 +222,7 @@
    "file": "assets/wizard/google/app-connect.png",
    "step": 10,
    "alt": "Trong Trợ lý cài đặt, bước Tạo máy chủ: dán địa chỉ …/exec vào ô Địa chỉ máy chủ (kết thúc bằng /exec) rồi bấm Kiểm tra bước này",
-   "caption": "Hộp trong Sheet chưa có nút \"Mở BDS Studio và kết nối\" (lần đầu, chưa nhập địa chỉ app): bấm \"Chép URL\" trong hộp, rồi ở bước \"Tạo máy chủ\" dán địa chỉ …/exec vào ô \"Địa chỉ máy chủ (kết thúc bằng /exec)\" (Ctrl+V) → bấm \"Kiểm tra bước này\"."
+   "caption": "Hộp trong Sheet chưa có nút \"Quay lại trang cài đặt và kết nối\": bấm \"Chép URL\" trong hộp, rồi ở bước \"Tạo máy chủ\" dán địa chỉ …/exec vào ô \"Địa chỉ máy chủ (kết thúc bằng /exec)\" (Ctrl+V) → bấm \"Kiểm tra bước này\"."
   },
   "template-copy": {
    "file": "assets/wizard/google/template-copy.png",
@@ -257,8 +257,8 @@
   "sheet-open-app": {
    "file": "assets/wizard/google/sheet-open-app.png",
    "step": 11,
-   "alt": "Hộp Máy chủ đã sẵn sàng trong Sheet: nút to Mở BDS Studio và kết nối",
-   "caption": "Hộp đã biết địa chỉ app của anh/chị: bấm \"Mở BDS Studio và kết nối\" – app mở ở thẻ mới, tự điền địa chỉ máy chủ, tự kiểm và sang bước tạo tài khoản. Không cần chép gì."
+   "alt": "Hộp Cài đặt xong trong Sheet: nút to Quay lại trang cài đặt và kết nối",
+   "caption": "Máy chủ đã triển khai: bấm \"Quay lại trang cài đặt và kết nối\" – trang cài đặt mở ở thẻ mới, tự nối máy chủ và mở màn đặt mật khẩu. Không cần chép gì."
   }
  },
  "slots": {

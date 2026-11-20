@@ -44,7 +44,7 @@ const _ot = h('input', { type: 'password', class: 'g3-f', autocomplete: 'off', p
 const _ou = G.input({ inputmode: 'numeric', placeholder: 'Mã mẫu ZNS (dãy số)', 'data-testid': 'zns-template' });
 const ready = _oq && _oq.zns && _oq.zns.token && _oq.zns.template;
 return h('details', { 'data-testid': 'zns-card' }, h('summary', { style: 'min-height:44px;cursor:pointer' }, 'Nhắc khách qua Zalo OA (ZNS): ' + (_oq ? (ready ? '✅ đã cấu hình' : 'cần khoá Zalo OA + mẫu ZNS') : 'máy chủ chưa có chức năng này')),
-h('p', { class: 'g3-sub' }, 'Cần: tài khoản Zalo OA đã xác thực, ứng dụng tại developers.zalo.me, mẫu ZNS đã được Zalo duyệt có tham số customer_name, event_name, event_time, location. Zalo tính phí từng tin ZNS gửi thành công. Nếu đã nối Zalo OA ở gói Khách hàng & Chăm sóc, chỉ cần mã mẫu.'),
+h('p', { class: 'g3-sub' }, 'Cần: tài khoản Zalo OA đã xác thực, ứng dụng tại developers.zalo.me, mẫu ZNS đã được Zalo duyệt có tham số customer_name, event_name, event_time, location. Zalo tính phí từng tin ZNS gửi thành công. Nếu đã nối Zalo OA ở mục Zalo OA (cùng gói này), chỉ cần mã mẫu.'),
 G.isOwner ? h('div', { class: 'g3' }, h('div', { class: 'g3-two' }, G.field('Access token', _ot), G.field('Mã mẫu ZNS', _ou)),
 h('div', { class: 'g3-row' }, K.button('Lưu', async () => {
 try { await K.api('g3.zns_config', { token: _ot.value.trim(), template_id: _ou.value.trim() }); K.toast('Đã lưu khoá Zalo OA', 'success'); _oo(); } catch (e) { K.toast(e && e.message || 'Chưa lưu được', 'warn'); }

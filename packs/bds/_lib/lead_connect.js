@@ -93,7 +93,7 @@ return [
 ].join('\n');
 }
 export function jsonSample(src = 'facebook') {
-return JSON.stringify({ name: '{{Họ tên}}', phone: '{{Số điện thoại}}', email: '{{Email}}', note: '{{Câu trả lời khác}}', project: 'Tên dự án', source: srcLabel(src) }, null, 2);
+return JSON.stringify({ name: '{{Họ tên}}', phone: '{{Số điện thoại}}', email: '{{Email}}', note: '{{Câu trả lời khác}}', project: 'Tên dự án', consent: '{{Đồng ý}}', source: srcLabel(src) }, null, 2);
 }
 export const FIELD_HELP = [
 ['Họ tên', 'name, ho_ten, full_name, fullname, ten, "Họ và tên"'],
@@ -101,6 +101,7 @@ export const FIELD_HELP = [
 ['Email', 'email'],
 ['Ghi chú', 'note, ghi_chu, message, content, "Lời nhắn"'],
 ['Dự án', 'project, du_an'],
+['Đồng ý (bắt buộc)', 'consent, dong_y, agree – ô tick đồng ý trên form; form không có ô này thì khách lưu ở trạng thái "chưa đồng ý"'],
 ['Nguồn', 'source (hoặc &src=… trên địa chỉ)'],
 ['Sale phụ trách', 'ref (hoặc &ref=… trên địa chỉ)'],
 ];

@@ -30,7 +30,7 @@ const news = _o7 ? _o7.news : [];
 const _of = news.filter(n => _oh && C.fold(n.title).includes(_oh));
 const _ol = news.filter(n => !_of.includes(n)).slice(0, 10);
 const _od = n => h('li', null, h('span', null, C.safeUrl(n.url) ? h('a', { href: C.safeUrl(n.url), target: '_blank', rel: 'noopener' }, n.title) : n.title), h('small', null, [n.source, M.fmtDate(n.published)].filter(Boolean).join(' · ')));
-_o2.appendChild(K.card({ title: 'Tin 30 ngày', testid: 'g2-mkt-news', body: !_o3 ? h('p', { class: 'bds-muted' }, 'Tin tức nằm trong Nguồn ý tưởng – cần quyền Video & Ý tưởng (Quản trị/Quản lý).')
+_o2.appendChild(K.card({ title: 'Tin 30 ngày', testid: 'g2-mkt-news', body: !_o3 ? h('p', { class: 'bds-muted' }, 'Tin tức nằm trong Nguồn ý tưởng – cần quyền Ý tưởng (Quản trị/Quản lý).')
 : news.length ? [_of.length ? h('h4', null, 'Nhắc tới ' + _og.name) : null, h('ul', { class: 'g2-parts' }, _of.map(_od)), _ol.length ? h('h4', null, 'Trong khu vực') : null, h('ul', { class: 'g2-parts' }, _ol.map(_od))]
 : h('p', { class: 'bds-muted' }, 'Chưa có tin khớp. Lấy tin ở Thị trường hoặc Nguồn ý tưởng.') }));
 const _o8 = env.history(pid).slice(0, 6);
@@ -78,7 +78,7 @@ _ob.close(); K.toast('Đã ghi nhận', 'success'); _oi();
 await _oi();
 }
 export default {
-manifest: { id: 'g2_thitruong', title: 'Thị trường quanh dự án', icon: '📈', screen: 'customers', order: 260, version: '0.1.0', status: 'thu-nghiem', pack: 'care',
+manifest: { id: 'g2_thitruong', title: 'Thị trường quanh dự án', icon: '📈', screen: 'customers', order: 260, version: '0.1.0', status: 'thu-nghiem', pack: 'showing',
 help: 'Theo dõi một dự án: tin 30 ngày, chính sách, nhu cầu khách, bản tin tuần; sổ ghi nhận giá bán/giá thuê/hạ tầng/tiến độ có nguồn.' },
 mount,
 async selftest(ctx) { return g2Selftest(ctx, mount); },

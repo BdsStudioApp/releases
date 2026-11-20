@@ -20,14 +20,14 @@ agent: { title: 'Trang cá nhân môi giới', icon: '🧑‍💼', desc: 'Giớ
 order: ['hero', 'agent', 'projects', 'loan', 'doc', 'form', 'contact'], off: ['loan', 'doc'] }
 };
 export const TEMPLATE_IDS = Object.keys(TEMPLATES);
-const _o5 = ['location', 'facts', 'event', 'agent', 'doc'];
+const _o4 = ['location', 'facts', 'event', 'agent', 'doc'];
 export function esc(s) {
 return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-const _o11 = (s) => esc(s).replace(/\n/g, '<br>');
-const _oz = (s) => String(s || '').split(/\n+/).map((_o1t) => _o1t.trim()).filter(Boolean);
-const _os = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
-export const validColor = (_o9) => /^#[0-9a-f]{6}$/i.test(String(_o9 || ''));
+const _o10 = (s) => esc(s).replace(/\n/g, '<br>');
+const _oy = (s) => String(s || '').split(/\n+/).map((_o1s) => _o1s.trim()).filter(Boolean);
+const _or = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
+export const validColor = (_o8) => /^#[0-9a-f]{6}$/i.test(String(_o8 || ''));
 export function slugify(s) {
 return fold(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 50).replace(/-+$/, '');
 }
@@ -37,63 +37,63 @@ let s = String(raw == null ? '' : raw).replace(/[\s.\-()]/g, '');
 if (/^\+84/.test(s)) s = '0' + s.slice(3); else if (/^84\d{9,10}$/.test(s)) s = '0' + s.slice(2);
 return /^0[35789]\d{8}$/.test(s) || /^02\d{9}$/.test(s) ? s : '';
 }
-export const phoneText = (_o13) => { const s = normPhone(_o13); return s.length === 10 ? s.replace(/^(\d{4})(\d{3})(\d{3})$/, '$1 $2 $3') : s; };
-export function imageUrl(_o1m) {
-const s = String(_o1m || '').trim();
-const _o10 = s.match(/^https:\/\/drive\.google\.com\/file\/d\/([\w-]{10,})/) || s.match(/^https:\/\/drive\.google\.com\/(?:open|uc|thumbnail)\?(?:[^#]*&)?id=([\w-]{10,})/);
-if (_o10) return 'https://drive.google.com/thumbnail?id=' + _o10[1] + '&sz=w1600';
+export const phoneText = (_o12) => { const s = normPhone(_o12); return s.length === 10 ? s.replace(/^(\d{4})(\d{3})(\d{3})$/, '$1 $2 $3') : s; };
+export function imageUrl(_o1l) {
+const s = String(_o1l || '').trim();
+const _oz = s.match(/^https:\/\/drive\.google\.com\/file\/d\/([\w-]{10,})/) || s.match(/^https:\/\/drive\.google\.com\/(?:open|uc|thumbnail)\?(?:[^#]*&)?id=([\w-]{10,})/);
+if (_oz) return 'https://drive.google.com/thumbnail?id=' + _oz[1] + '&sz=w1600';
 return /^https:\/\/[^\s"'<>\\]+$/i.test(s) && s.length <= 1000 ? s : '';
 }
-export const safeHttps = (_o1m) => (/^https:\/\/[^\s"'<>\\]+$/i.test(String(_o1m || '').trim()) && String(_o1m).trim().length <= 1000 ? String(_o1m).trim() : '');
-export function normBaseUrl(_o1m) {
-const s = String(_o1m || '').trim().replace(/\/+$/, '');
+export const safeHttps = (_o1l) => (/^https:\/\/[^\s"'<>\\]+$/i.test(String(_o1l || '').trim()) && String(_o1l).trim().length <= 1000 ? String(_o1l).trim() : '');
+export function normBaseUrl(_o1l) {
+const s = String(_o1l || '').trim().replace(/\/+$/, '');
 return /^https:\/\/[a-z0-9.-]+\.[a-z]{2,}(\/[a-z0-9._~\/-]*)?$/i.test(s) ? s + '/' : '';
 }
 export const PIXEL_RE = { fb: /^\d{8,20}$/, tiktok: /^[A-Z0-9]{10,30}$/i, google: /^(G|AW|GT|DC)-[A-Z0-9]{4,20}$/i };
 export const PIXEL_NAMES = { fb: 'Facebook Pixel', tiktok: 'TikTok Pixel', google: 'Google (gtag)' };
 export function activePixels(cfg) {
-const _o1b = (cfg && cfg.pixels) || {};
-const _o12 = {};
-for (const _ou of Object.keys(PIXEL_RE)) { const _o13 = _o1b[_ou] || {}; const id = String(_o13.id || '').trim(); if (_o13.on && PIXEL_RE[_ou].test(id)) _o12[_ou] = id; }
-return _o12;
+const _o1a = (cfg && cfg.pixels) || {};
+const _o11 = {};
+for (const _ot of Object.keys(PIXEL_RE)) { const _o12 = _o1a[_ot] || {}; const id = String(_o12.id || '').trim(); if (_o12.on && PIXEL_RE[_ot].test(id)) _o11[_ot] = id; }
+return _o11;
 }
-function _o1d(seed) { let _o1t = 0; for (const _oa of String(seed || 'mau')) _o1t = (_o1t * 31 + _oa.charCodeAt(0)) >>> 0; return () => { _o1t = (_o1t * 1664525 + 1013904223) >>> 0; return _o1t / 4294967296; }; }
+function _o1c(seed) { let _o1s = 0; for (const _o9 of String(seed || 'mau')) _o1s = (_o1s * 31 + _o9.charCodeAt(0)) >>> 0; return () => { _o1s = (_o1s * 1664525 + 1013904223) >>> 0; return _o1s / 4294967296; }; }
 export function sampleSvg(seed, hue, kind = 'city') {
-const R = _o1d(seed + kind);
-const [h1, h2] = Array.isArray(hue) && hue.length >= 2 ? hue.map((_o1t) => Math.round(Number(_o1t) || 0) % 360) : [210, 230];
-let _o7 = '';
+const R = _o1c(seed + kind);
+const [h1, h2] = Array.isArray(hue) && hue.length >= 2 ? hue.map((_o1s) => Math.round(Number(_o1s) || 0) % 360) : [210, 230];
+let _o6 = '';
 if (kind === 'person') {
-_o7 = `<rect width="400" height="400" fill="hsl(${h1},35%,32%)"/><circle cx="200" cy="160" r="72" fill="hsl(${h2},25%,78%)"/><path d="M70 400c10-100 70-150 130-150s120 50 130 150z" fill="hsl(${h2},25%,78%)"/>`;
-return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">${_o7}</svg>`);
+_o6 = `<rect width="400" height="400" fill="hsl(${h1},35%,32%)"/><circle cx="200" cy="160" r="72" fill="hsl(${h2},25%,78%)"/><path d="M70 400c10-100 70-150 130-150s120 50 130 150z" fill="hsl(${h2},25%,78%)"/>`;
+return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">${_o6}</svg>`);
 }
-const _o1h = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${h1},45%,${kind === 'room' ? 88 : 30}%)"/><stop offset="1" stop-color="hsl(${h2},40%,${kind === 'room' ? 76 : 62}%)"/></linearGradient></defs><rect width="1200" height="750" fill="url(#g)"/>`;
+const _o1g = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${h1},45%,${kind === 'room' ? 88 : 30}%)"/><stop offset="1" stop-color="hsl(${h2},40%,${kind === 'room' ? 76 : 62}%)"/></linearGradient></defs><rect width="1200" height="750" fill="url(#g)"/>`;
 if (kind === 'room') {
-_o7 = `<rect x="0" y="520" width="1200" height="230" fill="hsl(${h2},20%,60%)"/><rect x="120" y="140" width="380" height="300" rx="6" fill="hsl(${h1},50%,92%)" stroke="hsl(${h2},20%,55%)" stroke-width="10"/>` +
+_o6 = `<rect x="0" y="520" width="1200" height="230" fill="hsl(${h2},20%,60%)"/><rect x="120" y="140" width="380" height="300" rx="6" fill="hsl(${h1},50%,92%)" stroke="hsl(${h2},20%,55%)" stroke-width="10"/>` +
 `<line x1="310" y1="140" x2="310" y2="440" stroke="hsl(${h2},20%,55%)" stroke-width="8"/><rect x="640" y="400" width="420" height="140" rx="26" fill="hsl(${h1},25%,40%)"/><rect x="660" y="340" width="380" height="90" rx="22" fill="hsl(${h1},25%,48%)"/>` +
 `<rect x="880" y="120" width="12" height="230" fill="hsl(${h2},15%,35%)"/><ellipse cx="886" cy="120" rx="70" ry="30" fill="hsl(${h2},40%,90%)"/>`;
 } else {
-let _o1t = 30;
-while (_o1t < 1180) {
-const _o1p = 60 + Math.round(R() * 90), hgt = (kind === 'park' ? 120 : 220) + Math.round(R() * (kind === 'park' ? 140 : 330));
-const _ox = 18 + Math.round(R() * 18);
-_o7 += `<rect x="${_o1t}" y="${640 - hgt}" width="${_o1p}" height="${hgt}" fill="hsl(${h1},25%,${_ox}%)" opacity=".92"/>`;
-for (let _o1s = 640 - hgt + 18; _o1s < 620; _o1s += 34) _o7 += `<rect x="${_o1t + 10}" y="${_o1s}" width="${_o1p - 20}" height="8" fill="hsl(${h2},60%,80%)" opacity=".25"/>`;
-_o1t += _o1p + 14 + Math.round(R() * 30);
+let _o1s = 30;
+while (_o1s < 1180) {
+const _o1o = 60 + Math.round(R() * 90), hgt = (kind === 'park' ? 120 : 220) + Math.round(R() * (kind === 'park' ? 140 : 330));
+const _ow = 18 + Math.round(R() * 18);
+_o6 += `<rect x="${_o1s}" y="${640 - hgt}" width="${_o1o}" height="${hgt}" fill="hsl(${h1},25%,${_ow}%)" opacity=".92"/>`;
+for (let _o1r = 640 - hgt + 18; _o1r < 620; _o1r += 34) _o6 += `<rect x="${_o1s + 10}" y="${_o1r}" width="${_o1o - 20}" height="8" fill="hsl(${h2},60%,80%)" opacity=".25"/>`;
+_o1s += _o1o + 14 + Math.round(R() * 30);
 }
-_o7 += `<rect x="0" y="640" width="1200" height="110" fill="hsl(${h2},${kind === 'park' ? 45 : 20}%,${kind === 'park' ? 38 : 22}%)"/>`;
-for (let _op = 0; _op < 9; _op++) { const _ob = 60 + _op * 135 + Math.round(R() * 30); _o7 += `<circle cx="${_ob}" cy="650" r="${26 + Math.round(R() * 18)}" fill="hsl(${120 + Math.round(R() * 40)},35%,${28 + Math.round(R() * 10)}%)"/>`; }
+_o6 += `<rect x="0" y="640" width="1200" height="110" fill="hsl(${h2},${kind === 'park' ? 45 : 20}%,${kind === 'park' ? 38 : 22}%)"/>`;
+for (let _oo = 0; _oo < 9; _oo++) { const _oa = 60 + _oo * 135 + Math.round(R() * 30); _o6 += `<circle cx="${_oa}" cy="650" r="${26 + Math.round(R() * 18)}" fill="hsl(${120 + Math.round(R() * 40)},35%,${28 + Math.round(R() * 10)}%)"/>`; }
 }
-return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">${_o1h}${_o7}</svg>`);
+return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">${_o1g}${_o6}</svg>`);
 }
-const _o6 = { sale: 'Đang bán', soon: 'Sắp mở bán', done: 'Đã bàn giao', ask: 'Nhận bảng giá', low: 'Thấp tầng' };
-export const priceLabel = (_o13) => (_o13 && _o13.price ? `${fmtNum(_o13.price[0], 1)}–${fmtNum(_o13.price[1], 1)} triệu/m²` : '');
-export function priceRows(_o13, plans) {
-if (!_o13 || !_o13.price || !Array.isArray(_o13.types)) return [];
-const fs = (plans || []).map((_o1t) => Number(_o1t.factor)).filter((_o1t) => _o1t > 0);
-const _oh = fs.length ? Math.min(...fs) : 1, fmax = fs.length ? Math.max(...fs) : 1;
-return _o13.types.filter((t) => t && t.n).map((t) => {
+const _o5 = { sale: 'Đang bán', soon: 'Sắp mở bán', done: 'Đã bàn giao', ask: 'Nhận bảng giá', low: 'Thấp tầng' };
+export const priceLabel = (_o12) => (_o12 && _o12.price ? `${fmtNum(_o12.price[0], 1)}–${fmtNum(_o12.price[1], 1)} triệu/m²` : '');
+export function priceRows(_o12, plans) {
+if (!_o12 || !_o12.price || !Array.isArray(_o12.types)) return [];
+const fs = (plans || []).map((_o1s) => Number(_o1s.factor)).filter((_o1s) => _o1s > 0);
+const _og = fs.length ? Math.min(...fs) : 1, fmax = fs.length ? Math.max(...fs) : 1;
+return _o12.types.filter((t) => t && t.n).map((t) => {
 if (t.ask || !Array.isArray(t.a)) return { type: t.n, area: 'Liên hệ', price: 'Liên hệ', ask: true };
-const lo = t.a[0] * _o13.price[0] * 1e6 * _oh, hi = t.a[1] * _o13.price[1] * 1e6 * fmax;
+const lo = t.a[0] * _o12.price[0] * 1e6 * _og, hi = t.a[1] * _o12.price[1] * 1e6 * fmax;
 return { type: t.n, area: `${fmtNum(t.a[0])}–${fmtNum(t.a[1])} m²`, lo, hi, price: `${fmtMoney(lo)} – ${fmtMoney(hi)}` };
 });
 }
@@ -111,146 +111,146 @@ return policy && policy.month
 export function loanDefaults(data) {
 const rows = priceRows(data && data.project, data && data.plans).filter((r) => !r.ask);
 const price = rows.length ? Math.round(Math.min(...rows.map((r) => r.lo)) / 1e7) / 100 : 3;
-const ltv = Math.round(Math.max(0, ...((data && data.plans) || []).map((_o13) => Number(_o13.loan) || 0)) * 100) || 70;
+const ltv = Math.round(Math.max(0, ...((data && data.plans) || []).map((_o12) => Number(_o12.loan) || 0)) * 100) || 70;
 const cfg = (data && data.cfg) || {};
 return { price, ltv: Math.min(ltv, 80), rate: Number(cfg.RATE) || 10, years: Number(cfg.LOAN_YEARS) || 25 };
 }
-const _o1e = (seed, kind = 'city') => ({ kind: 'sample', seed: String(seed || 'mau'), look: kind });
+const _o1d = (seed, kind = 'city') => ({ kind: 'sample', seed: String(seed || 'mau'), look: kind });
 export function newLanding({ id, template = 'project', project = null, profile = {}, data = {}, now = Date.now() } = {}) {
 if (!TEMPLATES[template]) template = 'project';
 const T = TEMPLATES[template];
-const _o13 = project || null;
-const _o18 = _o13 ? _o13.name : '';
-const _o1a = profile || {};
-const _o8 = _o1a.brand || _o1a.name || 'Chuyên viên tư vấn';
+const _o12 = project || null;
+const _o17 = _o12 ? _o12.name : '';
+const _o19 = profile || {};
+const _o7 = _o19.brand || _o19.name || 'Chuyên viên tư vấn';
 const on = {}; for (const s of T.order) on[s] = !T.off.includes(s);
-const _oy = loanDefaults({ project: _o13, plans: data.plans, cfg: data.cfg });
-const _o1k = {
-project: _o18 ? `${_o18} – bảng giá tham khảo, chính sách mới nhất` : 'Dự án – bảng giá tham khảo, chính sách mới nhất',
-resale: _o18 ? `Cần bán căn hộ ${_o18}` : 'Cần bán căn hộ',
-event: _o18 ? `Sự kiện mở bán ${_o18}` : 'Sự kiện mở bán',
-agent: `${_o1a.name || 'Chuyên viên'} – tư vấn mua bán căn hộ`
+const _ox = loanDefaults({ project: _o12, plans: data.plans, cfg: data.cfg });
+const _o1j = {
+project: _o17 ? `${_o17} – bảng giá tham khảo, chính sách mới nhất` : 'Dự án – bảng giá tham khảo, chính sách mới nhất',
+resale: _o17 ? `Cần bán căn hộ ${_o17}` : 'Cần bán căn hộ',
+event: _o17 ? `Sự kiện mở bán ${_o17}` : 'Sự kiện mở bán',
+agent: `${_o19.name || 'Chuyên viên'} – tư vấn mua bán căn hộ`
 };
 const cfg = {
-v: LANDING_VERSION, id: String(id || ''), template, name: _o1k[template].slice(0, 80),
-slug: slugify((template === 'agent' ? _o1a.name || 'trang-ca-nhan' : _o18 || 'trang') + (template === 'event' ? '-mo-ban' : template === 'resale' ? '-can-ban' : '')) || 'trang-' + String(id || '').slice(-6),
-project_id: _o13 ? _o13.id : '', projects: template === 'agent' && _o13 ? [_o13.id] : [],
-brand: { name: _o8, c1: DEFAULT_COLORS.c1, c2: DEFAULT_COLORS.c2, font: 'serif' },
-contact: { name: _o1a.name || '', title: _o1a.title || 'Chuyên viên tư vấn bất động sản', phone: normPhone(_o1a.phone), zalo: normPhone(_o1a.zalo || _o1a.phone), cert: _o1a.cchn || '', company: _o1a.company || '', avatar: _o1e('ava', 'person') },
-seo: { title: _o1k[template].slice(0, 70), description: '', base_url: '', og_image: null },
+v: LANDING_VERSION, id: String(id || ''), template, name: _o1j[template].slice(0, 80),
+slug: slugify((template === 'agent' ? _o19.name || 'trang-ca-nhan' : _o17 || 'trang') + (template === 'event' ? '-mo-ban' : template === 'resale' ? '-can-ban' : '')) || 'trang-' + String(id || '').slice(-6),
+project_id: _o12 ? _o12.id : '', projects: template === 'agent' && _o12 ? [_o12.id] : [],
+brand: { name: _o7, c1: DEFAULT_COLORS.c1, c2: DEFAULT_COLORS.c2, font: 'serif' },
+contact: { name: _o19.name || '', title: _o19.title || 'Chuyên viên tư vấn bất động sản', phone: normPhone(_o19.phone), zalo: normPhone(_o19.zalo || _o19.phone), cert: _o19.cchn || '', company: _o19.company || '', avatar: _o1d('ava', 'person') },
+seo: { title: _o1j[template].slice(0, 70), description: '', base_url: '', og_image: null },
 pixels: { fb: { on: false, id: '' }, tiktok: { on: false, id: '' }, google: { on: false, id: '' } },
 order: T.order.slice(), on,
 s: {
 hero: {
-eyebrow: template === 'event' ? 'Sự kiện' : template === 'agent' ? 'Chuyên viên tư vấn' : (_o13 && _o6[_o13.status]) || 'Dự án',
-heading: template === 'agent' ? (_o1a.name || 'Họ tên của anh/chị') : template === 'resale' ? (_o18 ? `Căn hộ ${_o18}` : 'Căn hộ cần bán') : (_o18 || 'Tên dự án'),
-sub: template === 'project' ? [_o13 && _o13.loc, _o13 && _o13.dev ? 'Chủ đầu tư ' + _o13.dev : ''].filter(Boolean).join(' · ') || 'Vị trí dự án'
+eyebrow: template === 'event' ? 'Sự kiện' : template === 'agent' ? 'Chuyên viên tư vấn' : (_o12 && _o5[_o12.status]) || 'Dự án',
+heading: template === 'agent' ? (_o19.name || 'Họ tên của anh/chị') : template === 'resale' ? (_o17 ? `Căn hộ ${_o17}` : 'Căn hộ cần bán') : (_o17 || 'Tên dự án'),
+sub: template === 'project' ? [_o12 && _o12.loc, _o12 && _o12.dev ? 'Chủ đầu tư ' + _o12.dev : ''].filter(Boolean).join(' · ') || 'Vị trí dự án'
 : template === 'event' ? 'Đăng ký tham dự để nhận chính sách ưu đãi và chọn căn sớm.'
-: template === 'agent' ? 'Tư vấn mua, bán, cho thuê căn hộ – số liệu rõ ràng, đúng chính sách.' : [_o13 && _o13.loc].filter(Boolean).join(' · ') || 'Vị trí căn hộ',
+: template === 'agent' ? 'Tư vấn mua, bán, cho thuê căn hộ – số liệu rõ ràng, đúng chính sách.' : [_o12 && _o12.loc].filter(Boolean).join(' · ') || 'Vị trí căn hộ',
 cta: template === 'event' ? 'Đăng ký tham dự' : template === 'resale' ? 'Đặt lịch xem nhà' : template === 'agent' ? 'Nhận tư vấn' : 'Nhận bảng giá',
-image: _o1e(_o13 ? _o13.id : template, template === 'resale' ? 'room' : 'city')
+image: _o1d(_o12 ? _o12.id : template, template === 'resale' ? 'room' : 'city')
 },
-location: { text: _o13 && _o13.loc ? _o13.loc : 'Địa chỉ dự án …', items: 'Trường học – … phút\nBệnh viện – … phút\nTrung tâm thương mại – … phút\nCông viên – … phút' },
+location: { text: _o12 && _o12.loc ? _o12.loc : 'Địa chỉ dự án …', items: 'Trường học – … phút\nBệnh viện – … phút\nTrung tâm thương mại – … phút\nCông viên – … phút' },
 price: { note: '' },
-loan: { price: _oy.price, ltv: _oy.ltv, rate: _oy.rate, years: _oy.years },
+loan: { price: _ox.price, ltv: _ox.ltv, rate: _ox.rate, years: _ox.years },
 policy: { note: '' },
-gallery: { images: [_o1e((_o13 ? _o13.id : 'g') + '1', 'city'), _o1e((_o13 ? _o13.id : 'g') + '2', 'room'), _o1e((_o13 ? _o13.id : 'g') + '3', 'park')] },
+gallery: { images: [_o1d((_o12 ? _o12.id : 'g') + '1', 'city'), _o1d((_o12 ? _o12.id : 'g') + '2', 'room'), _o1d((_o12 ? _o12.id : 'g') + '3', 'park')] },
 form: {
 heading: template === 'event' ? 'Đăng ký tham dự' : template === 'resale' ? 'Đặt lịch xem nhà' : template === 'agent' ? 'Để lại thông tin – em liên hệ ngay' : 'Nhận bảng giá & chính sách mới nhất',
 sub: 'Chuyên viên gửi thông tin qua Zalo hoặc gọi lại đúng cách anh/chị chọn.',
 button: template === 'event' ? 'Đăng ký' : template === 'resale' ? 'Đặt lịch' : 'Nhận thông tin', interest: true
 },
-doc: { title: _o18 ? `Tài liệu ${_o18}: mặt bằng, bảng giá, tiến độ thanh toán` : 'Tài liệu dự án: mặt bằng, bảng giá, tiến độ thanh toán', desc: 'Để lại số Zalo – chuyên viên gửi tài liệu trong ít phút.', button: 'Nhận tài liệu qua Zalo', url: '' },
+doc: { title: _o17 ? `Tài liệu ${_o17}: mặt bằng, bảng giá, tiến độ thanh toán` : 'Tài liệu dự án: mặt bằng, bảng giá, tiến độ thanh toán', desc: 'Để lại số Zalo – chuyên viên gửi tài liệu trong ít phút.', button: 'Nhận tài liệu qua Zalo', url: '' },
 facts: { items: `Loại căn: …\nDiện tích: … m²\nTầng: …\nHướng: …\nNội thất: …\nPháp lý: …\nGiá chào: … tỷ` },
 event: { date: '', time: '09:00', place: 'Địa điểm sự kiện …', agenda: '09:00 – Đón khách\n09:30 – Giới thiệu dự án và chính sách\n10:30 – Chọn căn, giải đáp' },
 agent: { bio: 'Giới thiệu ngắn về kinh nghiệm, khu vực và loại sản phẩm anh/chị tư vấn …', bullets: 'Tính dòng tiền, phương án vay rõ ràng\nCập nhật chính sách mới nhất của chủ đầu tư\nHỗ trợ ký gửi bán, cho thuê' },
 projects: {},
 contact: {}
 },
-samples: _o5.filter((s) => T.order.includes(s)),
+samples: _o4.filter((s) => T.order.includes(s)),
 created_at: now, updated_at: now, published: {}
 };
-cfg.seo.description = template === 'project' && _o13
-? `${_o13.name}${_o13.loc ? ' – ' + _o13.loc : ''}. Bảng giá tham khảo theo loại căn, chính sách thanh toán, tính khoản vay. Nhận báo giá qua Zalo.`.slice(0, 160)
-: `${_o1k[template]}. Để lại thông tin để được tư vấn qua Zalo hoặc điện thoại.`.slice(0, 160);
-if (template === 'resale' && _o13) { const t = (_o13.types || []).find((_o1t) => !_o1t.ask); if (t) cfg.s.facts.items = `Loại căn: ${t.n}\nDiện tích: … m²\nTầng: …\nHướng: …\nNội thất: …\nPháp lý: …\nGiá chào: … tỷ`; }
+cfg.seo.description = template === 'project' && _o12
+? `${_o12.name}${_o12.loc ? ' – ' + _o12.loc : ''}. Bảng giá tham khảo theo loại căn, chính sách thanh toán, tính khoản vay. Nhận báo giá qua Zalo.`.slice(0, 160)
+: `${_o1j[template]}. Để lại thông tin để được tư vấn qua Zalo hoặc điện thoại.`.slice(0, 160);
+if (template === 'resale' && _o12) { const t = (_o12.types || []).find((_o1s) => !_o1s.ask); if (t) cfg.s.facts.items = `Loại căn: ${t.n}\nDiện tích: … m²\nTầng: …\nHướng: …\nNội thất: …\nPháp lý: …\nGiá chào: … tỷ`; }
 return cfg;
 }
 export function clearSample(cfg, section) { return { ...cfg, samples: (cfg.samples || []).filter((s) => s !== section) }; }
 export function normalizeLanding(raw) {
-if (!_os(raw)) return null;
-const _o1l = TEMPLATES[raw.template] ? raw.template : 'project';
-const base = newLanding({ id: raw.id, template: _o1l });
-const cfg = { ...base, ...raw, template: _o1l };
-cfg.brand = { ...base.brand, ...(_os(raw.brand) ? raw.brand : {}) };
+if (!_or(raw)) return null;
+const _o1k = TEMPLATES[raw.template] ? raw.template : 'project';
+const base = newLanding({ id: raw.id, template: _o1k });
+const cfg = { ...base, ...raw, template: _o1k };
+cfg.brand = { ...base.brand, ...(_or(raw.brand) ? raw.brand : {}) };
 if (!validColor(cfg.brand.c1)) cfg.brand.c1 = DEFAULT_COLORS.c1;
 if (!validColor(cfg.brand.c2)) cfg.brand.c2 = DEFAULT_COLORS.c2;
-cfg.contact = { ...base.contact, ...(_os(raw.contact) ? raw.contact : {}) };
-cfg.seo = { ...base.seo, ...(_os(raw.seo) ? raw.seo : {}) };
+cfg.contact = { ...base.contact, ...(_or(raw.contact) ? raw.contact : {}) };
+cfg.seo = { ...base.seo, ...(_or(raw.seo) ? raw.seo : {}) };
 cfg.pixels = { ...base.pixels };
-for (const _ou of Object.keys(base.pixels)) if (_os(raw.pixels) && _os(raw.pixels[_ou])) cfg.pixels[_ou] = { on: !!raw.pixels[_ou].on, id: String(raw.pixels[_ou].id || '') };
+for (const _ot of Object.keys(base.pixels)) if (_or(raw.pixels) && _or(raw.pixels[_ot])) cfg.pixels[_ot] = { on: !!raw.pixels[_ot].on, id: String(raw.pixels[_ot].id || '') };
 cfg.s = { ...base.s };
-for (const _ou of Object.keys(base.s)) if (_os(raw.s) && _os(raw.s[_ou])) cfg.s[_ou] = { ...base.s[_ou], ...raw.s[_ou] };
-const _ov = TEMPLATES[_o1l].order;
-cfg.order = Array.isArray(raw.order) ? raw.order.filter((_o1t) => _ov.includes(_o1t)) : _ov.slice();
-for (const _ou of _ov) if (!cfg.order.includes(_ou)) cfg.order.push(_ou);
-cfg.on = { ...base.on, ...(_os(raw.on) ? raw.on : {}) };
+for (const _ot of Object.keys(base.s)) if (_or(raw.s) && _or(raw.s[_ot])) cfg.s[_ot] = { ...base.s[_ot], ...raw.s[_ot] };
+const _ou = TEMPLATES[_o1k].order;
+cfg.order = Array.isArray(raw.order) ? raw.order.filter((_o1s) => _ou.includes(_o1s)) : _ou.slice();
+for (const _ot of _ou) if (!cfg.order.includes(_ot)) cfg.order.push(_ot);
+cfg.on = { ...base.on, ...(_or(raw.on) ? raw.on : {}) };
 cfg.on.hero = true;
-cfg.samples = Array.isArray(raw.samples) ? raw.samples.filter((_o1t) => _o5.includes(_o1t)) : [];
+cfg.samples = Array.isArray(raw.samples) ? raw.samples.filter((_o1s) => _o4.includes(_o1s)) : [];
 cfg.projects = Array.isArray(raw.projects) ? raw.projects.map(String).slice(0, 12) : [];
-cfg.published = _os(raw.published) ? raw.published : {};
+cfg.published = _or(raw.published) ? raw.published : {};
 return cfg;
 }
 export function checkLanding(cfg, data = {}, { server = '', mode = 'zip', images = {} } = {}) {
-const _o12 = [];
-const err = (text, fix) => _o12.push(fix ? { level: 'error', text, fix } : { level: 'error', text }), warn = (text, fix) => _o12.push(fix ? { level: 'warn', text, fix } : { level: 'warn', text });
+const _o11 = [];
+const err = (text, fix) => _o11.push(fix ? { level: 'error', text, fix } : { level: 'error', text }), warn = (text, fix) => _o11.push(fix ? { level: 'warn', text, fix } : { level: 'warn', text });
 if (!validSlug(cfg.slug)) err('Đường dẫn trang chỉ gồm chữ thường không dấu, số và dấu gạch nối (3–50 ký tự).');
 const on = (s) => cfg.order.includes(s) && cfg.on[s];
 if (!normPhone(cfg.contact.phone) && (on('contact') || on('form'))) err('Thiếu số điện thoại liên hệ đúng dạng (mục Liên hệ).', { group: 'lp-g-contact', field: 'lp-f-contact-phone', phone: 1 });
 if (on('form') && !server) (mode === 'gas' ? err : warn)('Chưa nối máy chủ Google của anh/chị – form chưa lưu được khách (đang xem thử).');
 if (!on('form') && !on('contact')) warn('Trang không có form và không có nút Zalo/Gọi – khách không liên hệ được.');
-const _o1b = cfg.pixels || {};
-for (const _ou of Object.keys(PIXEL_RE)) if (_o1b[_ou] && _o1b[_ou].on && !PIXEL_RE[_ou].test(String(_o1b[_ou].id || '').trim())) err(`Mã ${PIXEL_NAMES[_ou]} chưa đúng dạng.`);
+const _o1a = cfg.pixels || {};
+for (const _ot of Object.keys(PIXEL_RE)) if (_o1a[_ot] && _o1a[_ot].on && !PIXEL_RE[_ot].test(String(_o1a[_ot].id || '').trim())) err(`Mã ${PIXEL_NAMES[_ot]} chưa đúng dạng.`);
 if (!String(cfg.seo.title || '').trim()) warn('Chưa có tiêu đề SEO.');
 if (!String(cfg.seo.description || '').trim()) warn('Chưa có mô tả SEO.');
-const _o16 = data.project;
-if (_o16 && (_o16.sample === true || /^mau_/.test(String(_o16.id || '')))) err(`Dự án "${_o16.name}" là dự án Mẫu – chọn dự án thật (thêm ở Bảng hàng).`, { group: 'lp-g-base', field: 'lp-project' });
-for (const _o1j of (cfg.samples || []).filter(on)) err(`Mục "${SECTIONS[_o1j]}" còn chữ Mẫu – sửa nội dung (hoặc tắt mục này).`, { group: 'lp-g-sections', sec: _o1j });
-const _o4 = /đ[iị]a ch[iỉ] m[aẫ]u|m[aẫ]u\s*[–-]\s*thay b[aằ]ng/i;
-const _oo = [cfg.s.hero.eyebrow, cfg.s.hero.heading, cfg.s.hero.sub].map((_o1t) => String(_o1t || '')).join(' ');
-if (_o4.test(_oo)) err('Ảnh bìa & tiêu đề còn chữ mẫu ("Địa chỉ mẫu – thay bằng vị trí thật") – sửa Mô tả ngắn.', { group: 'lp-g-sections', sec: 'hero', field: 'lp-f-s-hero-sub' });
-if (on('location') && _o4.test(String(cfg.s.location.text || '')) && !(cfg.samples || []).includes('location')) err('Mục "Vị trí & tiện ích" còn chữ mẫu – ghi vị trí thật.', { group: 'lp-g-sections', sec: 'location' });
-const _oq = allImages(cfg).filter((_o1t) => _o1t.on);
-const _o3 = { hero: ['Ảnh bìa', { group: 'lp-g-sections', sec: 'hero', field: 'lp-img-s-hero-image' }], avatar: ['Ảnh đại diện', { group: 'lp-g-contact', field: 'lp-img-contact-avatar' }],
+const _o15 = data.project;
+if (_o15 && (_o15.sample === true || /^mau_/.test(String(_o15.id || '')))) err(`Dự án "${_o15.name}" là dự án Mẫu – chọn dự án thật (thêm ở Bảng hàng).`, { group: 'lp-g-base', field: 'lp-project' });
+for (const _o1i of (cfg.samples || []).filter(on)) err(`Mục "${SECTIONS[_o1i]}" còn chữ Mẫu – sửa nội dung (hoặc tắt mục này).`, { group: 'lp-g-sections', sec: _o1i });
+const _o3 = /đ[iị]a ch[iỉ] m[aẫ]u|m[aẫ]u\s*[–-]\s*thay b[aằ]ng/i;
+const _on = [cfg.s.hero.eyebrow, cfg.s.hero.heading, cfg.s.hero.sub].map((_o1s) => String(_o1s || '')).join(' ');
+if (_o3.test(_on)) err('Ảnh bìa & tiêu đề còn chữ mẫu ("Địa chỉ mẫu – thay bằng vị trí thật") – sửa Mô tả ngắn.', { group: 'lp-g-sections', sec: 'hero', field: 'lp-f-s-hero-sub' });
+if (on('location') && _o3.test(String(cfg.s.location.text || '')) && !(cfg.samples || []).includes('location')) err('Mục "Vị trí & tiện ích" còn chữ mẫu – ghi vị trí thật.', { group: 'lp-g-sections', sec: 'location' });
+const _op = allImages(cfg).filter((_o1s) => _o1s.on);
+const _o2 = { hero: ['Ảnh bìa', { group: 'lp-g-sections', sec: 'hero', field: 'lp-img-s-hero-image' }], avatar: ['Ảnh đại diện', { group: 'lp-g-contact', field: 'lp-img-contact-avatar' }],
 og: ['Ảnh khi chia sẻ', { group: 'lp-g-seo', field: 'lp-img-seo-og_image' }] };
-for (const _o1t of _oq.filter((y) => y.img.kind === 'sample')) {
-const _ok = /^gallery\.(\d+)$/.exec(_o1t.path);
-const [label, fix] = _ok ? ['Ảnh ' + (Number(_ok[1]) + 1) + ' (mục Ảnh)', { group: 'lp-g-sections', sec: 'gallery', field: 'lp-img-s-gallery-images-' + _ok[1] }] : _o3[_o1t.path] || ['Ảnh', null];
+for (const _o1s of _op.filter((y) => y.img.kind === 'sample')) {
+const _oj = /^gallery\.(\d+)$/.exec(_o1s.path);
+const [label, fix] = _oj ? ['Ảnh ' + (Number(_oj[1]) + 1) + ' (mục Ảnh)', { group: 'lp-g-sections', sec: 'gallery', field: 'lp-img-s-gallery-images-' + _oj[1] }] : _o2[_o1s.path] || ['Ảnh', null];
 err(label + ' đang là ảnh minh hoạ Mẫu – tải ảnh tự chụp, dán link ảnh, hoặc bỏ ảnh.', fix);
 }
-if (_oq.some((_o1t) => _o1t.img.kind === 'local' && !images[_o1t.img.id])) warn('Có ảnh tải lên từ máy khác, máy này không có – ảnh đó sẽ thay bằng ảnh Mẫu.');
+if (_op.some((_o1s) => _o1s.img.kind === 'local' && !images[_o1s.img.id])) warn('Có ảnh tải lên từ máy khác, máy này không có – ảnh đó sẽ thay bằng ảnh Mẫu.');
 if (on('price') && !priceRows(data.project, data.plans).length) warn('Dự án chưa có giá trong Bảng hàng – mục Bảng giá sẽ ẩn.');
 if (on('event') && !/^\d{4}-\d{2}-\d{2}$/.test(String(cfg.s.event.date || ''))) warn('Chưa chọn ngày sự kiện.');
 if (on('doc') && cfg.s.doc.url && !safeHttps(cfg.s.doc.url)) err('Link tài liệu phải bắt đầu bằng https://');
 if (mode === 'zip' && !normBaseUrl(cfg.seo.base_url)) warn('Chưa điền địa chỉ trang (tên miền) – sitemap và ảnh chia sẻ Facebook chưa dùng được.');
-return _o12;
+return _o11;
 }
 export function allImages(cfg) {
 const on = (s) => cfg.order.includes(s) && !!cfg.on[s];
-const _o12 = [];
-if (cfg.s.hero && cfg.s.hero.image) _o12.push({ path: 'hero', img: cfg.s.hero.image, on: true });
-(cfg.s.gallery.images || []).forEach((img, _op) => _o12.push({ path: 'gallery.' + _op, img, on: on('gallery') }));
-if (cfg.contact.avatar) _o12.push({ path: 'avatar', img: cfg.contact.avatar, on: cfg.template === 'agent' || on('agent') });
-if (cfg.seo.og_image) _o12.push({ path: 'og', img: cfg.seo.og_image, on: true });
-return _o12.filter((_o1t) => _os(_o1t.img));
+const _o11 = [];
+if (cfg.s.hero && cfg.s.hero.image) _o11.push({ path: 'hero', img: cfg.s.hero.image, on: true });
+(cfg.s.gallery.images || []).forEach((img, _oo) => _o11.push({ path: 'gallery.' + _oo, img, on: on('gallery') }));
+if (cfg.contact.avatar) _o11.push({ path: 'avatar', img: cfg.contact.avatar, on: cfg.template === 'agent' || on('agent') });
+if (cfg.seo.og_image) _o11.push({ path: 'og', img: cfg.seo.og_image, on: true });
+return _o11.filter((_o1s) => _or(_o1s.img));
 }
 export function pageCss(cfg) {
 const c1 = validColor(cfg.brand.c1) ? cfg.brand.c1 : DEFAULT_COLORS.c1, c2 = validColor(cfg.brand.c2) ? cfg.brand.c2 : DEFAULT_COLORS.c2;
-const _om = cfg.brand.font === 'sans' ? '"Be Vietnam Pro",system-ui,sans-serif' : '"Playfair Display",Georgia,serif';
+const _ol = cfg.brand.font === 'sans' ? '"Be Vietnam Pro",system-ui,sans-serif' : '"Playfair Display",Georgia,serif';
 return `:root{--c1:${c1};--c2:${c2};--bg:#FAF7F1;--card:#fff;--ink:#151B26;--muted:#5F6878;--line:#E7E1D6;--ok:#17784A;--bad:#B0281F;--r:18px;--sh:0 10px 30px rgba(14,27,46,.10)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:76px}
-h1,h2,h3{font-family:${_om};line-height:1.15;letter-spacing:-.2px;margin:0}
+h1,h2,h3{font-family:${_ol};line-height:1.15;letter-spacing:-.2px;margin:0}
 a{color:inherit}img{max-width:100%;display:block}
 .lp-wrap{max-width:1080px;margin:0 auto;padding:0 16px}
 .lp-top{position:sticky;top:0;z-index:20;background:var(--c1);color:#fff}
@@ -315,50 +315,50 @@ footer.lp-foot{background:var(--c1);color:rgba(255,255,255,.72);font-size:13px;m
  #lp-form .lp-card{max-width:760px;margin:0 auto}body{padding-bottom:0}.lp-dock{left:auto;right:18px;bottom:18px;width:340px;border-radius:18px;border:1px solid var(--line);box-shadow:var(--sh)}
 }`;
 }
-function _o15(_o1b) {
-let _o12 = '';
-if (_o1b.fb) _o12 += `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${_o1b.fb}');fbq('track','PageView');</script>\n<noscript><img height="1" width="1" alt="" src="https://www.facebook.com/tr?id=${_o1b.fb}&amp;ev=PageView&amp;noscript=1"></noscript>\n`;
-if (_o1b.tiktok) _o12 += `<script>!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('${_o1b.tiktok}');ttq.page();}(window,document,'ttq');</script>\n`;
-if (_o1b.google) _o12 += `<script async src="https://www.googletagmanager.com/gtag/js?id=${_o1b.google}"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${_o1b.google}');</script>\n`;
-return _o12;
+function _o14(_o1a) {
+let _o11 = '';
+if (_o1a.fb) _o11 += `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${_o1a.fb}');fbq('track','PageView');</script>\n<noscript><img height="1" width="1" alt="" src="https://www.facebook.com/tr?id=${_o1a.fb}&amp;ev=PageView&amp;noscript=1"></noscript>\n`;
+if (_o1a.tiktok) _o11 += `<script>!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('${_o1a.tiktok}');ttq.page();}(window,document,'ttq');</script>\n`;
+if (_o1a.google) _o11 += `<script async src="https://www.googletagmanager.com/gtag/js?id=${_o1a.google}"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${_o1a.google}');</script>\n`;
+return _o11;
 }
-const _ot = (o) => JSON.stringify(o).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+const _os = (o) => JSON.stringify(o).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 export function eventAt(ev) {
-const _oc = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(ev && ev.date || '')); if (!_oc) return 0;
+const _ob = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(ev && ev.date || '')); if (!_ob) return 0;
 const t = /^(\d{1,2}):(\d{2})$/.exec(String(ev.time || '00:00')) || [0, 0, 0];
-return Date.UTC(+_oc[1], +_oc[2] - 1, +_oc[3], +t[1] - 7, +t[2]);
+return Date.UTC(+_ob[1], +_ob[2] - 1, +_ob[3], +t[1] - 7, +t[2]);
 }
-const dmy = (iso) => { const _o10 = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || '')); return _o10 ? `${_o10[3]}/${_o10[2]}/${_o10[1]}` : ''; };
+const dmy = (iso) => { const _oz = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || '')); return _oz ? `${_oz[3]}/${_oz[2]}/${_oz[1]}` : ''; };
 export function renderPage(cfg, data = {}, opts = {}) {
 const target = opts.target || 'static';
 const preview = target === 'preview';
 const on = (s) => cfg.order.includes(s) && !!cfg.on[s];
 const sample = (s) => (cfg.samples || []).includes(s);
 const badge = '<span class="lp-badge" data-sample="1">Mẫu</span>';
-const _o13 = data.project || null;
+const _o12 = data.project || null;
 const phone = normPhone(cfg.contact.phone), zalo = normPhone(cfg.contact.zalo) || phone;
 const zaloHref = zalo ? 'https://zalo.me/' + zalo : '';
 const img = (im, alt, cls = 'lp-fig') => {
-let _o1i = '', isSample = false, note = '';
+let _o1h = '', isSample = false, note = '';
 if (im && im.kind === 'url' && imageUrl(im.url)) {
-if (preview) { _o1i = sampleSvg(im.url, [200, 210], 'room'); note = '<span class="lp-badge">Ảnh từ link – xem ở trang thật</span>'; } else _o1i = imageUrl(im.url);
-} else if (im && im.kind === 'local' && opts.imgSrc) _o1i = opts.imgSrc(im) || '';
-if (!_o1i) { _o1i = sampleSvg(im && (im.seed || im.id) || alt, (data.project && data.project.hue) || null, (im && im.look) || 'city'); isSample = true; }
-return `<figure class="${cls}"><img src="${esc(_o1i)}" alt="${esc(alt)}" loading="lazy" decoding="async">${isSample ? badge : note}</figure>`;
+if (preview) { _o1h = sampleSvg(im.url, [200, 210], 'room'); note = '<span class="lp-badge">Ảnh từ link – xem ở trang thật</span>'; } else _o1h = imageUrl(im.url);
+} else if (im && im.kind === 'local' && opts.imgSrc) _o1h = opts.imgSrc(im) || '';
+if (!_o1h) { _o1h = sampleSvg(im && (im.seed || im.id) || alt, (data.project && data.project.hue) || null, (im && im.look) || 'city'); isSample = true; }
+return `<figure class="${cls}"><img src="${esc(_o1h)}" alt="${esc(alt)}" loading="lazy" decoding="async">${isSample ? badge : note}</figure>`;
 };
-const _on = (s, title) => `<div class="lp-h"><h2>${esc(title)}</h2>${sample(s) ? badge : ''}</div>`;
-const sec = (s, title, _o7) => `<section class="lp-sec" id="lp-${s}"><div class="lp-wrap">${_on(s, title)}${_o7}</div></section>`;
-const _oj = (kind) => {
+const _om = (s, title) => `<div class="lp-h"><h2>${esc(title)}</h2>${sample(s) ? badge : ''}</div>`;
+const sec = (s, title, _o6) => `<section class="lp-sec" id="lp-${s}"><div class="lp-wrap">${_om(s, title)}${_o6}</div></section>`;
+const _oi = (kind) => {
 const F = cfg.s.form, doc = cfg.s.doc;
 let interest = '';
 if (kind === 'main' && F.interest) {
 if (cfg.template === 'agent') interest = `<label class="lp-f">Anh/chị cần<select class="lp-in" name="interest" data-kind="need"><option value="mua">Mua</option><option value="thuê">Thuê</option><option value="bán">Ký gửi bán</option><option value="cho thuê">Ký gửi cho thuê</option></select></label>`;
 else if (cfg.template === 'event') interest = `<label class="lp-f">Số người tham dự<select class="lp-in" name="people"><option>1</option><option>2</option><option>3+</option></select></label>`;
-else if (_o13 && (_o13.types || []).length) interest = `<label class="lp-f">Loại căn quan tâm<select class="lp-in" name="interest" data-kind="unit"><option value="">Chưa rõ</option>${_o13.types.map((t) => `<option>${esc(t.n)}</option>`).join('')}</select></label>`;
+else if (_o12 && (_o12.types || []).length) interest = `<label class="lp-f">Loại căn quan tâm<select class="lp-in" name="interest" data-kind="unit"><option value="">Chưa rõ</option>${_o12.types.map((t) => `<option>${esc(t.n)}</option>`).join('')}</select></label>`;
 }
-const _o1q = kind === 'doc' ? `data-want="${esc('Tài liệu: ' + doc.title)}" data-thanks="Chuyên viên gửi tài liệu qua Zalo trong ít phút."${safeHttps(doc.url) ? ` data-doc-url="${esc(safeHttps(doc.url))}"` : ''}` : '';
+const _o1p = kind === 'doc' ? `data-want="${esc('Tài liệu: ' + doc.title)}" data-thanks="Chuyên viên gửi tài liệu qua Zalo trong ít phút."${safeHttps(doc.url) ? ` data-doc-url="${esc(safeHttps(doc.url))}"` : ''}` : '';
 const n = kind === 'doc' ? 'd' : 'm';
-return `<form class="lp-form" data-lp-form="${kind}" novalidate autocomplete="on" ${_o1q}>
+return `<form class="lp-form" data-lp-form="${kind}" novalidate autocomplete="on" ${_o1p}>
 <label class="lp-f">Họ và tên<input class="lp-in" name="name" autocomplete="name" autocapitalize="words" maxlength="120" placeholder="Nguyễn Văn A"></label>
 <label class="lp-f">Số điện thoại / Zalo<input class="lp-in" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="09xx xxx xxx"></label>
 ${interest}
@@ -369,71 +369,71 @@ ${interest}
 <button type="submit" class="lp-btn">${esc(kind === 'doc' ? doc.button : F.button)}</button>
 <div class="lp-trust">🔒 Không chia sẻ cho bên thứ ba · Chỉ liên hệ đúng cách anh/chị chọn</div></form>`;
 };
-const _o14 = {};
+const _o13 = {};
 {
-const _o2 = cfg.s.hero;
-const _o1g = img(_o2.image, cfg.template === 'agent' ? 'Ảnh minh hoạ' : _o2.heading || 'Ảnh dự án');
-let _of = '';
-if (cfg.template === 'project' && _o13) {
-const _ow = [['Giá niêm yết', priceLabel(_o13) || 'Nhận bảng giá'], ['Bàn giao', _o13.handover ? ymLabel(_o13.handover) : 'Chưa công bố'], ['Trạng thái', _o6[_o13.status] || '–']];
-_of = `<div class="lp-kpis">${_ow.map(([a, b]) => `<div class="lp-kpi"><small>${esc(a)}</small><b>${esc(b)}</b></div>`).join('')}</div>`;
+const _o1 = cfg.s.hero;
+const _o1f = img(_o1.image, cfg.template === 'agent' ? 'Ảnh minh hoạ' : _o1.heading || 'Ảnh dự án');
+let _oe = '';
+if (cfg.template === 'project' && _o12) {
+const _ov = [['Giá niêm yết', priceLabel(_o12) || 'Nhận bảng giá'], ['Bàn giao', _o12.handover ? ymLabel(_o12.handover) : 'Chưa công bố'], ['Trạng thái', _o5[_o12.status] || '–']];
+_oe = `<div class="lp-kpis">${_ov.map(([a, b]) => `<div class="lp-kpi"><small>${esc(a)}</small><b>${esc(b)}</b></div>`).join('')}</div>`;
 } else if (cfg.template === 'event') {
-const _o1 = cfg.s.event, at = eventAt(_o1);
-_of = `<div class="lp-kpis"><div class="lp-kpi"><small>Ngày</small><b>${esc(dmy(_o1.date) || 'Sắp công bố')}</b></div><div class="lp-kpi"><small>Giờ</small><b>${esc(_o1.time || '–')}</b></div><div class="lp-kpi"><small>Địa điểm</small><b>${esc(_o1.place || '–')}</b></div></div>${at ? `<div class="lp-cd" data-lp-countdown data-at="${at}"></div>` : ''}`;
+const _o0 = cfg.s.event, at = eventAt(_o0);
+_oe = `<div class="lp-kpis"><div class="lp-kpi"><small>Ngày</small><b>${esc(dmy(_o0.date) || 'Sắp công bố')}</b></div><div class="lp-kpi"><small>Giờ</small><b>${esc(_o0.time || '–')}</b></div><div class="lp-kpi"><small>Địa điểm</small><b>${esc(_o0.place || '–')}</b></div></div>${at ? `<div class="lp-cd" data-lp-countdown data-at="${at}"></div>` : ''}`;
 } else if (cfg.template === 'agent') {
 const C = cfg.contact;
-_of = `<div class="lp-me">${img(C.avatar, C.name || 'Ảnh đại diện', 'lp-ava')}<div><b>${esc(C.name || '')}</b><span>${esc([C.title, C.cert ? 'CCHN ' + C.cert : '', C.company].filter(Boolean).join(' · '))}</span></div></div>`;
+_oe = `<div class="lp-me">${img(C.avatar, C.name || 'Ảnh đại diện', 'lp-ava')}<div><b>${esc(C.name || '')}</b><span>${esc([C.title, C.cert ? 'CCHN ' + C.cert : '', C.company].filter(Boolean).join(' · '))}</span></div></div>`;
 }
-const cta = `<div class="lp-cta">${on('form') ? `<a class="lp-btn" href="#lp-form">${esc(_o2.cta)}</a>` : ''}${zaloHref && on('contact') ? `<a class="lp-btn lp-btn-2" href="${esc(zaloHref)}" target="_blank" rel="noopener">💬 Zalo</a>` : ''}</div>`;
-_o14.hero = `<section class="lp-hero" id="lp-hero"><div class="lp-wrap"><div><span class="lp-eyebrow">${esc(_o2.eyebrow)}</span><h1>${esc(_o2.heading)}</h1><p class="lp-lead">${esc(_o2.sub)}</p>${cta}${_of}</div>${_o1g}</div></section>`;
+const cta = `<div class="lp-cta">${on('form') ? `<a class="lp-btn" href="#lp-form">${esc(_o1.cta)}</a>` : ''}${zaloHref && on('contact') ? `<a class="lp-btn lp-btn-2" href="${esc(zaloHref)}" target="_blank" rel="noopener">💬 Zalo</a>` : ''}</div>`;
+_o13.hero = `<section class="lp-hero" id="lp-hero"><div class="lp-wrap"><div><span class="lp-eyebrow">${esc(_o1.eyebrow)}</span><h1>${esc(_o1.heading)}</h1><p class="lp-lead">${esc(_o1.sub)}</p>${cta}${_oe}</div>${_o1f}</div></section>`;
 }
-_o14.location = sec('location', SECTIONS.location, `<div class="lp-two"><div class="lp-card"><p>${_o11(cfg.s.location.text)}</p></div><ul class="lp-list">${_oz(cfg.s.location.items).map((_o1t) => `<li>${esc(_o1t)}</li>`).join('')}</ul></div>`);
-const rows = priceRows(_o13, data.plans);
+_o13.location = sec('location', SECTIONS.location, `<div class="lp-two"><div class="lp-card"><p>${_o10(cfg.s.location.text)}</p></div><ul class="lp-list">${_oy(cfg.s.location.items).map((_o1s) => `<li>${esc(_o1s)}</li>`).join('')}</ul></div>`);
+const rows = priceRows(_o12, data.plans);
 if (rows.length) {
-const _o1n = data.today ? ` Cập nhật ${dmy(data.today)}.` : '';
-_o14.price = sec('price', SECTIONS.price, `<div class="lp-card lp-scroll"><table class="lp-tbl"><thead><tr><th>Loại căn</th><th>Diện tích</th><th class="n">Giá tham khảo</th></tr></thead><tbody>${rows.map((r) => `<tr><td><b>${esc(r.type)}</b></td><td>${esc(r.area)}</td><td class="n">${esc(r.price)}</td></tr>`).join('')}</tbody></table>
-<p class="lp-muted">${esc(priceNote(data.policy))}${esc(_o1n)}${cfg.s.price.note ? ' ' + esc(cfg.s.price.note) : ''}</p></div>`);
+const _o1m = data.today ? ` Cập nhật ${dmy(data.today)}.` : '';
+_o13.price = sec('price', SECTIONS.price, `<div class="lp-card lp-scroll"><table class="lp-tbl"><thead><tr><th>Loại căn</th><th>Diện tích</th><th class="n">Giá tham khảo</th></tr></thead><tbody>${rows.map((r) => `<tr><td><b>${esc(r.type)}</b></td><td>${esc(r.area)}</td><td class="n">${esc(r.price)}</td></tr>`).join('')}</tbody></table>
+<p class="lp-muted">${esc(priceNote(data.policy))}${esc(_o1m)}${cfg.s.price.note ? ' ' + esc(cfg.s.price.note) : ''}</p></div>`);
 }
-const _o19 = policyRows(data.plans);
-if (_o19.length) {
-_o14.policy = sec('policy', SECTIONS.policy, `<div class="lp-card lp-scroll"><table class="lp-tbl"><thead><tr><th>Phương án</th><th class="n">Chiết khấu</th><th class="n">Vay</th><th class="n">Hỗ trợ lãi</th></tr></thead><tbody>${_o19.map((r) => `<tr><td><b>${esc(r.name)}</b>${r.sub ? `<div class="lp-muted">${esc(r.sub)}</div>` : ''}</td><td class="n">${esc(r.disc)}</td><td class="n">${esc(r.loan)}</td><td class="n">${esc(r.htls)}</td></tr>`).join('')}</tbody></table>
+const _o18 = policyRows(data.plans);
+if (_o18.length) {
+_o13.policy = sec('policy', SECTIONS.policy, `<div class="lp-card lp-scroll"><table class="lp-tbl"><thead><tr><th>Phương án</th><th class="n">Chiết khấu</th><th class="n">Vay</th><th class="n">Hỗ trợ lãi</th></tr></thead><tbody>${_o18.map((r) => `<tr><td><b>${esc(r.name)}</b>${r.sub ? `<div class="lp-muted">${esc(r.sub)}</div>` : ''}</td><td class="n">${esc(r.disc)}</td><td class="n">${esc(r.loan)}</td><td class="n">${esc(r.htls)}</td></tr>`).join('')}</tbody></table>
 <p class="lp-muted">${esc(data.policy && data.policy.month ? policyLabel(data.policy) : 'Chính sách tham khảo')} – chi tiết từng đợt thanh toán gửi kèm báo giá.${cfg.s.policy.note ? ' ' + esc(cfg.s.policy.note) : ''}</p></div>`);
 }
 {
 const L = cfg.s.loan;
-const _or = (name, label, val, step) => `<label class="lp-f">${label}<input class="lp-in" name="${name}" type="number" inputmode="decimal" min="0" step="${step}" value="${esc(val)}"></label>`;
-_o14.loan = sec('loan', SECTIONS.loan, `<div class="lp-card" data-lp-loan><div class="lp-calc">${_or('price', 'Giá căn (tỷ)', L.price, '0.01')}${_or('ltv', 'Vay (% giá)', L.ltv, '1')}${_or('rate', 'Lãi suất (%/năm)', L.rate, '0.1')}${_or('years', 'Thời hạn (năm)', L.years, '1')}</div>
+const _oq = (name, label, val, step) => `<label class="lp-f">${label}<input class="lp-in" name="${name}" type="number" inputmode="decimal" min="0" step="${step}" value="${esc(val)}"></label>`;
+_o13.loan = sec('loan', SECTIONS.loan, `<div class="lp-card" data-lp-loan><div class="lp-calc">${_oq('price', 'Giá căn (tỷ)', L.price, '0.01')}${_oq('ltv', 'Vay (% giá)', L.ltv, '1')}${_oq('rate', 'Lãi suất (%/năm)', L.rate, '0.1')}${_oq('years', 'Thời hạn (năm)', L.years, '1')}</div>
 <div class="lp-out"><div><small>Số tiền vay</small><b data-out="loan">–</b></div><div><small>Vốn tự có</small><b data-out="own">–</b></div><div><small>Tháng đầu (gốc đều)</small><b data-out="first">–</b></div><div><small>Trả đều mỗi tháng</small><b data-out="annuity">–</b></div></div>
 <p class="lp-muted">Lãi suất giả định, chưa tính hỗ trợ lãi của chủ đầu tư – số liệu để tham khảo, không phải cam kết của ngân hàng.</p></div>`);
 }
-const _ol = (cfg.s.gallery.images || []).slice(0, 9);
-if (_ol.length) _o14.gallery = sec('gallery', SECTIONS.gallery, `<div class="lp-gal">${_ol.map((im, _op) => img(im, (cfg.s.hero.heading || 'Ảnh') + ' ' + (_op + 1))).join('')}</div>`);
+const _ok = (cfg.s.gallery.images || []).slice(0, 9);
+if (_ok.length) _o13.gallery = sec('gallery', SECTIONS.gallery, `<div class="lp-gal">${_ok.map((im, _oo) => img(im, (cfg.s.hero.heading || 'Ảnh') + ' ' + (_oo + 1))).join('')}</div>`);
 const F = cfg.s.form;
-_o14.form = `<section class="lp-sec" id="lp-form"><div class="lp-wrap"><div class="lp-card"><div class="lp-h"><h2>${esc(F.heading)}</h2></div><p class="lp-muted">${esc(F.sub)}</p>${_oj('main')}</div></div></section>`;
-const _o0 = cfg.s.doc;
-_o14.doc = sec('doc', 'Nhận tài liệu', `<div class="lp-card lp-docbox"><p><b>${esc(_o0.title)}</b></p><p class="lp-muted">${esc(_o0.desc)}</p>${_oj('doc')}</div>`);
-_o14.facts = sec('facts', SECTIONS.facts, `<ul class="lp-list">${_oz(cfg.s.facts.items).map((_o1t) => `<li>${esc(_o1t)}</li>`).join('')}</ul>`);
+_o13.form = `<section class="lp-sec" id="lp-form"><div class="lp-wrap"><div class="lp-card"><div class="lp-h"><h2>${esc(F.heading)}</h2></div><p class="lp-muted">${esc(F.sub)}</p>${_oi('main')}</div></div></section>`;
+const D = cfg.s.doc;
+_o13.doc = sec('doc', 'Nhận tài liệu', `<div class="lp-card lp-docbox"><p><b>${esc(D.title)}</b></p><p class="lp-muted">${esc(D.desc)}</p>${_oi('doc')}</div>`);
+_o13.facts = sec('facts', SECTIONS.facts, `<ul class="lp-list">${_oy(cfg.s.facts.items).map((_o1s) => `<li>${esc(_o1s)}</li>`).join('')}</ul>`);
 {
-const _o1 = cfg.s.event;
-_o14.event = sec('event', SECTIONS.event, `<div class="lp-two"><div class="lp-card"><p><b>${esc(dmy(_o1.date) || 'Ngày: sắp công bố')}${_o1.time ? ' · ' + esc(_o1.time) : ''}</b></p><p>${_o11(_o1.place)}</p></div><ul class="lp-list">${_oz(_o1.agenda).map((_o1t) => `<li>${esc(_o1t)}</li>`).join('')}</ul></div>`);
+const _o0 = cfg.s.event;
+_o13.event = sec('event', SECTIONS.event, `<div class="lp-two"><div class="lp-card"><p><b>${esc(dmy(_o0.date) || 'Ngày: sắp công bố')}${_o0.time ? ' · ' + esc(_o0.time) : ''}</b></p><p>${_o10(_o0.place)}</p></div><ul class="lp-list">${_oy(_o0.agenda).map((_o1s) => `<li>${esc(_o1s)}</li>`).join('')}</ul></div>`);
 }
 {
 const G = cfg.s.agent;
-_o14.agent = sec('agent', SECTIONS.agent, `<div class="lp-two"><div class="lp-card"><p>${_o11(G.bio)}</p></div><ul class="lp-list">${_oz(G.bullets).map((_o1t) => `<li>${esc(_o1t)}</li>`).join('')}</ul></div>`);
+_o13.agent = sec('agent', SECTIONS.agent, `<div class="lp-two"><div class="lp-card"><p>${_o10(G.bio)}</p></div><ul class="lp-list">${_oy(G.bullets).map((_o1s) => `<li>${esc(_o1s)}</li>`).join('')}</ul></div>`);
 }
-const _o17 = (data.projects || []).filter(Boolean).slice(0, 12);
-if (_o17.length) {
-_o14.projects = sec('projects', SECTIONS.projects, `<div class="lp-grid">${_o17.map((_o1t) => `<article class="lp-pcard">${img({ kind: 'sample', seed: _o1t.id, look: 'city' }, _o1t.name)}<div class="lp-pb"><b>${esc(_o1t.name)}</b><span class="lp-muted">${esc([_o6[_o1t.status], _o1t.loc].filter(Boolean).join(' · '))}</span><p>${esc(priceLabel(_o1t) || 'Nhận bảng giá')}</p></div></article>`).join('')}</div>`);
+const _o16 = (data.projects || []).filter(Boolean).slice(0, 12);
+if (_o16.length) {
+_o13.projects = sec('projects', SECTIONS.projects, `<div class="lp-grid">${_o16.map((_o1s) => `<article class="lp-pcard">${img({ kind: 'sample', seed: _o1s.id, look: 'city' }, _o1s.name)}<div class="lp-pb"><b>${esc(_o1s.name)}</b><span class="lp-muted">${esc([_o5[_o1s.status], _o1s.loc].filter(Boolean).join(' · '))}</span><p>${esc(priceLabel(_o1s) || 'Nhận bảng giá')}</p></div></article>`).join('')}</div>`);
 }
-const _o7 = cfg.order.filter((s) => s === 'hero' || on(s)).filter((s) => s !== 'contact').map((s) => _o14[s] || '').join('\n');
-const _oe = on('contact') && (phone || zalo) ? `<nav class="lp-dock" aria-label="Liên hệ nhanh">${zalo ? `<a class="z" href="${esc(zaloHref)}" target="_blank" rel="noopener">💬 Zalo</a>` : ''}${phone ? `<a class="c" href="tel:${esc(phone)}">📞 Gọi ${esc(phoneText(phone))}</a>` : ''}</nav>` : '';
+const _o6 = cfg.order.filter((s) => s === 'hero' || on(s)).filter((s) => s !== 'contact').map((s) => _o13[s] || '').join('\n');
+const _od = on('contact') && (phone || zalo) ? `<nav class="lp-dock" aria-label="Liên hệ nhanh">${zalo ? `<a class="z" href="${esc(zaloHref)}" target="_blank" rel="noopener">💬 Zalo</a>` : ''}${phone ? `<a class="c" href="tel:${esc(phone)}">📞 Gọi ${esc(phoneText(phone))}</a>` : ''}</nav>` : '';
 const C = cfg.contact;
-const _o1b = preview ? {} : activePixels(cfg);
-const _o1r = [C.name ? `<b>${esc(C.name)}</b>` : '', C.cert ? 'Chứng chỉ hành nghề môi giới số ' + esc(C.cert) : '', C.company ? 'Hành nghề tại ' + esc(C.company) : '', phone ? 'Hotline/Zalo ' + esc(phoneText(phone)) : ''].filter(Boolean).join(' · ');
-const _o1c = Object.keys(_o1b).length ? ` Trang dùng công cụ đo lường quảng cáo (${Object.keys(_o1b).map((_ou) => PIXEL_NAMES[_ou]).join(', ')}) để đo hiệu quả quảng cáo; không gửi họ tên, số điện thoại của anh/chị cho các công cụ này.` : '';
-const _oi = `<footer class="lp-foot" id="lp-data"><div class="lp-wrap">${_o1r ? `<p>${_o1r}</p>` : ''}
+const _o1a = preview ? {} : activePixels(cfg);
+const _o1q = [C.name ? `<b>${esc(C.name)}</b>` : '', C.cert ? 'Chứng chỉ hành nghề môi giới số ' + esc(C.cert) : '', C.company ? 'Hành nghề tại ' + esc(C.company) : '', phone ? 'Hotline/Zalo ' + esc(phoneText(phone)) : ''].filter(Boolean).join(' · ');
+const _o1b = Object.keys(_o1a).length ? ` Trang dùng công cụ đo lường quảng cáo (${Object.keys(_o1a).map((_ot) => PIXEL_NAMES[_ot]).join(', ')}) để đo hiệu quả quảng cáo; không gửi họ tên, số điện thoại của anh/chị cho các công cụ này.` : '';
+const _oh = `<footer class="lp-foot" id="lp-data"><div class="lp-wrap">${_o1q ? `<p>${_o1q}</p>` : ''}
 <p>Giá và chính sách trên trang là <b>thông tin tham khảo</b>, không phải bảng giá chính thức của chủ đầu tư. Giá, chiết khấu, tiến độ thanh toán, hỗ trợ lãi suất và điều kiện vay thực tế theo chính sách bán hàng, hợp đồng và ngân hàng tại thời điểm ký. Tên dự án và chủ đầu tư chỉ dùng để nhận diện sản phẩm; đây là trang tư vấn cá nhân, không phải trang của chủ đầu tư.</p>
-<details class="lp-pol"><summary>Chính sách bảo vệ dữ liệu cá nhân</summary><p>Họ tên, số điện thoại và nhu cầu anh/chị để lại chỉ dùng để tư vấn mua, bán, cho thuê bất động sản theo yêu cầu, chỉ khi anh/chị đã tick ô đồng ý. Không bán hoặc chia sẻ cho bên thứ ba khi chưa có sự đồng ý. Anh/chị có quyền xem, sửa, rút lại đồng ý hoặc yêu cầu xoá dữ liệu bất kỳ lúc nào${phone ? ' qua số ' + esc(phoneText(phone)) : ''}. Dữ liệu lưu tối đa 24 tháng kể từ lần liên hệ cuối hoặc đến khi anh/chị yêu cầu xoá.${esc(_o1c)}</p></details></div></footer>`;
+<details class="lp-pol"><summary>Chính sách bảo vệ dữ liệu cá nhân</summary><p>Họ tên, số điện thoại và nhu cầu anh/chị để lại chỉ dùng để tư vấn mua, bán, cho thuê bất động sản theo yêu cầu, chỉ khi anh/chị đã tick ô đồng ý. Không bán hoặc chia sẻ cho bên thứ ba khi chưa có sự đồng ý. Anh/chị có quyền xem, sửa, rút lại đồng ý hoặc yêu cầu xoá dữ liệu bất kỳ lúc nào${phone ? ' qua số ' + esc(phoneText(phone)) : ''}. Dữ liệu lưu tối đa 24 tháng kể từ lần liên hệ cuối hoặc đến khi anh/chị yêu cầu xoá.${esc(_o1b)}</p></details></div></footer>`;
 const css = pageCss(cfg);
 const base = normBaseUrl(opts.baseUrl || '') || normBaseUrl(cfg.seo.base_url);
 const title = String(cfg.seo.title || cfg.name || 'Trang').trim().slice(0, 90);
@@ -442,10 +442,10 @@ let og = '';
 if (cfg.seo.og_image && cfg.seo.og_image.kind === 'url' && imageUrl(cfg.seo.og_image.url)) og = imageUrl(cfg.seo.og_image.url);
 else if (cfg.seo.og_image && cfg.seo.og_image.kind === 'local' && base && opts.ogPath) og = base + opts.ogPath;
 const cfgJson = {
-server: opts.server || '', landing_id: cfg.id, slug: cfg.slug, project: _o13 ? _o13.name : '', template: cfg.template,
+server: opts.server || '', landing_id: cfg.id, slug: cfg.slug, project: _o12 ? _o12.name : '', template: cfg.template,
 preview: preview ? 1 : 0
 };
-const _oy = cfg.template === 'event' && eventAt(cfg.s.event)
+const _ox = cfg.template === 'event' && eventAt(cfg.s.event)
 ? { '@context': 'https://schema.org', '@type': 'Event', name: cfg.s.hero.heading, startDate: new Date(eventAt(cfg.s.event)).toISOString(), eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', location: { '@type': 'Place', name: cfg.s.event.place, address: cfg.s.event.place }, description: desc }
 : cfg.template === 'agent' ? { '@context': 'https://schema.org', '@type': 'RealEstateAgent', name: C.name || cfg.brand.name, telephone: phone || undefined, url: base || undefined } : null;
 const headTags = [
@@ -459,11 +459,11 @@ base ? `<meta property="og:url" content="${esc(base)}">` : '', og ? `<meta prope
 '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
 `<link href="${FONTS_URL}" rel="stylesheet">`,
 preview ? '' : `<style>${css}</style>`,
-preview ? '' : _o15(_o1b),
-_oy && !preview ? `<script type="application/ld+json">${_ot(JSON.parse(JSON.stringify(_oy)))}</script>` : ''
+preview ? '' : _o14(_o1a),
+_ox && !preview ? `<script type="application/ld+json">${_os(JSON.parse(JSON.stringify(_ox)))}</script>` : ''
 ].filter(Boolean).join('\n');
-const _o1f = preview ? '' : `<script type="application/json" id="lp-cfg">${_ot(cfgJson)}</script>\n<script>${pageScript()}</script>`;
-const html = `<!doctype html>\n<html lang="vi">\n<head>\n${headTags}\n</head>\n<body class="lp${preview ? ' lp-preview' : ''}">\n<header class="lp-top"><div class="lp-wrap"><span class="lp-brand">${esc(cfg.brand.name || C.name || '')}</span>${phone ? `<a class="lp-pill" href="tel:${esc(phone)}">📞 ${esc(phoneText(phone))}</a>` : ''}</div></header>\n<main>\n${_o7}\n</main>\n${_oi}\n${_oe}\n${_o1f}\n</body>\n</html>\n`;
+const _o1e = preview ? '' : `<script type="application/json" id="lp-cfg">${_os(cfgJson)}</script>\n<script>${pageScript()}</script>`;
+const html = `<!doctype html>\n<html lang="vi">\n<head>\n${headTags}\n</head>\n<body class="lp${preview ? ' lp-preview' : ''}">\n<header class="lp-top"><div class="lp-wrap"><span class="lp-brand">${esc(cfg.brand.name || C.name || '')}</span>${phone ? `<a class="lp-pill" href="tel:${esc(phone)}">📞 ${esc(phoneText(phone))}</a>` : ''}</div></header>\n<main>\n${_o6}\n</main>\n${_oh}\n${_od}\n${_o1e}\n</body>\n</html>\n`;
 return { html, css, cfgJson };
 }
 export const DEPLOY_GUIDE = [
@@ -489,17 +489,17 @@ export const DEPLOY_GUIDE = [
 ].join('\n');
 export function exportFiles(cfg, data = {}, { server = '', images = {}, now = Date.now() } = {}) {
 const files = [];
-const _o1o = new Set();
-const imgSrc = (im) => { const _og = images[im.id]; if (!_og) return ''; _o1o.add(im.id); return 'img/' + im.id + '.' + (_og.ext || 'jpg'); };
+const _o1n = new Set();
+const imgSrc = (im) => { const _of = images[im.id]; if (!_of) return ''; _o1n.add(im.id); return 'img/' + im.id + '.' + (_of.ext || 'jpg'); };
 const og = cfg.seo.og_image && cfg.seo.og_image.kind === 'local' && images[cfg.seo.og_image.id] ? 'img/' + cfg.seo.og_image.id + '.' + (images[cfg.seo.og_image.id].ext || 'jpg') : '';
 const { html } = renderPage(cfg, data, { target: 'static', server, imgSrc, ogPath: og });
-if (og) _o1o.add(cfg.seo.og_image.id);
+if (og) _o1n.add(cfg.seo.og_image.id);
 files.push({ name: 'index.html', data: html });
-for (const id of _o1o) files.push({ name: 'img/' + id + '.' + (images[id].ext || 'jpg'), data: images[id].bytes });
+for (const id of _o1n) files.push({ name: 'img/' + id + '.' + (images[id].ext || 'jpg'), data: images[id].bytes });
 const base = normBaseUrl(cfg.seo.base_url) || 'https://' + cfg.slug + '.pages.dev/';
-const _od = new Date(now).toISOString().slice(0, 10);
+const _oc = new Date(now).toISOString().slice(0, 10);
 files.push({ name: 'robots.txt', data: `User-agent: *\nAllow: /\nSitemap: ${base}sitemap.xml\n` });
-files.push({ name: 'sitemap.xml', data: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${esc(base)}</loc><lastmod>${_od}</lastmod></url>\n</urlset>\n` });
+files.push({ name: 'sitemap.xml', data: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${esc(base)}</loc><lastmod>${_oc}</lastmod></url>\n</urlset>\n` });
 files.push({ name: '_headers', data: '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n\n/img/*\n  Cache-Control: public, max-age=604800\n' });
 files.push({ name: 'HUONG_DAN_DUA_LEN_MANG.txt', data: DEPLOY_GUIDE.replace(/\{slug\}/g, cfg.slug) + '\n' });
 return { files, html };
@@ -511,8 +511,8 @@ export function appHtml(cfg, data = {}, { server = '', dataUrls = {}, pageUrl = 
 return renderPage(cfg, data, { target: 'app', server, baseUrl: pageUrl, imgSrc: (im) => dataUrls[im.id] || '' }).html;
 }
 export function saleLink(url, code) {
-const _o1m = String(url || ''); const _o9 = String(code || '').replace(/[^a-z0-9]/gi, '').slice(0, 16);
-if (!_o1m || !_o9) return _o1m;
-return _o1m + (_o1m.includes('?') ? '&' : '?') + 's=' + _o9;
+const _o1l = String(url || ''); const _o8 = String(code || '').replace(/[^a-z0-9]/gi, '').slice(0, 16);
+if (!_o1l || !_o8) return _o1l;
+return _o1l + (_o1l.includes('?') ? '&' : '?') + 's=' + _o8;
 }
 export const gasPageUrl = (serverUrl, slug) => (serverUrl ? String(serverUrl).replace(/[?#].*$/, '') + '?p=' + encodeURIComponent(slug) : '');

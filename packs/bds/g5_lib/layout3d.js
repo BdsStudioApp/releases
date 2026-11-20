@@ -93,7 +93,7 @@ return DIRS[Math.round(_o8 / 45) % 8];
 export function normalizeLayout3d(input) {
 const _od = extractJsonObj(input);
 if (!_od) return { ok: false, reason: 'json', warnings: ['AI trả kết quả chưa đúng mẫu – bấm làm lại hoặc nhập tay.'] };
-if (_od.demo === true && !Array.isArray(_od.rooms)) return { ok: false, reason: 'demo', warnings: ['Chế độ Dùng thử không có AI thật'] };
+if (_od.demo === true && !Array.isArray(_od.rooms)) return { ok: false, reason: 'demo', warnings: ['Chế độ Xem thử không có AI thật'] };
 const _om = normalizeLayout(_od);
 const w = _om.warnings.filter((x) => !/hướng ban công\/cửa|căn góc/.test(x));
 if (!_om.fields.north_arrow) w.push('Không thấy mũi tên chỉ hướng Bắc trên ảnh – app không tính hướng ban công, anh/chị tự xác nhận hướng');
@@ -166,5 +166,5 @@ rooms: [
 ],
 doors: [{ between: ['Hành lang', 'Phòng ngủ 2'] }, { between: ['Hành lang', 'Vệ sinh chung'] }, { between: ['Hành lang', 'Phòng khách'] }, { between: ['Bếp + ăn', 'Phòng khách'] },
 { between: ['Phòng ngủ master', 'Phòng khách'] }, { between: ['Vệ sinh master', 'Phòng khách'] }, { between: ['Phòng khách', 'Lô gia'] }],
-entry: { room: 'Hành lang', side: 'top' }, confidence: 0.8, notes: 'KẾT QUẢ MẪU của chế độ Dùng thử – không đọc từ ảnh của anh/chị.',
+entry: { room: 'Hành lang', side: 'top' }, confidence: 0.8, notes: 'KẾT QUẢ MẪU của chế độ Xem thử – không đọc từ ảnh của anh/chị.',
 };

@@ -4,7 +4,7 @@ export const KIND = { partner: 'g4_partner', listing: 'g4_listing', ref: 'g4_pri
 export const KINDS = Object.values(KIND);
 export const PARTNER_ROLES = [
 ['admin_du_an', 'Admin dự án'], ['san_f1', 'Sàn F1'], ['san_f2', 'Sàn F2'], ['sale_bds', 'Sale BĐS'], ['tin_dung', 'Cán bộ tín dụng'],
-['sale_ngan_hang', 'Sale ngân hàng'], ['cong_chung', 'Công chứng'], ['chu_nha', 'Chủ nhà'], ['khac', 'Khác'],
+['sale_ngan_hang', 'Sale ngân hàng'], ['cong_chung', 'Công chứng'], ['chu_nha', 'Chủ nhà'], ['ctv', 'Cộng tác viên (CTV)'], ['khac', 'Khác'],
 ];
 export const CONTACT_TYPES = [['call', 'Gọi'], ['zalo', 'Zalo'], ['meeting', 'Gặp'], ['note', 'Ghi chú']];
 export const DEALS = [['chuyen_nhuong', 'Chuyển nhượng'], ['cho_thue', 'Cho thuê']];
@@ -27,14 +27,14 @@ export const DEPOSIT_NOTE = 'Lưu ý luật: với căn hình thành trong tươ
 export const BOOKING_KINDS = [['giu_cho', 'Giữ chỗ'], ['priority', 'Priority / Booking'], ['coc', 'Đặt cọc']];
 export const BOOKING_STATUS = [['dang_giu', 'Đang giữ'], ['da_coc', 'Đã cọc'], ['da_ky', 'Đã ký hợp đồng'], ['huy', 'Huỷ / hoàn tiền']];
 export const PAYOUT_STATUS = [['chua', 'Chưa đến hạn'], ['cho_chi', 'Chờ nhận'], ['da_chi', 'Đã nhận']];
-export const label = (list, v) => { const _oa = list.find((_ow) => _ow[0] === v); return _oa ? _oa[1] : (v || ''); };
+export const label = (list, v) => { const _oa = list.find((_ox) => _ox[0] === v); return _oa ? _oa[1] : (v || ''); };
 export { strip, parseData, parseMoney, normPhone };
 const _oi = (n) => String(n).padStart(2, '0');
 export const YMD_RE = /^\d{4}-\d{2}-\d{2}$/;
 export function ymdToMs(s) {
 if (!YMD_RE.test(String(s || ''))) return 0;
-const [_ox, m, d] = String(s).split('-').map(Number);
-const ms = Date.UTC(_ox, m - 1, d, 2, 0, 0);
+const [_oy, m, d] = String(s).split('-').map(Number);
+const ms = Date.UTC(_oy, m - 1, d, 2, 0, 0);
 const _o9 = new Date(ms);
 return _o9.getUTCDate() === d && _o9.getUTCMonth() === m - 1 ? ms : 0;
 }
@@ -44,13 +44,13 @@ export function ymdLabel(s) { return YMD_RE.test(String(s || '')) ? String(s).sl
 export function moneyExact(n) {
 n = Number(n);
 if (!Number.isFinite(n) || n === 0) return '0 đồng';
-const _oo = n < 0 ? '-' : '', _o1 = Math.abs(n);
-const _ou = (_ow, d) => (Math.round(_ow * 10 ** d) / 10 ** d).toLocaleString('vi-VN', { maximumFractionDigits: d });
+const _op = n < 0 ? '-' : '', _o1 = Math.abs(n);
+const _ov = (_ox, d) => (Math.round(_ox * 10 ** d) / 10 ** d).toLocaleString('vi-VN', { maximumFractionDigits: d });
 const exact = (unit, d) => Math.abs(Math.round(_o1 / unit * 10 ** d) / 10 ** d * unit - _o1) < 0.5;
-if (_o1 >= 1e9 && exact(1e9, 3)) return _oo + _ou(_o1 / 1e9, 3) + ' tỷ';
-if (_o1 >= 1e6 && _o1 < 1e9 && exact(1e6, 2)) return _oo + _ou(_o1 / 1e6, 2) + ' triệu';
-if (_o1 >= 1e3 && _o1 < 1e6 && exact(1e3, 0)) return _oo + _ou(_o1 / 1e3, 0) + ' nghìn';
-return _oo + Math.round(_o1).toLocaleString('vi-VN') + ' đồng';
+if (_o1 >= 1e9 && exact(1e9, 3)) return _op + _ov(_o1 / 1e9, 3) + ' tỷ';
+if (_o1 >= 1e6 && _o1 < 1e9 && exact(1e6, 2)) return _op + _ov(_o1 / 1e6, 2) + ' triệu';
+if (_o1 >= 1e3 && _o1 < 1e6 && exact(1e3, 0)) return _op + _ov(_o1 / 1e3, 0) + ' nghìn';
+return _op + Math.round(_o1).toLocaleString('vi-VN') + ' đồng';
 }
 export function moneyText(n) {
 n = Math.round(Number(n));
@@ -73,11 +73,11 @@ export const numVi = (n) => String(n).replace('.', ',');
 export const todayYmd = (now = Date.now()) => msToYmd(now);
 export function dateProblem(ymd, what, { notFuture = false, notPast = false, now = Date.now() } = {}) {
 if (!YMD_RE.test(String(ymd || '')) || !ymdToMs(ymd)) return what + ' chưa đúng.';
-const _oq = todayYmd(now);
-const _ox = Number(ymd.slice(0, 4));
-if (_ox < 2000 || _ox > Number(_oq.slice(0, 4)) + 10) return what + ' chưa đúng năm (' + ymdLabel(ymd) + ').';
-if (notFuture && ymd > _oq) return what + ' không thể sau hôm nay (' + ymdLabel(_oq) + ').';
-if (notPast && ymd < _oq) return what + ' đã qua (' + ymdLabel(ymd) + ') – chọn từ hôm nay trở đi.';
+const _or = todayYmd(now);
+const _oy = Number(ymd.slice(0, 4));
+if (_oy < 2000 || _oy > Number(_or.slice(0, 4)) + 10) return what + ' chưa đúng năm (' + ymdLabel(ymd) + ').';
+if (notFuture && ymd > _or) return what + ' không thể sau hôm nay (' + ymdLabel(_or) + ').';
+if (notPast && ymd < _or) return what + ' đã qua (' + ymdLabel(ymd) + ') – chọn từ hôm nay trở đi.';
 return '';
 }
 export function commissionProblem({ type, value, price }) {
@@ -88,25 +88,25 @@ if (type === 'months' && v > 12) return 'Phí môi giới ' + numVi(v) + ' thán
 if (type === 'amount' && _oh > 0 && v >= _oh) return 'Hoa hồng ' + moneyExact(v) + ' không thể bằng hoặc lớn hơn giá căn ' + moneyExact(_oh) + '.';
 return '';
 }
-export function safeUrl(_os) {
-const s = String(_os ?? '').trim();
+export function safeUrl(_ot) {
+const s = String(_ot ?? '').trim();
 if (!s || s.length > 1000 || !/^https?:\/\/[^\s<>"'`]+$/i.test(s)) return '';
-try { const _ow = new URL(s); return _ow.protocol === 'http:' || _ow.protocol === 'https:' ? s : ''; } catch { return ''; }
+try { const _ox = new URL(s); return _ox.protocol === 'http:' || _ox.protocol === 'https:' ? s : ''; } catch { return ''; }
 }
 export function parseLinks(text, max = 20) {
 const _og = [];
-for (const _oj of String(text ?? '').split(/[\s,;]+/)) { const _os = safeUrl(_oj); if (_os && !_og.includes(_os)) _og.push(_os); }
+for (const _oj of String(text ?? '').split(/[\s,;]+/)) { const _ot = safeUrl(_oj); if (_ot && !_og.includes(_ot)) _og.push(_ot); }
 return _og.slice(0, max);
 }
-export function linkDropped(text) { return String(text ?? '').split(/[\s,;]+/).filter(Boolean).filter((_ow) => !safeUrl(_ow)); }
+export function linkDropped(text) { return String(text ?? '').split(/[\s,;]+/).filter(Boolean).filter((_ox) => !safeUrl(_ox)); }
 export function linkProblem(text) {
 const _o4 = linkDropped(text);
 if (!_o4.length || parseLinks(text).length) return '';
-return 'Link phải bắt đầu bằng https:// – chưa đúng: ' + _o4.slice(0, 2).map((_ow) => (_ow.length > 40 ? _ow.slice(0, 40) + '…' : _ow)).join(', ');
+return 'Link phải bắt đầu bằng https:// – chưa đúng: ' + _o4.slice(0, 2).map((_ox) => (_ox.length > 40 ? _ox.slice(0, 40) + '…' : _ox)).join(', ');
 }
-export function linkNote(...texts) { const n = texts.reduce((t, _ow) => t + linkDropped(_ow).length, 0); return n ? ' – bỏ ' + n + ' dòng không phải link https://' : ''; }
-export const isDriveLink = (_os) => /^https:\/\/(drive|docs|photos)\.google\.com\//i.test(String(_os || ''));
-export function hostOf(_os) { try { return new URL(_os).hostname.replace(/^www\./i, '').toLowerCase(); } catch { return ''; } }
+export function linkNote(...texts) { const n = texts.reduce((t, _ox) => t + linkDropped(_ox).length, 0); return n ? ' – bỏ ' + n + ' dòng không phải link https://' : ''; }
+export const isDriveLink = (_ot) => /^https:\/\/(drive|docs|photos)\.google\.com\//i.test(String(_ot || ''));
+export function hostOf(_ot) { try { return new URL(_ot).hostname.replace(/^www\./i, '').toLowerCase(); } catch { return ''; } }
 export const dataOf = (row) => parseData(row && row.data);
 export const alive = (r) => !!r && !Number(r.deleted);
 export function ofKind(rows, kind) { return (rows || []).filter((r) => alive(r) && r.kind === kind); }
@@ -130,15 +130,40 @@ return rows.filter((r) => strip(fields(r).filter(Boolean).join(' ')).includes(s)
 export function projectKey(projects, idOrName) {
 if (!idOrName) return '';
 const s = strip(idOrName);
-const _oh = (projects || []).find((_ow) => _ow && (_ow.id === idOrName || strip(_ow.name) === s || strip(_ow.id) === s));
+const _oh = (projects || []).find((_ox) => _ox && (_ox.id === idOrName || strip(_ox.name) === s || strip(_ox.id) === s));
 return _oh ? _oh.id : s;
 }
 export function projectName(projects, idOrName) {
 if (!idOrName) return '';
-const _oh = (projects || []).find((_ow) => _ow && (_ow.id === idOrName || _ow.name === idOrName));
+const _oh = (projects || []).find((_ox) => _ox && (_ox.id === idOrName || _ox.name === idOrName));
 return _oh ? (_oh.name || _oh.id) : String(idOrName);
 }
-export function splitUnits(s) { return String(s ?? '').split(/[,;\n]+/).map((_ow) => _ow.trim()).filter(Boolean).slice(0, 200); }
+export const isCtv = (row) => alive(row) && row.kind === KIND.partner && dataOf(row).role === 'ctv';
+export function cleanCtvNotes(list) {
+if (!Array.isArray(list)) return [];
+return list.filter((_ox) => _ox && typeof _ox === 'object').map((_ox) => {
+const _o5 = typeof _ox.commission === 'number' ? _ox.commission : parseMoney(_ox.commission);
+return {
+unit: String(_ox.unit ?? '').trim().slice(0, 300),
+closed_at: YMD_RE.test(String(_ox.closed_at || '')) ? String(_ox.closed_at) : '',
+commission: Number.isFinite(_o5) && _o5 > 0 ? Math.round(_o5) : 0,
+note: String(_ox.note ?? '').trim().slice(0, 500),
+};
+}).filter((_ox) => _ox.unit || _ox.closed_at || _ox.commission || _ox.note).slice(0, 500);
+}
+export const ctvNotesOf = (row) => cleanCtvNotes(dataOf(row).ctv_notes);
+export function ctvNotesTotal(list) { return (Array.isArray(list) ? list : []).reduce((s, _ox) => s + (Number(_ox && _ox.commission) > 0 ? Number(_ox.commission) : 0), 0); }
+export function findCtvFor(rows, customer) {
+if (!customer) return null;
+const _ol = normPhone(customer.phone);
+return (rows || []).find((r) => isCtv(r) && ((customer.id && dataOf(r).customer_id === customer.id) || (_ol && normPhone(r.phone) === _ol))) || null;
+}
+export function ctvFromCustomer(customer, user) {
+const _o5 = customer || {};
+return newRow(KIND.partner, user, { name: String(_o5.name || '').slice(0, 200), phone: normPhone(_o5.phone), zalo: _o5.zalo ? normPhone(_o5.zalo) : '', status: 'dang_hop_tac' },
+{ role: 'ctv', customer_id: _o5.id || '', ctv_notes: [] });
+}
+export function splitUnits(s) { return String(s ?? '').split(/[,;\n]+/).map((_ox) => _ox.trim()).filter(Boolean).slice(0, 200); }
 export function inventoryRows(partners) {
 const _og = [];
 for (const _oh of ofKind(partners, KIND.partner)) {
@@ -147,7 +172,7 @@ for (const _oc of Array.isArray(d.inventory) ? d.inventory : []) {
 const units = splitUnits(_oc && _oc.units);
 const base = { partner_id: _oh.id, partner: _oh.name || '', role: d.role || '', phone: _oh.phone || '', project: (_oc && _oc.project) || '', note: (_oc && _oc.note) || '', at: num(_oc && _oc.at) };
 if (!units.length) _og.push({ ...base, unit: '' });
-for (const _os of units) _og.push({ ...base, unit: _os });
+for (const _ot of units) _og.push({ ...base, unit: _ot });
 }
 }
 return _og;
@@ -185,15 +210,15 @@ ppm2: num(d.ppm2), rent: num(d.rent), source: String(d.source || ''), as_of: Str
 }
 export function pickRef(refs, { project, unit_type, deal }, projects, now = Date.now()) {
 const pk = projectKey(projects, project);
-const _oq = todayYmd(now);
+const _or = todayYmd(now);
 const list = (refs || []).filter((r) => !r.kind || (alive(r) && r.status !== 'luu_tru')).map((r) => (r.kind ? refView(r) : r))
 .filter((r) => projectKey(projects, r.project) === pk && r.deal === deal && (deal === 'cho_thue' ? r.rent > 0 : r.ppm2 > 0))
-.filter((r) => !r.as_of || String(r.as_of) <= _oq);
-const _ot = strip(unit_type);
-const exact = list.filter((r) => _ot && strip(r.unit_type) === _ot);
+.filter((r) => !r.as_of || String(r.as_of) <= _or);
+const _ou = strip(unit_type);
+const exact = list.filter((r) => _ou && strip(r.unit_type) === _ou);
 const _o2 = list.filter((r) => !r.unit_type);
-const _ol = exact.length ? exact : _o2;
-return _ol.sort((_o1, _o3) => String(_o3.as_of).localeCompare(String(_o1.as_of)))[0] || null;
+const _om = exact.length ? exact : _o2;
+return _om.sort((_o1, _o3) => String(_o3.as_of).localeCompare(String(_o1.as_of)))[0] || null;
 }
 const _ok = (_o1, _o3) => (_o3 > 0 ? Math.round(((_o1 - _o3) / _o3) * 1000) / 10 : null);
 export function compareListing(v, { project, refs, projects, threshold = 5 } = {}) {
@@ -206,10 +231,10 @@ else _og.notes.push('Chưa có giá thuê tham chiếu cho dự án/loại căn 
 } else {
 if (v.area > 0) _og.ppm2 = Math.round((v.price / v.area / 1e6) * 10) / 10;
 else _og.notes.push('Thiếu diện tích – chưa tính được giá/m²');
-const _om = project && Array.isArray(project.price) && project.price[0] > 0 ? project.price : null;
-_og.primary = _om;
-if (_og.ppm2 && _om) { _og.vsPrimaryLow = _ok(_og.ppm2, _om[0]); if (_og.ppm2 < _om[0]) _og.flags.push('duoi_so_cap'); }
-else if (!_om) _og.notes.push('Dự án chưa có giá sơ cấp trong Bảng hàng');
+const _on = project && Array.isArray(project.price) && project.price[0] > 0 ? project.price : null;
+_og.primary = _on;
+if (_og.ppm2 && _on) { _og.vsPrimaryLow = _ok(_og.ppm2, _on[0]); if (_og.ppm2 < _on[0]) _og.flags.push('duoi_so_cap'); }
+else if (!_on) _og.notes.push('Dự án chưa có giá sơ cấp trong Bảng hàng');
 if (_og.ref && _og.ppm2) _og.vsMarket = _ok(_og.ppm2, _og.ref.ppm2);
 else if (!_og.ref) _og.notes.push('Chưa có mặt bằng giá tham chiếu cho dự án/loại căn này');
 if (v.bought_price > 0 && v.price < v.bought_price) { _og.lossPct = _ok(v.price, v.bought_price); _og.flags.push('cat_lo'); }
@@ -220,20 +245,20 @@ return _og;
 export const FLAG_LABEL = { re_hon_mat_bang: 'Rẻ hơn mặt bằng', duoi_so_cap: 'Dưới giá sơ cấp', cat_lo: 'Cắt lỗ' };
 const _o0 = /da mua|khong tiem nang|da coc|ban giao/;
 export function matchCustomers(v, customers, { projects, slack = 0.1, limit = 20 } = {}) {
-const _ov = v.deal === 'cho_thue' ? ['thue'] : ['mua'];
-const pk = projectKey(projects, v.project), _ot = strip(v.unit_type);
+const _ow = v.deal === 'cho_thue' ? ['thue'] : ['mua'];
+const pk = projectKey(projects, v.project), _ou = strip(v.unit_type);
 const _og = [];
 for (const _o5 of customers || []) {
 if (!alive(_o5) || (_o5.kind && _o5.kind !== 'customer') || _o0.test(strip(_o5.status))) continue;
-if (!_ov.includes(strip(_o5.need || 'mua'))) continue;
+if (!_ow.includes(strip(_o5.need || 'mua'))) continue;
 const reasons = [];
 let score = 1;
 if (_o5.project) {
 if (projectKey(projects, _o5.project) !== pk) continue;
 score += 3; reasons.push('đúng dự án');
 }
-if (_o5.unit_type && _ot) {
-if (strip(_o5.unit_type) !== _ot) continue;
+if (_o5.unit_type && _ou) {
+if (strip(_o5.unit_type) !== _ou) continue;
 score += 2; reasons.push('đúng loại căn');
 }
 const budget = num(_o5.budget);
@@ -249,17 +274,17 @@ return _og.sort((_o1, _o3) => _o3.score - _o1.score || num(_o1.customer.budget) 
 export function legalState(legal) {
 const items = (legal && legal.items) || {};
 return LEGAL_ITEMS.map((it) => {
-const _ow = items[it.id] || {};
-return { ...it, status: LEGAL_STATUS.some((s) => s[0] === _ow.status) ? _ow.status : 'chua', note: String(_ow.note || ''), links: (Array.isArray(_ow.links) ? _ow.links : []).filter(safeUrl), at: num(_ow.at) };
+const _ox = items[it.id] || {};
+return { ...it, status: LEGAL_STATUS.some((s) => s[0] === _ox.status) ? _ox.status : 'chua', note: String(_ox.note || ''), links: (Array.isArray(_ox.links) ? _ox.links : []).filter(safeUrl), at: num(_ox.at) };
 });
 }
 export function legalProgress(legal) {
-const _op = legalState(legal).filter((_ow) => _ow.status !== 'khong_ap_dung');
-const ok = _op.filter((_ow) => _ow.status === 'ok').length, issues = _op.filter((_ow) => _ow.status === 'van_de').length;
-const pending = _op.length - ok - issues;
-const _or = _op.some((_ow) => _ow.status !== 'chua');
-const verdict = issues ? 'co_van_de' : (_op.length && !pending ? 'da_kiem' : (_or ? 'dang_kiem' : 'chua_kiem'));
-return { total: _op.length, ok, issues, pending, verdict };
+const _oq = legalState(legal).filter((_ox) => _ox.status !== 'khong_ap_dung');
+const ok = _oq.filter((_ox) => _ox.status === 'ok').length, issues = _oq.filter((_ox) => _ox.status === 'van_de').length;
+const pending = _oq.length - ok - issues;
+const _os = _oq.some((_ox) => _ox.status !== 'chua');
+const verdict = issues ? 'co_van_de' : (_oq.length && !pending ? 'da_kiem' : (_os ? 'dang_kiem' : 'chua_kiem'));
+return { total: _oq.length, ok, issues, pending, verdict };
 }
 export const VERDICT_LABEL = { chua_kiem: 'Chưa kiểm', dang_kiem: 'Đang kiểm', co_van_de: 'Có vấn đề', da_kiem: 'Đã kiểm đủ mục' };
 export function setLegalItem(legal, id, patch, now = Date.now()) {
@@ -273,7 +298,7 @@ return {
 id: row.id, name: row.name || '', project: row.project || '', unit_type: row.unit_type || '', status: row.status || 'dang_giu', owner: row.owner || '',
 kind: d.kind || 'giu_cho', customer_id: d.customer_id || '', customer_name: d.customer_name || '', unit_code: d.unit_code || '', listing_id: d.listing_id || '',
 amount: num(d.amount), paid_at: d.paid_at || '', proofs: (Array.isArray(d.proofs) ? d.proofs : []).filter(safeUrl),
-deadlines: (Array.isArray(d.deadlines) ? d.deadlines : []).filter((_ow) => _ow && _ow.id && YMD_RE.test(_ow.date || '')),
+deadlines: (Array.isArray(d.deadlines) ? d.deadlines : []).filter((_ox) => _ox && _ox.id && YMD_RE.test(_ox.date || '')),
 price: num(d.price), commission: { type: 'pct', value: 0, status: 'chua', ...(d.commission || {}) }, bonus: { amount: 0, note: '', status: 'chua', ...(d.bonus || {}) },
 note: row.note || '',
 };
@@ -295,8 +320,8 @@ if (_o3.status === 'huy') continue;
 const _of = by.get(_o3.owner) || { owner: _o3.owner, count: 0, commission: 0, bonus: 0, received: 0, waiting: 0, notyet: 0 };
 const _o5 = bookingCommission(_o3), bo = num(_o3.bonus.amount);
 _of.count++; _of.commission += _o5; _of.bonus += bo;
-for (const [amt, _op] of [[_o5, _o3.commission.status], [bo, _o3.bonus.status]]) {
-if (_op === 'da_chi') _of.received += amt; else if (_op === 'cho_chi') _of.waiting += amt; else _of.notyet += amt;
+for (const [amt, _oq] of [[_o5, _o3.commission.status], [bo, _o3.bonus.status]]) {
+if (_oq === 'da_chi') _of.received += amt; else if (_oq === 'cho_chi') _of.waiting += amt; else _of.notyet += amt;
 }
 by.set(_o3.owner, _of);
 }
@@ -363,23 +388,23 @@ if (_ob >= 0 && j > _ob) { try { return JSON.parse(_o5.slice(_ob, j + 1)); } cat
 return null;
 }
 export function parseSiteEntries(text, sources = [], existing = [], now = Date.now()) {
-const _oq = todayYmd(now);
+const _or = todayYmd(now);
 const j = extractJson(text);
 const list = Array.isArray(j) ? j : (j && Array.isArray(j.entries) ? j.entries : []);
 const hosts = new Set();
 for (const s of sources || []) { const _o1 = hostOf(s && s.url), _o3 = String((s && s.title) || '').replace(/^www\./i, '').toLowerCase().trim(); if (_o1) hosts.add(_o1); if (_o3 && /\./.test(_o3) && !/\s/.test(_o3)) hosts.add(_o3); }
-const _on = new Set((existing || []).map((e) => (e.date || '') + '|' + (e.sources && e.sources[0] ? e.sources[0].url : '')));
+const _oo = new Set((existing || []).map((e) => (e.date || '') + '|' + (e.sources && e.sources[0] ? e.sources[0].url : '')));
 const _og = [];
 for (const e of list.slice(0, 20)) {
 if (!e || typeof e !== 'object') continue;
 const date = String(e.date || '').slice(0, 10), url = safeUrl(e.source_url || e.url), txt = String(e.text || e.summary || '').trim().slice(0, 600);
 if (!YMD_RE.test(date) || !ymdToMs(date) || !url || !txt) continue;
-if (date > _oq) continue;
+if (date > _or) continue;
 const _od = date + '|' + url;
-if (_on.has(_od)) continue;
-_on.add(_od);
+if (_oo.has(_od)) continue;
+_oo.add(_od);
 const h = hostOf(url);
-const grounded = !!h && [...hosts].some((_ow) => _ow === h || h.endsWith('.' + _ow) || _ow.endsWith('.' + h));
+const grounded = !!h && [...hosts].some((_ox) => _ox === h || h.endsWith('.' + _ox) || _ox.endsWith('.' + h));
 _og.push({ date, text: txt, source_url: url, source_title: String(e.source_title || h || '').slice(0, 160), grounded });
 }
 return _og.sort((_o1, _o3) => _o3.date.localeCompare(_o1.date));

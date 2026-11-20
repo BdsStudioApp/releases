@@ -33,7 +33,7 @@ const S = (_o7, n) => String(_o7 == null ? '' : _o7).replace(/\s+/g, ' ').trim()
 export function normalizeQhRead(input) {
 const _o4 = extractJsonObj(input);
 if (!_o4) return { ok: false, reason: 'json', warnings: ['AI trả kết quả chưa đúng mẫu – bấm làm lại hoặc nhập tay.'] };
-if (_o4.demo === true && !Array.isArray(_o4.legend)) return { ok: false, reason: 'demo', warnings: ['Chế độ Dùng thử không có AI thật'] };
+if (_o4.demo === true && !Array.isArray(_o4.legend)) return { ok: false, reason: 'demo', warnings: ['Chế độ Xem thử không có AI thật'] };
 const _o8 = [];
 const _o2 = Math.max(0, Math.min(1, Number.isFinite(parseNum(_o4.confidence)) ? parseNum(_o4.confidence) : 0));
 const decision = S(_o4.decision, 120), issuer = S(_o4.issuer, 160), date = S(_o4.date, 40);
@@ -75,8 +75,8 @@ hint: 'Đối chiếu màu ô đất với chú giải, chấm từng tiêu chí
 return { steps, next: steps.find((x) => !x.done) || null };
 }
 export const DEMO_QH = {
-title: 'Bản đồ quy hoạch MẪU (chế độ Dùng thử)', issuer: '', decision: '', date: '', scale: '1/2000', north_arrow: true,
+title: 'Bản đồ quy hoạch MẪU (chế độ Xem thử)', issuer: '', decision: '', date: '', scale: '1/2000', north_arrow: true,
 legend: [{ color: '#F2D36B', label: 'Đất ở (mẫu)' }, { color: '#7CC46A', label: 'Cây xanh (mẫu)' }, { color: '#EEEAE0', label: 'Đất trống (mẫu)' }],
 landmarks: [{ x: 0.1, y: 0.1, label: 'Góc trên-trái ô đất (mẫu)' }, { x: 0.9, y: 0.1, label: 'Góc trên-phải ô đất (mẫu)' }, { x: 0.1, y: 0.9, label: 'Góc dưới-trái ô đất (mẫu)' }],
-confidence: 0.5, notes: 'KẾT QUẢ MẪU của chế độ Dùng thử – không đọc từ ảnh của anh/chị.',
+confidence: 0.5, notes: 'KẾT QUẢ MẪU của chế độ Xem thử – không đọc từ ảnh của anh/chị.',
 };

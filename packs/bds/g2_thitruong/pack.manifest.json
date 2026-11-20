@@ -1,2 +1,2 @@
-{ "id": "g2_thitruong", "title": "Thị trường quanh dự án", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "📈", "order": 260, "status": "thu-nghiem",
+{ "id": "g2_thitruong", "title": "Thị trường quanh dự án", "pack": "showing", "pack_group": "g2", "screen": "customers", "icon": "📈", "order": 260, "status": "thu-nghiem",
   "items": ["F–M"], "desc": "Tin 30 ngày, chính sách, nhu cầu khách quanh 1 dự án; sổ ghi nhận giá bán/giá thuê/hạ tầng/tiến độ có nguồn" }

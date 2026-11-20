@@ -1,7 +1,7 @@
 import * as M from './machine.js';
 import {
 adminNote, permTable, stepper, peopleEditor, validatePeople, toPeople, resizeGroup, inviteBase, invitesList, seatsText, maxPeople, quotaWarn, usersPath
-} from '../invites.e08b00346c.js';
+} from '../invites.d0704e2232.js';
 const cur = (st) => ({ sale: 0, manager: 0, rows: [], created: [], ...((st && st.data && st.data.doingu) || {}) });
 export function doinguCheck(state) {
 const _o4 = cur(state);

@@ -58,14 +58,14 @@ _os ? h('div', { class: 'sl-muted' }, `Đang áp dụng: ${S.policyLabel(policy)
 _o0.button('✍️ Gõ tay', () => { _o1a.draft = _oc(plans.length ? plans : [_o6(0)]); _o1a.source = 'manual'; _o1a.draftId = null; _o1a.aiErrors = []; _o10(); }, { testid: 'policy-manual' }),
 _o0.button('📷 Ảnh/PDF phiếu tính giá', () => _oh.click(), { testid: 'policy-ai-file', ai: 'policy_read' }),
 _o0.button('🤖 Làm bằng Claude/Gemini', handoff, { testid: 'policy-handoff', aiBadge: 'handoff' }),
-_o0.button('📋 Dán JSON', () => _ot(), { kind: 'ghost', testid: 'policy-paste' }))));
+_o0.button('📋 Dán kết quả AI', () => _ot(), { kind: 'ghost', testid: 'policy-paste' }))));
 }
 const _oh = h('input', { type: 'file', accept: 'image/*,application/pdf', multiple: true, hidden: true, 'data-testid': 'policy-file', onchange: (e) => _oy([...e.target.files]) });
 _o15.appendChild(_oh);
 async function _oy(files) {
 if (!files.length) return;
 const _os = project();
-if (!ctx.ai || typeof ctx.ai.run !== 'function') { _o0.toast('Chưa bật AI. Dùng "Làm bằng Claude/Gemini" rồi dán JSON.', 'warn'); return; }
+if (!ctx.ai || typeof ctx.ai.run !== 'function') { _o0.toast('Chưa bật AI. Dùng "Làm bằng Claude/Gemini" rồi dán kết quả về.', 'warn'); return; }
 _o0.toast('Đang đọc phiếu…', 'info');
 try {
 const images = [];
@@ -83,17 +83,17 @@ if (ctx.ai && typeof ctx.ai.handoff === 'function') {
 try { const text = await ctx.ai.handoff('read_policy', prompt); if (text) _o1g(text, 'ai'); return; } catch { }
 }
 await _o0.copy(prompt);
-_o0.toast('Đã chép lời nhắn. Dán vào Claude/Gemini cùng ảnh phiếu, rồi dán JSON kết quả.', 'info');
+_o0.toast('Đã chép lời nhắn. Dán vào Claude/Gemini cùng ảnh phiếu, rồi chép nguyên câu trả lời của AI dán về đây.', 'info');
 _ot();
 }
 function _ot() {
 const _o1d = h('textarea', { rows: 10, 'data-testid': 'policy-json', placeholder: '{"plans":[…]}' });
-const _oo = _o0.modal({ title: 'Dán JSON chính sách', testid: 'policy-json-modal', body: [_o1d, h('div', { class: 'sl-row sl-end' },
-_o0.button('Dùng JSON này', () => { if (_o1g(_o1d.value, 'ai')) _oo.close(); }, { kind: 'primary', testid: 'policy-json-use' }))] });
+const _oo = _o0.modal({ title: 'Dán kết quả AI – chính sách', testid: 'policy-json-modal', body: [_o1d, h('div', { class: 'sl-row sl-end' },
+_o0.button('Dùng kết quả này', () => { if (_o1g(_o1d.value, 'ai')) _oo.close(); }, { kind: 'primary', testid: 'policy-json-use' }))] });
 }
 function _o1g(text, source) {
 const _ow = S.normalizePlans(text);
-if (!_ow.plans.length) { _o0.toast(_ow.errors[0] || 'JSON chưa đúng mẫu.', 'error'); return false; }
+if (!_ow.plans.length) { _o0.toast(_ow.errors[0] || 'Kết quả chưa đúng mẫu – chép lại nguyên câu trả lời của AI rồi dán.', 'error'); return false; }
 _o1a.draft = _ow.plans; _o1a.source = source; _o1a.draftId = null; _o1a.aiErrors = _ow.errors;
 _o10();
 _o0.toast(`Đã nạp ${_ow.plans.length} phương án – kiểm tra kỹ trước khi Duyệt.`, 'ok');
@@ -229,7 +229,7 @@ return _o15;
 export default {
 manifest: {
 id: 'policy', title: 'Cập nhật chính sách', icon: '📝', screen: 'sales', order: 40, version: '1.0.0', status: 'ready',
-help: 'Nạp chính sách bán hàng mới: gõ tay, chụp phiếu tính giá cho AI đọc, hoặc nhờ Claude/Gemini rồi dán JSON. Tổng phải đủ 100% mới Duyệt được.',
+help: 'Nạp chính sách bán hàng mới: gõ tay, chụp phiếu tính giá cho AI đọc, hoặc nhờ Claude/Gemini rồi dán kết quả về. Tổng các đợt phải đủ 100% mới Duyệt được.',
 },
 mount,
 async selftest(ctx) {

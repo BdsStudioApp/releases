@@ -33,6 +33,10 @@ var BDS_KIT_RELEASE_ORIGIN = 'https://raw.githubusercontent.com/BdsStudioApp/rel
 var BDS_KIT_APP_URL = '';
 // Tên miền app riêng của người bán (sale.config.json › APP_DOMAIN): khách gõ "tenkhach" → https://tenkhach.<APP_DOMAIN>.
 var BDS_KIT_APP_DOMAIN = 'bdsstudio.app';
+// gflow (18/11): TRANG CÀI ĐẶT của người bán (sale.config.json › PORTAL, vd https://cai.bdsstudio.app – tools/sale_build.mjs --kit điền).
+// Khách mới (chưa có app riêng) → hộp thoại có nút to "Quay lại trang cài đặt và kết nối": Trợ lý ở trang cài đặt tự điền địa chỉ máy chủ +
+// vé cài đặt, tự kiểm, mở thẳng màn đặt mật khẩu – không chép/dán …/exec, không gõ mã 6 số. Trống → như cũ (Chép URL).
+var BDS_KIT_PORTAL_URL = 'https://cai.bdsstudio.app';
 // Địa chỉ máy chủ …/exec – CÙNG mẫu với web/core/exec_url.js › EXEC_URL_RE (tests/unit/exec_url.test.mjs đối chiếu). /dev KHÔNG nhận.
 var BDS_KIT_EXEC_RE = /^https:\/\/script\.google\.com\/(?:macros|a\/macros\/[A-Za-z0-9.-]{2,253}|a\/[A-Za-z0-9.-]{2,253}\/macros)\/s\/[A-Za-z0-9_-]{20,}\/exec$/;
 
@@ -259,6 +263,13 @@ function bdsKitUrlBlock_(url, appUrl) {
   var sc = bdsKitSetupTicket_(null, false).code;
   if (sc) copy += '<p>Mã cài đặt: <b style="font-size:18px;letter-spacing:2px">' + sc.slice(0, 3) + ' ' + sc.slice(3) + '</b> – app hỏi mã này 1 lần khi tạo tài khoản (chống người lạ dùng máy chủ của anh/chị).</p>';
   var keep = '<p class="note">Giữ địa chỉ này riêng tư. Dữ liệu nằm trong chính Sheet này, trong Google của anh/chị.</p>';
+  var portal = appUrl ? '' : bdsKitNormAppUrl_(BDS_KIT_PORTAL_URL);
+  if (portal) {
+    return '<p>Máy chủ đã sẵn sàng. Bấm nút dưới – Trợ lý cài đặt tự nối máy chủ và mở màn đặt mật khẩu, không cần chép gì:</p>'
+      + '<a class="big" data-ic="🚀" target="_blank" rel="noopener" href="' + bdsKitEsc_(bdsKitOpenHref_(portal, url)) + '">Quay lại trang cài đặt và kết nối</a>'
+      + '<p class="note">Mở bằng đúng trình duyệt đang mở trang cài đặt ' + bdsKitEsc_(portal.replace(/^https:\/\//, '')) + '. App riêng của anh/chị được tạo ngay sau bước đặt mật khẩu.</p>'
+      + '<details><summary>Không mở được? Chép địa chỉ máy chủ</summary>' + copy + '</details>' + keep;
+  }
   if (appUrl) {
     return '<p>Máy chủ đã sẵn sàng. Bấm nút dưới – app tự nối, không cần chép gì:</p>'
       + '<a class="big" data-ic="🚀" target="_blank" rel="noopener" href="' + bdsKitEsc_(bdsKitOpenHref_(appUrl, url)) + '">Mở BDS Studio và kết nối</a>'

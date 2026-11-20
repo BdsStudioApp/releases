@@ -28,7 +28,6 @@ export function slugPart(s) { return strip(s).replace(/[^a-z0-9]+/g, '-').replac
 export function groupLink(base, { group, campaign } = {}) {
 return taggedLink(base, { utm_source: 'group', utm_medium: 'community', utm_campaign: slugPart(campaign) || undefined, utm_content: group });
 }
-export function referralLink(base, code) { return taggedLink(base, { ref: cleanCode(code), utm_source: 'referral', utm_medium: 'referral' }); }
 export function adLink(base, { platform, campaign, content, video } = {}) {
 return taggedLink(base, { utm_source: platform, utm_medium: 'paid', utm_campaign: slugPart(campaign) || undefined, utm_content: slugPart(content) || undefined, v: video });
 }

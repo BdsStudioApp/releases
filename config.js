@@ -1,7 +1,7 @@
 // BẢN MẪU ĐỂ BÁN (edition=sale) – không chứa thông tin của chủ. Người dùng tự nhập khi cài.
 export default {
   "SCRIPT_URL": "",
-  "APP_VERSION": "1.0.5",
+  "APP_VERSION": "1.0.6",
   "PACK": "bds",
   "LOCK_MINUTES": 10,
   "SYNC_INTERVAL_MS": 30000,
@@ -26,12 +26,10 @@ export default {
   },
   "FEATURES": {
     "wizard": true,
-    "hwscan": true,
+    "hwscan": false,
     "video": false
   },
-  "hwscan": {
-    "enabled": true
-  },
+  "NO_VIDEO": true,
   "TEMPLATE_COPY_URL": "https://docs.google.com/spreadsheets/d/1Gscnz1lTmgkJsY7pvvSf_g7BnaNGXFqDGnu6yXuNYYQ/copy",
   "CNAME_TARGET": "",
   "APP_DOMAIN": "bdsstudio.app",
@@ -44,6 +42,8 @@ export default {
   },
   "GOOGLE_OAUTH_CLIENT_ID": "97314285247-d0k2luoqmkioo027hb76ciai7tfba8uo.apps.googleusercontent.com",
   "GOOGLE_OAUTH_VERIFIED": false,
+  "GOOGLE_INSTALL_ON": true,
+  "GOOGLE_INSTALL_SLOTS": 50,
   "PRIVACY_URL": "https://bdsstudio.app/chinh-sach-rieng-tu",
   "SUPPORT": {
     "email": "hotro@bdsstudio.app",

@@ -2,29 +2,41 @@ export const FLOWS = {
 personal: ['allow', 'account', 'telegram', 'backup', 'domain', 'ai', 'finish'],
 company: ['prepare', 'company', 'allow', 'account', 'telegram', 'tfa', 'doingu', 'domain', 'ai', 'finish', 'handover']
 };
-const _o5 = (list) => { const _o3 = list.indexOf('account'); return [...list.slice(0, _o3 + 1), 'diachi', ...list.slice(_o3 + 1)]; };
-export const PORTAL_FLOWS = { personal: _o5(FLOWS.personal), company: _o5(FLOWS.company) };
+const _o6 = (list) => { const _o3 = list.indexOf('account'); return [...list.slice(0, _o3 + 1), 'diachi', ...list.slice(_o3 + 1)]; };
+export const PORTAL_FLOWS = { personal: _o6(FLOWS.personal), company: _o6(FLOWS.company) };
 export function flowIds(flow, { portal = false } = {}) { return ((portal ? PORTAL_FLOWS : FLOWS)[flow]) || []; }
 export const FLOW_LABEL = { personal: 'Cá nhân', company: 'Công ty' };
 export const FLOW_INTRO = {
 personal: {
 icon: '👤', title: 'Cá nhân',
-lead: 'Cho một người tự dùng. Khoảng 10–15 phút, không cần cài phần mềm. Dữ liệu nằm trong Gmail của anh/chị, không chung với ai.',
-points: ['Tạo máy chủ (nơi cất dữ liệu) trong Gmail', 'Đặt tên đăng nhập và mật khẩu', 'Xong – có sẵn khách mẫu để xem thử']
+lead: 'Một người tự dùng. Cài một lần khoảng 10–15 phút, không cài phần mềm. Dữ liệu nằm trong Gmail của anh/chị.',
+points: ['Tạo máy chủ dữ liệu trong Gmail', 'Đặt tên đăng nhập, mật khẩu', 'Có sẵn khách mẫu để xem thử']
 },
 company: {
 icon: '🏢', title: 'Công ty',
-lead: 'Cho công ty có nhân viên: mỗi người một tài khoản, chỉ thấy phần việc của mình. Làm cùng bên cài đặt, có biên bản bàn giao.',
-points: ['Chuẩn bị: Google công ty, tên miền, Telegram', 'Nhập tên, mã số thuế, logo công ty', 'Tạo máy chủ và tài khoản Quản trị (Admin)', 'Bật mã đăng nhập, mời nhân viên, ký bàn giao']
+lead: 'Mỗi nhân viên một tài khoản, chỉ thấy phần việc của mình. Làm cùng bên cài đặt, có biên bản bàn giao.',
+points: ['Chuẩn bị Google công ty, tên miền', 'Tên, mã số thuế, logo công ty', 'Máy chủ + tài khoản Quản trị', 'Mời nhân viên, ký bàn giao']
 }
 };
+export const TRIAL_COMPANY_SEATS = 10;
+export function trialCompanySeats(config) {
+const _o4 = config && config.licensing;
+const v = Math.floor(Number(_o4 && _o4.trial_company_seats));
+return v >= 1 && v <= 10000 ? v : TRIAL_COMPANY_SEATS;
+}
+export function flowWho(flow, config) {
+return flow === 'company' ? 'Công ty = nhiều người, dùng thử tối đa ' + trialCompanySeats(config) + ' người' : 'Cá nhân = 1 người dùng';
+}
 export const CHECKLIST = [
-{ id: 'workspace', required: true, label: 'Tài khoản Google Workspace (Gmail mang tên công ty) do quản trị viên công ty giữ',
-hint: '⚠️ Không dùng Gmail cá nhân của nhân viên: người đó nghỉ việc là công ty mất toàn bộ dữ liệu khách.' },
-{ id: 'domain', required: true, label: 'Tên miền công ty (đã có website thì mua THÊM 1 tên miền riêng cho app) + tài khoản Cloudflare miễn phí của công ty',
-hint: 'App ở app.tencongty.vn, trang riêng nhân viên ở ten.tencongty.vn. Cần người đổi được nameserver ở nơi mua tên miền.' },
-{ id: 'telegram', required: true, label: 'Bot Telegram (tài khoản tự nhắn tin) của công ty, tạo bằng @BotFather + điện thoại có Telegram',
-hint: 'Bot báo khách mới, nhắc việc, gửi mã đăng nhập. Sau này mỗi sale tạo được bot riêng.' },
+{ id: 'workspace', required: false, recommended: true, label: 'Tài khoản Google Workspace (Gmail mang tên công ty) do quản trị viên công ty giữ',
+short: 'Tài khoản Google Workspace của công ty',
+hint: '⚠️ Nên dùng tài khoản Google Workspace do quản trị viên công ty giữ – dùng Gmail cá nhân để thử cũng được, nhưng trước khi dùng thật hãy chuyển sang tài khoản công ty để nhân viên nghỉ việc không mang dữ liệu đi.' },
+{ id: 'domain', required: false, recommended: true, label: 'Tên miền công ty (đã có website thì mua THÊM 1 tên miền riêng cho app) + tài khoản Cloudflare miễn phí của công ty',
+short: 'Tên miền công ty + Cloudflare',
+hint: 'Dùng thử: app chạy ở địa chỉ miễn phí tenkhach.bdsstudio.app. Trước khi dùng thật nên có tên miền công ty: app ở app.tencongty.vn, trang riêng nhân viên ở ten.tencongty.vn – cần người đổi được nameserver ở nơi mua tên miền.' },
+{ id: 'telegram', required: false, recommended: true, label: 'Bot Telegram (tài khoản tự nhắn tin) của công ty, tạo bằng @BotFather + điện thoại có Telegram',
+short: 'Bot Telegram của công ty',
+hint: 'Bot báo khách mới, nhắc việc, gửi mã đăng nhập. Chưa có thì vẫn dùng thử được (mã đăng nhập 2 lớp lấy bằng ứng dụng xác thực, hoặc làm sau) – nên tạo trước khi dùng thật. Sau này mỗi sale tạo được bot riêng.' },
 { id: 'ai', required: false, label: 'Khoá AI Gemini (mã để app dùng AI) – công ty tự đăng ký, tự trả phí',
 hint: 'Gemini có mức miễn phí (giới hạn số lần/ngày).' },
 { id: 'landing', required: false, label: 'Trang giới thiệu (landing) của công ty, nếu có, để khách để lại số',
@@ -46,21 +58,22 @@ export const STEPS = {
 prepare: {
 id: 'prepare', phase: 'any', required: true, check: 'manual', flows: ['company'],
 title: 'Chuẩn bị trước',
+trial: 'Muốn dùng thử trước? Bỏ qua các mục chưa có – chuẩn bị sau, trước khi dùng thật.',
 head: 'Để buổi cài không phải dừng giữa chừng vì thiếu thứ gì.',
-note: 'Mọi tài khoản đứng tên công ty – nhân viên nghỉ việc không mang dữ liệu đi được.',
+note: 'Khi dùng thật, mọi tài khoản nên đứng tên công ty – nhân viên nghỉ việc không mang dữ liệu đi được.',
 todo: [
-'Có tài khoản Google Workspace (Gmail mang tên công ty).',
+'Nên có tài khoản Google Workspace (Gmail mang tên công ty).',
 'Hỏi ai đang quản lý tên miền của công ty.',
 'Tạo bot Telegram (tài khoản tự nhắn tin) cho công ty.',
-'Đánh dấu các mục đã có → bấm **Kiểm tra bước này**.'
+'Đánh dấu các mục đã có (chưa có thì bỏ trống) → bấm **Kiểm tra bước này**.'
 ],
-time: 'Khoảng 30–60 phút, làm trước buổi cài',
-cost: 'Có tốn phí: Google Workspace trả theo tháng, tên miền .com khoảng 10–15 USD/năm (giá tham khảo, xem lại trước khi mua)',
+time: 'Khoảng 30–60 phút, làm trước buổi cài (dùng thử: bỏ qua được)',
+cost: 'Dùng thử: 0 đ · Khi dùng thật có tốn phí: Google Workspace trả theo tháng, tên miền .com khoảng 10–15 USD/năm (giá tham khảo, xem lại trước khi mua)',
 actions: [
-{ text: 'Quản trị viên công ty tạo một tài khoản Google Workspace riêng cho BDS Studio, vd bds@congty.vn. Hôm cài: bấm ảnh đại diện góc phải trang Google để chắc đúng tài khoản này.', slot: 'ext-google-account', note: _o1 },
+{ text: 'Nên có: quản trị viên công ty tạo một tài khoản Google Workspace riêng cho BDS Studio, vd bds@congty.vn (dùng thử: Gmail cá nhân cũng được). Hôm cài: bấm ảnh đại diện góc phải trang Google để chắc đúng tài khoản này.', slot: 'ext-google-account', note: _o1 },
 { text: 'Hỏi người quản lý tên miền: ai thêm được bản ghi CNAME (một dòng trỏ tên miền con, vd app.congty.vn, về app) ở nơi mua tên miền hoặc Cloudflare.' },
 { text: 'Tạo bot Telegram: mở Telegram → tìm **@BotFather** → gõ **/newbot** → đặt tên → lưu **mã bot** (dạng 123456:ABC…).', slot: 'ext-botfather', note: 'Trang Telegram – ảnh hướng dẫn sẽ bổ sung' },
-{ text: 'Đánh dấu các mục đã có ở danh sách dưới, rồi bấm **Kiểm tra bước này**.' }
+{ text: 'Đánh dấu các mục đã có ở danh sách dưới (chưa có thì bỏ trống – dùng thử vẫn được), rồi bấm **Kiểm tra bước này**.' }
 ]
 },
 company: {
@@ -93,7 +106,7 @@ todo: [
 'Bấm **Mở BDS Studio và kết nối** (hoặc **Chép URL** → dán vào ô dưới).'
 ],
 todoCompany: [
-'Dùng Google CÔNG TY, bấm **Tạo bản sao** (bên dưới, rồi trên trang Google).',
+'Dùng Google CÔNG TY (dùng thử: Gmail cá nhân cũng được), bấm **Tạo bản sao** (bên dưới, rồi trên trang Google).',
 'Trong Sheet: menu **BDS Studio › Cài đặt** → **Cho phép**.',
 'Trong hộp hiện ra: **Triển khai → Tuỳ chọn triển khai mới**.',
 'Bấm **Mở BDS Studio và kết nối** (hoặc **Chép URL** → dán vào ô dưới).'
@@ -171,6 +184,10 @@ todo: [
 'Bấm **Tạo ngay**, chờ khoảng 1–3 phút.',
 'App tự mở ở địa chỉ mới – đăng nhập ở đó.'
 ],
+todoQuick: [
+'Tên đã điền sẵn theo tên đăng nhập – sửa nếu muốn (chọn rồi không đổi được).',
+'Bấm **Tạo ngay** – khoảng 1–3 phút app riêng tự mở, đăng nhập bằng mật khẩu vừa đặt.'
+],
 todoNoService: [
 'Gõ tên muốn dùng → bấm **Gửi tên cho bên bán**.',
 'Bấm **Làm sau** – dùng app ngay ở địa chỉ này.',
@@ -194,6 +211,7 @@ actions: [
 telegram: {
 skipNote: 'Không nhận tin báo khách mới, nhắc việc qua Telegram. Nối sau được ở Cài đặt › Kết nối.',
 id: 'telegram', phase: 'post', required: false, check: 'auto', flows: ['personal', 'company'], requiredIn: ['company'], deferrable: true,
+laterNoteCompany: 'Đã lưu. Chưa có Telegram: ở bước Bảo mật 2 lớp bật bằng ứng dụng xác thực (hoặc Làm sau). Nối Telegram trước khi dùng thật – bot báo khách mới, nhắc việc, gửi mã đăng nhập.',
 title: 'Nhận tin qua Telegram',
 head: 'Để app nhắn Telegram cho anh/chị khi có khách mới, đến hẹn gọi lại, đến ngày đóng tiền.',
 headCompany: 'Để app nhắn Telegram khi có khách mới, đến hẹn gọi lại, và gửi mã đăng nhập (bảo mật 2 lớp).',
@@ -215,13 +233,14 @@ actions: [
 ]
 },
 tfa: {
-id: 'tfa', phase: 'post', required: true, check: 'auto', flows: ['company'],
+id: 'tfa', phase: 'post', required: true, deferrable: true, check: 'auto', flows: ['company'],
 title: 'Bảo mật 2 lớp',
 head: 'Để kẻ gian có mật khẩu cũng không vào được – đăng nhập phải nhập thêm mã 6 số gửi tới điện thoại.',
-note: 'Bắt buộc: dữ liệu khách của cả công ty nằm ở đây, phải giữ an toàn theo Luật Bảo vệ dữ liệu cá nhân (Luật số 91/2025/QH15).',
+note: 'Bắt buộc trước khi dùng thật: dữ liệu khách của cả công ty nằm ở đây, phải giữ an toàn theo Luật Bảo vệ dữ liệu cá nhân (Luật số 91/2025/QH15). Đang dùng thử, chưa có Telegram: bật bằng **Cài ứng dụng xác thực**, hoặc bấm **Làm sau**.',
+laterNote: 'Đã lưu. Bảo mật 2 lớp vẫn BẮT BUỘC trước khi dùng thật với khách – bấm nút Trợ lý cài đặt ở góc màn hình để làm nốt (Telegram hoặc ứng dụng xác thực).',
 todo: [
 'Đã nối Telegram: mã tự gửi qua Telegram, không phải làm thêm.',
-'Muốn chắc hơn: bấm **Cài ứng dụng xác thực** (app tạo mã trên điện thoại).',
+'Chưa có Telegram: bấm **Cài ứng dụng xác thực** (app tạo mã trên điện thoại; chỉ dùng thử thì Làm sau được).',
 'Bấm **Tạo mã dự phòng**, in hoặc tải về, cất kỹ.',
 'Bấm **Kiểm tra bước này**.'
 ],
@@ -256,12 +275,12 @@ domain: {
 skipNote: 'App vẫn mở ở địa chỉ có sẵn bên bán đã gửi. Gắn tên miền riêng sau được.',
 id: 'domain', phase: 'post', required: false, check: 'auto', flows: ['personal', 'company'], requiredIn: ['company'], deferrable: true,
 laterLabelCompany: 'Làm tiếp sau',
-laterNoteCompany: 'Đã lưu. Bước "Tên miền công ty" vẫn bắt buộc – tên miền chạy rồi thì bấm nút Trợ lý cài đặt ở góc màn hình để làm nốt.',
+laterNoteCompany: 'Đã lưu. App vẫn chạy ở địa chỉ đang mở (miễn phí). Bước "Tên miền công ty" vẫn bắt buộc trước khi dùng thật – có tên miền thì bấm nút Trợ lý cài đặt ở góc màn hình để làm nốt.',
 title: 'Địa chỉ mở app',
 titleCompany: 'Tên miền công ty',
 head: 'Để mở app bằng tên miền riêng của anh/chị (vd app.tenanh.com) cho chuyên nghiệp khi gửi link.',
 headCompany: 'Để app công ty chạy ở app.tencongty.vn và mỗi nhân viên có ngay trang riêng ten.tencongty.vn kéo khách về danh sách của chính mình.',
-noteCompany: 'Bắt buộc với bản Công ty. Đã có website thì nên mua THÊM 1 tên miền riêng cho app – app và dữ liệu khách không đụng website cũ. Đang chờ tên miền chạy? Bấm **Làm tiếp sau** – làm các bước còn lại, dùng app ngay; bước này vẫn ghi "chưa xong".',
+noteCompany: 'Bắt buộc trước khi dùng thật. Đã có website thì nên mua THÊM 1 tên miền riêng cho app – app và dữ liệu khách không đụng website cũ. Đang dùng thử, chưa có tên miền, hoặc đang chờ tên miền chạy? Bấm **Làm tiếp sau** – dùng app ngay ở địa chỉ miễn phí đang mở; bước này vẫn ghi "chưa xong".',
 note: 'Không cần tên miền riêng? Dùng địa chỉ có sẵn (vd tenkhach.bdsstudio.app) – miễn phí, chạy y như nhau.',
 todo: [
 'Gửi email cho bên bán, kèm tên miền muốn dùng.',
@@ -424,19 +443,19 @@ const s = STEPS[id];
 if (!s) return null;
 const _o2 = flow === 'company', pe = flow === 'personal';
 const required = s.required || (Array.isArray(s.requiredIn) && s.requiredIn.includes(flow));
-const _o4 = (k) => (_o2 && s[k + 'Company']) || (pe && s[k + 'Personal']) || s[k];
+const _o5 = (k) => (_o2 && s[k + 'Company']) || (pe && s[k + 'Personal']) || s[k];
 return {
 ...s,
 required,
 deferrable: !!s.deferrable && !(Array.isArray(s.strictIn) && s.strictIn.includes(flow)),
 title: (_o2 && s.titleCompany) || s.title,
-laterLabel: _o4('laterLabel') || 'Làm sau',
-laterNote: _o4('laterNote') || '',
-head: _o4('head'),
-note: _o4('note') || '',
-todo: _o4('todo') || [],
-time: _o4('time'),
-cost: _o4('cost'),
+laterLabel: _o5('laterLabel') || 'Làm sau',
+laterNote: _o5('laterNote') || '',
+head: _o5('head'),
+note: _o5('note') || '',
+todo: _o5('todo') || [],
+time: _o5('time'),
+cost: _o5('cost'),
 actions: ((_o2 && s.actionsCompany) || s.actions).map((a) => ({ ...a, text: (_o2 && a.textCompany) || (pe && a.textPersonal) || a.text }))
 };
 }
@@ -444,4 +463,4 @@ export function stepsFor(flow, opts) { return flowIds(flow, opts).map((id) => st
 export function boldParts(text) {
 return String(text || '').split('**').map((t, _o3) => ({ t, b: _o3 % 2 === 1 })).filter((x) => x.t);
 }
-export default { boldParts, FLOWS, PORTAL_FLOWS, flowIds, FLOW_LABEL, FLOW_INTRO, CHECKLIST, STEPS, ENGINE_GUIDE, stepFor, stepsFor, URL_FIELD_LABEL, NOT_PUBLIC_TEXT, supportEmail, isSaleEdition };
+export default { flowWho, trialCompanySeats, boldParts, FLOWS, PORTAL_FLOWS, flowIds, FLOW_LABEL, FLOW_INTRO, CHECKLIST, STEPS, ENGINE_GUIDE, stepFor, stepsFor, URL_FIELD_LABEL, NOT_PUBLIC_TEXT, supportEmail, isSaleEdition };

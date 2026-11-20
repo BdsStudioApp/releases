@@ -1,36 +1,184 @@
 {
-  "web": "1.0.5",
-  "gas": "1.0.5",
-  "engine": "1.0.5",
+  "web": "1.0.6",
+  "gas": "1.0.6",
+  "engine": "1.0.6",
   "notes": [
     {
-      "version": "1.0.5",
-      "date": "2026-11-17",
-      "text": "Bản quyền mới: Gói Cơ bản mua 1 lần, dùng vĩnh viễn; mua thêm từng gói mở rộng (vĩnh viễn) hoặc Trọn bộ các gói. Mọi bản cập nhật app, máy chủ và gói luôn miễn phí. Cài đặt › Bản quyền hiện rõ anh/chị đang có gì (Gói Cơ bản ✓ vĩnh viễn, Gói 3 ✓ …) và bảng giá các gói còn mua được; mua vĩnh viễn trong lúc dùng thử là dùng ngay. Key đã mua trước đây giữ nguyên quyền; \"🎁 Có mã tặng?\": người bán tặng mã mở gói (vd TANGVIDEO) – bấm \"🎁 Có mã tặng?\" ở thẻ gói (Cài đặt › Gói chức năng) hoặc ở Cài đặt › Bản quyền, nhập mã, bấm \"Nhận quà\" là gói dùng được ngay. Thẻ gói ghi \"🎁 Tặng tới dd/mm/yyyy\" (hoặc \"vĩnh viễn\"); hết hạn tặng thì gói tắt, dữ liệu giữ nguyên. Mỗi tài khoản Google nhận 1 lần mỗi mã; quà dùng được khi app đang dùng thử hoặc đã có Gói Cơ bản; Gói 🧪 Thử nghiệm dùng thử miễn phí: đang dùng thử app hoặc đã có bản quyền Gói Cơ bản là bấm \"Tải về\" để cài, rồi bấm \"💬 Góp ý gói này\" để góp ý. Bản thử nghiệm có thể còn lỗi – dữ liệu của anh/chị vẫn an toàn. Gói Video thử nghiệm có sẵn phần chọn cách làm video và bộ cài máy dựng trong gói; …",
+      "version": "1.0.6",
+      "date": "2026-11-18",
+      "text": "Khách hàng: danh sách gọn hơn – bỏ thẻ Đối tác và nút Gọn/Chi tiết, có nút \"Mở Sổ đối tác\". Sổ đối tác (Gói Cơ bản) chuyển sang màn Khách hàng, thêm vai trò Cộng tác viên (CTV) với Ghi chú bán hàng tự ghi (căn đã bán, ngày chốt, hoa hồng) và tóm tắt ở danh sách CTV. Hồ sơ khách có nút \"Nâng thành CTV\" – khách vẫn giữ nguyên trong danh sách; Nhập khách từ Excel/CSV có nút \"Tải tệp mẫu (Excel)\": tệp .xlsx đúng các cột app nhập được, cột số điện thoại giữ số 0 đầu, có trang Hướng dẫn; 2 dòng ví dụ quên xoá cũng không bị nhập; Nguồn khách: chọn Nguồn (TikTok/Reels, Bài Facebook, Landing, Giới thiệu, Người quen, Zalo…) và ghi Chi tiết nguồn (tên bài đăng, chiến dịch, dự án). Nút \"Nguồn khách\" cho biết theo tuần/tháng mỗi nguồn ra bao nhiêu khách mới, khách Nóng, đã hẹn xem, đã chốt, kèm khuyến nghị và xuất CSV chỉ có số gộp; …",
       "parts": [
         "web",
         "gas",
-        "landing",
-        "engine"
+        "landing"
       ],
       "sections": {
         "new": [
           {
-            "text": "Bản quyền mới: Gói Cơ bản mua 1 lần, dùng vĩnh viễn; mua thêm từng gói mở rộng (vĩnh viễn) hoặc Trọn bộ các gói. Mọi bản cập nhật app, máy chủ và gói luôn miễn phí. Cài đặt › Bản quyền hiện rõ anh/chị đang có gì (Gói Cơ bản ✓ vĩnh viễn, Gói 3 ✓ …) và bảng giá các gói còn mua được; mua vĩnh viễn trong lúc dùng thử là dùng ngay. Key đã mua trước đây giữ nguyên quyền.",
+            "text": "Khách hàng: danh sách gọn hơn – bỏ thẻ Đối tác và nút Gọn/Chi tiết, có nút \"Mở Sổ đối tác\". Sổ đối tác (Gói Cơ bản) chuyển sang màn Khách hàng, thêm vai trò Cộng tác viên (CTV) với Ghi chú bán hàng tự ghi (căn đã bán, ngày chốt, hoa hồng) và tóm tắt ở danh sách CTV. Hồ sơ khách có nút \"Nâng thành CTV\" – khách vẫn giữ nguyên trong danh sách.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nhập khách từ Excel/CSV có nút \"Tải tệp mẫu (Excel)\": tệp .xlsx đúng các cột app nhập được, cột số điện thoại giữ số 0 đầu, có trang Hướng dẫn; 2 dòng ví dụ quên xoá cũng không bị nhập.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nguồn khách: chọn Nguồn (TikTok/Reels, Bài Facebook, Landing, Giới thiệu, Người quen, Zalo…) và ghi Chi tiết nguồn (tên bài đăng, chiến dịch, dự án). Nút \"Nguồn khách\" cho biết theo tuần/tháng mỗi nguồn ra bao nhiêu khách mới, khách Nóng, đã hẹn xem, đã chốt, kèm khuyến nghị và xuất CSV chỉ có số gộp.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Dán tin khách (Chủ, Quản lý) ở màn Chờ duyệt: dán tin Zalo/Messenger/bình luận, app nhận ra tên, số điện thoại, dự án, khách đang hỏi gì và gợi ý phương án trả lời mẫu để chép; tạo khách, lịch hẹn, ghi chú một chạm. App không tự gửi cho khách.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nhật ký đồng ý dữ liệu cá nhân trong hồ sơ khách: khách đồng ý gì (lưu dữ liệu, nhận tin chăm sóc, tin quảng cáo, để AI xử lý), qua kênh nào, ai ghi, lúc nào; khách rút lại thì app khoá soạn tin, ẩn nhắc gọi và không gửi thông tin khách cho AI. Menu \"⋯ Thêm › Đồng ý dữ liệu\": lọc khách chưa có đồng ý rõ ràng, văn bản thông báo mẫu, xuất CSV nhật ký. Nhập khách từ Excel/CSV tự ghi nhật ký \"Nhập từ danh sách cũ\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Khách vào qua máy chủ cũng có Nhật ký đồng ý: khách tick ô đồng ý trên landing, Trang của tôi, form nối landing có sẵn hoặc Sheet landing được ghi \"Form landing\" kèm giờ gửi; nhập khách vào Kho lead công ty phải tick xác nhận khách đã đồng ý và được ghi tên người xác nhận. Form ngoài không có ô đồng ý thì khách vẫn được lưu nhưng ở trạng thái \"Chưa có đồng ý\" – hỏi lại khách trước khi chăm sóc.",
+            "parts": [
+              "web",
+              "gas",
+              "landing"
+            ]
+          },
+          {
+            "text": "Phân tích thị trường lên Bảng tin, thêm \"Khu vực khác\" cho địa phương ngoài danh sách dự án (gõ tên, chọn từ danh bạ hoặc nhờ AI gợi ý) và câu tóm tắt Dữ liệu 7 ngày.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý AI bản mới: nút ✨ Trợ lý AI ở góc dưới phải mọi màn – trò chuyện nhiều lượt, chế độ Hỏi đáp / Soạn tin Zalo / Giải thích thuật ngữ / Việc trong app; hỏi về chức năng (\"sao lưu\", \"cộng tác viên\", \"nhập khách cũ\") là có thẻ chức năng ngay: ở đâu, làm gì, cần nhập gì, nút Mở. Trong trợ lý có nút \"Góp ý / Gửi cho người bán\" và link \"📖 Hướng dẫn\". Câu trả lời có nút Đúng ý, Làm lại ngắn hơn/chi tiết hơn.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Thẻ gợi ý khi bấm Gọi khách: câu mở đầu theo khách, câu nên tránh, ghi nhanh kết quả cuộc gọi vào dòng thời gian.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Sao lưu: Bảng tin nhắc khi quá 7 ngày chưa sao lưu (\"Để sau\" hoãn 1 ngày); ghi \"Lần sao lưu gần nhất\"; nút \"Xuất Excel danh sách khách\"; khi khôi phục, mật khẩu sai thì nhập lại ngay trong hộp (không phải chọn lại tệp) và hộp chọn cách khôi phục cho xem trước số khách, đối tác, lịch sử, lịch hẹn trong tệp. Khách đã xoá theo yêu cầu vẫn không bao giờ quay lại.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mạng yếu hoặc nhà mạng chặn: đăng nhập hiện từng bước và số giây, không treo; có nút Thử lại, \"Chẩn đoán kết nối\" (cả ở Cài đặt › Kết nối gọn) chỉ rõ chỗ hỏng và cách sửa; máy đã đăng nhập đầy đủ trong 12 giờ qua mở được dữ liệu đã lưu để xem (chỉ đọc). Máy đã bị tài khoản đăng nhập ở máy khác thay chỗ thì cần đăng nhập lại.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nguồn ý tưởng thêm báo chính thống (Dân trí, VietnamNet, Lao Động) và danh mục nguồn gợi ý thêm.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "fix": [
+          {
+            "text": "Vá bảo mật 18/11: bản quyền và địa chỉ app gắn chặt hơn với tài khoản Google đã cài – mỗi lần app kiểm bản quyền, máy chủ gửi kèm xác minh tài khoản Google (như lúc đăng ký dùng thử), nên mã bản quyền chỉ chạy trên đúng máy chủ anh/chị đã cài và tên app anh/chị đã chọn không ai khác xin được. Giới hạn 1 máy tính + 1 điện thoại chặt hơn: đăng nhập trên trình duyệt mới thì máy cũ cùng loại tự đăng xuất (thay đổi chưa gửi vẫn gửi nốt được). Trang cài đặt chỉ nhận bản phát hành có chữ ký số. Nhập mã bản quyền / mã tặng không còn bị chặn chung vì người khác nhập sai nhiều lần. Không cần làm gì thêm – dữ liệu giữ nguyên.",
             "parts": [
               "web",
               "gas"
             ]
           },
           {
-            "text": "\"🎁 Có mã tặng?\": người bán tặng mã mở gói (vd TANGVIDEO) – bấm \"🎁 Có mã tặng?\" ở thẻ gói (Cài đặt › Gói chức năng) hoặc ở Cài đặt › Bản quyền, nhập mã, bấm \"Nhận quà\" là gói dùng được ngay. Thẻ gói ghi \"🎁 Tặng tới dd/mm/yyyy\" (hoặc \"vĩnh viễn\"); hết hạn tặng thì gói tắt, dữ liệu giữ nguyên. Mỗi tài khoản Google nhận 1 lần mỗi mã; quà dùng được khi app đang dùng thử hoặc đã có Gói Cơ bản.",
+            "text": "Thay đổi vừa lưu không còn mất khi đóng app hoặc chuyển sang app khác ngay sau khi bấm Lưu; đồng bộ bắt đầu trước lúc mất mạng không còn báo nhầm là đã có mạng.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Ô chức năng không còn mờ oan khi kiểm tra chậm; gói chưa cài và lỗi có câu báo riêng.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Cài đặt › Gói chức năng: cài hoặc bật/tắt gói không còn làm trang nhảy lên đầu.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Danh sách khách: chấm tính cách D-I-S-C luôn hiện, bấm để đặt.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "Trang cài đặt: chọn bản ngay ở màn đầu – **Cá nhân = 1 người dùng**, **Công ty = nhiều người, dùng thử tối đa 10 người**. Mở trang cài đặt trên điện thoại hoặc máy tính bảng thì có thẻ \"Cài trên máy tính\" kèm nút Chép link: bước cài (khoảng 10–15 phút) làm trên máy tính vì app Google Sheets trên điện thoại không làm được; cài xong dùng app trên điện thoại bình thường, bấm \"Tôi đã cài rồi – đăng nhập trên máy này\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trang cài đặt trên điện thoại / máy tính bảng: **\"Cài bằng Google\" – ưu tiên 50 khách hàng đầu tiên** – cài máy chủ ngay trên điện thoại trong 3–5 phút (đăng nhập Google, trang tự tạo Sheet và máy chủ trong Drive của anh/chị), thẻ ghi rõ số chỗ còn lại; hết chỗ thì cài trên máy tính như cũ. Thẻ \"Cài trên máy tính\" có thêm ô **Gửi link về email** (mở thư trên máy tính để cài) và link hướng dẫn có ảnh.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Cài đặt gọn hơn (cách Tạo bản sao Sheet mẫu): hộp \"Cài đặt xong\" trong Sheet có nút \"Quay lại trang cài đặt và kết nối\" – trợ lý tự nối và tự kiểm máy chủ, không phải chép địa chỉ hay gõ mã cài đặt 6 số; email lấy luôn tài khoản Google đã cài máy chủ nên không phải chờ mã qua email; tên đăng nhập và địa chỉ app điền sẵn, chỉ cần đặt mật khẩu. Các bước của Google (sao chép, cho phép, triển khai) giữ nguyên.",
             "parts": [
               "web",
               "gas"
             ]
           },
           {
-            "text": "Gói 🧪 Thử nghiệm dùng thử miễn phí: đang dùng thử app hoặc đã có bản quyền Gói Cơ bản là bấm \"Tải về\" để cài, rồi bấm \"💬 Góp ý gói này\" để góp ý. Bản thử nghiệm có thể còn lỗi – dữ liệu của anh/chị vẫn an toàn. Gói Video thử nghiệm có sẵn phần chọn cách làm video và bộ cài máy dựng trong gói.",
+            "text": "Bản này tập trung vào khách hàng, bán hàng, landing và nội dung bài đăng – chạy hoàn toàn trên trình duyệt, không cần cài thêm gì trên máy tính.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Gói mở rộng sẽ lần lượt ra mắt: Cài đặt › Gói chức năng chỉ hiện những gói người bán đã mở (trải nghiệm hoặc đang bán); chưa có gói nào mở thì chỉ có Gói Cơ bản – đủ cho việc hằng ngày.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0.5",
+      "date": "2026-11-17",
+      "text": "Bản quyền mới: Gói Cơ bản mua 1 lần, dùng vĩnh viễn. Mọi bản cập nhật app và máy chủ luôn miễn phí. Cài đặt › Bản quyền hiện rõ anh/chị đang có gì (Gói Cơ bản ✓ vĩnh viễn …); mua vĩnh viễn trong lúc dùng thử là dùng ngay. Mã bản quyền đã mua trước đây giữ nguyên quyền; Gói mở rộng sẽ lần lượt ra mắt. Khi có gói đang 🧪 thử nghiệm, Cài đặt › Gói chức năng hiện thẻ gói: bấm \"✉️ Yêu cầu trải nghiệm\"; khi có mã, bấm \"🔑 Nhập mã\" trên thẻ gói, rồi \"Tải về\" để cài và \"💬 Góp ý gói này\" để góp ý. Thẻ gói ghi \"Trải nghiệm đến dd/mm/yyyy\" (app đang dùng thử: hết cùng lúc với thời gian dùng thử; đã có Gói Cơ bản: tối đa 10 ngày); hết hạn thì gói tạm khoá, dữ liệu giữ nguyên. Gói đang bán hiện giá và nút \"Mua gói\" ngay trên thẻ. Chưa có gói nào mở thì màn chỉ có Gói Cơ bản; Cài đặt xong, trợ lý hiện thẻ \"📲 Đưa BDS Studio ra màn hình điện thoại\": hướng dẫn từng bước cho iPhone/iPad và Android (tự chọn đúng máy đang dùng, có hình nút Chia sẻ và nút ⋮), Android Chrome có nút \"Cài ngay\", đang mở trong Zalo/Facebook thì nhắc mở bằng Safari/Chrome trước. Trên máy tính có mã QR: quét bằng camera điện thoại là mở đúng app. Điện thoại chưa thêm app ra màn hình chính được nhắc gọn ở 3 lần mở app đầu (bấm \"Đã làm xong\" hoặc \"Không nhắc nữa\" là thôi); xem lại hướng dẫn bất kỳ lúc nào ở Cài đặt › Phiên bản & Cập nhật › Cài app ra màn hình chính; …",
+      "parts": [
+        "web",
+        "gas",
+        "landing"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Bản quyền mới: Gói Cơ bản mua 1 lần, dùng vĩnh viễn. Mọi bản cập nhật app và máy chủ luôn miễn phí. Cài đặt › Bản quyền hiện rõ anh/chị đang có gì (Gói Cơ bản ✓ vĩnh viễn …); mua vĩnh viễn trong lúc dùng thử là dùng ngay. Mã bản quyền đã mua trước đây giữ nguyên quyền.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Gói mở rộng sẽ lần lượt ra mắt. Khi có gói đang 🧪 thử nghiệm, Cài đặt › Gói chức năng hiện thẻ gói: bấm \"✉️ Yêu cầu trải nghiệm\"; khi có mã, bấm \"🔑 Nhập mã\" trên thẻ gói, rồi \"Tải về\" để cài và \"💬 Góp ý gói này\" để góp ý. Thẻ gói ghi \"Trải nghiệm đến dd/mm/yyyy\" (app đang dùng thử: hết cùng lúc với thời gian dùng thử; đã có Gói Cơ bản: tối đa 10 ngày); hết hạn thì gói tạm khoá, dữ liệu giữ nguyên. Gói đang bán hiện giá và nút \"Mua gói\" ngay trên thẻ. Chưa có gói nào mở thì màn chỉ có Gói Cơ bản.",
             "parts": [
               "web",
               "gas"
@@ -43,19 +191,32 @@
             ]
           },
           {
-            "text": "Gói chức năng (Video & Ý tưởng, Bán hàng & Tài chính, Khách hàng & Chăm sóc, Tìm khách & Landing, Nguồn hàng & Giao dịch, Trải nghiệm nâng cao & Học tập, Video AI) đang ở chế độ \"🧪 Thử nghiệm – sắp có\": vẫn hiện ở Cài đặt › Gói chức năng để anh/chị xem trước nội dung, chưa tải về được. Bấm \"🔔 Báo tôi khi có\" để app nhắc khi gói sẵn sàng. Các chức năng cơ bản (khách hàng, chăm sóc, bảng hàng, báo giá, máy tính vay, chính sách, thành viên) dùng bình thường.",
+            "text": "Các chức năng cơ bản (khách hàng, chăm sóc, bảng hàng, báo giá, máy tính vay, chính sách, thành viên, Ý tưởng nội dung) có sẵn trong Gói Cơ bản và dùng bình thường.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Học mỗi ngày (bài 5–10 phút, câu hỏi ôn, tủ sách) có sẵn trong Gói Cơ bản. Ô \"CRM: Phễu & Ghép căn\" đổi tên thành \"Khách & Phễu bán hàng\".",
             "parts": [
               "web"
             ]
           },
           {
-            "text": "Sổ đối tác có sẵn trong gói Cơ bản (Báo giá & Dự án → Sổ đối tác, và thẻ \"Đối tác\" ở màn Khách hàng): lưu admin dự án, sàn F1/F2, Sale BĐS, Sale ngân hàng, công chứng, chủ nhà; xem ai đang giữ quỹ căn nào và ghi nhật ký gọi/nhắn. Không cần cài gói \"Nguồn hàng & Giao dịch\".",
+            "text": "Zalo OA: tin khách nhắn OA vào thẳng app. Theo quy định của Zalo, OA chỉ gửi được tin tư vấn tới người quan tâm trong 7 ngày kể từ lần cuối họ nhắn hoặc tương tác với OA – app ghi rõ điều này ở màn Zalo OA.",
             "parts": [
               "web"
             ]
           },
           {
-            "text": "Trình tạo landing có trong gói Cơ bản: tạo 1 landing (mẫu dự án, ký gửi – thứ cấp, sự kiện – mở bán, trang cá nhân), tự điền từ Bảng hàng, xem trước trên điện thoại/máy tính. Sửa và đăng lại trang đó bất cứ lúc nào; muốn nhiều trang hơn: Gói 3 · Tìm khách & Landing (sắp có – bấm \"🔔 Báo tôi khi có\"). Bản Công ty: 1 landing cho cả công ty, \"Trang của tôi\" của từng nhân viên không tính.",
+            "text": "Sổ đối tác có sẵn trong Gói Cơ bản (Báo giá & Dự án → Sổ đối tác, và thẻ \"Đối tác\" ở màn Khách hàng): lưu admin dự án, sàn F1/F2, Sale BĐS, Sale ngân hàng, công chứng, chủ nhà; xem ai đang giữ quỹ căn nào và ghi nhật ký gọi/nhắn. Không cần cài gói \"Nguồn hàng & Giao dịch\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trình tạo landing có trong Gói Cơ bản: tạo 1 landing (mẫu dự án, ký gửi – thứ cấp, sự kiện – mở bán, trang cá nhân), tự điền từ Bảng hàng, xem trước trên điện thoại/máy tính. Sửa và đăng lại trang đó bất cứ lúc nào. Bản Công ty: 1 landing cho cả công ty, \"Trang của tôi\" của từng nhân viên không tính.",
             "parts": [
               "web",
               "gas",
@@ -105,7 +266,7 @@
             ]
           },
           {
-            "text": "Quyền từng phần: vai trò chỉ là bộ quyền mặc định, Quản trị tick hoặc bỏ tick từng phần cho từng người (Xem khách toàn công ty, Chia khách, Xoá dữ liệu khách, Xuất file, Video, Ý tưởng, Bảng hàng, Thêm/sửa dự án, Báo giá, Landing, AI). Ý tưởng dùng được cả khi không có quyền Video; Cộng tác viên mặc định tắt AI và Landing. Phần bị bỏ tick ẩn hẳn trong app của người đó và máy chủ cũng chặn.",
+            "text": "Quyền từng phần: vai trò chỉ là bộ quyền mặc định, Quản trị tick hoặc bỏ tick từng phần cho từng người (Xem khách toàn công ty, Chia khách, Xoá dữ liệu khách, Xuất file, Ý tưởng, Bảng hàng, Thêm/sửa dự án, Báo giá, Landing, AI). Cộng tác viên mặc định tắt AI và Landing. Phần bị bỏ tick ẩn hẳn trong app của người đó và máy chủ cũng chặn.",
             "parts": [
               "web",
               "gas"
@@ -229,40 +390,6 @@
             "parts": [
               "web",
               "gas"
-            ]
-          },
-          {
-            "text": "Bản Công ty – gợi ý cài bộ tạo video trên máy mạnh: người có quyền \"Video & Ý tưởng\" ngồi máy cấu hình Mạnh (app tự kiểm 1 lần, nhớ 30 ngày) thấy thẻ \"Máy này đủ mạnh để làm video\" với nút \"Tải bộ cài\" đúng Windows hoặc Mac, \"Để sau\" (14 ngày) và \"Không hỏi lại trên máy này\". Máy Khá có gợi ý nhẹ, máy Cơ bản không gợi ý. Quản trị nhận thông báo, vd \"Lan (Marketing) có máy đủ mạnh để làm video – đã gợi ý cài\" kèm nút Cho phép / Không cho.",
-            "parts": [
-              "web",
-              "gas"
-            ]
-          },
-          {
-            "text": "Công tắc \"Cho phép nhân viên cài máy dựng\" (mặc định bật). Tắt thì nhân viên bấm \"Xin Quản trị cho phép\" và Quản trị duyệt từng người.",
-            "parts": [
-              "web",
-              "gas"
-            ]
-          },
-          {
-            "text": "Nhân viên tự liên kết máy dựng cài trên máy của mình: máy đó chỉ làm video do chính người đó gửi từ điện thoại (\"Gửi máy tính dựng (máy của bạn)\"), không nhận video của người khác. Video lưu vào thư mục Drive riêng của người đó, người khác không mở được. Máy dựng hiện trong Cài đặt › Bảo mật › Thiết bị kèm tên người; chính người đó hoặc Quản trị thu hồi được.",
-            "parts": [
-              "web",
-              "gas"
-            ]
-          },
-          {
-            "text": "Biểu tượng \"BDS Studio\" trên Mac (màn hình nền, Launchpad, Dock) và Windows (màn hình nền, Start Menu): bấm là máy dựng chạy nền và mở app, không còn cửa sổ lệnh.",
-            "parts": [
-              "engine"
-            ]
-          },
-          {
-            "text": "Cài đặt › Kết nối có thẻ \"Bản đồ (nền + tìm địa chỉ)\": anh/chị dán khoá miễn phí của Geoapify (đăng ký không cần thẻ, gói Free 3.000 credit/ngày) để video bản đồ có ảnh nền và tự tìm toạ độ địa điểm. Khoá lưu trên máy tính chạy máy dựng, video tự ghi nguồn bản đồ.",
-            "parts": [
-              "web",
-              "engine"
             ]
           },
           {
@@ -528,7 +655,7 @@
             ]
           },
           {
-            "text": "iPhone có tai thỏ / thanh Home: khung \"Đang tải dữ liệu lần đầu\", thanh nhắc đổi tên đăng nhập, khung gợi ý máy dựng, thanh trang cài đặt và màn khoá không còn nằm dưới tai thỏ hoặc đè thanh Home.",
+            "text": "iPhone có tai thỏ / thanh Home: khung \"Đang tải dữ liệu lần đầu\", thanh nhắc đổi tên đăng nhập, thanh trang cài đặt và màn khoá không còn nằm dưới tai thỏ hoặc đè thanh Home.",
             "parts": [
               "web"
             ]
@@ -622,7 +749,7 @@
             ]
           },
           {
-            "text": "Trợ lý cài đặt gọn hơn: không còn bước chọn cách làm video. Cả bản Cá nhân và Công ty đều cài bản cơ bản ngay từ đầu, không cần tải hay cài thêm gì trên máy tính. Video sẽ có sau dưới dạng gói bổ sung; Ý tưởng & nội dung vẫn dùng bình thường.",
+            "text": "Trợ lý cài đặt gọn hơn: cả bản Cá nhân và Công ty đều cài bản cơ bản ngay từ đầu, không cần tải hay cài thêm gì trên máy tính.",
             "parts": [
               "web"
             ]
@@ -646,7 +773,7 @@
             ]
           },
           {
-            "text": "Thẻ gói chức năng: tên thống nhất (Gói Cơ bản, Gói 1–5, Gói Video, Gói Video AI), bỏ các số thứ tự nội bộ trong phần mô tả.",
+            "text": "Thẻ gói chức năng: tên thống nhất, bỏ các số thứ tự nội bộ trong phần mô tả.",
             "parts": [
               "web"
             ]
@@ -681,12 +808,8 @@
     }
   ],
   "sha256": {
-    "downloads/TatCa.gs": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
-    "downloads/BDS_Studio_Engine.zip": "9c488087847e34210a3fc4d9390c217464cf3e2096b403310f2cd5e9693c48b5",
-    "downloads/BDS_Studio_Video_Windows.zip": "644ca795f74ad69e0065b5c23e98312ac7d0fadc0dc9e24e40ba0b56a37e64a6",
-    "downloads/BDS_Studio_Video_Mac.zip": "df51b91bff39f5fc87dace65ec11e61842f46f01d16334216f6714bbacae5efb"
+    "downloads/TatCa.gs": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe"
   },
-  "tatca_sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
-  "gas_sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
-  "engine_sha256": "9c488087847e34210a3fc4d9390c217464cf3e2096b403310f2cd5e9693c48b5"
+  "tatca_sha256": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe",
+  "gas_sha256": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe"
 }

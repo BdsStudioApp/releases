@@ -1,20 +1,20 @@
 {
-  "version": "1.0.5",
-  "build_id": "b4e3ed5eb3e010f8",
-  "gas_build_id": "d4c6911447bcf5dd",
+  "version": "1.0.6",
+  "build_id": "3ef2b533fdea90cf",
+  "gas_build_id": "e3e6178a3dc7b36a",
   "boot_version": 1,
-  "core_build_id": "1f0523a18da481ef",
+  "core_build_id": "67c64c6e16b6d934",
   "core_requires_boot": 1,
   "parts": {
-    "web": "1.0.5",
-    "gas": "1.0.5",
-    "engine": "1.0.5"
+    "web": "1.0.6",
+    "gas": "1.0.6",
+    "engine": "1.0.6"
   },
   "files": [
     {
       "path": "downloads/TatCa.gs",
-      "sha256": "133a910ebfb4504a025d6afaf1cd2db47c76ff3364cc1b54fc9b40e5a4f77570",
-      "size": 777011
+      "sha256": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe",
+      "size": 791695
     },
     {
       "path": "downloads/appsscript.json",
@@ -22,19 +22,14 @@
       "size": 558
     },
     {
-      "path": "downloads/BDS_Studio_Engine.zip",
-      "sha256": "9c488087847e34210a3fc4d9390c217464cf3e2096b403310f2cd5e9693c48b5",
-      "size": 8944645
-    },
-    {
       "path": "version.json",
-      "sha256": "f77372b8c91c97bdff950ca6a89c9255b18a6d829cb39cc12224f1e4302650a4",
-      "size": 44483
+      "sha256": "280ac3def378c53839188d784505327cbf2eb401f554d0ded4048d420782302a",
+      "size": 52880
     },
     {
       "path": "downloads/CaiDat.gs",
-      "sha256": "1f54de850054f5e8b65f625b008c9fb244cbd407f842e7d1b9ad908ec69016dd",
-      "size": 29277
+      "sha256": "6d0e3c51193f454e3f342f4b117db91b0e54d5a326b82f8d5bacf8eed84e5d2c",
+      "size": 30622
     },
     {
       "path": "downloads/sheet/appsscript.json",
@@ -43,18 +38,8 @@
     },
     {
       "path": "downloads/ServerCore.js",
-      "sha256": "1f0523a18da481ef2fe6218fe7ce0f62a64f85dd7f5f431eda5071b940c5fe18",
-      "size": 727637
-    },
-    {
-      "path": "downloads/BDS_Studio_Video_Windows.zip",
-      "sha256": "644ca795f74ad69e0065b5c23e98312ac7d0fadc0dc9e24e40ba0b56a37e64a6",
-      "size": 8619734
-    },
-    {
-      "path": "downloads/BDS_Studio_Video_Mac.zip",
-      "sha256": "df51b91bff39f5fc87dace65ec11e61842f46f01d16334216f6714bbacae5efb",
-      "size": 8769556
+      "sha256": "67c64c6e16b6d9344552ac37dbfc623a21c62f2f74918bc25d9462b3bc17b657",
+      "size": 742321
     }
   ],
   "channel": "sale",

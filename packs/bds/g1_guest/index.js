@@ -71,7 +71,7 @@ pin, pin2, err, h('div', { style: 'display:flex;gap:8px;justify-content:flex-end
 pin.addEventListener('keydown', (e) => { if (e.key === 'Enter') ok(); });
 _oi.addEventListener('keydown', (e) => { if (e.key === 'Escape') _o9(false); });
 document.body.appendChild(_oi);
-setTimeout(() => pin.focus(), 30);
+setTimeout(() => { if (!_oi.contains(document.activeElement)) pin.focus(); }, 30);
 });
 }
 export async function toggleGuest() {
@@ -134,7 +134,7 @@ _oa();
 h('div', { class: 'sl-box' }, h('h3', null, 'Khi bật sẽ ẩn'), h('ul', null,
 h('li', null, 'Hoa hồng, giá nét, ghi chú nội bộ ở mọi màn (ô có nhãn 🔒 Nội bộ)'),
 h('li', null, 'Ghi chú của khách hàng'),
-h('li', null, 'Các màn Bảng tin, Khách hàng, Chờ duyệt, Cài đặt (có thông tin khách khác) – chỉ còn Bán hàng và Video'),
+h('li', null, 'Các màn Bảng tin, Khách hàng, Chờ duyệt, Cài đặt (có thông tin khách khác) – chỉ còn Bán hàng và Ý tưởng'),
 h('li', null, 'Trong Bán hàng: màn Theo dõi chính sách, ô chọn khách và danh sách báo giá đã gửi (có tên, SĐT khách)'),
 h('li', null, 'Menu tài khoản, ô "Hỏi app" (tìm được tên, SĐT khách)'))),
 h('p', { class: 'g1-legal' }, 'Mã PIN lưu dạng băm trên máy này; nhập sai 5 lần khoá 60 giây. Quên mã: bấm nút khoá 🔒 trên thanh trên rồi nhập lại mật khẩu tài khoản – chế độ khách tự tắt, vào đây đặt mã mới.'));

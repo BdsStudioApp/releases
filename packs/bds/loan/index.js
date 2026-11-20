@@ -91,7 +91,6 @@ h('div', { class: 'sl-kpis' },
 h('div', { class: 'sl-kpi' }, h('small', null, 'Số tiền vay'), h('b', { 'data-testid': 'loan-principal' }, money(principal))),
 h('div', { class: 'sl-kpi' }, h('small', null, `Trả tháng đầu (tháng ${_o1.firstPayMonth})`), h('b', { 'data-testid': 'loan-first' }, S.fmtVnd(_o1.firstPay))),
 h('div', { class: 'sl-kpi' }, h('small', null, 'Trả tháng cuối'), h('b', { 'data-testid': 'loan-last' }, S.fmtVnd(_o1.lastPay))),
-h('div', { class: 'sl-kpi' }, h('small', null, 'Tổng lãi phải trả'), h('b', { 'data-testid': 'loan-interest' }, money(_o1.totalInterest))),
 _o1.supportedInterest ? h('div', { class: 'sl-kpi' }, h('small', null, 'Lãi được hỗ trợ'), h('b', null, money(_o1.supportedInterest))) : null),
 grace ? h('p', { class: 'sl-muted sl-small' }, `Trong ${Math.min(grace, _o1.months - 1)} tháng ân hạn chỉ trả lãi, khoảng ${S.fmtVnd(principal * rate / 1200)} mỗi tháng${support >= 1 ? ` (các tháng được hỗ trợ lãi thì trả 0 đ)` : ''}.`) : null,
 chart(_o1.rows, money),
@@ -124,7 +123,7 @@ return _of;
 export default {
 manifest: {
 id: 'loan', title: 'Máy tính vay', icon: '🏦', screen: 'sales', order: 30, version: '1.0.0', status: 'ready',
-help: 'Tính trả tháng đầu/cuối, tổng lãi, ân hạn và hỗ trợ lãi; gốc đều hoặc trả đều; so sánh vay với trả sớm theo chính sách dự án.',
+help: 'Tính trả tháng đầu/cuối, ân hạn và hỗ trợ lãi; gốc đều hoặc trả đều; so sánh vay với trả sớm theo chính sách dự án.',
 },
 mount,
 async selftest(ctx) {

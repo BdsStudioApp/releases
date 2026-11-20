@@ -1,5 +1,6 @@
 import { strip, parseData } from '../_lib/crm.js';
 import { readAttribution, normChannel, channelName } from './attribution.js';
+import { magnetLabel } from '../_lib/magnet.js';
 import { csvObjects } from './csv.js';
 export const DEAL_STATUSES = ['Đã đặt cọc', 'Đã mua', 'Đã thuê', 'Đã bán', 'Đã cho thuê'];
 export const DIMENSIONS = { channel: 'Kênh', campaign: 'Chiến dịch', video: 'Video', landing: 'Trang landing' };
@@ -205,7 +206,7 @@ const _oc = _oq(_o7);
 if (_oc && !_ol(_oc, from, to)) continue;
 const _o2 = readAttribution(_o7);
 const _oo = _or(_o2, dim) || '(chưa gắn)';
-const x = get(_oo, dim === 'channel' ? channelName(_oo) : (dim === 'campaign' ? (_ov.get(_oo) || _o2.utm_campaign || _oo) : _oo));
+const x = get(_oo, dim === 'channel' ? channelName(_oo) : (dim === 'campaign' ? (_ov.get(_oo) || magnetLabel(_o2.utm_campaign) || _o2.utm_campaign || _oo) : _oo));
 x.leads++;
 if (isDeal(_o7)) { x.deals++; x.commission += commissionOf(_o7, ratePct); }
 }

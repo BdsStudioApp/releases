@@ -1,2 +1,2 @@
-{ "id": "g2_crm", "title": "CRM: Phễu & Ghép căn", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "🎯", "order": 210, "status": "thu-nghiem",
+{ "id": "g2_crm", "title": "Khách & Phễu bán hàng", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "🎯", "order": 210, "status": "thu-nghiem",
   "items": ["33", "72"], "desc": "Phễu 6 bước, tự ghép nhu cầu với căn trong Bảng hàng (có giải thích điểm), chấm điểm Nóng/Ấm/Lạnh" }

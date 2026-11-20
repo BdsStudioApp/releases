@@ -1,6 +1,6 @@
 import { h } from './kit.js';
 import * as LC from './lead_connect.js';
-import { paidBadge } from '../../../core/ai_cost.4e4e8b66f1.js';
+import { paidBadge } from '../../../core/ai_cost.2fb10e6822.js';
 const _o0 = `
 .lc{display:flex;flex-direction:column;gap:12px;min-width:0}
 .lc h3{margin:0;font-size:1.05rem}.lc h4{margin:0;font-size:.98rem}
@@ -76,11 +76,11 @@ h('p', { class: 'lc-muted', 'data-testid': 'lc-nokey' }, 'Chưa có địa chỉ
 return;
 }
 const urlBox = h('code', { class: 'lc-url', 'data-testid': 'lc-url' }, urlOf());
-const _oh = LC.saleVariants(info);
-const _oe = h('select', { 'aria-label': 'Khách về sale nào', 'data-testid': 'lc-sale' }, _oh.map((v) => h('option', { value: v.value, selected: v.value === ref }, v.label)));
+const variants = LC.saleVariants(info);
+const _oe = h('select', { 'aria-label': 'Khách về sale nào', 'data-testid': 'lc-sale' }, variants.map((v) => h('option', { value: v.value, selected: v.value === ref }, v.label)));
 _oe.addEventListener('change', () => { ref = _oe.value; _o5(); });
 const copyUrl = K.button('📋 Chép địa chỉ nhận khách', async () => {
-if (!_ob) { K.toast('Bản Dùng thử chưa có địa chỉ thật – nối máy chủ Google rồi chép lại.', 'warn'); return; }
+if (!_ob) { K.toast('Bản xem thử chưa có địa chỉ thật – nối máy chủ Google rồi chép lại.', 'warn'); return; }
 await K.copy(urlOf()); K.toast('Đã chép địa chỉ nhận khách', 'ok');
 }, { kind: 'primary', testid: 'lc-copy' });
 const testBtn = K.button('🧪 Gửi thử', () => _of(), { kind: 'ghost', testid: 'lc-test', title: 'Gửi 1 khách thử (nhãn "thử") qua đúng đường nhận khách' });
@@ -97,7 +97,7 @@ h('h3', null, '🔌 Nối landing có sẵn'),
 h('p', { class: 'lc-muted' }, 'Đã có landing ở nơi khác (trình dựng landing, website riêng, Google Forms…)? Dán địa chỉ dưới đây vào đó – khách để lại số là về thẳng app + báo Telegram, có nguồn "webhook:…" để biết khách từ đâu. Khách đã có trong app không bị giao lại.'),
 h('label', { class: 'lc-row' }, h('span', null, 'Khách về:'), _oe),
 urlBox,
-_ob ? null : h('p', { class: 'lc-note', 'data-testid': 'lc-demo' }, 'Bản Dùng thử: địa chỉ thật có sau khi nối máy chủ Google của anh/chị. "Gửi thử" vẫn chạy để xem khách hiện ra thế nào.'),
+_ob ? null : h('p', { class: 'lc-note', 'data-testid': 'lc-demo' }, 'Bản xem thử: địa chỉ thật có sau khi nối máy chủ Google của anh/chị. "Gửi thử" vẫn chạy để xem khách hiện ra thế nào.'),
 h('div', { class: 'lc-row' }, copyUrl, testBtn, _oc),
 hostsRow,
 h('p', { class: 'lc-note lc-warn' }, '🔒 Địa chỉ này có khoá bí mật: chỉ dán vào công cụ của anh/chị (form, webhook). Lộ ra ngoài → bấm "Đổi khoá". CTV/Sale không xem được mục này.'),
@@ -134,6 +134,7 @@ body.push(_o3('Mã cho Google Forms', LC.gformsScript(url), 'lc-snip-gforms'));
 body.push(_o3('Mẫu thân JSON', LC.jsonSample(g.src), 'lc-snip-json-' + g.id));
 }
 body.push(h('p', { class: 'lc-muted' }, h('b', null, 'Lời đồng ý (dán cạnh ô tick): '), LC.consentText(org)));
+body.push(h('p', { class: 'lc-note', 'data-testid': 'lc-consent-need-' + g.id }, 'Form cần có ô tick đồng ý bắt buộc (trường consent). Khách tick → app ghi vào Nhật ký đồng ý; form không có ô này → khách vẫn được lưu nhưng ở trạng thái "chưa đồng ý", cần hỏi lại khách trước khi chăm sóc.'));
 body.push(h('div', { class: 'lc-figs' }, g.img.map(_o7)));
 const sum = h('summary', { 'data-testid': 'lc-guide-' + g.id }, g.icon + ' ' + g.title,
 g.advanced ? h('span', { class: 'lc-tag' }, 'nâng cao') : null,

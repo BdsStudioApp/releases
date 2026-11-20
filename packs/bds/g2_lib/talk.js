@@ -1,6 +1,8 @@
 import { fold } from './core.js';
+import { LIB_SCRIPTS as WARM_SCRIPTS } from './warm.js';
+import { gate, stateOf } from '../_lib/consent.js';
 export const SCRIPT_CATS = [
-['objection', 'Xử lý từ chối'], ['open', 'Mở lời'], ['followup', 'Sau gặp / xem nhà'], ['close', 'Chốt – bước tiếp theo'], ['reply', 'Trả lời bình luận'],
+['objection', 'Xử lý từ chối'], ['open', 'Mở lời'], ['followup', 'Sau gặp / xem nhà'], ['close', 'Chốt – bước tiếp theo'], ['reply', 'Trả lời bình luận'], ['warm', 'Người quen'],
 ];
 export const ETHICS = [
 'Nói thật, số liệu có nguồn; chưa chắc thì hẹn kiểm tra rồi trả lời.',
@@ -39,6 +41,22 @@ tip: 'Đưa giấy tờ để khách đọc trước. Không ép ký trong buổ
 { id: 'binh_luan', cat: 'reply', title: 'Trả lời bình luận hỏi giá', triggers: ['gia', 'bao nhieu', 'ib', 'inbox', 'xin gia'],
 text: 'Dạ em cảm ơn anh/chị đã quan tâm {du_an} ạ. Giá thay đổi theo căn và chính sách từng tháng nên em gửi riêng bảng giá mới nhất qua tin nhắn để anh/chị xem chính xác nhé ạ.',
 tip: 'Bình luận công khai: ngắn, lịch sự, không đăng số điện thoại khách, mời nhắn riêng.' },
+{ id: 'tc_hoi_vo_chong', cat: 'objection', objection: 'hoi_vo_chong', title: '"Để hỏi vợ/chồng đã"', triggers: ['hoi vo', 'hoi chong', 'hoi y kien', 'ban voi vo', 'ban voi chong', 'hoi gia dinh'],
+text: 'Dạ vâng, việc lớn của gia đình thì anh/chị bàn cùng nhau là đúng ạ. Em gửi anh/chị tài liệu {du_an} gọn trong một tin: bảng giá căn {loai_can}, tiến độ thanh toán và giấy tờ pháp lý, để anh/chị chuyển cho người nhà cùng xem. Nếu tiện, em hẹn một buổi cả hai cùng nghe tư vấn để em trả lời trực tiếp các băn khoăn ạ.',
+tip: 'Nội dung mẫu – Chủ sửa cho hợp đội. Hỏi người cùng quyết định quan tâm điều gì nhất; không nói xấu hay gạt người vắng mặt.' },
+{ id: 'tc_ben_kia_re', cat: 'objection', objection: 'ben_kia_re', title: '"Bên kia rẻ hơn"', triggers: ['ben kia', 're hon', 'cho khac re', 'du an khac re'],
+text: 'Dạ cảm ơn anh/chị đã chia sẻ ạ. Anh/chị gửi em thông tin căn bên kia (diện tích, tầng, hướng, chính sách thanh toán, phí quản lý) để em đặt cạnh căn {loai_can} ở {du_an} cho dễ so. Nếu bên kia thật sự hợp hơn với nhu cầu của mình, em cũng nói thẳng để anh/chị chọn đúng ạ.',
+tip: 'Nội dung mẫu – Chủ sửa cho hợp đội. So cùng điều kiện (giá/m² thông thuỷ, tổng tiền gồm phí, thời điểm bàn giao). Không chê đối thủ khi chưa có dữ kiện.' },
+{ id: 'tc_suy_nghi', cat: 'objection', objection: 'suy_nghi', title: '"Để suy nghĩ thêm"', triggers: ['suy nghi them', 'de suy nghi', 'can nhac them'],
+text: 'Dạ vâng anh/chị cứ suy nghĩ kỹ ạ. Để em hỗ trợ đúng chỗ, anh/chị đang cân nhắc nhất về điểm nào: giá, vị trí, pháp lý hay cách thanh toán ạ? Em gửi thêm tài liệu đúng phần đó để mình xem lúc rảnh, không cần trả lời ngay.',
+tip: 'Nội dung mẫu – Chủ sửa cho hợp đội. Mục tiêu là hiểu băn khoăn thật, không ép quyết. Hẹn mốc liên hệ lại theo ý khách.' },
+{ id: 'tc_vi_tri', cat: 'objection', objection: 'vi_tri', title: '"Vị trí không ưng"', triggers: ['vi tri xau', 'khong thich vi tri', 'vi tri khong', 'duong nho', 'ngo nho'],
+text: 'Dạ em cảm ơn anh/chị nói thẳng ạ. Anh/chị chưa ưng vị trí ở điểm nào: đường vào, khoảng cách tới chỗ làm/trường học hay môi trường xung quanh ạ? Em gửi bản đồ và ảnh thực tế quanh {du_an}, nếu đúng là chưa hợp thì em tìm phương án ở khu vực anh/chị thích hơn ạ.',
+tip: 'Nội dung mẫu – Chủ sửa cho hợp đội. Hạ tầng tương lai chỉ nói khi có quyết định/tiến độ chính thức kèm nguồn.' },
+{ id: 'tc_lai_vay', cat: 'objection', objection: 'lai_vay', title: '"Lo lãi vay"', triggers: ['lai vay', 'lai suat cao', 'so lai', 'tha noi', 'lo lai'],
+text: 'Dạ lo về lãi vay là rất hợp lý ạ. Em làm giúp anh/chị bảng tính trả nợ theo đúng chính sách hiện hành của ngân hàng liên kết với {du_an}: số trả mỗi tháng trong thời gian ưu đãi và sau khi hết ưu đãi, để mình so với thu nhập. Lãi suất thay đổi theo từng thời điểm nên em sẽ kiểm tra lại với ngân hàng trước khi gửi số ạ.',
+tip: 'Nội dung mẫu – Chủ sửa cho hợp đội. Kiểm tra chính sách hiện hành của ngân hàng trước khi nêu số; luôn cho khách xem cả giai đoạn sau ưu đãi. Không khuyên vay quá sức.' },
+...WARM_SCRIPTS,
 ];
 export function mergeScripts(teamCfg, personal = []) {
 const c = teamCfg && typeof teamCfg === 'object' ? teamCfg : {};
@@ -56,7 +74,7 @@ return _o5.concat(_on).filter(s => !_ol.has(s.id)).concat(_oe);
 export function parseTriggers(s) { return String(s || '').split(/[,;\n]+/).map(t => fold(t)).filter(Boolean).slice(0, 20); }
 export function saveTeamScript(cfg, script, patch) {
 const c = { overrides: {}, custom: [], hidden: [], ...(cfg && typeof cfg === 'object' ? cfg : {}) };
-const clean = { title: String(patch.title || '').trim().slice(0, 120), text: String(patch.text || '').trim().slice(0, 3000), tip: String(patch.tip || '').trim().slice(0, 600), cat: patch.cat || 'objection', triggers: Array.isArray(patch.triggers) ? patch.triggers : parseTriggers(patch.triggers) };
+const clean = { title: String(patch.title || '').trim().slice(0, 120), text: String(patch.text || '').trim().slice(0, 3000), tip: String(patch.tip || '').trim().slice(0, 600), cat: patch.cat || 'objection', triggers: Array.isArray(patch.triggers) ? patch.triggers : parseTriggers(patch.triggers), ...(patch.objection ? { objection: String(patch.objection).slice(0, 40) } : {}) };
 if (!clean.text) throw new Error('Nội dung kịch bản đang trống');
 if (script && script.scope === 'default') return { ...c, overrides: { ...c.overrides, [script.id]: clean } };
 if (script && script.scope === 'team' && DEFAULT_SCRIPTS.some(_o8 => _o8.id === script.id)) return { ...c, overrides: { ...c.overrides, [script.id]: clean } };
@@ -99,14 +117,14 @@ for (const t of s.triggers || []) if (t && hasWord(_of, words(t).trim())) pts +=
 for (const _ob of _o7.intents) if (_o0[_ob.id] === s.id) pts += 3;
 return { s, pts };
 }).filter(x => x.pts > 0).sort((_o3, b) => b.pts - _o3.pts).map(x => x.s);
-const _oa = t => String(t || '').replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined && vars[k] !== '' ? String(vars[k]) : (k === 'du_an' ? 'dự án' : k === 'ten' ? '' : '…'))).replace(/\s{2,}/g, ' ').replace(/ ([,.])/g, '$1').trim();
+const fill = t => String(t || '').replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined && vars[k] !== '' ? String(vars[k]) : (k === 'du_an' ? 'dự án' : k === 'ten' ? '' : '…'))).replace(/\s{2,}/g, ' ').replace(/ ([,.])/g, '$1').trim();
 const _oo = _o7.intents[0];
 const _ok = _o7.spam ? '' : channel === 'comment'
 ? (_oo && (_oo.id === 'che' || _oo.id === 'gia_cao')
 ? 'Dạ em cảm ơn góp ý của anh/chị ạ. Em gửi riêng anh/chị bảng so sánh giá có nguồn để mình tham khảo thêm nhé ạ.'
 : 'Dạ em cảm ơn anh/chị đã quan tâm ạ. ' + (_oo ? 'Phần ' + _oo.label.toLowerCase().replace(/^hỏi /, '') + ' ' : 'Thông tin chi tiết ') + 'em gửi riêng qua tin nhắn để anh/chị xem đầy đủ nhé ạ.')
 : '';
-const _oj = _om[0] ? _oa(_om[0].text) : (_o7.spam ? '' : _oa('Dạ em chào anh/chị, em cảm ơn anh/chị đã nhắn. Anh/chị đang quan tâm căn để ở hay đầu tư, khoảng vốn bao nhiêu để em gửi thông tin {du_an} phù hợp ạ?'));
+const _oj = _om[0] ? fill(_om[0].text) : (_o7.spam ? '' : fill('Dạ em chào anh/chị, em cảm ơn anh/chị đã nhắn. Anh/chị đang quan tâm căn để ở hay đầu tư, khoảng vốn bao nhiêu để em gửi thông tin {du_an} phù hợp ạ?'));
 return { intents: _o7.intents, spam: _o7.spam, public: _ok, private: _oj, scripts: _om.slice(0, 4), warnings };
 }
 export function replyPrompt(text, { channel = 'comment', project = '', me = {} } = {}) {
@@ -142,16 +160,18 @@ export const READ_FIELDS = [
 { id: 'channel', label: 'Kênh tiện nhất', opts: [['', '—'], ['zalo', 'Nhắn Zalo'], ['goi', 'Gọi điện'], ['gap', 'Gặp mặt']] },
 ];
 export const PRIORITIES = [['vi_tri', 'Vị trí, đi lại'], ['gia', 'Giá / tổng tiền'], ['phap_ly', 'Pháp lý'], ['truong', 'Trường học cho con'], ['tien_ich', 'Tiện ích nội khu'], ['cdt', 'Uy tín chủ đầu tư'], ['loi_suat', 'Lợi suất cho thuê'], ['ban_giao', 'Bàn giao sớm'], ['phong_thuy', 'Hướng, phong thuỷ']];
-export const SENSITIVE_NOTE = 'Không ghi và không suy đoán: tôn giáo, quan điểm chính trị, sức khoẻ, đời sống tình dục, nguồn gốc dân tộc, tiền án, thông tin tài khoản ngân hàng – đây là dữ liệu cá nhân nhạy cảm theo quy định về bảo vệ dữ liệu cá nhân (Luật Bảo vệ dữ liệu cá nhân 2025 (Luật số 91/2025/QH15) và Nghị định 356/2025/NĐ-CP).';
+export const SENSITIVE_NOTE = 'Không ghi và không suy đoán: tôn giáo, quan điểm chính trị, sức khoẻ, đời sống tình dục, nguồn gốc dân tộc, tiền án, thông tin tài khoản ngân hàng – đây là dữ liệu cá nhân nhạy cảm theo quy định về bảo vệ dữ liệu cá nhân (Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP).';
 export const GUARDRAILS = [
 'Mục đích của "Đọc khách" là hiểu đúng NHU CẦU để tư vấn trung thực – không dùng để thao túng tâm lý.',
 'Không tạo khan hiếm hay hạn chót giả, không gây áp lực, không khai thác nỗi sợ hay hoàn cảnh riêng.',
-'Khách có quyền xem, sửa, rút lại đồng ý và yêu cầu xoá hồ sơ này bất cứ lúc nào (theo Luật Bảo vệ dữ liệu cá nhân 2025 (Luật số 91/2025/QH15)).',
+'Khách có quyền xem, sửa, rút lại đồng ý và yêu cầu xoá hồ sơ này bất cứ lúc nào (theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15).',
 ];
 const _o1 = /tôn giáo|đạo phật|công giáo|chính trị|đảng viên|bệnh|ung thư|mang thai|ly hôn|nợ xấu|tiền án|dân tộc/i;
 export function consentState(c) {
-if (Number(c && c.consent) === 1) return { ok: true, text: 'Khách đã đồng ý xử lý dữ liệu cá nhân.' };
-return { ok: false, text: 'Khách CHƯA đồng ý xử lý dữ liệu cá nhân (theo Luật Bảo vệ dữ liệu cá nhân 2025 (Luật số 91/2025/QH15)). Chỉ lập hồ sơ nhu cầu khi khách đồng ý – ghi nhận đồng ý trong hồ sơ khách trước.' };
+const _oa = gate(c, 'profile');
+if (!_oa.ok && c && stateOf(c).withdrawn) return { ok: false, text: _oa.reason + ' Không lập hồ sơ nhu cầu cho khách này.' };
+if (_oa.ok) return { ok: true, text: 'Khách đã đồng ý xử lý dữ liệu cá nhân.' };
+return { ok: false, text: 'Khách CHƯA đồng ý xử lý dữ liệu cá nhân (theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15). Chỉ lập hồ sơ nhu cầu khi khách đồng ý – ghi nhận đồng ý trong hồ sơ khách trước.' };
 }
 export function redact(text) {
 return String(text || '').replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, '[email]').replace(/\b\d{9,16}\b/g, '[số]').replace(/(\+84|0)[\d .]{8,12}\d/g, '[số điện thoại]');

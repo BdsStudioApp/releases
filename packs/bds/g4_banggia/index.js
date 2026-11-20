@@ -1,5 +1,5 @@
 import { g4kit, g4selftest, manifest as mf, h, G } from '../_lib/g4_ui.js';
-import { ls } from '../../../core/xkit.f03faf0986.js';
+import { ls } from '../../../core/xkit.e7637ba4a6.js';
 export const manifest = mf('g4_banggia', 'Bảng giá thứ cấp', '📉', 130, 'So giá chào với giá sơ cấp và mặt bằng giá anh/chị nhập; báo căn rẻ, căn cắt lỗ và khách khớp.');
 const _o1 = 'bds:g4:threshold';
 const _o0 = ['Căn', 'Giá chào', 'Sơ cấp (tr/m²)', 'Mặt bằng', 'Chênh', 'Cờ', 'Khách khớp'];

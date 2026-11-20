@@ -1,5 +1,5 @@
 import * as crm from './crm.js';
-import * as AC from '../../../core/ai_cost.4e4e8b66f1.js';
+import * as AC from '../../../core/ai_cost.2fb10e6822.js';
 const _o0 = 'bds-crm-css';
 export function ensureCss() {
 if (typeof document === 'undefined' || document.getElementById(_o0)) return;
@@ -221,7 +221,11 @@ return _o1.put('events', { object_id, type, text: text || '', at: now(), data: d
 },
 callBtn(c, opts = {}) {
 if (!c.phone) return null;
-return _o1.linkBtn(opts.short ? '' : 'Gọi', _o1.tel(c.phone), () => { _o1.logEvent(c.id, 'call', 'Gọi ' + _o1.phone(c.phone)); }, { kind: 'primary', icon: 'phone', glyph: '📞', aria: opts.short ? 'Gọi ' + (c.name || '') : null, testid: 'call-' + c.id });
+return _o1.linkBtn(opts.short ? '' : 'Gọi', _o1.tel(c.phone), (e) => {
+_o1.logEvent(c.id, 'call', 'Gọi ' + _o1.phone(c.phone));
+const _o2 = e && e.currentTarget, avoid = _o2 && _o2.getBoundingClientRect ? (_o2.closest('.bds-acts') || _o2).getBoundingClientRect() : null;
+if (!c.kind || c.kind === 'customer') import('./callcard.js').then(_oe => _oe.openCallCard(ctx, c, { avoid })).catch(() => { });
+}, { kind: 'primary', icon: 'phone', glyph: '📞', aria: opts.short ? 'Gọi ' + (c.name || '') : null, testid: 'call-' + c.id });
 },
 zaloBtn(c, opts = {}) {
 const _oh = c.zalo || c.phone;

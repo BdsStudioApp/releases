@@ -1,4 +1,4 @@
-import { ensureCss } from '../xkit.f03faf0986.js';
+import { ensureCss } from '../xkit.e7637ba4a6.js';
 export const TIERS = ['co_ban', 'kha', 'manh'];
 export const TIER_LABEL = { co_ban: 'Cơ bản', kha: 'Khá', manh: 'Mạnh' };
 export const SLACK = 0.5;

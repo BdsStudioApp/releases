@@ -45,7 +45,7 @@ var _o0 = function (from, to) { var _o2 = String(from == null ? '' : from).trim(
 if (ownerInstance[_o7]) { _o0(String(ownerInstance[_o7]).replace(/\/+$/, ''), ''); _o0(_o5(ownerInstance[_o7]), ''); }
 });
 _o0(ownerInstance.LANDING_SHEET_ID, '');
-_o0(ownerInstance.CHANNEL, 'Kênh của bạn');
+_o0(ownerInstance.CHANNEL, '');
 _o0(ownerInstance.OWNER_NAME, '');
 _o0(ownerInstance.OWNER_CCHN, '');
 _oa.sort(function (a, b) { return b[0].length - a[0].length; });

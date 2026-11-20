@@ -11,34 +11,38 @@ button{width:100%;min-height:48px;border:0;border-radius:12px;background:#c9a24a
 .contact{display:flex;gap:10px;flex-wrap:wrap}.contact a{flex:1;min-width:140px;text-align:center;padding:12px;border-radius:12px;background:#0f1e33;color:#fff;text-decoration:none;font-weight:600}
 ul.facts{padding-left:18px}footer{margin-top:28px;font-size:.82rem;color:#5b6475}.story{border-left:4px solid #c9a24a;padding-left:12px;margin:14px 0}`;
 const _o1 = `(function(){var f=document.getElementById('g3f');if(!f)return;var ep=f.getAttribute('data-endpoint')||'';
-var q=new URLSearchParams(location.search),keys=['ref','v','utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+var q=new URLSearchParams(location.search),keys=['ref','v','s','utm_source','utm_medium','utm_campaign','utm_content','utm_term'],inj={},pu=location.href;
+try{var mq=document.querySelector('meta[name="lp-qs"]');if(mq)inj=JSON.parse(mq.getAttribute('content')||'{}')||{};var mu=document.querySelector('meta[name="lp-url"]');if(mu&&mu.getAttribute('content'))pu=mu.getAttribute('content');}catch(e){inj={};}
+function ph(s){s=String(s||'').replace(/[\\s.\\-()]/g,'');if(/^\\+84/.test(s))s='0'+s.slice(3);else if(/^84\\d{9,10}$/.test(s))s='0'+s.slice(2);return /^0[35789]\\d{8}$/.test(s)||/^02\\d{9}$/.test(s)?s:'';}
 f.addEventListener('submit',function(ev){ev.preventDefault();var m=document.getElementById('g3m');m.className='';m.textContent='';
 if(!ep){m.className='err';m.textContent='Trang chưa nối máy chủ nhận khách – vui lòng gọi số điện thoại bên dưới.';return;}
+if(String(f.name.value||'').trim().length<2){m.className='err';m.textContent='Vui lòng nhập họ tên.';return;}
+if(!ph(f.phone.value)){m.className='err';m.textContent='Số điện thoại chưa đúng (10 số, ví dụ 0912 345 678).';return;}
 if(!f.consent.checked){m.className='err';m.textContent='Vui lòng tích ô đồng ý để tiếp tục.';return;}
-var act=f.getAttribute('data-action')||'g3.lead',p={kind:f.getAttribute('data-kind'),ref_id:f.getAttribute('data-ref'),name:f.name.value,phone:f.phone.value,consent:true,website:f.website.value,page_url:location.href.slice(0,500)};
+var act=f.getAttribute('data-action')||'g3.lead',p={kind:f.getAttribute('data-kind'),ref_id:f.getAttribute('data-ref'),name:f.name.value,phone:f.phone.value,consent:true,website:f.website.value,page_url:String(pu).slice(0,500)};
 if(act==='landing.lead'){p={name:p.name,phone:p.phone,consent:true,website:p.website,page_url:p.page_url,landing_id:f.getAttribute('data-landing')||'',project:f.getAttribute('data-project')||'',want:f.getAttribute('data-want')||''};}
-keys.forEach(function(k){var v=q.get(k);if(v)p[k]=v.slice(0,100);});var b=f.querySelector('button');b.disabled=true;
+keys.forEach(function(k){var v=q.get(k)||inj[k];if(v)p[k]=String(v).slice(0,100);});var b=f.querySelector('button');b.disabled=true;
 fetch(ep,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:act,payload:p})}).then(function(r){return r.json();}).then(function(r){b.disabled=false;
 if(!r||!r.ok){m.className='err';m.textContent=(r&&r.error&&r.error.message)||'Chưa gửi được, vui lòng thử lại.';return;}
 var d=r.data||{};m.className='ok';m.textContent=d.message||'Đã nhận thông tin. Môi giới sẽ liên hệ sớm.';
-if(d.file_url&&/^https:\\/\\//.test(d.file_url)){var a=document.createElement('a');a.href=d.file_url;a.target='_blank';a.rel='noopener';a.textContent=' Mở tài liệu';m.appendChild(a);location.href=d.file_url;}
+if(d.file_url&&/^https:\\/\\//.test(d.file_url)){var a=document.createElement('a');a.href=d.file_url;a.target='_blank';a.rel='noopener';a.textContent=' Mở tài liệu';m.appendChild(a);var top=true;try{top=window.top===window.self;}catch(e){top=false;}if(top)location.href=d.file_url;}
 f.reset();}).catch(function(){b.disabled=false;m.className='err';m.textContent='Mạng chập chờn, vui lòng thử lại.';});});})();`;
 function _oc(phone) { const d = String(phone || '').replace(/\D/g, ''); return d ? 'https://zalo.me/' + d : ''; }
 function _o2(agent) {
 if (!agent || !agent.phone) return '';
 return `<div class="contact"><a href="tel:${e(agent.phone)}">Gọi ${e(agent.phone)}</a><a href="${e(_oc(agent.phone))}" target="_blank" rel="noopener">Nhắn Zalo</a></div>`;
 }
-function _o6({ kind, refId, endpoint, button, note, action = 'g3.lead', landing = '', project = '', want = '' }) {
+function _o6({ kind, refId, endpoint, button, note, purpose, withdraw, action = 'g3.lead', landing = '', project = '', want = '' }) {
 const _o3 = action === 'g3.lead' ? '' : ` data-action="${e(action)}" data-landing="${e(landing)}" data-project="${e(project)}" data-want="${e(want)}"`;
 return `<form id="g3f" class="card" data-endpoint="${e(endpoint || '')}" data-kind="${e(kind)}" data-ref="${e(refId || '')}"${_o3} novalidate>
 ${note ? `<p class="muted">${e(note)}</p>` : ''}<label for="g3n">Họ tên</label><input id="g3n" name="name" type="text" autocomplete="name" maxlength="80" required>
 <label for="g3p">Số điện thoại / Zalo</label><input id="g3p" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="15" required>
 <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
 <label class="consent"><input type="checkbox" name="consent" required><span>${e(CONSENT_TEXT)}</span></label>
-<button type="submit">${e(button)}</button><p id="g3m" role="status" aria-live="polite"></p></form>`;
+${purpose ? `<p class="muted">${e(purpose)}</p>` : ''}${withdraw ? `<p class="muted">${e(withdraw)}</p>` : ''}<button type="submit">${e(button)}</button><p id="g3m" role="status" aria-live="polite"></p></form>`;
 }
-function _o9({ head, body }) {
-return `<!doctype html>\n<html lang="vi">\n<head>\n${head}\n<style>${_o0}</style>\n</head>\n<body>\n<main>\n${body}\n</main>\n<script>${_o1}</script>\n</body>\n</html>\n`;
+function _o9({ head, body, quick = false }) {
+return `<!doctype html>\n<html lang="vi">\n<head>\n${quick ? '<!--lp-inject-->\n' : ''}${head}\n<style>${_o0}</style>\n</head>\n<body>\n<main>\n${body}\n</main>\n<script>${_o1}</script>\n</body>\n</html>\n`;
 }
 const _o4 = (agent) => `<footer><p>${e(DISCLAIMER)}</p>${agent && agent.name ? `<p>${e(agent.name)}${agent.license ? ' · CCHN ' + e(agent.license) : ''}${agent.phone ? ' · ' + e(agent.phone) : ''}</p>` : ''}</footer>`;
 export function projectPage(_o7, { agent = {}, base = '', endpoint = '', facts = [], body = '' } = {}) {
@@ -54,13 +58,13 @@ ${_o2(agent)}
 <p class="muted"><a href="${e(joinUrl(base, 'ho-so'))}">Hồ sơ năng lực môi giới</a> · <a href="${e(joinUrl(base, ''))}">Các dự án khác</a></p></article>${_o4(agent)}`;
 return _o9({ head, body: _o5 });
 }
-export function docPage(doc, { agent = {}, base = '', endpoint = '', canonical = '' } = {}) {
+export function docPage(doc, { agent = {}, base = '', endpoint = '', canonical = '', quick = false } = {}) {
 const _o7 = { title: doc.title + (agent.name ? ' | ' + agent.name : ''), description: doc.description || ('Nhận ' + doc.title + ' qua Zalo.'), canonical, image: doc.cover, noindex: !!doc.noindex };
 const _o5 = `<h1>${e(doc.title)}</h1>${doc.cover ? `<div class="hero"><img src="${e(doc.cover)}" alt="${e(doc.title)}" width="1200" height="675"></div>` : ''}
 ${doc.description ? `<p>${e(doc.description)}</p>` : ''}${(doc.bullets || []).length ? `<ul class="facts">${doc.bullets.map(b => `<li>${e(b)}</li>`).join('')}</ul>` : ''}
-${_o6({ kind: 'doc', refId: doc.id, endpoint, button: 'Nhận tài liệu', note: 'Để lại số Zalo để nhận tài liệu ngay và bản cập nhật khi có chính sách mới.' })}
+${_o6({ kind: 'doc', refId: doc.id, endpoint, button: 'Nhận tài liệu', note: 'Để lại số Zalo để nhận tài liệu ngay và bản cập nhật khi có chính sách mới.', purpose: doc.purpose, withdraw: doc.withdraw })}
 ${_o2(agent)}${_o4(agent)}`;
-return _o9({ head: headTags(_o7), body: _o5 });
+return _o9({ head: headTags(_o7), body: _o5, quick });
 }
 export function eventPage(ev, { agent = {}, endpoint = '', canonical = '' } = {}) {
 const _oa = ev.start_at ? new Date(Number(ev.start_at)).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';

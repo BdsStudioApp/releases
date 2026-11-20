@@ -137,7 +137,7 @@ intro: 'Khách xem video, đọc bài của anh/chị nhiều lần trước khi
 sections: [
 { h: 'Hữu ích trước, bán hàng sau', p: 'Giải thích quy hoạch, hạ tầng, cách tính dòng tiền, kinh nghiệm nhận nhà. Phần giới thiệu dự án chỉ nên là một phần nhỏ.' },
 { h: 'Ghi nguồn, ghi thời điểm', p: 'Mọi con số về giá, hạ tầng, quy hoạch ghi rõ nguồn và tháng/năm. Ảnh phối cảnh ghi "Ảnh minh hoạ". Không dùng chữ "chắc chắn tăng giá", "cam kết lợi nhuận".' },
-{ h: 'Đều đặn', p: 'Ba nội dung tốt mỗi tuần, đều đặn trong nhiều tháng, hiệu quả hơn nhiều nội dung dồn vào một tuần rồi nghỉ. Lịch & Đăng trong app giúp giữ nhịp.' },
+{ h: 'Đều đặn', p: 'Ba nội dung tốt mỗi tuần, đều đặn trong nhiều tháng, hiệu quả hơn nhiều nội dung dồn vào một tuần rồi nghỉ. Lịch đăng 14 ngày ở Nguồn ý tưởng giúp giữ nhịp.' },
 ],
 exercise: 'Viết 3 tiêu đề video cho tuần tới: 1 về hạ tầng (có nguồn), 1 về tài chính mua nhà, 1 về kinh nghiệm thực tế.',
 takeaways: ['Hữu ích trước', 'Luôn có nguồn và thời điểm', 'Đều đặn quan trọng hơn dồn dập'],
@@ -149,7 +149,7 @@ quiz: [
 },
 {
 id: 'l10', title: 'Bảo vệ dữ liệu khách hàng', minutes: 6, topic: 'Đạo đức nghề',
-intro: 'Số điện thoại, thu nhập, nhu cầu của khách là dữ liệu cá nhân. Luật Bảo vệ dữ liệu cá nhân 2025 (Luật số 91/2025/QH15), hiệu lực từ 01/01/2026, và Nghị định 356/2025/NĐ-CP hướng dẫn luật quy định việc thu thập, xử lý dữ liệu này: khách tư vấn phải đồng ý rõ ràng, dữ liệu chỉ dùng đúng mục đích đã báo, khách có quyền rút lại đồng ý và yêu cầu xoá.',
+intro: 'Số điện thoại, thu nhập, nhu cầu của khách là dữ liệu cá nhân. Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15, hiệu lực từ 01/01/2026, và Nghị định 356/2025/NĐ-CP hướng dẫn luật quy định việc thu thập, xử lý dữ liệu này: khách tư vấn phải đồng ý rõ ràng, dữ liệu chỉ dùng đúng mục đích đã báo, khách có quyền rút lại đồng ý và yêu cầu xoá.',
 sections: [
 { h: 'Có đồng ý mới liên hệ', p: 'Landing của app có ô đồng ý. Khách chưa đồng ý nhận thông tin: chỉ trả lời câu hỏi khách đặt ra, không đưa vào danh sách gửi tin hàng loạt.' },
 { h: 'Không chia sẻ dữ liệu', p: 'Không gửi danh sách khách cho người ngoài, không đăng ảnh chụp màn hình có số điện thoại, không mua bán "data khách".' },
@@ -158,7 +158,7 @@ sections: [
 exercise: 'Kiểm tra điện thoại: xoá các ảnh chụp màn hình có thông tin khách không còn cần thiết; rà lại nhóm Zalo đang chia sẻ số khách.',
 takeaways: ['Có đồng ý mới chăm sóc', 'Không chia sẻ, không mua bán dữ liệu', 'Xoá khi khách yêu cầu'],
 quiz: [
-{ q: 'Văn bản quy định bảo vệ dữ liệu cá nhân nhắc trong bài?', options: ['Luật Bảo vệ dữ liệu cá nhân 2025 (Luật số 91/2025/QH15)', 'Luật Giao thông', 'Thông tư về thuế', 'Không có'], answer: 0, why: 'Luật Bảo vệ dữ liệu cá nhân 2025 (Luật số 91/2025/QH15), hướng dẫn bởi Nghị định 356/2025/NĐ-CP.' },
+{ q: 'Văn bản quy định bảo vệ dữ liệu cá nhân nhắc trong bài?', options: ['Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15', 'Luật Giao thông', 'Thông tư về thuế', 'Không có'], answer: 0, why: 'Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15, hướng dẫn bởi Nghị định 356/2025/NĐ-CP.' },
 { q: 'Được làm gì với danh sách khách?', options: ['Bán cho sàn khác', 'Dùng đúng mục đích khách đã đồng ý', 'Đăng lên nhóm', 'Gửi cho bạn bè'], answer: 1, why: 'Chỉ xử lý dữ liệu đúng mục đích khách đồng ý.' },
 { q: 'Khách yêu cầu xoá thông tin?', options: ['Lờ đi', 'Xoá bằng chức năng xoá dữ liệu và xác nhận lại', 'Chuyển sang file riêng', 'Đổi tên khách'], answer: 1, why: 'Tôn trọng quyền của chủ thể dữ liệu.' },
 ],

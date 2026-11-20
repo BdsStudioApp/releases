@@ -1,8 +1,8 @@
 import { buildQuote, parseNum, parsePlans, fold, fmtMoney, fmtNum, parseTypesText, typesToText, ymLabel } from '../_lib/sales.js';
-const _oy = (x) => typeof x === 'number' && isFinite(x);
+const _ox = (x) => typeof x === 'number' && isFinite(x);
 const num = (v, d = 0) => { const n = typeof v === 'number' ? v : parseNum(v); return isFinite(n) ? n : d; };
-const _o1v = (x) => Math.round(x);
-const _o17 = (n) => { try { const L = globalThis.BDSLogic; const s = L && L.fmt && L.fmt.money(n); if (s) return s; } catch { } return fmtMoney(n); };
+const _o1u = (x) => Math.round(x);
+const _o16 = (n) => { try { const L = globalThis.BDSLogic; const s = L && L.fmt && L.fmt.money(n); if (s) return s; } catch { } return fmtMoney(n); };
 export const TAX_DEFAULTS = {
 pit_rate: 0.02,
 lptb_rate: 0.005,
@@ -33,39 +33,39 @@ export function notaryFee(value, cfg = TAX_DEFAULTS) {
 const v = Math.max(0, num(value));
 if (!v) return 0;
 for (const [cap, fixed, rate, floor] of cfg.notary_tiers) {
-if (cap === null || v <= cap) return Math.min(cfg.notary_max || Infinity, _o1v(fixed + rate * (v - floor)));
+if (cap === null || v <= cap) return Math.min(cfg.notary_max || Infinity, _o1u(fixed + rate * (v - floor)));
 }
 return 0;
 }
-export function transferCosts(_o1b = {}) {
-const cfg = taxConfig(_o1b.cfg);
-const price = Math.max(0, num(_o1b.price)), state = Math.max(0, num(_o1b.statePrice));
+export function transferCosts(_o1a = {}) {
+const cfg = taxConfig(_o1a.cfg);
+const price = Math.max(0, num(_o1a.price)), state = Math.max(0, num(_o1a.statePrice));
 const base = Math.max(price, state);
-const _o1q = _o1b.mode === 'primary';
+const _o1p = _o1a.mode === 'primary';
 const items = [];
-const add = (key, label, amount, payer, legal, note) => { if (amount > 0 || note) items.push({ key, label, amount: _o1v(amount), payer, legal: legal || '', note: note || '' }); };
-if (!_o1q) {
-add('pit', 'Thuế thu nhập cá nhân ' + fmtNum(cfg.pit_rate * 100, 3) + '%', _o1b.exemptPit ? 0 : base * cfg.pit_rate, _o1b.pitPayer || 'seller', cfg.legal.pit,
-_o1b.exemptPit ? 'Miễn thuế (đủ điều kiện – cần giấy tờ chứng minh)' : [state > price ? 'Tính trên giá nhà nước vì cao hơn giá hợp đồng' : '', cfg.pit_note ? String(cfg.pit_note) : ''].filter(Boolean).join(' · '));
+const add = (key, label, amount, payer, legal, note) => { if (amount > 0 || note) items.push({ key, label, amount: _o1u(amount), payer, legal: legal || '', note: note || '' }); };
+if (!_o1p) {
+add('pit', 'Thuế thu nhập cá nhân ' + fmtNum(cfg.pit_rate * 100, 3) + '%', _o1a.exemptPit ? 0 : base * cfg.pit_rate, _o1a.pitPayer || 'seller', cfg.legal.pit,
+_o1a.exemptPit ? 'Miễn thuế (đủ điều kiện – cần giấy tờ chứng minh)' : [state > price ? 'Tính trên giá nhà nước vì cao hơn giá hợp đồng' : '', cfg.pit_note ? String(cfg.pit_note) : ''].filter(Boolean).join(' · '));
 }
-const _o15 = cfg.lptb_rate * (_o1b.online ? 1 - cfg.lptb_online_discount : 1);
-add('lptb', 'Lệ phí trước bạ ' + fmtNum(_o15 * 100, 2) + '%', _o1b.exemptLptb ? 0 : base * _o15, _o1b.lptbPayer || 'buyer', cfg.legal.lptb,
-_o1b.exemptLptb ? 'Miễn lệ phí trước bạ (đủ điều kiện)' : '');
-if (!_o1q) {
+const _o14 = cfg.lptb_rate * (_o1a.online ? 1 - cfg.lptb_online_discount : 1);
+add('lptb', 'Lệ phí trước bạ ' + fmtNum(_o14 * 100, 2) + '%', _o1a.exemptLptb ? 0 : base * _o14, _o1a.lptbPayer || 'buyer', cfg.legal.lptb,
+_o1a.exemptLptb ? 'Miễn lệ phí trước bạ (đủ điều kiện)' : '');
+if (!_o1p) {
 const nf = notaryFee(base, cfg);
-const np = _o1b.notaryPayer || 'buyer';
+const np = _o1a.notaryPayer || 'buyer';
 if (np === 'split') { add('notary_b', 'Phí công chứng (bên mua 1/2)', nf / 2, 'buyer', cfg.legal.notary); add('notary_s', 'Phí công chứng (bên bán 1/2)', nf / 2, 'seller', cfg.legal.notary); }
 else add('notary', 'Phí công chứng', nf, np, cfg.legal.notary);
 } else {
 add('maint', 'Kinh phí bảo trì ' + fmtNum(cfg.maintenance_rate * 100, 3) + '%', 0, 'buyer', cfg.legal.maintenance, 'Thường đã gồm trong giá niêm yết – kiểm tra phiếu tính giá');
 }
-const broker = price * Math.max(0, num(_o1b.brokerRate)) + Math.max(0, num(_o1b.brokerFixed));
-add('broker', 'Phí môi giới', broker, _o1b.brokerPayer || 'seller', 'Theo thoả thuận');
-add('appraisal', 'Phí thẩm định hồ sơ, cấp sổ (theo tỉnh)', Math.max(0, num(_o1b.appraisal)), 'buyer', 'Nghị quyết HĐND tỉnh nơi có nhà đất');
-add('other_b', 'Chi phí khác bên mua', Math.max(0, num(_o1b.otherBuyer)), 'buyer', '');
-add('other_s', 'Chi phí khác bên bán', Math.max(0, num(_o1b.otherSeller)), 'seller', '');
-const _o2c = (who) => items.filter((i) => i.payer === who).reduce((a, i) => a + i.amount, 0);
-const buyerFees = _o2c('buyer'), sellerFees = _o2c('seller');
+const broker = price * Math.max(0, num(_o1a.brokerRate)) + Math.max(0, num(_o1a.brokerFixed));
+add('broker', 'Phí môi giới', broker, _o1a.brokerPayer || 'seller', 'Theo thoả thuận');
+add('appraisal', 'Phí thẩm định hồ sơ, cấp sổ (theo tỉnh)', Math.max(0, num(_o1a.appraisal)), 'buyer', 'Nghị quyết HĐND tỉnh nơi có nhà đất');
+add('other_b', 'Chi phí khác bên mua', Math.max(0, num(_o1a.otherBuyer)), 'buyer', '');
+add('other_s', 'Chi phí khác bên bán', Math.max(0, num(_o1a.otherSeller)), 'seller', '');
+const _o2b = (who) => items.filter((i) => i.payer === who).reduce((a, i) => a + i.amount, 0);
+const buyerFees = _o2b('buyer'), sellerFees = _o2b('seller');
 return { price, statePrice: state, base, items, buyerFees, sellerFees, buyerPays: price + buyerFees, sellerGets: price - sellerFees, cfg };
 }
 export const MAX_LOAN_MONTHS = 1200;
@@ -96,21 +96,21 @@ return out;
 }
 export function amortize({ principal, years, phases, method = 'annuity', stopMonth = 0 }) {
 const P = Math.max(0, num(principal)), N = Math.min(MAX_LOAN_MONTHS, Math.max(1, Math.round(num(years) * 12)));
-const _o1m = (phases || []).filter((x) => x && isFinite(num(x.ratePct, NaN)));
-if (!_o1m.length) return { rows: [], months: N, totalInterest: 0, ok: false };
-const _o1x = (m) => { let _oa = 0; for (const x of _o1m) { _oa += Math.max(0, Math.round(num(x.months))); if (m <= _oa) return num(x.ratePct); } return num(_o1m[_o1m.length - 1].ratePct); };
+const _o1l = (phases || []).filter((x) => x && isFinite(num(x.ratePct, NaN)));
+if (!_o1l.length) return { rows: [], months: N, totalInterest: 0, ok: false };
+const _o1w = (m) => { let _oa = 0; for (const x of _o1l) { _oa += Math.max(0, Math.round(num(x.months))); if (m <= _oa) return num(x.ratePct); } return num(_o1l[_o1l.length - 1].ratePct); };
 const rows = [];
 let _oc = P, pay = 0, curRate = null, totalInterest = 0;
 const end = stopMonth > 0 ? Math.min(N, stopMonth) : N;
 for (let m = 1; m <= end; m++) {
-const _o23 = _o1x(m), r = _o23 / 1200, left = N - m + 1;
-if (method === 'annuity' && _o23 !== curRate) { pay = r ? _oc * r / (1 - Math.pow(1 + r, -left)) : _oc / left; curRate = _o23; }
+const _o22 = _o1w(m), r = _o22 / 1200, left = N - m + 1;
+if (method === 'annuity' && _o22 !== curRate) { pay = r ? _oc * r / (1 - Math.pow(1 + r, -left)) : _oc / left; curRate = _o22; }
 const interest = _oc * r;
-let _o1r = method === 'annuity' ? pay - interest : P / N;
-if (m === N || _o1r > _oc) _o1r = _oc;
-_oc -= _o1r; if (Math.abs(_oc) < 1e-6) _oc = 0;
+let _o1q = method === 'annuity' ? pay - interest : P / N;
+if (m === N || _o1q > _oc) _o1q = _oc;
+_oc -= _o1q; if (Math.abs(_oc) < 1e-6) _oc = 0;
 totalInterest += interest;
-rows.push({ m, ratePct: _o23, interest, principal: _o1r, pay: _o1r + interest, balance: _oc });
+rows.push({ m, ratePct: _o22, interest, principal: _o1q, pay: _o1q + interest, balance: _oc });
 }
 return { rows, months: N, totalInterest, balance: _oc, ok: true };
 }
@@ -118,16 +118,16 @@ export const BANK_FIELDS = ['bank', 'promo_rate', 'promo_months', 'floating_rate
 export function parsePrepay(s) { return String(s ?? '').split(/[;,\s/|]+/).map((x) => parseNum(x)).filter(isFinite); }
 export function prepayPct(list, year) { if (!list.length) return NaN; return list[Math.min(list.length, Math.max(1, year)) - 1]; }
 export function normBank(r = {}) {
-const _o1b = {};
-_o1b.id = String(r.id || ''); _o1b.bank = String(r.bank || '').trim();
-for (const k of ['promo_rate', 'promo_months', 'floating_rate', 'ref_rate', 'margin', 'max_ltv', 'max_years']) { const v = numDec(r[k]); _o1b[k] = isFinite(v) ? v : null; }
-_o1b.base_label = String(r.base_label || '').trim(); _o1b.prepay = String(r.prepay ?? '').trim(); _o1b.source_url = String(r.source_url || '').trim();
-_o1b.updated = /^\d{4}-\d{2}-\d{2}$/.test(String(r.updated || '')) ? String(r.updated) : ''; _o1b.note = String(r.note || '').trim();
-_o1b.source_name = String(r.source_name || '').trim();
-_o1b.origin = r.origin === 'ai' ? 'ai' : 'manual';
-_o1b.ai_at = /^\d{4}-\d{2}-\d{2}$/.test(String(r.ai_at || '')) ? String(r.ai_at) : '';
-_o1b.ai_rep = _oy(r.ai_rep) ? r.ai_rep : 0;
-return _o1b;
+const _o1a = {};
+_o1a.id = String(r.id || ''); _o1a.bank = String(r.bank || '').trim();
+for (const k of ['promo_rate', 'promo_months', 'floating_rate', 'ref_rate', 'margin', 'max_ltv', 'max_years']) { const v = numDec(r[k]); _o1a[k] = isFinite(v) ? v : null; }
+_o1a.base_label = String(r.base_label || '').trim(); _o1a.prepay = String(r.prepay ?? '').trim(); _o1a.source_url = String(r.source_url || '').trim();
+_o1a.updated = /^\d{4}-\d{2}-\d{2}$/.test(String(r.updated || '')) ? String(r.updated) : ''; _o1a.note = String(r.note || '').trim();
+_o1a.source_name = String(r.source_name || '').trim();
+_o1a.origin = r.origin === 'ai' ? 'ai' : 'manual';
+_o1a.ai_at = /^\d{4}-\d{2}-\d{2}$/.test(String(r.ai_at || '')) ? String(r.ai_at) : '';
+_o1a.ai_rep = _ox(r.ai_rep) ? r.ai_rep : 0;
+return _o1a;
 }
 export function bankIssues(b, todayISO, staleDays = 30) {
 const e = [];
@@ -145,29 +145,29 @@ const _og = (k, label, lo, hi, unit) => { if (b[k] != null && !(b[k] >= lo && b[
 _og('promo_rate', 'Lãi ưu đãi', 0, 40, '%/năm'); _og('floating_rate', 'Lãi thả nổi', 0, 40, '%/năm'); _og('ref_rate', 'Lãi cơ sở', 0, 40, '%/năm');
 _og('margin', 'Biên độ', 0, 20, '%'); _og('promo_months', 'Thời gian ưu đãi', 0, 360, ' tháng'); _og('max_ltv', 'Cho vay tối đa', 1, 100, '%');
 _og('max_years', 'Thời hạn tối đa', 1, 50, ' năm');
-const _o1p = parsePrepay(b.prepay);
-if (String(b.prepay || '').trim() && (!_o1p.length || _o1p.length > 30 || _o1p.some((x) => x < 0 || x > 10))) e.push('Phí trả trước hạn: mỗi năm một số từ 0 đến 10%, cách nhau bằng dấu phẩy (vd 3,3,2,1,0)');
+const _o1o = parsePrepay(b.prepay);
+if (String(b.prepay || '').trim() && (!_o1o.length || _o1o.length > 30 || _o1o.some((x) => x < 0 || x > 10))) e.push('Phí trả trước hạn: mỗi năm một số từ 0 đến 10%, cách nhau bằng dấu phẩy (vd 3,3,2,1,0)');
 return e;
 }
 export function compareBanks(rows, opt = {}) {
 const P = num(opt.principal), years = num(opt.years, 20), py = Math.max(0, Math.round(num(opt.prepayYear)));
 const out = (rows || []).map(normBank).map((b) => {
-const _oz = bankIssues(b, opt.todayISO, opt.staleDays);
-const _o20 = { ...b, issues: _oz.errors, stale: _oz.stale, ok: false };
-if (_oz.errors.some((x) => /thả nổi|thiếu lãi ưu đãi|tên/i.test(x)) || !(P > 0)) return _o20;
-if (b.max_years && years > b.max_years) _o20.issues = _o20.issues.concat('Ngân hàng cho vay tối đa ' + fmtNum(b.max_years) + ' năm');
+const _oy = bankIssues(b, opt.todayISO, opt.staleDays);
+const _o1z = { ...b, issues: _oy.errors, stale: _oy.stale, ok: false };
+if (_oy.errors.some((x) => /thả nổi|thiếu lãi ưu đãi|tên/i.test(x)) || !(P > 0)) return _o1z;
+if (b.max_years && years > b.max_years) _o1z.issues = _o1z.issues.concat('Ngân hàng cho vay tối đa ' + fmtNum(b.max_years) + ' năm');
 const phases = [];
 if (b.promo_rate != null && b.promo_months) phases.push({ months: b.promo_months, ratePct: b.promo_rate });
 phases.push({ months: 1e6, ratePct: b.floating_rate });
-const _o2a = py > 0 ? Math.min(py * 12, years * 12) : 0;
-const A = amortize({ principal: P, years, phases, method: opt.method || 'annuity', stopMonth: _o2a });
-const _op = A.rows.find((r) => r.m === (b.promo_months || 0) + 1) || null;
-const _o1l = _o2a && A.balance > 0 ? prepayPct(parsePrepay(b.prepay), py) : 0;
-const penalty = _o2a && A.balance > 0 ? (isFinite(_o1l) ? A.balance * _o1l / 100 : NaN) : 0;
-if (_o2a && A.balance > 0 && !isFinite(_o1l)) _o20.issues = _o20.issues.concat('Thiếu phí trả trước hạn – chưa cộng phạt');
-Object.assign(_o20, { ok: true, first: A.rows[0] ? A.rows[0].pay : 0, after: _op ? _op.pay : null, interest: A.totalInterest,
-penalty: isFinite(penalty) ? penalty : 0, balanceAtPrepay: _o2a ? A.balance : 0, cost: A.totalInterest + (isFinite(penalty) ? penalty : 0) });
-return _o20;
+const _o29 = py > 0 ? Math.min(py * 12, years * 12) : 0;
+const A = amortize({ principal: P, years, phases, method: opt.method || 'annuity', stopMonth: _o29 });
+const _oo = A.rows.find((r) => r.m === (b.promo_months || 0) + 1) || null;
+const _o1k = _o29 && A.balance > 0 ? prepayPct(parsePrepay(b.prepay), py) : 0;
+const penalty = _o29 && A.balance > 0 ? (isFinite(_o1k) ? A.balance * _o1k / 100 : NaN) : 0;
+if (_o29 && A.balance > 0 && !isFinite(_o1k)) _o1z.issues = _o1z.issues.concat('Thiếu phí trả trước hạn – chưa cộng phạt');
+Object.assign(_o1z, { ok: true, first: A.rows[0] ? A.rows[0].pay : 0, after: _oo ? _oo.pay : null, interest: A.totalInterest,
+penalty: isFinite(penalty) ? penalty : 0, balanceAtPrepay: _o29 ? A.balance : 0, cost: A.totalInterest + (isFinite(penalty) ? penalty : 0) });
+return _o1z;
 });
 const okRows = out.filter((x) => x.ok);
 if (okRows.length > 1) { const m = Math.min(...okRows.map((x) => x.cost)); okRows.forEach((x) => { x.best = x.cost === m; x.extra = x.cost - m; }); }
@@ -188,9 +188,9 @@ return t.toISOString().slice(0, 10);
 }
 export const isoVN = (ms) => new Date(num(ms, Date.now()) + 7 * 3600e3).toISOString().slice(0, 10);
 export const dmy = (iso) => (_o6.test(String(iso || '')) ? String(iso).split('-').reverse().join('/') : '');
-const _oh = (v, n) => (v == null ? '' : String(v).replace(/\s+/g, ' ').trim().slice(0, n));
-const _o19 = (v, lo, hi) => { if (v == null || v === '') return null; const n = parseNum(v); return isFinite(n) && n >= lo && n <= hi ? n : null; };
-const _ol = (a, b) => (Date.parse(b) - Date.parse(a)) / 864e5;
+const clip = (v, n) => (v == null ? '' : String(v).replace(/\s+/g, ' ').trim().slice(0, n));
+const _o18 = (v, lo, hi) => { if (v == null || v === '') return null; const n = parseNum(v); return isFinite(n) && n >= lo && n <= hi ? n : null; };
+const _ok = (a, b) => (Date.parse(b) - Date.parse(a)) / 864e5;
 const _o7 = 120;
 const _o3 = {
 vietcombank: ['vcb', 'ngoaithuong'], bidv: ['dautuvaphattrien'], vietinbank: ['ctg', 'congthuong'], agribank: ['nongnghiepvaphattriennongthon', 'nongnghiep'],
@@ -203,19 +203,19 @@ vietbank: ['vbb', 'vietnamthuongtin'], shinhanbank: ['shinhan'], uob: ['uobvietn
 };
 const _o1 = (() => { const m = {}; for (const [_oe, list] of Object.entries(_o3)) { m[_oe] = _oe; for (const a of list) m[a] = _oe; } return m; })();
 const _o0 = Object.keys(_o1).filter((a) => a.length >= 6).sort((a, b) => b.length - a.length);
-const _oi = (s) => fold(s).replace(/[^a-z0-9]+/g, '');
-const _o2b = (s) => fold(s).replace(/\b(ngan hang|nh|tmcp|thuong mai co phan|tnhh|mot thanh vien|mtv|joint stock commercial bank|commercial bank|bank|jsc|viet nam|vietnam)\b/g, ' ');
+const _oh = (s) => fold(s).replace(/[^a-z0-9]+/g, '');
+const _o2a = (s) => fold(s).replace(/\b(ngan hang|nh|tmcp|thuong mai co phan|tnhh|mot thanh vien|mtv|joint stock commercial bank|commercial bank|bank|jsc|viet nam|vietnam)\b/g, ' ');
 export function bankKey(name) {
 const f = fold(name);
 if (!f) return '';
 const inner = [...f.matchAll(/\(([^)]*)\)/g)].map((m) => m[1]);
-const _o1g = f.replace(/\([^)]*\)/g, ' ');
-for (const _of of [...inner, _o1g]) {
-const _oe = _oi(_of), cs = _oi(_o2b(_of));
+const _o1f = f.replace(/\([^)]*\)/g, ' ');
+for (const _of of [...inner, _o1f]) {
+const _oe = _oh(_of), cs = _oh(_o2a(_of));
 for (const x of [cs, _oe]) { if (x && _o1[x]) return _o1[x]; }
 for (const a of _o0) { if (cs.includes(a) || _oe.includes(a)) return _o1[a]; }
 }
-return _oi(_o2b(_o1g)) || _oi(_o1g) || _oi(f);
+return _oh(_o2a(_o1f)) || _oh(_o1f) || _oh(f);
 }
 export const BANK_FRESH_ASK = 'Tìm biểu lãi suất CHO VAY MUA NHÀ (cá nhân vay mua nhà ở, căn hộ) MỚI NHẤT đang áp dụng của các ngân hàng tại Việt Nam – càng nhiều ' +
 'ngân hàng càng tốt (ít nhất các ngân hàng lớn: Vietcombank, BIDV, VietinBank, Agribank, Techcombank, VPBank, MB, ACB, Sacombank, HDBank, TPBank, VIB, SHB, MSB). ' +
@@ -227,29 +227,29 @@ export const BANK_FRESH_SHAPE = '{"banks":[{"bank":"Tên ngắn của ngân hàn
 '"source_name":"tên trang","source_url":"https://…","date":"YYYY-MM-DD"}]}  (số là số thuần, % ghi 6.5 nghĩa là 6,5%/năm; không có thì null)';
 export function normFreshBanks(parsed, { todayISO } = {}) {
 const list = Array.isArray(parsed) ? parsed : parsed && Array.isArray(parsed.banks) ? parsed.banks : parsed && Array.isArray(parsed.items) ? parsed.items : [];
-const _o25 = new Set(), out = [];
+const _o24 = new Set(), out = [];
 for (const x of list.slice(0, 60)) {
 if (!x || typeof x !== 'object') continue;
-const bank = _oh(x.bank || x.name || x.title, 80);
+const bank = clip(x.bank || x.name || x.title, 80);
 const key = bankKey(bank);
-if (!key || _o25.has(key)) continue;
-_o25.add(key);
+if (!key || _o24.has(key)) continue;
+_o24.add(key);
 const issues = [], warns = [];
 const r = { key, bank };
-const rate = (k, label) => { const v = _o19(x[k], 0.1, 40); if (x[k] != null && x[k] !== '' && v == null) warns.push(label + ' không hợp lệ – bỏ qua'); return v; };
+const rate = (k, label) => { const v = _o18(x[k], 0.1, 40); if (x[k] != null && x[k] !== '' && v == null) warns.push(label + ' không hợp lệ – bỏ qua'); return v; };
 r.promo_rate = rate('promo_rate', 'Lãi ưu đãi');
-r.promo_months = _o19(x.promo_months, 0, 360); if (r.promo_months != null) r.promo_months = Math.round(r.promo_months);
+r.promo_months = _o18(x.promo_months, 0, 360); if (r.promo_months != null) r.promo_months = Math.round(r.promo_months);
 r.ref_rate = rate('ref_rate', 'Lãi cơ sở');
-r.margin = _o19(x.margin, 0, 20);
+r.margin = _o18(x.margin, 0, 20);
 r.floating_rate = rate('floating_rate', 'Lãi thả nổi');
 if (r.floating_rate == null && r.ref_rate != null && r.margin != null) { r.floating_rate = Math.round((r.ref_rate + r.margin) * 1000) / 1000; warns.push('Lãi thả nổi = lãi cơ sở + biên độ (app tự cộng)'); }
-r.base_label = _oh(x.base_label, 120) || (r.margin != null ? 'Lãi cơ sở + ' + fmtNum(r.margin, 3) + '%' : '');
-const _o1p = Array.isArray(x.prepay) ? x.prepay.map((v) => _o19(v, 0, 10)).filter((v) => v != null) : parsePrepay(x.prepay).filter((v) => v >= 0 && v <= 10);
-r.prepay = _o1p.slice(0, 10).map((v) => fmtNum(v, 2)).join(',');
-r.max_ltv = _o19(x.max_ltv, 1, 100);
-r.max_years = _o19(x.max_years, 1, 50);
-r.note = [_oh(x.package, 80), _oh(x.note, 160)].filter((v) => v && !/^null$/i.test(v)).join(' – ');
-r.source_name = _oh(x.source_name, 80);
+r.base_label = clip(x.base_label, 120) || (r.margin != null ? 'Lãi cơ sở + ' + fmtNum(r.margin, 3) + '%' : '');
+const _o1o = Array.isArray(x.prepay) ? x.prepay.map((v) => _o18(v, 0, 10)).filter((v) => v != null) : parsePrepay(x.prepay).filter((v) => v >= 0 && v <= 10);
+r.prepay = _o1o.slice(0, 10).map((v) => fmtNum(v, 2)).join(',');
+r.max_ltv = _o18(x.max_ltv, 1, 100);
+r.max_years = _o18(x.max_years, 1, 50);
+r.note = [clip(x.package, 80), clip(x.note, 160)].filter((v) => v && !/^null$/i.test(v)).join(' – ');
+r.source_name = clip(x.source_name, 80);
 r.source_url = safeUrl(x.source_url);
 let date = isoDate(x.date || x.updated);
 if (date && todayISO && date > todayISO) { warns.push('Ngày nguồn sau hôm nay – bỏ ngày'); date = ''; }
@@ -259,7 +259,7 @@ if (r.promo_rate == null && r.floating_rate == null) issues.push('Không có m�
 if (r.promo_months && r.promo_rate == null) warns.push('Có thời gian ưu đãi nhưng thiếu lãi ưu đãi');
 if (r.floating_rate == null) warns.push('Thiếu lãi thả nổi – chưa tính được tổng chi phí');
 if (!date) warns.push('Nguồn không ghi ngày – dùng ngày cập nhật qua AI');
-r.stale = !!(date && todayISO && _ol(date, todayISO) > _o7);
+r.stale = !!(date && todayISO && _ok(date, todayISO) > _o7);
 if (r.stale) warns.push('Biểu lãi đã cũ (' + dmy(date) + ') – nên hỏi lại ngân hàng');
 r.issues = issues; r.warns = warns; r.ok = !issues.length;
 out.push(r);
@@ -267,7 +267,7 @@ out.push(r);
 return out;
 }
 const _o2 = ['promo_rate', 'promo_months', 'ref_rate', 'margin', 'floating_rate', 'base_label', 'prepay', 'max_ltv', 'max_years'];
-const _or = (v) => (typeof v === 'number' ? fmtNum(v, 3) : v);
+const _oq = (v) => (typeof v === 'number' ? fmtNum(v, 3) : v);
 export function findBankRow(rows, bankOrKey) {
 const key = bankKey(bankOrKey) || String(bankOrKey || '');
 return (Array.isArray(rows) ? rows : []).findIndex((r) => r && bankKey(r.bank) === key);
@@ -275,23 +275,23 @@ return (Array.isArray(rows) ? rows : []).findIndex((r) => r && bankKey(r.bank) =
 export function mergeFreshBanks(rows, fresh, opt = {}) {
 const at = isoDate(opt.atISO) || '';
 const next = (Array.isArray(rows) ? rows : []).map((r) => ({ ...r }));
-const added = [], updated = [], _o2e = new Set();
+const added = [], updated = [], _o2d = new Set();
 (fresh || []).filter((f) => f && f.ok).forEach((f, i) => {
 const key = f.key || bankKey(f.bank);
-const idx = next.findIndex((r, _o11) => !_o2e.has(_o11) && bankKey(r.bank) === key);
+const idx = next.findIndex((r, _o10) => !_o2d.has(_o10) && bankKey(r.bank) === key);
 const base = idx >= 0 ? next[idx] : { id: opt.newId ? opt.newId(i) : 'ai' + Date.now().toString(36) + i, bank: f.bank };
-const _o22 = { ...base };
-for (const k of _o2) { const v = f[k]; if (v != null && v !== '') _o22[k] = _or(v); }
-if (f.note && !(base.note && String(base.note).trim())) _o22.note = f.note;
-Object.assign(_o22, { source_name: f.source_name || '', source_url: f.source_url, updated: f.date || at, origin: 'ai', ai_at: at, ai_rep: num(opt.reputable, 0) });
-if (idx >= 0) { next[idx] = _o22; _o2e.add(idx); updated.push(_o22.bank); }
-else { next.push(_o22); _o2e.add(next.length - 1); added.push(_o22.bank); }
+const _o21 = { ...base };
+for (const k of _o2) { const v = f[k]; if (v != null && v !== '') _o21[k] = _oq(v); }
+if (f.note && !(base.note && String(base.note).trim())) _o21.note = f.note;
+Object.assign(_o21, { source_name: f.source_name || '', source_url: f.source_url, updated: f.date || at, origin: 'ai', ai_at: at, ai_rep: num(opt.reputable, 0) });
+if (idx >= 0) { next[idx] = _o21; _o2d.add(idx); updated.push(_o21.bank); }
+else { next.push(_o21); _o2d.add(next.length - 1); added.push(_o21.bank); }
 });
-const kept = next.filter((_, _o11) => !_o2e.has(_o11)).map((r) => r.bank);
+const kept = next.filter((_, _o10) => !_o2d.has(_o10)).map((r) => r.bank);
 return { rows: next, added, updated, kept };
 }
-export function markBankManual(_o22) {
-const r = { ...(_o22 || {}) };
+export function markBankManual(_o21) {
+const r = { ...(_o21 || {}) };
 delete r.origin; delete r.ai_at; delete r.ai_rep;
 return r;
 }
@@ -299,14 +299,14 @@ export function banksStamp(rows) {
 const list = (Array.isArray(rows) ? rows : []).map(normBank);
 let date = '', ai = false, rep = 0;
 for (const b of list) {
-const _ox = b.origin === 'ai' && !!b.ai_at;
-const d = _ox ? b.ai_at : b.updated;
-if (d && d > date) { date = d; ai = _ox; rep = _ox ? b.ai_rep : 0; }
-else if (d && d === date && _ox) { ai = true; rep = Math.max(rep, b.ai_rep); }
+const _ow = b.origin === 'ai' && !!b.ai_at;
+const d = _ow ? b.ai_at : b.updated;
+if (d && d > date) { date = d; ai = _ow; rep = _ow ? b.ai_rep : 0; }
+else if (d && d === date && _ow) { ai = true; rep = Math.max(rep, b.ai_rep); }
 }
-const _o18 = list.filter((b) => b.origin === 'ai' && b.ai_at === date).length;
-const _ov = date ? 'Cập nhật ngày ' + dmy(date) + (ai ? ' qua AI (' + _o18 + ' ngân hàng' + (rep ? ', ' + rep + ' trang uy tín' : '') + ')' : '') : 'Chưa có ngày cập nhật';
-return { date, ai, rep, text: _ov + ' – bảng tính chỉ mang tính tham khảo, nên gọi nhân viên ngân hàng để có số chính xác.' };
+const _o17 = list.filter((b) => b.origin === 'ai' && b.ai_at === date).length;
+const _ou = date ? 'Cập nhật ngày ' + dmy(date) + (ai ? ' qua AI (' + _o17 + ' ngân hàng' + (rep ? ', ' + rep + ' trang uy tín' : '') + ')' : '') : 'Chưa có ngày cập nhật';
+return { date, ai, rep, text: _ou + ' – bảng tính chỉ mang tính tham khảo, nên gọi nhân viên ngân hàng để có số chính xác.' };
 }
 export const TAX_FRESH_ASK = 'Tìm mức thuế, phí, lệ phí MỚI NHẤT đang có hiệu lực tại hôm nay khi CÁ NHÂN chuyển nhượng (mua bán) nhà đất, căn hộ tại Việt Nam. ' +
 'Lưu ý luật có thể VỪA THAY ĐỔI (ví dụ Luật Thuế thu nhập cá nhân mới, nghị định/thông tư hướng dẫn mới): chỉ lấy văn bản ĐANG CÓ HIỆU LỰC, bỏ văn bản đã bị thay thế. Gồm: ' +
@@ -327,17 +327,17 @@ export const TAX_FRESH_ITEMS = [
 { key: 'notary', label: 'Phí công chứng hợp đồng chuyển nhượng', field: 'notary_tiers' },
 { key: 'appraisal', label: 'Phí thẩm định hồ sơ, cấp sổ', field: 'appraisal_note' },
 ];
-const _o1k = (frac) => fmtNum(frac * 100, 3) + '%';
-const _o2d = (tiers, max) => (Array.isArray(tiers) ? tiers.length + ' bậc' : '') + (max ? ', tối đa ' + fmtNum(max / 1e6, 1) + ' triệu' : '');
+const _o1j = (frac) => fmtNum(frac * 100, 3) + '%';
+const _o2c = (tiers, max) => (Array.isArray(tiers) ? tiers.length + ' bậc' : '') + (max ? ', tối đa ' + fmtNum(max / 1e6, 1) + ' triệu' : '');
 export function parseNotaryTiers(list) {
 if (!Array.isArray(list) || list.length < 3 || list.length > 15) return null;
 const out = [];
 for (const t of list) {
 if (!t || typeof t !== 'object') return null;
-const _o1f = t.to == null || t.to === '';
-const to = _o1f ? null : _o19(t.to, 1, 1e15);
-if (!_o1f && to == null) return null;
-const from = _o19(t.from ?? 0, 0, 1e15), fixed = _o19(t.fixed ?? 0, 0, 2e8), pct = _o19(t.pct ?? 0, 0, 1);
+const _o1e = t.to == null || t.to === '';
+const to = _o1e ? null : _o18(t.to, 1, 1e15);
+if (!_o1e && to == null) return null;
+const from = _o18(t.from ?? 0, 0, 1e15), fixed = _o18(t.fixed ?? 0, 0, 2e8), pct = _o18(t.pct ?? 0, 0, 1);
 if (from == null || fixed == null || pct == null || (to != null && from > to)) return null;
 out.push([to, fixed, pct / 100, from]);
 }
@@ -350,41 +350,41 @@ return out[out.length - 1][0] === null ? out : null;
 export function normFreshTax(parsed, { cfgOver, todayISO } = {}) {
 const _oe = taxConfig(cfgOver), P = parsed && typeof parsed === 'object' ? parsed : {};
 const out = [];
-for (const _o10 of TAX_FRESH_ITEMS) {
-const x = P[_o10.key];
+for (const _oz of TAX_FRESH_ITEMS) {
+const x = P[_oz.key];
 if (!x || typeof x !== 'object') continue;
-const r = { key: _o10.key, label: _o10.label, field: _o10.field, issues: [], warns: [], noteOnly: false,
-legal: _oh(x.legal, 200), effective: isoDate(x.effective), source_name: _oh(x.source_name, 80), source_url: safeUrl(x.source_url), date: isoDate(x.date) };
+const r = { key: _oz.key, label: _oz.label, field: _oz.field, issues: [], warns: [], noteOnly: false,
+legal: clip(x.legal, 200), effective: isoDate(x.effective), source_name: clip(x.source_name, 80), source_url: safeUrl(x.source_url), date: isoDate(x.date) };
 if (r.date && todayISO && r.date > todayISO) r.date = '';
 if (r.effective && todayISO && r.effective > todayISO) r.warns.push('Văn bản chưa có hiệu lực (từ ' + dmy(r.effective) + ') – cân nhắc trước khi lưu');
-if (_o10.val) {
-const v = _o19(x[_o10.val], 0, _o10.max);
-if (v == null) r.issues.push(x[_o10.val] == null ? 'AI không tìm được mức thu' : 'Mức thu ngoài khoảng hợp lý – không lưu');
+if (_oz.val) {
+const v = _o18(x[_oz.val], 0, _oz.max);
+if (v == null) r.issues.push(x[_oz.val] == null ? 'AI không tìm được mức thu' : 'Mức thu ngoài khoảng hợp lý – không lưu');
 r.value = v == null ? null : Math.round(v * 1e5) / 1e7;
-r.show = v == null ? '—' : _o1k(r.value);
-r.current = _o1k(_oe[_o10.field]);
-if (_o10.key === 'pit') {
+r.show = v == null ? '—' : _o1j(r.value);
+r.current = _o1j(_oe[_oz.field]);
+if (_oz.key === 'pit') {
 const basis = fold(x.basis || '');
 if (basis && !/^(price|gia)\b/.test(basis) && !/gia chuyen nhuong/.test(basis)) {
 r.noteOnly = true;
-r.basis_text = _oh(x.basis_text || x.basis, 200);
+r.basis_text = clip(x.basis_text || x.basis, 200);
 r.warns.push('Cách tính không phải "% × giá chuyển nhượng" – app chưa tự tính theo cách này, chỉ lưu ghi chú; anh/chị sửa tay mức thu nếu cần');
-r.show = (v == null ? '' : _o1k(r.value) + ' – ') + (r.basis_text || basis);
+r.show = (v == null ? '' : _o1j(r.value) + ' – ') + (r.basis_text || basis);
 r.issues = r.issues.filter((s) => !/mức thu/.test(s));
 }
 }
-} else if (_o10.key === 'notary') {
-const tiers = parseNotaryTiers(x.tiers), max = _o19(x.max, 1e6, 1e9);
+} else if (_oz.key === 'notary') {
+const tiers = parseNotaryTiers(x.tiers), max = _o18(x.max, 1e6, 1e9);
 if (!tiers) r.issues.push('Biểu phí công chứng không đọc được – giữ biểu cũ');
 if (x.max != null && max == null) r.warns.push('Mức tối đa không hợp lệ – giữ mức cũ');
 r.value = tiers ? { tiers, max } : null;
-r.show = tiers ? _o2d(tiers, max || _oe.notary_max) : '—';
-r.current = _o2d(_oe.notary_tiers, _oe.notary_max);
+r.show = tiers ? _o2c(tiers, max || _oe.notary_max) : '—';
+r.current = _o2c(_oe.notary_tiers, _oe.notary_max);
 if (tiers && JSON.stringify(tiers) === JSON.stringify(_oe.notary_tiers) && (!max || max === _oe.notary_max)) r.show = r.current;
 } else {
-const t = _oh(x.text || x.summary, 300);
+const t = clip(x.text || x.summary, 300);
 if (!t) r.issues.push('AI không tìm được thông tin');
-r.value = t || null; r.show = t || '—'; r.current = _oh(_oe.appraisal_note, 300) || 'Theo Nghị quyết HĐND tỉnh (anh/chị nhập số khi tính)';
+r.value = t || null; r.show = t || '—'; r.current = clip(_oe.appraisal_note, 300) || 'Theo Nghị quyết HĐND tỉnh (anh/chị nhập số khi tính)';
 }
 if (!r.source_url) r.issues.push('Không có link nguồn – không lưu');
 if (!r.legal) r.warns.push('Không ghi văn bản căn cứ');
@@ -396,36 +396,36 @@ return out;
 }
 export function mergeFreshTax(cfgOver, items, opt = {}) {
 const at = isoDate(opt.atISO) || '';
-const _o1n = opt.selected == null ? null : new Set(opt.selected);
-const _o1b = { ...(cfgOver && typeof cfgOver === 'object' ? cfgOver : {}) };
-_o1b.legal = { ...(_o1b.legal || {}) }; _o1b.src = { ...(_o1b.src || {}) };
+const _o1m = opt.selected == null ? null : new Set(opt.selected);
+const _o1a = { ...(cfgOver && typeof cfgOver === 'object' ? cfgOver : {}) };
+_o1a.legal = { ...(_o1a.legal || {}) }; _o1a.src = { ...(_o1a.src || {}) };
 const applied = [];
 for (const r of items || []) {
-if (!r || !r.ok || (_o1n && !_o1n.has(r.key))) continue;
-if (r.key === 'notary') { _o1b.notary_tiers = r.value.tiers; if (r.value.max) _o1b.notary_max = r.value.max; }
-else if (r.key === 'appraisal') _o1b.appraisal_note = r.value;
-else if (r.noteOnly) _o1b.pit_note = 'Theo ' + (r.legal || 'văn bản mới') + ': ' + (r.basis_text || r.show);
-else { _o1b[r.field] = r.value; if (r.key === 'pit') delete _o1b.pit_note; }
-if (r.legal) _o1b.legal[r.key] = r.legal + (r.effective ? ' (hiệu lực ' + dmy(r.effective) + ')' : '');
-_o1b.src[r.key] = { name: r.source_name, url: r.source_url, date: r.date, effective: r.effective, legal: r.legal, at };
+if (!r || !r.ok || (_o1m && !_o1m.has(r.key))) continue;
+if (r.key === 'notary') { _o1a.notary_tiers = r.value.tiers; if (r.value.max) _o1a.notary_max = r.value.max; }
+else if (r.key === 'appraisal') _o1a.appraisal_note = r.value;
+else if (r.noteOnly) _o1a.pit_note = 'Theo ' + (r.legal || 'văn bản mới') + ': ' + (r.basis_text || r.show);
+else { _o1a[r.field] = r.value; if (r.key === 'pit') delete _o1a.pit_note; }
+if (r.legal) _o1a.legal[r.key] = r.legal + (r.effective ? ' (hiệu lực ' + dmy(r.effective) + ')' : '');
+_o1a.src[r.key] = { name: r.source_name, url: r.source_url, date: r.date, effective: r.effective, legal: r.legal, at };
 applied.push(r.key);
 }
-if (applied.length && at) { _o1b.ai_at = at; _o1b.ai_rep = num(opt.reputable, 0); _o1b.checked_at = at; }
-return { cfg: _o1b, applied };
+if (applied.length && at) { _o1a.ai_at = at; _o1a.ai_rep = num(opt.reputable, 0); _o1a.checked_at = at; }
+return { cfg: _o1a, applied };
 }
 export function markTaxManual(cfgOver, next) {
-const _o1b = { ...(cfgOver && typeof cfgOver === 'object' ? cfgOver : {}), ...next };
-_o1b.src = { ...(_o1b.src || {}) };
+const _o1a = { ...(cfgOver && typeof cfgOver === 'object' ? cfgOver : {}), ...next };
+_o1a.src = { ...(_o1a.src || {}) };
 const prev = taxConfig(cfgOver);
 let changed = false;
-for (const _o10 of TAX_FRESH_ITEMS) { if (_o10.val && _o10.field in next && Math.abs(num(next[_o10.field]) - prev[_o10.field]) > 1e-9) { delete _o1b.src[_o10.key]; changed = true; } }
-if (changed || ('checked_at' in next && next.checked_at !== _o1b.ai_at)) delete _o1b.ai_at;
-return _o1b;
+for (const _oz of TAX_FRESH_ITEMS) { if (_oz.val && _oz.field in next && Math.abs(num(next[_oz.field]) - prev[_oz.field]) > 1e-9) { delete _o1a.src[_oz.key]; changed = true; } }
+if (changed || ('checked_at' in next && next.checked_at !== _o1a.ai_at)) delete _o1a.ai_at;
+return _o1a;
 }
 export function taxStamp(cfgOver) {
-const _oe = taxConfig(cfgOver), _o1b = cfgOver && typeof cfgOver === 'object' ? cfgOver : {};
-const ai = !!(_o1b.ai_at && _o1b.ai_at === _oe.checked_at);
-return { date: _oe.checked_at, ai, text: 'Cập nhật ngày ' + dmy(_oe.checked_at) + (ai ? ' qua AI' + (_o1b.ai_rep ? ' (' + _o1b.ai_rep + ' trang uy tín)' : '') : '') +
+const _oe = taxConfig(cfgOver), _o1a = cfgOver && typeof cfgOver === 'object' ? cfgOver : {};
+const ai = !!(_o1a.ai_at && _o1a.ai_at === _oe.checked_at);
+return { date: _oe.checked_at, ai, text: 'Cập nhật ngày ' + dmy(_oe.checked_at) + (ai ? ' qua AI' + (_o1a.ai_rep ? ' (' + _o1a.ai_rep + ' trang uy tín)' : '') : '') +
 ' – chỉ mang tính tham khảo, kiểm tra lại với cơ quan thuế và văn phòng công chứng trước khi giao dịch.' };
 }
 export function taxSourceFor(cfg, rowKey) {
@@ -440,50 +440,50 @@ if (R <= th) return { vat: 0, pit: 0, total: 0 };
 const vat = (t.vat_on_excess_only ? R - th : R) * num(t.vat, 0.05), pit = (R - th) * num(t.pit, 0.05);
 return { vat, pit, total: vat + pit };
 }
-export function irr(_oq, lo = -0.99, hi = 1) {
-const npv = (r) => _oq.reduce((a, f, i) => a + f / Math.pow(1 + r, i), 0);
+export function irr(_op, lo = -0.99, hi = 1) {
+const npv = (r) => _op.reduce((a, f, i) => a + f / Math.pow(1 + r, i), 0);
 let a = lo, b = hi, fa = npv(a), fb = npv(b);
 if (!isFinite(fa) || !isFinite(fb) || fa * fb > 0) return NaN;
 for (let i = 0; i < 200; i++) { const m = (a + b) / 2, fm = npv(m); if (Math.abs(fm) < 1e-6) return m; if (fa * fm < 0) { b = m; fb = fm; } else { a = m; fa = fm; } }
 return (a + b) / 2;
 }
-export function rentalPlan(_o1b = {}) {
-const price = num(_o1b.price), buy = num(_o1b.buyCosts) + num(_o1b.furniture), loanAmt = Math.min(num(_o1b.loanAmount), price);
-const equity = price + buy - loanAmt, H = Math.max(1, Math.min(40, Math.round(num(_o1b.horizon, 10))));
-const _o1d = Math.min(1, Math.max(0, num(_o1b.occupancy, 1))), _ou = num(_o1b.rentGrowth), pg = num(_o1b.priceGrowth);
-const A = loanAmt > 0 ? amortize({ principal: loanAmt, years: num(_o1b.years, 20), phases: [{ months: 1e6, ratePct: num(_o1b.ratePct) }], method: _o1b.method || 'annuity' }) : { rows: [] };
-const tax = { ...RENT_TAX_DEFAULTS, ...(_o1b.tax || {}) };
+export function rentalPlan(_o1a = {}) {
+const price = num(_o1a.price), buy = num(_o1a.buyCosts) + num(_o1a.furniture), loanAmt = Math.min(num(_o1a.loanAmount), price);
+const equity = price + buy - loanAmt, H = Math.max(1, Math.min(40, Math.round(num(_o1a.horizon, 10))));
+const _o1c = Math.min(1, Math.max(0, num(_o1a.occupancy, 1))), _ot = num(_o1a.rentGrowth), pg = num(_o1a.priceGrowth);
+const A = loanAmt > 0 ? amortize({ principal: loanAmt, years: num(_o1a.years, 20), phases: [{ months: 1e6, ratePct: num(_o1a.ratePct) }], method: _o1a.method || 'annuity' }) : { rows: [] };
+const tax = { ...RENT_TAX_DEFAULTS, ...(_o1a.tax || {}) };
 const years = [];
 let cum = 0, payback = null, paybackSale = null;
 for (let y = 1; y <= H; y++) {
-const gross = num(_o1b.rentMonthly) * 12 * _o1d * Math.pow(1 + _ou, y - 1);
+const gross = num(_o1a.rentMonthly) * 12 * _o1c * Math.pow(1 + _ot, y - 1);
 const t = tax.enabled === false ? { total: 0 } : rentTax(gross, tax);
-const opex = gross * num(_o1b.mgmtRate) + num(_o1b.maintYear) * Math.pow(1 + _ou, y - 1) + num(_o1b.otherYear);
+const opex = gross * num(_o1a.mgmtRate) + num(_o1a.maintYear) * Math.pow(1 + _ot, y - 1) + num(_o1a.otherYear);
 const noi = gross - opex - t.total;
-const _o2j = A.rows.filter((r) => r.m > (y - 1) * 12 && r.m <= y * 12);
-const debt = _o2j.reduce((a, r) => a + r.pay, 0), interest = _o2j.reduce((a, r) => a + r.interest, 0);
-const _oc = _o2j.length ? _o2j[_o2j.length - 1].balance : (A.rows.length && y * 12 > A.rows.length ? 0 : loanAmt);
+const _o2i = A.rows.filter((r) => r.m > (y - 1) * 12 && r.m <= y * 12);
+const debt = _o2i.reduce((a, r) => a + r.pay, 0), interest = _o2i.reduce((a, r) => a + r.interest, 0);
+const _oc = _o2i.length ? _o2i[_o2i.length - 1].balance : (A.rows.length && y * 12 > A.rows.length ? 0 : loanAmt);
 const cf = noi - debt;
 cum += cf;
 const value = price * Math.pow(1 + pg, y);
-const exit = value * (1 - num(_o1b.sellCostRate)) - _oc;
+const exit = value * (1 - num(_o1a.sellCostRate)) - _oc;
 if (payback == null && cum >= equity) payback = y;
 if (paybackSale == null && cum + exit - equity >= 0) paybackSale = y;
 years.push({ y, gross, tax: t.total, opex, noi, debt, interest, cf, cum, value, balance: _oc, exit });
 }
-const _o2i = years[0];
+const _o2h = years[0];
 const firstPay = A.rows[0] ? A.rows[0].pay : 0;
-const _o1z = _o2i ? (_o2i.noi) / 12 : 0;
-const _oq = [-equity, ...years.map((x, i) => x.cf + (i === years.length - 1 ? x.exit : 0))];
+const _o1y = _o2h ? (_o2h.noi) / 12 : 0;
+const _op = [-equity, ...years.map((x, i) => x.cf + (i === years.length - 1 ? x.exit : 0))];
 return {
 equity, loanAmt, years, payback, paybackSale,
-grossYield: price ? num(_o1b.rentMonthly) * 12 / price : 0,
-netYield: price + buy ? (_o2i ? _o2i.noi : 0) / (price + buy) : 0,
-cashOnCash: equity > 0 && _o2i ? _o2i.cf / equity : NaN,
-dscr: _o2i && _o2i.debt ? _o2i.noi / _o2i.debt : null,
-monthlyRentNet: _o1z, monthlyDebt: firstPay, monthlyGap: _o1z - firstPay,
-rentToCover: _o1d > 0 && _o2i ? (_o2i.debt + _o2i.opex - _o2i.gross * num(_o1b.mgmtRate)) / 12 / _o1d / (1 - num(_o1b.mgmtRate)) : NaN,
-irr: equity > 0 ? irr(_oq) : NaN,
+grossYield: price ? num(_o1a.rentMonthly) * 12 / price : 0,
+netYield: price + buy ? (_o2h ? _o2h.noi : 0) / (price + buy) : 0,
+cashOnCash: equity > 0 && _o2h ? _o2h.cf / equity : NaN,
+dscr: _o2h && _o2h.debt ? _o2h.noi / _o2h.debt : null,
+monthlyRentNet: _o1y, monthlyDebt: firstPay, monthlyGap: _o1y - firstPay,
+rentToCover: _o1c > 0 && _o2h ? (_o2h.debt + _o2h.opex - _o2h.gross * num(_o1a.mgmtRate)) / 12 / _o1c / (1 - num(_o1a.mgmtRate)) : NaN,
+irr: equity > 0 ? irr(_op) : NaN,
 };
 }
 export function advancedCalc({ project, plans, type, area, unitPrice, extras = [], gift = 0, costOfCapital = 8, loanRate = 10, loanYears = 25, today, internal = {} }) {
@@ -497,12 +497,12 @@ if (!(v > 0)) continue;
 const _ob = x.kind === 'amount' ? v : (x.base === 'after' ? price : m.unit.listPrice) * v / 100;
 price -= _ob; applied.push({ label: x.label || 'Ưu đãi', amount: _ob });
 }
-const _ou = Math.max(0, num(gift));
-if (_ou) { price -= _ou; applied.push({ label: 'Quà tặng quy đổi', amount: _ou }); }
-price = Math.max(0, _o1v(price));
+const _ot = Math.max(0, num(gift));
+if (_ot) { price -= _ot; applied.push({ label: 'Quà tặng quy đổi', amount: _ot }); }
+price = Math.max(0, _o1u(price));
 const k = m.total ? price / m.total : 0;
-const _o21 = num(costOfCapital) / 1200;
-const npv = m.steps.reduce((a, s) => a + s.amount * k / Math.pow(1 + _o21, Math.max(0, s.month)), 0);
+const _o20 = num(costOfCapital) / 1200;
+const npv = m.steps.reduce((a, s) => a + s.amount * k / Math.pow(1 + _o20, Math.max(0, s.month)), 0);
 const support = m.loan ? m.loan.supportedInterest * k : 0;
 const effective = npv - support;
 const commission = price * num(internal.commissionPct) / 100;
@@ -517,14 +517,14 @@ commission, overNet: netPrice > 0 ? price - netPrice : null, checkOk: m.check.ok
 if (out.length > 1) { const best = Math.min(...out.map((x) => x.effective)); out.forEach((x) => { x.best = x.effective === best; x.vsBest = x.effective - best; }); }
 return out;
 }
-export function calcText(rows, { project, type, area, unitPrice, costOfCapital }, money = _o17) {
-const _o14 = [`📊 ${project.name} – căn ${type} ${fmtNum(area)} m² (giá niêm yết ${fmtNum(unitPrice, 1)} triệu/m²)`];
+export function calcText(rows, { project, type, area, unitPrice, costOfCapital }, money = _o16) {
+const _o13 = [`📊 ${project.name} – căn ${type} ${fmtNum(area)} m² (giá niêm yết ${fmtNum(unitPrice, 1)} triệu/m²)`];
 rows.forEach((r) => {
-_o14.push(`• ${r.plan.name}: giá thực ${money(r.price)} (${fmtNum(r.perM2 / 1e6, 1)} tr/m², giảm ${fmtNum(r.discountPct * 100, 1)}%)` +
+_o13.push(`• ${r.plan.name}: giá thực ${money(r.price)} (${fmtNum(r.perM2 / 1e6, 1)} tr/m², giảm ${fmtNum(r.discountPct * 100, 1)}%)` +
 `${r.loan ? `, vay ${money(r.loan.amount)}, hỗ trợ lãi ~${money(r.support)}` : ''}; quy về hôm nay ~${money(r.effective)}${r.best ? ' ✓ lợi nhất' : ''}`);
 });
-_o14.push(`Giá trị quy về hôm nay tính với chi phí vốn ${fmtNum(costOfCapital)}%/năm. Số liệu tham khảo, theo chính sách hiện hành của CĐT.`);
-return _o14.join('\n');
+_o13.push(`Giá trị quy về hôm nay tính với chi phí vốn ${fmtNum(costOfCapital)}%/năm. Số liệu tham khảo, theo chính sách hiện hành của CĐT.`);
+return _o13.join('\n');
 }
 export const RESEARCH_FIELDS = {
 dev: { label: 'Chủ đầu tư', hint: 'tên đầy đủ' },
@@ -554,14 +554,14 @@ return [
 }
 export function parseFacts(text) {
 const s = String(text || ''), out = [];
-const _o1y = /^[ \t>*-]*FACT\s*\|(.+)$/gim;
+const _o1x = /^[ \t>*-]*FACT\s*\|(.+)$/gim;
 let m;
-while ((m = _o1y.exec(s))) {
-const _o1j = m[1].split('|').map((x) => x.trim());
-const field = (_o1j[0] || '').toLowerCase().replace(/[^a-z]/g, '');
+while ((m = _o1x.exec(s))) {
+const _o1i = m[1].split('|').map((x) => x.trim());
+const field = (_o1i[0] || '').toLowerCase().replace(/[^a-z]/g, '');
 if (!RESEARCH_FIELDS[field]) continue;
-const _o2f = (_o1j[2] || '').match(/https?:\/\/[^\s<>"')]+/i);
-out.push({ field, raw: _o1j[1] || '', url: _o2f ? _o2f[0].replace(/[.,;]+$/, '') : '', quote: _o1j[3] || '', date: /^\d{4}-\d{2}-\d{2}$/.test(_o1j[4] || '') ? _o1j[4] : '', start: m.index, end: m.index + m[0].length });
+const _o2e = (_o1i[2] || '').match(/https?:\/\/[^\s<>"')]+/i);
+out.push({ field, raw: _o1i[1] || '', url: _o2e ? _o2e[0].replace(/[.,;]+$/, '') : '', quote: _o1i[3] || '', date: /^\d{4}-\d{2}-\d{2}$/.test(_o1i[4] || '') ? _o1i[4] : '', start: m.index, end: m.index + m[0].length });
 }
 return out;
 }
@@ -569,18 +569,18 @@ export function normalizeFact(field, raw) {
 const v = String(raw || '').trim();
 if (!v) return { ok: false, error: 'Trống' };
 if (field === 'handover') {
-const _o1s = fold(v).match(/quy\s*([1-4]|i{1,3}|iv)\D+(\d{4})/);
-if (_o1s) { const _o1u = { i: 1, ii: 2, iii: 3, iv: 4 }[_o1s[1]] || Number(_o1s[1]); const _o16 = String(_o1u * 3).padStart(2, '0'); return { ok: true, value: `${_o1s[2]}-${_o16}`, display: `Quý ${_o1u}/${_o1s[2]} (lấy tháng ${_o16})` }; }
+const _o1r = fold(v).match(/quy\s*([1-4]|i{1,3}|iv)\D+(\d{4})/);
+if (_o1r) { const _o1t = { i: 1, ii: 2, iii: 3, iv: 4 }[_o1r[1]] || Number(_o1r[1]); const _o15 = String(_o1t * 3).padStart(2, '0'); return { ok: true, value: `${_o1r[2]}-${_o15}`, display: `Quý ${_o1t}/${_o1r[2]} (lấy tháng ${_o15})` }; }
 let m = v.match(/(\d{1,2})\s*[/.-]\s*(\d{4})/) || null;
-if (m) { const _o16 = Number(m[1]); if (_o16 >= 1 && _o16 <= 12) return { ok: true, value: `${m[2]}-${String(_o16).padStart(2, '0')}`, display: `${String(_o16).padStart(2, '0')}/${m[2]}` }; }
+if (m) { const _o15 = Number(m[1]); if (_o15 >= 1 && _o15 <= 12) return { ok: true, value: `${m[2]}-${String(_o15).padStart(2, '0')}`, display: `${String(_o15).padStart(2, '0')}/${m[2]}` }; }
 m = v.match(/(\d{4})-(\d{2})/);
 if (m && Number(m[2]) >= 1 && Number(m[2]) <= 12) return { ok: true, value: `${m[1]}-${m[2]}`, display: `${m[2]}/${m[1]}` };
 return { ok: false, error: 'Không đọc được tháng/năm bàn giao' };
 }
 if (field === 'price') {
-const _o1a = (v.match(/\d[\d.,]*/g) || []).map((x) => parseNum(x.replace(/[.,]$/, ''))).filter(isFinite);
-if (!_o1a.length) return { ok: false, error: 'Không có số giá' };
-let lo = _o1a[0], hi = _o1a[1] ?? _o1a[0];
+const _o19 = (v.match(/\d[\d.,]*/g) || []).map((x) => parseNum(x.replace(/[.,]$/, ''))).filter(isFinite);
+if (!_o19.length) return { ok: false, error: 'Không có số giá' };
+let lo = _o19[0], hi = _o19[1] ?? _o19[0];
 if (lo >= 1e5) { lo /= 1e6; hi /= 1e6; }
 if (!(lo > 5 && hi >= lo && hi < 2000)) return { ok: false, error: 'Giá/m² ngoài khoảng hợp lý (5–2.000 triệu)' };
 return { ok: true, value: [lo, hi], display: `${fmtNum(lo, 1)}–${fmtNum(hi, 1)} triệu/m²` };
@@ -592,7 +592,7 @@ return { ok: true, value: t, display: typesToText(t).replace(/\n/g, '; ') };
 }
 if (field === 'status') {
 const f = fold(v);
-for (const [k, _o1y] of _o8) if (_o1y.test(f)) return { ok: true, value: k, display: STATUS_LABEL[k] };
+for (const [k, _o1x] of _o8) if (_o1x.test(f)) return { ok: true, value: k, display: STATUS_LABEL[k] };
 return { ok: false, error: 'Không hiểu trạng thái' };
 }
 return { ok: true, value: v.slice(0, 500), display: v.slice(0, 500) };
@@ -601,22 +601,22 @@ export const safeUrl = (u) => { const s = String(u ?? '').trim(); return /^https
 export const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, '').toLowerCase(); } catch { return ''; } };
 export function matchSources(facts, text, { sources = [], segments = [] } = {}) {
 const s = String(text || '');
-const _o27 = segments.map((_ou) => {
-const i = _ou.text ? s.indexOf(_ou.text) : -1;
-return { start: Number.isFinite(_ou.start) ? _ou.start : i, end: Number.isFinite(_ou.end) ? _ou.end : (i >= 0 ? i + _ou.text.length : -1), chunks: _ou.chunks || [] };
+const _o26 = segments.map((_ot) => {
+const i = _ot.text ? s.indexOf(_ot.text) : -1;
+return { start: Number.isFinite(_ot.start) ? _ot.start : i, end: Number.isFinite(_ot.end) ? _ot.end : (i >= 0 ? i + _ot.text.length : -1), chunks: _ot.chunks || [] };
 }).filter((x) => x.start >= 0);
 return facts.map((f) => {
 const idx = new Set();
-_o27.forEach((sp) => { if (sp.start < f.end && sp.end > f.start) sp.chunks.forEach((_oe) => idx.add(_oe)); });
+_o26.forEach((sp) => { if (sp.start < f.end && sp.end > f.start) sp.chunks.forEach((_oe) => idx.add(_oe)); });
 const h = hostOf(f.url);
 if (h) sources.forEach((src, i) => { const t = String(src.title || '').toLowerCase().replace(/^www\./, ''); if (t && (t === h || h.endsWith('.' + t) || t.endsWith('.' + h) || hostOf(src.url) === h)) idx.add(i); });
-const _o28 = [...idx].map((i) => sources[i]).filter((x) => x && /^https?:\/\//.test(x.url));
-const _o2g = /^https?:\/\/[^\s]+\.[^\s]+/.test(f.url);
-const status = _o28.length ? 'grounded' : _o2g ? 'ai_only' : 'missing';
-return { ...f, sources: _o28, status };
+const _o27 = [...idx].map((i) => sources[i]).filter((x) => x && /^https?:\/\//.test(x.url));
+const _o2f = /^https?:\/\/[^\s]+\.[^\s]+/.test(f.url);
+const status = _o27.length ? 'grounded' : _o2f ? 'ai_only' : 'missing';
+return { ...f, sources: _o27, status };
 });
 }
-const _o26 = (field, v) => {
+const _o25 = (field, v) => {
 if (v == null || v === '' || (Array.isArray(v) && !v.length)) return '—';
 if (field === 'handover') return ymLabel(v) || String(v);
 if (field === 'price') return Array.isArray(v) ? `${fmtNum(v[0], 1)}–${fmtNum(v[1], 1)} triệu/m²` : String(v);
@@ -624,37 +624,37 @@ if (field === 'types') return Array.isArray(v) ? typesToText(v).replace(/\n/g, '
 if (field === 'status') return STATUS_LABEL[v] || String(v);
 return String(v);
 };
-export const showFieldValue = _o26;
+export const showFieldValue = _o25;
 export function researchDiff(project, matched) {
-const _o1w = { grounded: 0, ai_only: 1, missing: 2 };
+const _o1v = { grounded: 0, ai_only: 1, missing: 2 };
 const best = {};
 for (const f of matched) {
 const n = normalizeFact(f.field, f.raw);
 const _oe = { ...f, norm: n };
-const _ok = best[f.field];
-if (!_ok || (n.ok && !_ok.norm.ok) || (n.ok === _ok.norm.ok && _o1w[_oe.status] < _o1w[_ok.status])) best[f.field] = _oe;
+const _oj = best[f.field];
+if (!_oj || (n.ok && !_oj.norm.ok) || (n.ok === _oj.norm.ok && _o1v[_oe.status] < _o1v[_oj.status])) best[f.field] = _oe;
 }
 return Object.keys(RESEARCH_FIELDS).filter((k) => best[k]).map((k) => {
 const f = best[k], oldV = project ? project[k] : null;
 const changed = f.norm.ok && JSON.stringify(oldV ?? null) !== JSON.stringify(f.norm.value);
-return { field: k, label: RESEARCH_FIELDS[k].label, old: _o26(k, oldV), new: f.norm.ok ? f.norm.display : f.raw, changed, ok: f.norm.ok && f.status !== 'missing', error: f.norm.error || (f.status === 'missing' ? 'Thiếu link nguồn' : ''), fact: f, value: f.norm.value };
+return { field: k, label: RESEARCH_FIELDS[k].label, old: _o25(k, oldV), new: f.norm.ok ? f.norm.display : f.raw, changed, ok: f.norm.ok && f.status !== 'missing', error: f.norm.error || (f.status === 'missing' ? 'Thiếu link nguồn' : ''), fact: f, value: f.norm.value };
 });
 }
 export function applyResearch(data, rows, { now, by } = {}) {
 const d = { ...(data && typeof data === 'object' ? data : {}) };
 const src = { ...(d.g1_sources || {}) };
-const _o28 = { ...(d.sources && typeof d.sources === 'object' ? d.sources : {}) };
+const _o27 = { ...(d.sources && typeof d.sources === 'object' ? d.sources : {}) };
 for (const r of rows) {
 if (!r || !r.ok || !r.fact) continue;
-const _ou = r.fact.sources && r.fact.sources[0];
-const url = _ou ? _ou.url : r.fact.url;
+const _ot = r.fact.sources && r.fact.sources[0];
+const url = _ot ? _ot.url : r.fact.url;
 if (!/^https?:\/\//.test(String(url || ''))) continue;
 d[r.field] = r.value;
-src[r.field] = { url, title: _ou ? _ou.title : hostOf(r.fact.url), ai_url: r.fact.url, quote: String(r.fact.quote || '').slice(0, 300), date: r.fact.date || '', status: r.fact.status, at: now || 0, by: by || '' };
-_o28[r.field] = { url, title: _ou ? (_ou.title || hostOf(r.fact.url)) : hostOf(r.fact.url), at: now || 0, by: 'ai', user: by || '', date: r.fact.date || '', status: r.fact.status };
+src[r.field] = { url, title: _ot ? _ot.title : hostOf(r.fact.url), ai_url: r.fact.url, quote: String(r.fact.quote || '').slice(0, 300), date: r.fact.date || '', status: r.fact.status, at: now || 0, by: by || '' };
+_o27[r.field] = { url, title: _ot ? (_ot.title || hostOf(r.fact.url)) : hostOf(r.fact.url), at: now || 0, by: 'ai', user: by || '', date: r.fact.date || '', status: r.fact.status };
 }
 d.g1_sources = src;
-d.sources = _o28;
+d.sources = _o27;
 d.g1_research_at = now || 0;
 return d;
 }
@@ -662,21 +662,21 @@ export function fieldSource(data, field) {
 const d = data && typeof data === 'object' ? data : {};
 const s = (d.sources && d.sources[field]) || null;
 if (s && typeof s === 'object') return s;
-const _ou = d.g1_sources && d.g1_sources[field];
-return _ou && typeof _ou === 'object' ? { url: _ou.url, title: _ou.title, at: _ou.at || 0, by: 'ai', user: _ou.by || '', date: _ou.date || '', status: _ou.status } : null;
+const _ot = d.g1_sources && d.g1_sources[field];
+return _ot && typeof _ot === 'object' ? { url: _ot.url, title: _ot.title, at: _ot.at || 0, by: 'ai', user: _ot.by || '', date: _ot.date || '', status: _ot.status } : null;
 }
 export function markManual(prev, next, fields, { now, by } = {}) {
-const _o1h = prev && typeof prev === 'object' ? prev : {};
+const _o1g = prev && typeof prev === 'object' ? prev : {};
 const d = { ...(next && typeof next === 'object' ? next : {}) };
-const _o28 = { ...(d.sources && typeof d.sources === 'object' ? d.sources : {}) };
-let _o2e = false;
+const _o27 = { ...(d.sources && typeof d.sources === 'object' ? d.sources : {}) };
+let _o2d = false;
 for (const f of fields || []) {
-if (JSON.stringify(_o1h[f] ?? null) === JSON.stringify(d[f] ?? null)) continue;
-_o28[f] = { url: '', title: '', at: now || 0, by: 'manual', user: by || '' };
+if (JSON.stringify(_o1g[f] ?? null) === JSON.stringify(d[f] ?? null)) continue;
+_o27[f] = { url: '', title: '', at: now || 0, by: 'manual', user: by || '' };
 if (d.g1_sources && d.g1_sources[f]) { d.g1_sources = { ...d.g1_sources }; delete d.g1_sources[f]; }
-_o2e = true;
+_o2d = true;
 }
-if (_o2e || d.sources) d.sources = _o28;
+if (_o2d || d.sources) d.sources = _o27;
 return d;
 }
 export const DIRS = ['Bắc', 'Đông Bắc', 'Đông', 'Đông Nam', 'Nam', 'Tây Nam', 'Tây', 'Tây Bắc'];
@@ -685,8 +685,8 @@ export function normDir(v) {
 if (v == null || v === '') return null;
 const f = fold(v).replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
 if (_o5[f.replace(/ /g, '')]) return _o5[f.replace(/ /g, '')];
-const _ow = DIRS.slice().sort((a, b) => b.length - a.length).find((d) => f.includes(fold(d)));
-return _ow || null;
+const _ov = DIRS.slice().sort((a, b) => b.length - a.length).find((d) => f.includes(fold(d)));
+return _ov || null;
 }
 export function layoutPrompt(project, code) {
 return [
@@ -702,28 +702,28 @@ return [
 export function extractJsonObj(text) {
 if (text && typeof text === 'object') return text;
 const s = String(text || '');
-const _oo = s.match(/```(?:json)?\s*([\s\S]*?)```/i);
-const _od = _oo ? _oo[1] : s;
+const _on = s.match(/```(?:json)?\s*([\s\S]*?)```/i);
+const _od = _on ? _on[1] : s;
 const a = _od.indexOf('{'), b = _od.lastIndexOf('}');
 if (a < 0 || b < a) return null;
 try { return JSON.parse(_od.slice(a, b + 1)); } catch { return null; }
 }
 export function normalizeLayout(input) {
-const _o11 = extractJsonObj(input);
-if (!_o11) return { ok: false, warnings: ['AI trả kết quả chưa đúng mẫu – bấm làm lại hoặc nhập tay.'], fields: null };
+const _o10 = extractJsonObj(input);
+if (!_o10) return { ok: false, warnings: ['AI trả kết quả chưa đúng mẫu – bấm làm lại hoặc nhập tay.'], fields: null };
 const w = [];
 const n = (v, lo, hi) => { const x = parseNum(v); return isFinite(x) && x >= lo && x <= hi ? x : null; };
 const f = {
-unit_code: String(_o11.unit_code || '').trim().slice(0, 40),
-area_m2: n(_o11.area_m2, 10, 1000), area_kind: ['thong_thuy', 'tim_tuong'].includes(_o11.area_kind) ? _o11.area_kind : 'khong_ro',
-bedrooms: n(_o11.bedrooms, 0, 10), wc: n(_o11.wc, 0, 10),
-corner: _o11.corner === true || _o11.corner === false ? _o11.corner : null,
-north_arrow: _o11.north_arrow === true,
-balcony_dir: normDir(_o11.balcony_dir), door_dir: normDir(_o11.door_dir),
-view: String(_o11.view || '').trim().slice(0, 200), notes: String(_o11.notes || '').trim().slice(0, 500),
-confidence: Math.max(0, Math.min(1, num(_o11.confidence, 0))),
+unit_code: String(_o10.unit_code || '').trim().slice(0, 40),
+area_m2: n(_o10.area_m2, 10, 1000), area_kind: ['thong_thuy', 'tim_tuong'].includes(_o10.area_kind) ? _o10.area_kind : 'khong_ro',
+bedrooms: n(_o10.bedrooms, 0, 10), wc: n(_o10.wc, 0, 10),
+corner: _o10.corner === true || _o10.corner === false ? _o10.corner : null,
+north_arrow: _o10.north_arrow === true,
+balcony_dir: normDir(_o10.balcony_dir), door_dir: normDir(_o10.door_dir),
+view: String(_o10.view || '').trim().slice(0, 200), notes: String(_o10.notes || '').trim().slice(0, 500),
+confidence: Math.max(0, Math.min(1, num(_o10.confidence, 0))),
 };
-if (_o11.area_m2 != null && f.area_m2 == null) w.push('Diện tích AI đọc ngoài khoảng hợp lý – nhập lại');
+if (_o10.area_m2 != null && f.area_m2 == null) w.push('Diện tích AI đọc ngoài khoảng hợp lý – nhập lại');
 if (f.area_m2 != null && f.area_kind === 'khong_ro') w.push('Chưa rõ diện tích thông thuỷ hay tim tường');
 if (!f.north_arrow && (f.balcony_dir || f.door_dir)) { w.push('Ảnh không có mũi tên chỉ hướng Bắc – đã bỏ hướng AI đoán, tự xác nhận hướng'); f.balcony_dir = null; f.door_dir = null; }
 if (!f.north_arrow) w.push('Không thấy mũi tên hướng Bắc: hướng ban công/cửa cần tự xác nhận');
@@ -736,10 +736,10 @@ const name = (fields.unit_code ? 'Căn ' + fields.unit_code : 'Căn chưa ghi m�
 return { id, kind: 'g1_unit', name, project: project ? project.name : '', unit_type: fields.bedrooms != null ? fields.bedrooms + 'PN' : '', status: 'đã xác nhận',
 data: JSON.stringify({ project_id: project ? project.id : '', ...fields, image_name: imageName || '', ai: provider || '', confirmed_at: now, confirmed_by: confirmedBy || '' }) };
 }
-const _o1i = (r) => String(r.effective_from || (r.month ? r.month + '-01' : '') || '');
+const _o1h = (r) => String(r.effective_from || (r.month ? r.month + '-01' : '') || '');
 export function policyVersions(policies, projectId) {
 return (policies || []).filter((r) => r && !Number(r.deleted) && String(r.project_id) === String(projectId))
-.sort((a, b) => _o1i(b).localeCompare(_o1i(a)) || (Number(b.updated_at) || 0) - (Number(a.updated_at) || 0));
+.sort((a, b) => _o1h(b).localeCompare(_o1h(a)) || (Number(b.updated_at) || 0) - (Number(a.updated_at) || 0));
 }
 export function defaultPair(versions) {
 const nw = versions[0] || null;
@@ -753,31 +753,31 @@ const a = fold(_oe.project);
 return !!a && (a === fold(project.id) || a === fold(project.name) || a.includes(fold(project.name)));
 }
 export function affectedCustomers({ customers, quotes, events, project, newPolicyId, oldPolicyId }) {
-const _o1t = {};
-(quotes || []).filter((_o1s) => !Number(_o1s.deleted) && String(_o1s.project_id) === String(project.id)).forEach((_o1s) => {
-const k = String(_o1s.object_id || ''); if (!k) return;
-if (!_o1t[k] || (Number(_o1s.created_at) || 0) > (Number(_o1t[k].created_at) || 0)) _o1t[k] = _o1s;
+const _o1s = {};
+(quotes || []).filter((_o1r) => !Number(_o1r.deleted) && String(_o1r.project_id) === String(project.id)).forEach((_o1r) => {
+const k = String(_o1r.object_id || ''); if (!k) return;
+if (!_o1s[k] || (Number(_o1r.created_at) || 0) > (Number(_o1s[k].created_at) || 0)) _o1s[k] = _o1r;
 });
 const notified = new Set();
 (events || []).forEach((e) => { if (Number(e.deleted)) return; let d = e.data; if (typeof d === 'string') { try { d = JSON.parse(d); } catch { d = {}; } } if (d && d.g1_notice && d.g1_notice === newPolicyId) notified.add(String(e.object_id)); });
 return (customers || []).filter((_oe) => !Number(_oe.deleted) && (!_oe.kind || _oe.kind === 'customer') && !_o4.test(String(_oe.status || '')))
 .map((_oe) => {
-const _o1s = _o1t[_oe.id] || null, reasons = [];
-if (_o1s) reasons.push(_o1s.policy_id && oldPolicyId && _o1s.policy_id === oldPolicyId ? 'đã nhận báo giá theo chính sách cũ' : 'đã nhận báo giá dự án');
+const _o1r = _o1s[_oe.id] || null, reasons = [];
+if (_o1r) reasons.push(_o1r.policy_id && oldPolicyId && _o1r.policy_id === oldPolicyId ? 'đã nhận báo giá theo chính sách cũ' : 'đã nhận báo giá dự án');
 if (matchProject(_oe, project)) reasons.push('đang quan tâm dự án');
-return reasons.length ? { customer: _oe, quote: _o1s, reasons, notified: notified.has(String(_oe.id)) } : null;
+return reasons.length ? { customer: _oe, quote: _o1r, reasons, notified: notified.has(String(_oe.id)) } : null;
 }).filter(Boolean)
 .sort((a, b) => (a.notified - b.notified) || (b.quote ? 1 : 0) - (a.quote ? 1 : 0) || (Number(b.customer.score) || 0) - (Number(a.customer.score) || 0));
 }
-export function requote(_o1s, newPlans) {
-if (!_o1s) return null;
-let m = _o1s.payload; if (typeof m === 'string') { try { m = JSON.parse(m); } catch { m = null; } }
+export function requote(_o1r, newPlans) {
+if (!_o1r) return null;
+let m = _o1r.payload; if (typeof m === 'string') { try { m = JSON.parse(m); } catch { m = null; } }
 const list = parsePlans(newPlans);
-const _o1e = m && m.plan ? m.plan : { id: _o1s.plan_id };
-const np = list.find((_o1h) => _o1h.id === _o1e.id) || list.find((_o1h) => _o1h.name && fold(_o1h.name) === fold(_o1e.name));
+const _o1d = m && m.plan ? m.plan : { id: _o1r.plan_id };
+const np = list.find((_o1g) => _o1g.id === _o1d.id) || list.find((_o1g) => _o1g.name && fold(_o1g.name) === fold(_o1d.name));
 const listPrice = m && m.unit && m.unit.listPrice ? Number(m.unit.listPrice) : null;
-if (!np || !listPrice) return { ok: false, oldTotal: Number(_o1s.price_total) || 0 };
-const newTotal = Math.round(listPrice * Number(np.factor) / 1000) * 1000, oldTotal = Number(_o1s.price_total) || (m ? m.total : 0);
+if (!np || !listPrice) return { ok: false, oldTotal: Number(_o1r.price_total) || 0 };
+const newTotal = Math.round(listPrice * Number(np.factor) / 1000) * 1000, oldTotal = Number(_o1r.price_total) || (m ? m.total : 0);
 return { ok: true, planName: np.name, oldTotal, newTotal, delta: newTotal - oldTotal, unit: m.unit };
 }
 export function changeTone(d) {
@@ -789,64 +789,64 @@ if (d.label === 'Bỏ phương án') return -1;
 if (d.label === 'Thêm phương án') return 1;
 return 0;
 }
-export function noticeText({ customer, project, changes, req, effective, sender }, money = _o17) {
+export function noticeText({ customer, project, changes, req, effective, sender }, money = _o16) {
 const name = String(customer && customer.name || '').trim().split(/\s+/).pop() || '';
-const _o14 = [`Dạ em chào anh/chị ${name},`.replace(' ,', ','),
+const _o13 = [`Dạ em chào anh/chị ${name},`.replace(' ,', ','),
 `Em ${sender && sender.name ? sender.name + ' ' : ''}báo anh/chị chính sách bán hàng mới của ${project.name}${effective ? ' (hiệu lực ' + effective.split('-').reverse().join('/') + ')' : ''}:`];
-(changes || []).slice(0, 4).forEach((_oe) => _o14.push('• ' + _oe));
-if ((changes || []).length > 4) _o14.push(`• và ${changes.length - 4} điểm khác`);
+(changes || []).slice(0, 4).forEach((_oe) => _o13.push('• ' + _oe));
+if ((changes || []).length > 4) _o13.push(`• và ${changes.length - 4} điểm khác`);
 if (req && req.ok && Math.abs(req.delta) >= 1e6) {
-_o14.push(`Với căn ${req.unit && req.unit.type ? req.unit.type + ' ' : ''}em đã báo giá (${req.planName}): ${money(req.oldTotal)} → ${money(req.newTotal)} (${req.delta < 0 ? 'giảm ' : 'tăng '}${money(Math.abs(req.delta))}).`);
+_o13.push(`Với căn ${req.unit && req.unit.type ? req.unit.type + ' ' : ''}em đã báo giá (${req.planName}): ${money(req.oldTotal)} → ${money(req.newTotal)} (${req.delta < 0 ? 'giảm ' : 'tăng '}${money(Math.abs(req.delta))}).`);
 }
-_o14.push('Anh/chị cần em gửi báo giá chi tiết theo chính sách mới không ạ?' + (sender && sender.phone ? ` (${sender.phone})` : ''));
-return _o14.join('\n');
+_o13.push('Anh/chị cần em gửi báo giá chi tiết theo chính sách mới không ạ?' + (sender && sender.phone ? ` (${sender.phone})` : ''));
+return _o13.join('\n');
 }
 export function watermarkLayout(w, h, { name, phone, date }) {
 const text = [name, phone, date].filter(Boolean).join(' · ');
-const _ot = Math.max(14, Math.round(Math.min(w, h) / 22));
-const _o29 = Math.max(_ot * text.length * 0.62, 200), stepY = _ot * 5;
+const _os = Math.max(14, Math.round(Math.min(w, h) / 22));
+const _o28 = Math.max(_os * text.length * 0.62, 200), stepY = _os * 5;
 const items = [];
-for (let y = -h; y < h * 2; y += stepY) for (let x = -w; x < w * 2; x += _o29) items.push({ x: x + ((y / stepY) % 2 ? _o29 / 2 : 0), y });
-const _os = Math.max(28, Math.round(_ot * 1.8));
-return { text, fontSize: _ot, angle: -Math.PI / 6, alpha: 0.16, items, footer: { h: _os, text: 'Tài liệu do ' + text + ' cung cấp – chỉ dùng tham khảo, không phát tán' } };
+for (let y = -h; y < h * 2; y += stepY) for (let x = -w; x < w * 2; x += _o28) items.push({ x: x + ((y / stepY) % 2 ? _o28 / 2 : 0), y });
+const _or = Math.max(28, Math.round(_os * 1.8));
+return { text, fontSize: _os, angle: -Math.PI / 6, alpha: 0.16, items, footer: { h: _or, text: 'Tài liệu do ' + text + ' cung cấp – chỉ dùng tham khảo, không phát tán' } };
 }
-const _on = (s) => new TextEncoder().encode(s);
+const _om = (s) => new TextEncoder().encode(s);
 export function buildPdf(pages) {
 if (!pages || !pages.length) throw new Error('Không có trang nào');
 const chunks = [], offsets = [];
-let _o13 = 0;
-const push = (x) => { const b = typeof x === 'string' ? _on(x) : x; chunks.push(b); _o13 += b.length; };
-const _o1c = (id, _od) => { offsets[id] = _o13; push(`${id} 0 obj\n`); _od(); push('\nendobj\n'); };
+let _o12 = 0;
+const push = (x) => { const b = typeof x === 'string' ? _om(x) : x; chunks.push(b); _o12 += b.length; };
+const _o1b = (id, _od) => { offsets[id] = _o12; push(`${id} 0 obj\n`); _od(); push('\nendobj\n'); };
 push('%PDF-1.4\n'); push(new Uint8Array([37, 0xE2, 0xE3, 0xCF, 0xD3, 10]));
 const n = pages.length, kids = pages.map((_, i) => `${3 + i * 3} 0 R`).join(' ');
-_o1c(1, () => push('<< /Type /Catalog /Pages 2 0 R >>'));
-_o1c(2, () => push(`<< /Type /Pages /Kids [${kids}] /Count ${n} >>`));
-pages.forEach((_o1h, i) => {
-const _o12 = _o1h.w > _o1h.h, PW = _o12 ? 842 : 595, PH = _o12 ? 595 : 842, M = 18;
-const k = Math.min((PW - 2 * M) / _o1h.w, (PH - 2 * M) / _o1h.h);
-const _om = +(_o1h.w * k).toFixed(2), dh = +(_o1h.h * k).toFixed(2), dx = +((PW - _om) / 2).toFixed(2), dy = +((PH - dh) / 2).toFixed(2);
-const _o1o = 3 + i * 3, iid = _o1o + 1, cid = _o1o + 2;
-const _oj = `q ${_om} 0 0 ${dh} ${dx} ${dy} cm /Im0 Do Q`;
-_o1c(_o1o, () => push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 ${iid} 0 R >> >> /Contents ${cid} 0 R >>`));
-_o1c(iid, () => { push(`<< /Type /XObject /Subtype /Image /Width ${_o1h.w} /Height ${_o1h.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${_o1h.jpeg.length} >>\nstream\n`); push(_o1h.jpeg); push('\nendstream'); });
-_o1c(cid, () => push(`<< /Length ${_oj.length} >>\nstream\n${_oj}\nendstream`));
+_o1b(1, () => push('<< /Type /Catalog /Pages 2 0 R >>'));
+_o1b(2, () => push(`<< /Type /Pages /Kids [${kids}] /Count ${n} >>`));
+pages.forEach((_o1g, i) => {
+const _o11 = _o1g.w > _o1g.h, PW = _o11 ? 842 : 595, PH = _o11 ? 595 : 842, M = 18;
+const k = Math.min((PW - 2 * M) / _o1g.w, (PH - 2 * M) / _o1g.h);
+const _ol = +(_o1g.w * k).toFixed(2), dh = +(_o1g.h * k).toFixed(2), dx = +((PW - _ol) / 2).toFixed(2), dy = +((PH - dh) / 2).toFixed(2);
+const _o1n = 3 + i * 3, iid = _o1n + 1, cid = _o1n + 2;
+const _oi = `q ${_ol} 0 0 ${dh} ${dx} ${dy} cm /Im0 Do Q`;
+_o1b(_o1n, () => push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 ${iid} 0 R >> >> /Contents ${cid} 0 R >>`));
+_o1b(iid, () => { push(`<< /Type /XObject /Subtype /Image /Width ${_o1g.w} /Height ${_o1g.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${_o1g.jpeg.length} >>\nstream\n`); push(_o1g.jpeg); push('\nendstream'); });
+_o1b(cid, () => push(`<< /Length ${_oi.length} >>\nstream\n${_oi}\nendstream`));
 });
-const _o2h = _o13, total = 3 + n * 3;
+const _o2g = _o12, total = 3 + n * 3;
 push(`xref\n0 ${total}\n0000000000 65535 f \n`);
 for (let i = 1; i < total; i++) push(String(offsets[i]).padStart(10, '0') + ' 00000 n \n');
-push(`trailer\n<< /Size ${total} /Root 1 0 R >>\nstartxref\n${_o2h}\n%%EOF\n`);
-const out = new Uint8Array(_o13);
-let _o1b = 0; for (const _oe of chunks) { out.set(_oe, _o1b); _o1b += _oe.length; }
+push(`trailer\n<< /Size ${total} /Root 1 0 R >>\nstartxref\n${_o2g}\n%%EOF\n`);
+const out = new Uint8Array(_o12);
+let _o1a = 0; for (const _oe of chunks) { out.set(_oe, _o1a); _o1a += _oe.length; }
 return out;
 }
 export const GUEST_SCREENS = ['sales', 'content'];
-export const pinValid = (_o1h) => /^\d{4,8}$/.test(String(_o1h || ''));
+export const pinValid = (_o1g) => /^\d{4,8}$/.test(String(_o1g || ''));
 export const GUEST_BLOCKED_MODULES = ['g1_policywatch'];
 export function guestBlocked(hash) {
-const _o1j = String(hash || '').replace(/^#?\/?/, '').split('?')[0].split('/');
-const _o24 = _o1j[0] || 'home';
-if (!GUEST_SCREENS.includes(_o24)) return true;
-return GUEST_BLOCKED_MODULES.includes(_o1j[1] || '');
+const _o1i = String(hash || '').replace(/^#?\/?/, '').split('?')[0].split('/');
+const _o23 = _o1i[0] || 'home';
+if (!GUEST_SCREENS.includes(_o23)) return true;
+return GUEST_BLOCKED_MODULES.includes(_o1i[1] || '');
 }
 export function pinLock(state, now) {
 const s = state || { fails: 0, until: 0 };

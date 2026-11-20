@@ -44,6 +44,8 @@ html[data-g1-guest="1"] .g1-guest-fab{background:#C9A24A;color:#0F1E33;font-weig
 .g1-guest-bar{position:fixed;left:0;right:0;top:0;z-index:95;background:#C9A24A;color:#0F1E33;text-align:center;font-size:.85rem;padding:4px 8px;font-weight:700;pointer-events:none}
 @media (max-width:600px){.g1-guest-fab{width:48px;height:48px;padding:0;font-size:1.25rem;opacity:.92}.g1-guest-fab .g1-fab-l{display:none}}
 @media (min-width:900px){.g1-guest-fab{left:auto;right:20px;bottom:20px}}
+/* 18/11 chia lại gói: Chế độ khách xem (Gói 3) chạy cùng Pháp lý / Giữ chỗ – cột chi tiết bên phải đang mở thì nút nổi dời sang trái cột, không che nút Lưu của biểu mẫu */
+@media (min-width:900px){#app.has-sheet ~ .g1-guest-fab{right:calc(max(400px, 42%) + 20px)}}
 `;
 function _o1(id, css) {
 if (typeof document === 'undefined' || document.getElementById(id) || (_o1.done && _o1.done[id])) return;

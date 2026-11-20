@@ -45,13 +45,16 @@ API_OFF: { cause: 'Tài khoản Google này chưa bật "Google Apps Script API"
 WORKSPACE_BLOCKED: { cause: 'Quản trị viên Google Workspace của công ty đã tắt Apps Script (hoặc chặn ứng dụng bên ngoài) cho tài khoản này.', fix: 'Nhờ quản trị viên bật Apps Script và cho phép ứng dụng "BDS Studio" (Bảng quản trị › Ứng dụng › Google Workspace › Apps Script; Bảo mật › Quyền truy cập API). Hoặc dùng Gmail cá nhân / tài khoản khác.', retry: 'manual' },
 NOT_ANYONE: { cause: 'Tài khoản công ty không cho web app mở công khai ("Bất kỳ ai").', fix: 'Nhờ quản trị viên Google Workspace cho phép chia sẻ web app Apps Script ra ngoài tổ chức, rồi bấm Thử lại. Hoặc dùng Gmail cá nhân.', retry: 'manual' },
 QUOTA: { cause: 'Google đang giới hạn số lần tạo (hạn mức trong ngày / quá nhiều yêu cầu).', fix: 'Đợi vài phút rồi bấm Thử lại – trang làm tiếp đúng chỗ, không tạo trùng. Vẫn lỗi: thử lại ngày mai.', retry: 'manual' },
-SELLER_SETUP: { cause: 'Dịch vụ "Cài bằng Google" của bên bán chưa bật xong (dự án Google Cloud thiếu API).', fix: 'Dùng "Cài trên máy tính (cách cũ)" hoặc báo bên bán.', retry: 'manual' },
+SELLER_SETUP: { cause: 'Dịch vụ "Cài bằng Google" của bên bán chưa bật xong (dự án Google Cloud thiếu API).', fix: 'Dùng "Cài trên máy tính" hoặc báo bên bán.', retry: 'manual' },
 NO_URL: { cause: 'Google tạo xong bản triển khai nhưng chưa trả địa chỉ máy chủ (…/exec).', fix: 'Bấm Thử lại – trang hỏi lại Google địa chỉ của bản triển khai đã tạo.', retry: 'manual' },
 NO_TICKET: { cause: 'Không đọc lại được vé cài đặt của máy chủ đã tạo dở.', fix: 'Bấm "Tạo máy chủ mới" để làm lại từ đầu (máy chủ dở dang cũ để nguyên trong Drive, xoá tay được).', retry: 'restart' },
 FILES: { cause: 'Chưa lấy được tệp máy chủ đã kiểm chữ ký từ trang cài đặt.', fix: 'Kiểm tra mạng rồi bấm Thử lại. Vẫn lỗi: bấm "Cần giúp?".', retry: 'manual' },
 NETWORK: { cause: 'Không tới được Google (mạng chập chờn hoặc bị chặn).', fix: 'Kiểm tra Wi-Fi/4G, tắt VPN/chặn quảng cáo cho trang này, rồi bấm Thử lại.', retry: 'manual' },
 SERVER: { cause: 'Google đang bận (lỗi tạm thời).', fix: 'Đợi một chút rồi bấm Thử lại.', retry: 'manual' },
-OTHER: { cause: 'Google báo lỗi khi tạo máy chủ.', fix: 'Bấm Thử lại. Vẫn lỗi: dùng "Cài trên máy tính (cách cũ)" hoặc bấm "Cần giúp?" và gửi phần Chi tiết kỹ thuật.', retry: 'manual' }
+OTHER: { cause: 'Google báo lỗi khi tạo máy chủ.', fix: 'Bấm Thử lại. Vẫn lỗi: dùng "Cài trên máy tính" hoặc bấm "Cần giúp?" và gửi phần Chi tiết kỹ thuật.', retry: 'manual' },
+SLOT_NET: { cause: 'Chưa giữ được chỗ ưu tiên: không tới được dịch vụ của bên bán.', fix: 'Kiểm tra mạng rồi bấm Thử lại. Vẫn không được: bấm "Cài trên máy tính" bên dưới.', retry: 'manual' },
+SLOT_CAPTCHA: { cause: 'Chưa qua bước kiểm tra chống máy.', fix: 'Bấm Thử lại, đánh dấu ô kiểm tra nếu trang hỏi.', retry: 'manual' },
+NO_SLOT: { cause: 'Vừa hết chỗ ưu tiên "Cài bằng Google" trên điện thoại.', fix: 'Anh/chị cài trên máy tính: bấm "Cài trên máy tính" bên dưới (gửi link về email để mở trên máy tính).', retry: 'manual' }
 };
 export class GError extends Error {
 constructor(code, { status = 0, detail = '', stage = '' } = {}) {
@@ -134,7 +137,7 @@ const url = _ox && _ox.webApp && String(_ox.webApp.url || '').replace(/[?#].*$/,
 return { url: EXEC_URL_RE.test(url || '') ? url : '', access: (_ox && _ox.webApp && _ox.webApp.entryPointConfig && _ox.webApp.entryPointConfig.access) || '' };
 }
 const _os = (fn, d) => { try { return fn(); } catch { return d; } };
-const _o0 = ['fileId', 'scriptId', 'version', 'deploymentId', 'execUrl', 'contentDone', 'authorized', 'apiOk', 'at'];
+const _o0 = ['fileId', 'scriptId', 'version', 'deploymentId', 'execUrl', 'contentDone', 'authorized', 'apiOk', 'claimed', 'at'];
 export function loadProgress(store = _os(() => globalThis.localStorage, null)) {
 const _oe = _os(() => JSON.parse((store && store.getItem(STATE_KEY)) || 'null'), null);
 if (!_oe || typeof _oe !== 'object') return {};

@@ -1,7 +1,7 @@
 {
   "id": "g1_tax",
   "title": "Thuế phí chuyển nhượng",
-  "pack": "sales",
+  "pack": "closing",
   "pack_group": "g1",
   "screen": "sales",
   "icon": "🧮",

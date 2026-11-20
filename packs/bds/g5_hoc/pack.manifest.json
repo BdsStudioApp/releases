@@ -1,12 +1,12 @@
 {
   "id": "g5_hoc",
   "title": "Học mỗi ngày",
-  "pack": "learn",
+  "pack": "core",
   "pack_group": "g5",
   "screen": "home",
   "icon": "📚",
   "order": 520,
-  "status": "thu-nghiem",
+  "status": "ready",
   "version": "0.1.0",
   "items": [
     "78"

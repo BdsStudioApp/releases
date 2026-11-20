@@ -1,7 +1,7 @@
 {
   "id": "g1_guest",
   "title": "Chế độ khách xem",
-  "pack": "sales",
+  "pack": "closing",
   "pack_group": "g1",
   "screen": "sales",
   "icon": "👁",

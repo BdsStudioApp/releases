@@ -14,13 +14,8 @@
     "quote",
     "loan",
     "policy",
-    "video",
-    "studio",
-    "characters",
     "ideas",
     "market",
-    "calendar",
-    "staff",
     "inbox",
     "landing_builder",
     "trang_cua_toi",
@@ -46,7 +41,6 @@
     "g3_events",
     "g3_groups",
     "g3_profile",
-    "g3_referral",
     "g3_roi",
     "g3_seo",
     "g4_banggia",
@@ -56,14 +50,12 @@
     "g4_giucho",
     "g4_phaply",
     "g5_can3d",
-    "g5_dandan",
     "g5_hoc",
     "g5_huongnang",
     "g5_luyentuvan",
     "g5_noithat",
     "g5_phongthuy",
-    "g5_quyhoach",
-    "videoai_taocanh"
+    "g5_quyhoach"
   ],
   "meta": {
     "brief": {
@@ -114,15 +106,6 @@
       "screen": "sales",
       "order": 40
     },
-    "video": {
-      "title": "Video bản đồ & nhân vật",
-      "icon": "🎬",
-      "screen": "content",
-      "order": 10,
-      "requires": "video",
-      "video_only": true,
-      "video_online": true
-    },
     "ideas": {
       "title": "Ý tưởng nội dung",
       "icon": "💡",
@@ -136,43 +119,12 @@
       "screen": "inbox",
       "order": 10
     },
-    "characters": {
-      "title": "Nhân vật",
-      "icon": "🧑‍💼",
-      "screen": "content",
-      "order": 15,
-      "requires": "video",
-      "video_only": true
-    },
-    "calendar": {
-      "title": "Lịch & Đăng",
-      "icon": "🗓️",
-      "screen": "content",
-      "order": 30,
-      "requires": "video"
-    },
-    "staff": {
-      "title": "Nhân viên & Phòng",
-      "icon": "🧑‍💼",
-      "screen": "content",
-      "order": 40,
-      "requires": "video",
-      "video_only": true
-    },
     "market": {
       "title": "Phân tích thị trường",
       "icon": "📊",
-      "screen": "customers",
-      "order": 40,
+      "screen": "home",
+      "order": 20,
       "requires": "video"
-    },
-    "studio": {
-      "title": "Dựng & Sửa",
-      "icon": "✂️",
-      "screen": "content",
-      "order": 12,
-      "requires": "video",
-      "video_only": true
     },
     "landing_builder": {
       "title": "Trình tạo landing",
@@ -193,56 +145,56 @@
       "icon": "🏦",
       "screen": "sales",
       "order": 160,
-      "pack": "sales"
+      "pack": "closing"
     },
     "g1_guest": {
       "title": "Chế độ khách xem",
       "icon": "👁",
       "screen": "sales",
       "order": 150,
-      "pack": "sales"
+      "pack": "closing"
     },
     "g1_layout": {
       "title": "Đọc layout căn",
       "icon": "📐",
       "screen": "sales",
       "order": 130,
-      "pack": "sales"
+      "pack": "showing"
     },
     "g1_policycalc": {
       "title": "Chính sách nâng cao & tài liệu",
       "icon": "🧾",
       "screen": "sales",
       "order": 110,
-      "pack": "sales"
+      "pack": "source"
     },
     "g1_policywatch": {
       "title": "Theo dõi chính sách",
       "icon": "🔔",
       "screen": "sales",
       "order": 140,
-      "pack": "sales"
+      "pack": "source"
     },
     "g1_rental": {
       "title": "Đầu tư cho thuê",
       "icon": "🔑",
       "screen": "sales",
       "order": 180,
-      "pack": "sales"
+      "pack": "closing"
     },
     "g1_research": {
       "title": "AI cập nhật dự án",
       "icon": "🔎",
       "screen": "sales",
       "order": 120,
-      "pack": "sales"
+      "pack": "source"
     },
     "g1_tax": {
       "title": "Thuế phí chuyển nhượng",
       "icon": "🧮",
       "screen": "sales",
       "order": 170,
-      "pack": "sales"
+      "pack": "closing"
     },
     "g2_chamsoc": {
       "title": "Cớ chăm sóc khách cũ",
@@ -252,7 +204,7 @@
       "pack": "care"
     },
     "g2_crm": {
-      "title": "CRM: Phễu & Ghép căn",
+      "title": "Khách & Phễu bán hàng",
       "icon": "🎯",
       "screen": "customers",
       "order": 210,
@@ -263,7 +215,7 @@
       "icon": "📁",
       "screen": "customers",
       "order": 240,
-      "pack": "care"
+      "pack": "closing"
     },
     "g2_lich": {
       "title": "Lịch xem nhà",
@@ -291,7 +243,7 @@
       "icon": "📈",
       "screen": "customers",
       "order": 260,
-      "pack": "care"
+      "pack": "showing"
     },
     "g2_tuvan": {
       "title": "Tư vấn: Trả lời & Kịch bản",
@@ -305,7 +257,7 @@
       "icon": "🟦",
       "screen": "customers",
       "order": 290,
-      "pack": "care"
+      "pack": "leads"
     },
     "g3_ads": {
       "title": "Hỗ trợ quảng cáo",
@@ -315,7 +267,7 @@
       "pack": "leads"
     },
     "g3_docs": {
-      "title": "Tài liệu đổi số Zalo",
+      "title": "Tài liệu đổi số Zalo (landing dự án)",
       "icon": "📄",
       "screen": "customers",
       "order": 52,
@@ -340,13 +292,6 @@
       "icon": "🏅",
       "screen": "customers",
       "order": 59,
-      "pack": "leads"
-    },
-    "g3_referral": {
-      "title": "Chương trình giới thiệu",
-      "icon": "🤝",
-      "screen": "customers",
-      "order": 54,
       "pack": "leads"
     },
     "g3_roi": {
@@ -380,7 +325,7 @@
     "g4_doitac": {
       "title": "Sổ đối tác",
       "icon": "🤝",
-      "screen": "sales",
+      "screen": "customers",
       "order": 110
     },
     "g4_giohang": {
@@ -395,81 +340,62 @@
       "icon": "🎟️",
       "screen": "sales",
       "order": 150,
-      "pack": "source"
+      "pack": "closing"
     },
     "g4_phaply": {
       "title": "Kiểm tra pháp lý",
       "icon": "⚖️",
       "screen": "sales",
       "order": 140,
-      "pack": "source"
+      "pack": "closing"
     },
     "g5_can3d": {
       "title": "Căn hộ 3D",
       "icon": "🏠",
       "screen": "sales",
       "order": 550,
-      "pack": "learn"
-    },
-    "g5_dandan": {
-      "title": "Nhân vật dẫn",
-      "icon": "🎙️",
-      "screen": "content",
-      "order": 510,
-      "pack": "learn",
-      "requires": "video",
-      "video_only": true
+      "pack": "showing"
     },
     "g5_hoc": {
       "title": "Học mỗi ngày",
       "icon": "📚",
       "screen": "home",
-      "order": 520,
-      "pack": "learn"
+      "order": 520
     },
     "g5_huongnang": {
       "title": "Hướng nắng theo giờ & mùa",
       "icon": "🌤️",
       "screen": "sales",
       "order": 530,
-      "pack": "learn"
+      "pack": "showing"
     },
     "g5_luyentuvan": {
       "title": "Luyện tư vấn với AI",
       "icon": "🎭",
       "screen": "home",
       "order": 510,
-      "pack": "learn"
+      "pack": "care"
     },
     "g5_noithat": {
       "title": "Dự toán nội thất",
       "icon": "🛋️",
       "screen": "sales",
       "order": 540,
-      "pack": "learn"
+      "pack": "showing"
     },
     "g5_phongthuy": {
       "title": "La bàn phong thuỷ",
       "icon": "🧭",
       "screen": "sales",
       "order": 520,
-      "pack": "learn"
+      "pack": "showing"
     },
     "g5_quyhoach": {
       "title": "Chồng bản đồ quy hoạch",
       "icon": "🗺️",
       "screen": "sales",
       "order": 510,
-      "pack": "learn"
-    },
-    "videoai_taocanh": {
-      "title": "Video AI",
-      "icon": "✨",
-      "screen": "content",
-      "order": 15,
-      "pack": "videoai",
-      "video_only": true,
-      "video_online": true
+      "pack": "showing"
     },
     "lead_pool": {
       "title": "Kho lead",
@@ -490,7 +416,7 @@
     {
       "id": "core",
       "kind": "core",
-      "version": "1.0.1",
+      "version": "1.0.3",
       "status": "ready",
       "modules": [
         "brief",
@@ -508,12 +434,33 @@
         "trang_cua_toi",
         "ideas",
         "g4_doitac",
-        "landing_builder"
+        "landing_builder",
+        "g5_hoc"
       ],
       "features": [
         "ai_assistant"
       ],
       "changelog": [
+        {
+          "version": "1.0.3",
+          "date": "2026-11-18",
+          "items": [
+            "Khách hàng: bỏ thẻ Đối tác và nút Gọn/Chi tiết – lối tắt \"Mở Sổ đối tác\"; nâng khách thành cộng tác viên (CTV); tệp mẫu Excel khi nhập khách",
+            "Sổ đối tác chuyển sang màn Khách hàng; CTV có Ghi chú bán hàng và tóm tắt hoa hồng tự ghi",
+            "Phân tích thị trường lên Bảng tin, thêm \"Khu vực khác\" cho địa phương ngoài danh sách",
+            "Nguồn khách: nguồn nào ra khách Nóng, hẹn xem, chốt theo tuần/tháng; Dán tin khách; Nhật ký đồng ý dữ liệu cá nhân; nhắc sao lưu hằng tuần, xuất Excel danh sách khách",
+            "Trợ lý AI mới (nút ✨ góc dưới phải): trò chuyện nhiều lượt, hiểu các chức năng của app, có Góp ý / Gửi cho người bán và Hướng dẫn",
+            "Thẻ gợi ý khi bấm Gọi khách; an toàn khi mạng chặn (đăng nhập không treo, Chẩn đoán kết nối, mở dữ liệu đã lưu chỉ đọc)"
+          ]
+        },
+        {
+          "version": "1.0.2",
+          "date": "2026-11-18",
+          "items": [
+            "Học mỗi ngày chuyển vào Gói Cơ bản: bài 5–10 phút/ngày, câu hỏi ôn, tủ sách – dùng ngay, không cần cài gói",
+            "Trình tạo landing: Gói Cơ bản đăng được 1 trang; nhiều trang hơn bật Gói 1 · Tìm khách & Landing"
+          ]
+        },
         {
           "version": "1.0.1",
           "date": "2026-11-17",
@@ -521,8 +468,8 @@
             "Chờ duyệt → \"Xem & duyệt\" chính sách mở đúng bản nháp; Quản lý chỉ lưu nháp chính sách, Sale/CTV chỉ xem (nói rõ lý do)",
             "Báo giá, Máy tính vay nêu đúng ô cần nhập; lịch đóng tiền không lưu đợt 0 đồng; ghi chú nhanh trống có báo",
             "Bảng hàng: gõ tên dự án chưa có thì gợi ý \"Để AI tìm\" (báo phí, chờ đồng ý); dự án AI có nhãn \"nguồn AI – cần kiểm lại\"; sửa chữ \"Mẫu\" đè nhãn chủ đầu tư; \"Khôi phục mặc định\" không còn xoá nhầm dự án",
-            "Sổ đối tác có sẵn trong gói Cơ bản (Báo giá & Dự án → Sổ đối tác, và thẻ Đối tác ở màn Khách hàng): admin dự án, sàn F1/F2, Sale BĐS, Sale ngân hàng, công chứng, chủ nhà; ai giữ quỹ căn nào; nhật ký gọi/nhắn",
-            "Trình tạo landing có trong gói Cơ bản: tạo 1 landing (mẫu dự án, ký gửi, sự kiện, trang cá nhân), đăng lên địa chỉ app của anh/chị bằng 1 bấm, khách về app + Telegram; nhiều trang hơn ở Gói 3 · Tìm khách & Landing (sắp có)"
+            "Sổ đối tác có sẵn trong Gói Cơ bản (Báo giá & Dự án → Sổ đối tác, và thẻ Đối tác ở màn Khách hàng): admin dự án, sàn F1/F2, Sale BĐS, Sale ngân hàng, công chứng, chủ nhà; ai giữ quỹ căn nào; nhật ký gọi/nhắn",
+            "Trình tạo landing có trong Gói Cơ bản: tạo 1 landing (mẫu dự án, ký gửi, sự kiện, trang cá nhân), đăng lên địa chỉ app của anh/chị bằng 1 bấm, khách về app + Telegram; nhiều trang hơn ở Gói 1 · Tìm khách & Landing"
           ]
         },
         {
@@ -537,112 +484,10 @@
       ]
     },
     {
-      "id": "video",
-      "kind": "optional",
-      "version": "1.0.0",
-      "status": "thu_nghiem",
-      "modules": [
-        "video",
-        "studio",
-        "characters",
-        "staff",
-        "calendar"
-      ],
-      "features": [
-        "engine",
-        "brief_video",
-        "ideas21h"
-      ],
-      "changelog": [
-        {
-          "version": "1.0.0",
-          "date": "2026-11-16",
-          "items": [
-            "Tách Video & Ý tưởng thành gói riêng: bật/tắt cho cả công ty, tắt không mất dữ liệu",
-            "Tắt gói: ẩn menu Video, Bảng tin và tin 7h bỏ phần video, không nhắc 21h, không dò máy dựng"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "sales",
-      "kind": "extension",
-      "no": 1,
-      "version": "0.2.0",
-      "status": "thu_nghiem",
-      "modules": [
-        "g1_banks",
-        "g1_guest",
-        "g1_layout",
-        "g1_policycalc",
-        "g1_policywatch",
-        "g1_rental",
-        "g1_research",
-        "g1_tax"
-      ],
-      "trial": true,
-      "changelog": [
-        {
-          "version": "0.2.0",
-          "date": "2026-11-17",
-          "items": [
-            "So sánh ngân hàng: nút \"Cập nhật thông tin mới nhất qua AI\" – AI quét lãi vay mua nhà các ngân hàng (≥ 10 nguồn uy tín, báo phí trước), gộp theo tên, giữ dòng nhập tay, ghi ngày cập nhật + chỉ tham khảo",
-            "Thuế phí chuyển nhượng: AI tìm mức thuế/phí/lệ phí mới nhất kèm văn bản căn cứ, ngày hiệu lực; chỉ lưu mục đã duyệt"
-          ]
-        },
-        {
-          "version": "0.1.0",
-          "date": "2026-11-17",
-          "items": [
-            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
-            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
-            "8 module ở màn Báo giá & Dự án"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "care",
-      "kind": "extension",
-      "no": 2,
-      "version": "0.2.0",
-      "status": "thu_nghiem",
-      "modules": [
-        "g2_chamsoc",
-        "g2_crm",
-        "g2_hoso",
-        "g2_lich",
-        "g2_nhom",
-        "g2_taisan",
-        "g2_thitruong",
-        "g2_tuvan",
-        "g2_zoa"
-      ],
-      "trial": true,
-      "changelog": [
-        {
-          "version": "0.2.0",
-          "date": "2026-11-17",
-          "items": [
-            "Đọc khách: thêm phân loại tính cách D-I-S-C dùng chung với màn Khách hàng, gợi ý cách tư vấn theo nhóm"
-          ]
-        },
-        {
-          "version": "0.1.0",
-          "date": "2026-11-17",
-          "items": [
-            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
-            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
-            "9 module ở màn Khách hàng"
-          ]
-        }
-      ]
-    },
-    {
       "id": "leads",
       "kind": "extension",
-      "no": 3,
-      "version": "0.2.0",
+      "no": 1,
+      "version": "0.4.0",
       "status": "thu_nghiem",
       "modules": [
         "g3_ads",
@@ -650,12 +495,28 @@
         "g3_events",
         "g3_groups",
         "g3_profile",
-        "g3_referral",
         "g3_roi",
-        "g3_seo"
+        "g3_seo",
+        "g2_zoa"
       ],
       "trial": true,
       "changelog": [
+        {
+          "version": "0.4.0",
+          "date": "2026-11-18",
+          "items": [
+            "Kho mồi câu tài liệu: 8 mẫu tài liệu tải miễn phí đổi số Zalo, trang khoá, link riêng từng sale",
+            "Trang của Gói 1 (tài liệu, sự kiện, SEO) không chiếm chỗ 1 landing của Gói Cơ bản"
+          ]
+        },
+        {
+          "version": "0.3.0",
+          "date": "2026-11-18",
+          "items": [
+            "Chia lại gói theo việc của môi giới (18/11): thêm Zalo OA (nhận tin khách nhắn OA, trả lời tin tư vấn trong thời hạn Zalo cho phép)",
+            "Bật gói này: Trình tạo landing đăng không giới hạn số trang (Gói Cơ bản 1 trang)"
+          ]
+        },
         {
           "version": "0.2.0",
           "date": "2026-11-17",
@@ -679,20 +540,133 @@
       ]
     },
     {
-      "id": "source",
+      "id": "showing",
       "kind": "extension",
-      "no": 4,
-      "version": "0.1.0",
+      "no": 2,
+      "version": "0.3.0",
       "status": "thu_nghiem",
       "modules": [
-        "g4_banggia",
-        "g4_congtruong",
-        "g4_giohang",
-        "g4_giucho",
-        "g4_phaply"
+        "g1_layout",
+        "g5_can3d",
+        "g5_huongnang",
+        "g5_phongthuy",
+        "g5_noithat",
+        "g5_quyhoach",
+        "g2_thitruong"
       ],
       "trial": true,
       "changelog": [
+        {
+          "version": "0.3.0",
+          "date": "2026-11-18",
+          "items": [
+            "Chia lại gói theo việc của môi giới (18/11): gói mới gom việc dẫn khách xem nhà: Đọc layout căn, Căn hộ 3D, Hướng nắng, La bàn phong thuỷ, Dự toán nội thất, Chồng bản đồ quy hoạch, Thị trường quanh dự án",
+            "Máy đã cài gói cũ chứa các phần này: tự bật gói mới, dữ liệu giữ nguyên"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "closing",
+      "kind": "extension",
+      "no": 3,
+      "version": "0.3.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g1_tax",
+        "g1_banks",
+        "g1_rental",
+        "g1_guest",
+        "g4_phaply",
+        "g4_giucho",
+        "g2_hoso"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.3.0",
+          "date": "2026-11-18",
+          "items": [
+            "Chia lại gói theo việc của môi giới (18/11): gói mới gom việc chốt giao dịch: Thuế phí chuyển nhượng, So sánh ngân hàng, Đầu tư cho thuê, Chế độ khách xem, Kiểm tra pháp lý, Giữ chỗ & Hoa hồng, Hồ sơ giao dịch",
+            "Máy đã cài gói cũ chứa các phần này: tự bật gói mới, dữ liệu giữ nguyên"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "care",
+      "kind": "extension",
+      "no": 4,
+      "version": "0.4.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g2_chamsoc",
+        "g2_crm",
+        "g2_lich",
+        "g2_taisan",
+        "g2_tuvan",
+        "g5_luyentuvan",
+        "g2_nhom"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.4.0",
+          "date": "2026-11-18",
+          "items": [
+            "Tư vấn: kho xử lý từ chối xếp theo hiệu quả, Người quen (kịch bản mối quan hệ ấm), Chat Wingman (dán chat Zalo → 3 phương án trả lời)",
+            "Lịch xem nhà: \"Hôm nay dẫn khách\", \"Sau buổi xem\" ghi kết quả + hẹn gọi lại, chấm cam \"Chưa ghi kết quả\""
+          ]
+        },
+        {
+          "version": "0.3.0",
+          "date": "2026-11-18",
+          "items": [
+            "Chia lại gói theo việc của môi giới (18/11): gói Chăm sóc & Bán lại: thêm Luyện tư vấn với AI; Hồ sơ giao dịch sang Gói 3, Thị trường quanh dự án sang Gói 2, Zalo OA sang Gói 1",
+            "Đổi tên \"CRM: Phễu & Ghép căn\" thành \"Khách & Phễu bán hàng\""
+          ]
+        },
+        {
+          "version": "0.2.0",
+          "date": "2026-11-17",
+          "items": [
+            "Đọc khách: thêm phân loại tính cách D-I-S-C dùng chung với màn Khách hàng, gợi ý cách tư vấn theo nhóm"
+          ]
+        },
+        {
+          "version": "0.1.0",
+          "date": "2026-11-17",
+          "items": [
+            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
+            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
+            "9 module ở màn Khách hàng"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "kind": "extension",
+      "no": 5,
+      "version": "0.3.0",
+      "status": "thu_nghiem",
+      "modules": [
+        "g1_research",
+        "g1_policywatch",
+        "g1_policycalc",
+        "g4_giohang",
+        "g4_banggia",
+        "g4_congtruong"
+      ],
+      "trial": true,
+      "changelog": [
+        {
+          "version": "0.3.0",
+          "date": "2026-11-18",
+          "items": [
+            "Chia lại gói theo việc của môi giới (18/11): gói Nguồn hàng & Dự án: thêm AI cập nhật dự án, Theo dõi chính sách, Chính sách nâng cao & tài liệu; Kiểm tra pháp lý và Giữ chỗ & Hoa hồng sang Gói 3"
+          ]
+        },
         {
           "version": "0.1.0",
           "date": "2026-11-17",
@@ -703,72 +677,46 @@
           ]
         }
       ]
-    },
-    {
-      "id": "learn",
-      "kind": "extension",
-      "no": 5,
-      "version": "0.2.0",
-      "status": "thu_nghiem",
-      "modules": [
-        "g5_can3d",
-        "g5_dandan",
-        "g5_hoc",
-        "g5_huongnang",
-        "g5_luyentuvan",
-        "g5_noithat",
-        "g5_phongthuy",
-        "g5_quyhoach"
-      ],
-      "trial": true,
-      "module_requires": {
-        "g5_dandan": [
+    }
+  ],
+  "pack_moves": {
+    "v": 3,
+    "date": "2026-11-18",
+    "note": "Chia lại gói 18/11: bản ghi gói cũ → gói mới chứa module của nó (web/core/packs.js applyMoves, gas/server_core.js PACK_MOVES). Key bản quyền phạm vi cũ: license_logic.js SCOPE_ALIAS.",
+    "from": {
+      "sales": {
+        "to": [
+          "showing",
+          "closing",
+          "source"
+        ]
+      },
+      "learn": {
+        "to": [
+          "showing",
+          "care"
+        ]
+      },
+      "videoai": {
+        "to": [
+          "video"
+        ],
+        "needs": [
           "video"
         ]
       },
-      "changelog": [
-        {
-          "version": "0.2.0",
-          "date": "2026-11-17",
-          "items": [
-            "Chồng bản đồ quy hoạch: làm theo 4 bước có \"Việc tiếp theo\", cuộn được trên điện thoại, link cổng quy hoạch chính thức, nút \"AI đọc bản đồ\" (báo phí trước, AI không chấm điểm)",
-            "Căn hộ 3D: bắt buộc tải layout mặt bằng (ảnh/PDF); AI quét phòng, kích thước, cửa, hướng hoặc nhập tay; soát số đo rồi mới dựng 3D"
-          ]
-        },
-        {
-          "version": "0.1.0",
-          "date": "2026-11-17",
-          "items": [
-            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
-            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
-            "8 module ở màn Báo giá & Dự án, Bảng tin và Video & Ý tưởng (Nhân vật dẫn cần gói Video & Ý tưởng đang bật)"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "videoai",
-      "kind": "extension",
-      "version": "0.1.0",
-      "status": "thu_nghiem",
-      "requires": [
-        "video"
-      ],
-      "modules": [
-        "videoai_taocanh"
-      ],
-      "trial": true,
-      "changelog": [
-        {
-          "version": "0.1.0",
-          "date": "2026-11-17",
-          "items": [
-            "Bản thử nghiệm đầu tiên: khi gói mở, bấm Cài ở Cài đặt › Gói chức năng; chưa cài thì không tải, không hiện",
-            "Gỡ gói chỉ ẩn menu – dữ liệu giữ nguyên, cài lại là dùng tiếp",
-            "AI tạo cảnh ở màn Video & Ý tưởng (cần gói Video & Ý tưởng đang bật)"
-          ]
-        }
-      ]
+      "care": {
+        "to": [
+          "showing",
+          "closing",
+          "leads"
+        ]
+      },
+      "source": {
+        "to": [
+          "closing"
+        ]
+      }
     }
-  ]
+  }
 }

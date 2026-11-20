@@ -1,4 +1,5 @@
 import * as crm from '../_lib/crm.js';
+import { gate } from '../_lib/consent.js';
 export const DAY = 86400000;
 export const safeUrl = (u) => { const s = String(u ?? '').trim(); return /^https?:\/\/[^\s"'<>\\]+$/i.test(s) && s.length <= 2000 ? s : ''; };
 const _oh = r => r && !Number(r.deleted);
@@ -251,7 +252,7 @@ const now = ctx.now || Date.now();
 const rows = [];
 for (const c of crm.activeCustomers(customers)) {
 const _ou = stageOf(c.status);
-if (_ou === 0 || _ou === 6 || pd(c.data).erased) continue;
+if (_ou === 0 || _ou === 6 || pd(c.data).erased || !gate(c, 'contact').ok) continue;
 const last = Math.max(lastContactAt(events, c.id), num(c.created_at));
 if (!last) continue;
 const days = Math.floor((now - last) / DAY);
@@ -317,7 +318,7 @@ if (!_om) continue;
 const kws = projectKeywords(_om, areas);
 const _od = hooks.filter(hk => (hk.kind === 'policy' ? hk.project_id === c.project : mentions(hk.text, kws)));
 if (!_od.length) continue;
-if (!Number(c.consent)) { noConsent++; continue; }
+if (!gate(c, 'care').ok) { noConsent++; continue; }
 rows.push({ c, hooks: _od, cap: capState(c.id, events, cfg, now) });
 }
 rows.sort((a, _o6) => (_o6.cap.ok ? 1 : 0) - (a.cap.ok ? 1 : 0) || _o6.hooks[0].at - a.hooks[0].at);

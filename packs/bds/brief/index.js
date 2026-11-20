@@ -49,7 +49,7 @@ let syncLine = '';
 try { const _ow = ctx.store.status ? await ctx.store.status() : null; if (_ow) syncLine = (_ow.online === false ? 'Đang ngoại tuyến · ' : '') + (_ow.pending ? _ow.pending + ' thay đổi chờ đồng bộ' : 'Đã đồng bộ'); } catch { }
 const perms = ctx.user && ctx.user.perms;
 const _o9 = (!perms || perms.video !== false) && !(ctx.packs && !ctx.packs.featureOn('brief_video'));
-const _ot = _o9 ? await import('../staff/index.js').then((m) => m.briefSection(ctx, { run: _ov })).catch(() => null) : null;
+let _ot = null;
 _o4.innerHTML = '';
 const _o5 = K.button('Nhập khách landing ngay', () => _oh(_o5), { icon: 'download', testid: 'import-landing' });
 _o4.appendChild(h('div', { class: 'bds-head' },

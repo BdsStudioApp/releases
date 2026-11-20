@@ -1,2 +1,2 @@
-{ "id": "g2_hoso", "title": "Hồ sơ giao dịch", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "📁", "order": 240, "status": "thu-nghiem",
+{ "id": "g2_hoso", "title": "Hồ sơ giao dịch", "pack": "closing", "pack_group": "g2", "screen": "customers", "icon": "📁", "order": 240, "status": "thu-nghiem",
   "items": ["F–M"], "desc": "Checklist từng bước giao dịch, link tệp, ghi chú nội bộ, tiến độ %" }

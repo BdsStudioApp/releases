@@ -1,8 +1,8 @@
 import { norm, score as scoreIdea } from './ideas.js';
-import { CHANNEL } from './video.js';
+import { CHANNEL, kenhBds } from './video.js';
 import { normalizeNews, DEFAULT_MARKET } from './freshnews.js';
 import { FALLBACK_PRICES } from '../../../core/connections_logic.cff3dbca52.js';
-const _o1 = 24 * 3600e3;
+const D = 24 * 3600e3;
 export const UNVERIFIED = 'chưa kiểm chứng';
 export const AREAS = [
 { id: 'ocean_park', label: 'Gia Lâm / Long Biên', province: 'Hà Nội', projectAreas: ['Khu Mẫu B'],
@@ -16,152 +16,168 @@ kw: ['noi do', 'hoan kiem', 'ba dinh', 'dong da', 'hai ba trung', 'thanh xuan', 
 { id: 'smart_city', label: 'Tây Mỗ / Nam Từ Liêm', province: 'Hà Nội', projectAreas: ['Khu Mẫu D'],
 kw: ['khu mau d', 'tay mo', 'dai mo', 'nam tu liem', 'dai lo thang long'] },
 ];
-const _o0 = new Set(AREAS.flatMap(a => a.projectAreas));
-const has = (_of, kw) => (' ' + _of + ' ').includes(' ' + kw + ' ');
-const pd = _op => { if (_op && typeof _op === 'object') return _op; try { return JSON.parse(_op || '{}') || {}; } catch { return {}; } };
-const isUrl = _op => /^https?:\/\/\S+$/i.test(String(_op || '').trim());
-const _oc = _oo => _oo && !Number(_oo.deleted);
-const _oi = _of => String(_of).padStart(2, '0');
-const dmy = ms => { const _o6 = new Date(ms); return _oi(_o6.getDate()) + '/' + _oi(_o6.getMonth() + 1) + '/' + _o6.getFullYear(); };
-export const areaOf = id => AREAS.find(a => a.id === id) || AREAS[0];
-export const areaProvince = id => String((AREAS.find(a => a.id === id) || {}).province || '');
+const _o1 = new Set(AREAS.flatMap(a => a.projectAreas));
+const has = (_oh, kw) => (' ' + _oh + ' ').includes(' ' + kw + ' ');
+const pd = _or => { if (_or && typeof _or === 'object') return _or; try { return JSON.parse(_or || '{}') || {}; } catch { return {}; } };
+const _oa = _or => /^https?:\/\/\S+$/i.test(String(_or || '').trim());
+const _oe = _oq => _oq && !Number(_oq.deleted);
+const _ok = _oh => String(_oh).padStart(2, '0');
+const dmy = ms => { const _o7 = new Date(ms); return _ok(_o7.getDate()) + '/' + _ok(_o7.getMonth() + 1) + '/' + _o7.getFullYear(); };
+export const LS_CUSTOM_AREA = 'bds.market.custom_area';
+export const CUSTOM_PREFIX = 'custom:';
+const _o0 = /^(thanh pho|tp|tinh|quan|huyen|thi xa|thi tran|phuong|xa|khu do thi|kdt)\s+/;
+export function customArea(place) {
+const label = String((place && place.label) || '').replace(/\s+/g, ' ').trim().slice(0, 80);
+const _oh = norm(label);
+if (!_oh) return null;
+const _ov = _oh.replace(_o0, '');
+const kw = [...new Set([_oh, _ov].filter(Boolean))];
+const _oz = String((place && place.tinh_thanh) || '').trim().slice(0, 60);
+return { id: CUSTOM_PREFIX + _oh.replace(/ /g, '-'), label, tinh_thanh: _oz, province: _oz,
+projectAreas: [], kw, keywords: kw, custom: true };
+}
+export const isCustom = a => !!(a && typeof a === 'object' && a.custom);
+export const areaOf = id => (isCustom(id) ? id : AREAS.find(a => a.id === (id && typeof id === 'object' ? id.id : id)) || AREAS[0]);
+export const areaProvince = id => { const a = isCustom(id) ? id : AREAS.find(x => x.id === id) || {}; return String(a.province || a.tinh_thanh || ''); };
 export function projectsIn(areaId, projects) {
 const a = areaOf(areaId);
-return (projects || []).filter(_oh => a.projectAreas.includes(_oh.area) || (!_o0.has(_oh.area) && a.kw.some(_ob => has(norm(_oh.loc), _ob))));
+if (a.custom) return [];
+return (projects || []).filter(_oj => a.projectAreas.includes(_oj.area) || (!_o1.has(_oj.area) && a.kw.some(_od => has(norm(_oj.loc), _od))));
 }
-function _oe(text, a, _on) {
-const _of = norm(text);
-return a.kw.some(_ob => has(_of, _ob)) || _on.some(_oh => _oh.name && has(_of, norm(_oh.name)));
+function _og(text, a, _op) {
+const _oh = norm(text);
+return a.kw.some(_od => has(_oh, _od)) || _op.some(_oj => _oj.name && has(_oh, norm(_oj.name)));
 }
 export function weekRange(now = Date.now()) {
-const _o6 = new Date(now);
-const from = new Date(_o6.getFullYear(), _o6.getMonth(), _o6.getDate() - ((_o6.getDay() + 6) % 7));
+const _o7 = new Date(now);
+const from = new Date(_o7.getFullYear(), _o7.getMonth(), _o7.getDate() - ((_o7.getDay() + 6) % 7));
 const to = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 6, 23, 59, 59, 999);
-const _ou = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 3);
-const _oa = new Date(_ou.getFullYear(), 0, 4);
-const _oy = 1 + Math.round(((_ou - _oa) / _o1 - 3 + ((_oa.getDay() + 6) % 7)) / 7);
-return { from: from.getTime(), to: to.getTime(), key: _ou.getFullYear() + '-W' + _oi(_oy),
-label: `Tuần ${_oi(from.getDate())}/${_oi(from.getMonth() + 1)} – ${_oi(to.getDate())}/${_oi(to.getMonth() + 1)}/${to.getFullYear()}` };
+const _ox = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 3);
+const _oc = new Date(_ox.getFullYear(), 0, 4);
+const _o13 = 1 + Math.round(((_ox - _oc) / D - 3 + ((_oc.getDay() + 6) % 7)) / 7);
+return { from: from.getTime(), to: to.getTime(), key: _ox.getFullYear() + '-W' + _ok(_o13),
+label: `Tuần ${_ok(from.getDate())}/${_ok(from.getMonth() + 1)} – ${_ok(to.getDate())}/${_ok(to.getMonth() + 1)}/${to.getFullYear()}` };
 }
 export function gather({ area, ideas = [], policies = [], customers = [], jobs = [], projects = [], feedItems = [], now = Date.now(), days = 7 } = {}) {
 const a = areaOf(area);
-const _on = projectsIn(a.id, projects);
-const _ok = new Set(_on.map(_oh => _oh.id));
-const _ol = id => (projects.find(_oh => _oh.id === id) || {}).name || id;
-const since = now - days * _o1;
-const _os = new Set();
+const _op = projectsIn(a, projects);
+const _om = new Set(_op.map(_oj => _oj.id));
+const _on = id => (projects.find(_oj => _oj.id === id) || {}).name || id;
+const since = now - days * D;
+const _ou = new Set();
 const news = [];
 const add = (id, title, url, source, published, summary, anyArea) => {
 const key = url || title;
-if (!title || _os.has(key) || published < since || (!anyArea && !_oe([title, summary].join(' '), a, _on))) return;
-_os.add(key); news.push({ id, title: String(title).slice(0, 200), url: isUrl(url) ? url : '', source: source || '', published });
+if (!title || _ou.has(key) || published < since || (!anyArea && !_og([title, summary].join(' '), a, _op))) return;
+_ou.add(key); news.push({ id, title: String(title).slice(0, 200), url: _oa(url) ? url : '', source: source || '', published });
 };
-for (const _o7 of ideas) if (_oc(_o7) && _o7.status !== 'rejected' && _o7.source !== 'market') {
-const _o6 = pd(_o7.data);
-add(_o7.id, _o7.title, _o7.url, _o7.source, Number(_o6.published) || Number(_o7.updated_at) || 0, _o7.summary);
+for (const _o9 of ideas) if (_oe(_o9) && _o9.status !== 'rejected' && _o9.source !== 'market') {
+const _o7 = pd(_o9.data);
+add(_o9.id, _o9.title, _o9.url, _o9.source, Number(_o7.published) || Number(_o9.updated_at) || 0, _o9.summary);
 }
-for (const _o8 of feedItems || []) add(_o8.link || _o8.title, _o8.title, _o8.link, _o8.source, Number(_o8.published) || 0, _o8.summary, _o8.area === a.id);
+for (const _ob of feedItems || []) add(_ob.link || _ob.title, _ob.title, _ob.link, _ob.source, Number(_ob.published) || 0, _ob.summary, _ob.area === a.id);
 news.sort((x, y) => y.published - x.published);
-const _o5 = (() => { const _o6 = new Date(now); return _o6.getFullYear() + '-' + _oi(_o6.getMonth() + 1); })();
-const _om = policies.filter(_oh => _oc(_oh) && _oh.status === 'active' && _ok.has(_oh.project_id) && (Number(_oh.updated_at) >= now - 30 * _o1 || _oh.month === _o5))
-.map(_oh => ({ id: _oh.id, project_id: _oh.project_id, project: _ol(_oh.project_id), month: _oh.month || '', effective_from: _oh.effective_from || '', note: String(_oh.note || '').slice(0, 200) }));
+const _o6 = (() => { const _o7 = new Date(now); return _o7.getFullYear() + '-' + _ok(_o7.getMonth() + 1); })();
+const _oo = policies.filter(_oj => _oe(_oj) && _oj.status === 'active' && _om.has(_oj.project_id) && (Number(_oj.updated_at) >= now - 30 * D || _oj.month === _o6))
+.map(_oj => ({ id: _oj.id, project_id: _oj.project_id, project: _on(_oj.project_id), month: _oj.month || '', effective_from: _oj.effective_from || '', note: String(_oj.note || '').slice(0, 200) }));
 const dem = new Map();
-for (const _o4 of customers) {
-if (!_oc(_o4) || (_o4.kind && _o4.kind !== 'customer') || _o4.source !== 'landing' || !_ok.has(_o4.project)) continue;
-const _oo = dem.get(_o4.project) || { project_id: _o4.project, project: _ol(_o4.project), count: 0, total: 0 };
-_oo.total++; if (Number(_o4.created_at) >= since) _oo.count++;
-dem.set(_o4.project, _oo);
+for (const _o5 of customers) {
+if (!_oe(_o5) || (_o5.kind && _o5.kind !== 'customer') || _o5.source !== 'landing' || !_om.has(_o5.project)) continue;
+const _oq = dem.get(_o5.project) || { project_id: _o5.project, project: _on(_o5.project), count: 0, total: 0 };
+_oq.total++; if (Number(_o5.created_at) >= since) _oq.count++;
+dem.set(_o5.project, _oq);
 }
 const demand = [...dem.values()].sort((x, y) => y.count - x.count || y.total - x.total);
-const _ox = jobs.filter(_o9 => _oc(_o9) && /^video_/.test(_o9.type || '') && Number(_o9.updated_at) >= since);
-const videos = { done: _ox.filter(_o9 => _o9.status === 'done').length, queued: _ox.filter(_o9 => ['queued', 'running', 'waiting_approval'].includes(_o9.status)).length };
-return { area: a.id, area_label: a.label, province: a.province || '', week: weekRange(now), since, now, projects: _on.map(_oh => _oh.name), news, policies: _om, demand, videos };
+const _o11 = jobs.filter(j => _oe(j) && /^video_/.test(j.type || '') && Number(j.updated_at) >= since);
+const videos = { done: _o11.filter(j => j.status === 'done').length, queued: _o11.filter(j => ['queued', 'running', 'waiting_approval'].includes(j.status)).length };
+return { area: a.id, area_label: a.label, province: a.province || a.tinh_thanh || '', tinh_thanh: a.tinh_thanh || '', custom: !!a.custom, week: weekRange(now), since, now, projects: _op.map(_oj => _oj.name), news, policies: _oo, demand, videos };
 }
-export function buildPrompt(g) {
+export function buildPrompt(g, { channel = CHANNEL } = {}) {
 const L = [];
-L.push(`Viết BẢN TIN THỊ TRƯỜNG TUẦN cho khu vực ${g.area_label} (${g.week.label}) – kênh BĐS "${CHANNEL}", ${g.province || DEFAULT_MARKET}.`);
+const _o12 = g.custom && g.province && norm(g.province) !== norm(g.area_label) ? ` (${g.province})` : '';
+L.push(`Viết BẢN TIN THỊ TRƯỜNG TUẦN cho khu vực ${g.area_label}${_o12} (${g.week.label}) – ${kenhBds(channel)}${g.custom ? '' : ', ' + (g.province || DEFAULT_MARKET)}.`);
 L.push('Luật bắt buộc: Không bịa số. Mọi con số phải lấy từ dữ liệu dưới đây hoặc từ link nguồn kèm theo; số không có nguồn thì ghi "(' + UNVERIFIED + ')".');
 L.push('Giữ nguyên chữ "đề xuất/dự kiến/dự thảo" nếu nguồn ghi như vậy. Không hứa tăng giá, không khuyên đầu tư/vay. Không nhắc tên hay số điện thoại khách.');
 L.push('', `Dự án trong khu vực: ${g.projects.join(', ') || '(chưa có)'}`);
 L.push('', 'TIN TRONG 7 NGÀY (tiêu đề – nguồn – link):');
-g.news.slice(0, 20).forEach(_of => L.push(`- ${_of.title} – ${_of.source || 'không rõ'} – ${_of.url || 'không có link'}`));
+g.news.slice(0, 20).forEach(_oh => L.push(`- ${_oh.title} – ${_oh.source || 'không rõ'} – ${_oh.url || 'không có link'}`));
 if (!g.news.length) L.push('- (không có tin – đừng tự nghĩ ra tin)');
 L.push('', 'CHÍNH SÁCH ĐANG ÁP DỤNG (bảng chính sách của app, nguồn = "app"):');
-g.policies.forEach(_oh => L.push(`- ${_oh.project}: ${_oh.note || 'chính sách tháng ' + _oh.month}${_oh.effective_from ? ' (từ ' + _oh.effective_from + ')' : ''}`));
+g.policies.forEach(_oj => L.push(`- ${_oj.project}: ${_oj.note || 'chính sách tháng ' + _oj.month}${_oj.effective_from ? ' (từ ' + _oj.effective_from + ')' : ''}`));
 if (!g.policies.length) L.push('- (không có)');
 L.push('', 'NHU CẦU KHÁCH (khách để lại thông tin trên landing, chỉ đếm theo dự án, nguồn = "app"):');
-g.demand.forEach(_o6 => L.push(`- ${_o6.project}: ${_o6.count} khách mới trong 7 ngày, tổng ${_o6.total}`));
+g.demand.forEach(_o7 => L.push(`- ${_o7.project}: ${_o7.count} khách mới trong 7 ngày, tổng ${_o7.total}`));
 if (!g.demand.length) L.push('- (chưa có)');
-L.push('', `VIDEO 7 NGÀY: ${g.videos.done} video xong, ${g.videos.queued} đang chờ dựng.`);
-L.push('', 'Bản tin gồm các mục: Tin chính (có link nguồn), Chính sách mới, Nhu cầu khách, Gợi ý chủ đề video, Lý do để gọi lại khách.');
+
+L.push('', 'Bản tin gồm các mục: Tin chính (có link nguồn), Chính sách mới, Nhu cầu khách, Gợi ý nội dung đăng, Lý do để gọi lại khách.');
 L.push('Trả về DUY NHẤT một khối JSON: {"headline": "…", "main": [{"text": "…", "url": "link nguồn"}], "policies": [{"text": "…", "source": "app"}],' +
 ' "demand": [{"text": "…", "source": "app"}], "video_ideas": [{"title": "≤ 70 ký tự", "why": "…"}], "call_reasons": [{"project": "tên dự án", "reason": "câu ngắn để mở lời khi gọi"}]}');
 return L.join('\n');
 }
-function _ow(item) {
+function _o10(item) {
 const text = String(item.text || '').trim();
-const _og = !/\d/.test(text) || isUrl(item.url) || item.source === 'app';
-return { text: _og || text.includes(UNVERIFIED) ? text : text + ' (' + UNVERIFIED + ')', url: isUrl(item.url) ? item.url : '', source: item.source || '', verified: _og };
+const _oi = !/\d/.test(text) || _oa(item.url) || item.source === 'app';
+return { text: _oi || text.includes(UNVERIFIED) ? text : text + ' (' + UNVERIFIED + ')', url: _oa(item.url) ? item.url : '', source: item.source || '', verified: _oi };
 }
 const _o2 = v => (Array.isArray(v) ? v : []).filter(x => x && typeof x === 'object');
 export function parseReport(text) {
-const _op = String(text ?? '').trim();
-const _od = _op.match(/```(?:json)?\s*([\s\S]*?)```/i);
-let _o9 = null;
-for (const _o3 of [_od ? _od[1] : _op, _op.slice(_op.indexOf('{'), _op.lastIndexOf('}') + 1)]) { try { _o9 = JSON.parse(_o3); break; } catch { } }
-if (!_o9 || typeof _o9 !== 'object' || Array.isArray(_o9)) return null;
-if (!['main', 'policies', 'demand', 'video_ideas', 'call_reasons', 'headline'].some(_ob => _ob in _o9)) return null;
+const _or = String(text ?? '').trim();
+const _of = _or.match(/```(?:json)?\s*([\s\S]*?)```/i);
+let j = null;
+for (const _o4 of [_of ? _of[1] : _or, _or.slice(_or.indexOf('{'), _or.lastIndexOf('}') + 1)]) { try { j = JSON.parse(_o4); break; } catch { } }
+if (!j || typeof j !== 'object' || Array.isArray(j)) return null;
+if (!['main', 'policies', 'demand', 'video_ideas', 'call_reasons', 'headline'].some(_od => _od in j)) return null;
 return {
-headline: String(_o9.headline || '').slice(0, 160),
-main: _o2(_o9.main).filter(x => x.text).map(_ow),
-policies: _o2(_o9.policies).filter(x => x.text).map(_ow),
-demand: _o2(_o9.demand).filter(x => x.text).map(x => _ow({ ...x, source: x.source || 'app' })),
-video_ideas: _o2(_o9.video_ideas).filter(x => x.title).map(x => ({ title: String(x.title).slice(0, 120), why: String(x.why || '').slice(0, 300) })),
-call_reasons: _o2(_o9.call_reasons).filter(x => x.reason).map(x => ({ project: String(x.project || '').slice(0, 80), reason: String(x.reason).slice(0, 300) })),
+headline: String(j.headline || '').slice(0, 160),
+main: _o2(j.main).filter(x => x.text).map(_o10),
+policies: _o2(j.policies).filter(x => x.text).map(_o10),
+demand: _o2(j.demand).filter(x => x.text).map(x => _o10({ ...x, source: x.source || 'app' })),
+video_ideas: _o2(j.video_ideas).filter(x => x.title).map(x => ({ title: String(x.title).slice(0, 120), why: String(x.why || '').slice(0, 300) })),
+call_reasons: _o2(j.call_reasons).filter(x => x.reason).map(x => ({ project: String(x.project || '').slice(0, 80), reason: String(x.reason).slice(0, 300) })),
 };
 }
 export function fallbackReport(g) {
-const main = g.news.slice(0, 8).map(_of => ({ text: _of.title, url: _of.url, source: _of.source, verified: true }));
-const policies = g.policies.map(_oh => ({ text: `${_oh.project}: ${_oh.note || 'chính sách tháng ' + _oh.month}${_oh.effective_from ? ' (áp dụng từ ' + _oh.effective_from.split('-').reverse().join('/') + ')' : ''}`, source: 'app', verified: true }));
-const demand = g.demand.map(_o6 => ({ text: `${_o6.project}: ${_o6.count} khách mới trong 7 ngày (tổng ${_o6.total} khách landing)`, source: 'app', verified: true }));
-const video_ideas = g.news.slice(0, 3).map(_of => ({ title: _of.title.slice(0, 90), why: 'Tin mới trong tuần' + (_of.source ? ' – ' + _of.source : '') }));
-for (const _oh of g.policies.slice(0, 2)) video_ideas.push({ title: `Chính sách mới ${_oh.project} tháng ${_oh.month.split('-').reverse().join('/')}`, why: 'Giải thích chính sách (không khuyên vay)' });
+const main = g.news.slice(0, 8).map(_oh => ({ text: _oh.title, url: _oh.url, source: _oh.source, verified: true }));
+const policies = g.policies.map(_oj => ({ text: `${_oj.project}: ${_oj.note || 'chính sách tháng ' + _oj.month}${_oj.effective_from ? ' (áp dụng từ ' + _oj.effective_from.split('-').reverse().join('/') + ')' : ''}`, source: 'app', verified: true }));
+const demand = g.demand.map(_o7 => ({ text: `${_o7.project}: ${_o7.count} khách mới trong 7 ngày (tổng ${_o7.total} khách landing)`, source: 'app', verified: true }));
+const video_ideas = g.news.slice(0, 3).map(_oh => ({ title: _oh.title.slice(0, 90), why: 'Tin mới trong tuần' + (_oh.source ? ' – ' + _oh.source : '') }));
+for (const _oj of g.policies.slice(0, 2)) video_ideas.push({ title: `Chính sách mới ${_oj.project} tháng ${_oj.month.split('-').reverse().join('/')}`, why: 'Giải thích chính sách (không khuyên vay)' });
 const call_reasons = [];
-for (const _oh of g.policies) call_reasons.push({ project: _oh.project, reason: 'Có chính sách mới: ' + (_oh.note || 'tháng ' + _oh.month) });
+for (const _oj of g.policies) call_reasons.push({ project: _oj.project, reason: 'Có chính sách mới: ' + (_oj.note || 'tháng ' + _oj.month) });
 if (g.news[0]) {
-const _ot = g.demand[0] ? g.demand[0].project : (g.projects[0] || g.area_label);
-call_reasons.push({ project: _ot, reason: 'Có tin mới trong khu vực: ' + g.news[0].title });
+const _ow = g.demand[0] ? g.demand[0].project : (g.projects[0] || g.area_label);
+call_reasons.push({ project: _ow, reason: 'Có tin mới trong khu vực: ' + g.news[0].title });
 }
 return { headline: `${g.area_label} – ${g.week.label}`, main, policies, demand, video_ideas, call_reasons,
 note: main.length ? '' : 'Tuần này chưa có tin khớp khu vực – bấm "Lấy tin mới" hoặc thêm chủ đề theo dõi ở Nguồn ý tưởng.' };
 }
-export function reportText(_oo, g) {
-const L = [`BẢN TIN THỊ TRƯỜNG – ${g ? g.area_label + ' – ' + g.week.label : ''}`, _oo.headline || '', ''];
-const _or = (title, list, fmt) => { L.push(title + ':'); if (!list.length) L.push('- (không có)'); list.forEach(x => L.push('- ' + fmt(x))); L.push(''); };
-_or('Tin chính', _oo.main, x => x.text + (x.url ? ' – ' + x.url : ''));
-_or('Chính sách mới', _oo.policies, x => x.text);
-_or('Nhu cầu khách', _oo.demand, x => x.text);
-_or('Gợi ý chủ đề video', _oo.video_ideas, x => x.title + (x.why ? ' (' + x.why + ')' : ''));
-_or('Lý do để gọi lại khách', _oo.call_reasons, x => (x.project ? x.project + ': ' : '') + x.reason);
+export function reportText(_oq, g) {
+const L = [`BẢN TIN THỊ TRƯỜNG – ${g ? g.area_label + ' – ' + g.week.label : ''}`, _oq.headline || '', ''];
+const _ot = (title, list, fmt) => { L.push(title + ':'); if (!list.length) L.push('- (không có)'); list.forEach(x => L.push('- ' + fmt(x))); L.push(''); };
+_ot('Tin chính', _oq.main, x => x.text + (x.url ? ' – ' + x.url : ''));
+_ot('Chính sách mới', _oq.policies, x => x.text);
+_ot('Nhu cầu khách', _oq.demand, x => x.text);
+_ot('Gợi ý nội dung đăng', _oq.video_ideas, x => x.title + (x.why ? ' (' + x.why + ')' : ''));
+_ot('Lý do để gọi lại khách', _oq.call_reasons, x => (x.project ? x.project + ': ' : '') + x.reason);
 return L.join('\n').trim();
 }
-export function jobRow(_oo, g, { provider = '' } = {}) {
+export function jobRow(_oq, g, { provider = '' } = {}) {
 return {
 type: 'market_report', status: 'done', cost_estimate: 0,
 title: `Bản tin thị trường ${g.area_label} – ${g.week.label}`,
-input: JSON.stringify({ area: g.area, week: g.week.key, since: g.since, counts: { news: g.news.length, policies: g.policies.length, demand: g.demand.reduce((_op, _o6) => _op + _o6.count, 0) } }),
-output: JSON.stringify({ report: _oo, provider, text: reportText(_oo, g) }),
+input: JSON.stringify({ area: g.area, week: g.week.key, since: g.since, counts: { news: g.news.length, policies: g.policies.length, demand: g.demand.reduce((_or, _o7) => _or + _o7.count, 0) } }),
+output: JSON.stringify({ report: _oq, provider, text: reportText(_oq, g) }),
 };
 }
-export function ideaFromSuggestion(_op, { area = '', week = '', now = Date.now() } = {}) {
-const _oq = scoreIdea({ title: _op.title, summary: _op.why }, { now });
-return { title: String(_op.title).slice(0, 160), summary: String(_op.why || ''), source: 'market', url: '', status: 'new', score: _oq.score,
-data: JSON.stringify({ from: 'market_report', area, week, score_parts: _oq.parts }) };
+export function ideaFromSuggestion(_or, { area = '', week = '', now = Date.now() } = {}) {
+const _os = scoreIdea({ title: _or.title, summary: _or.why }, { now });
+return { title: String(_or.title).slice(0, 160), summary: String(_or.why || ''), source: 'market', url: '', status: 'new', score: _os.score,
+data: JSON.stringify({ from: 'market_report', area, week, score_parts: _os.parts }) };
 }
-export function reminderFromReason(_o4, { now = Date.now() } = {}) {
-const _o6 = new Date(now);
-return { object_id: '', kind: 'followup', title: `Gọi lại khách quan tâm ${_o4.project || 'khu vực'}: ${_o4.reason}`.slice(0, 200),
-due_at: new Date(_o6.getFullYear(), _o6.getMonth(), _o6.getDate() + 1, 9, 0, 0).getTime(), remind_before_days: 0, amount: 0, installment: 0, done: 0,
+export function reminderFromReason(_o5, { now = Date.now() } = {}) {
+const _o7 = new Date(now);
+return { object_id: '', kind: 'followup', title: `Gọi lại khách quan tâm ${_o5.project || 'khu vực'}: ${_o5.reason}`.slice(0, 200),
+due_at: new Date(_o7.getFullYear(), _o7.getMonth(), _o7.getDate() + 1, 9, 0, 0).getTime(), remind_before_days: 0, amount: 0, installment: 0, done: 0,
 data: JSON.stringify({ from: 'market_report' }) };
 }
 export const fmtDate = dmy;
@@ -171,38 +187,80 @@ export const WRITE_AI = [
 { id: 'gemini', label: 'Gemini – tự động', auto: true, hint: 'Gemini viết ngay trong app (miễn phí trong hạn mức của Google).' },
 { id: 'claude_api', label: 'Claude API – tự động, có phí', auto: true, paid: true, hint: 'Claude viết kỹ hơn; có phí theo lượt – app báo phí ước tính trước khi chạy, tính vào ngân sách AI tháng.' },
 { id: 'ollama', label: 'Ollama trên máy – miễn phí', auto: true, hint: 'AI chạy trên máy anh/chị: miễn phí, dữ liệu không ra ngoài; máy chưa bật Ollama thì app chuyển sang Gemini.' },
-{ id: 'handoff_claude', label: 'Claude qua chat – 0 đồng', hint: 'App chép sẵn lời nhắn → mở Claude trên web → anh/chị dán câu trả lời (JSON) về.' },
-{ id: 'handoff_gemini', label: 'Gemini qua chat – 0 đồng', hint: 'App chép sẵn lời nhắn → mở Gemini trên web → anh/chị dán câu trả lời (JSON) về.' },
+{ id: 'handoff_claude', label: 'Claude qua chat – 0 đồng', hint: 'App chép sẵn lời nhắn → mở Claude trên web → anh/chị dán câu trả lời về.' },
+{ id: 'handoff_gemini', label: 'Gemini qua chat – 0 đồng', hint: 'App chép sẵn lời nhắn → mở Gemini trên web → anh/chị dán câu trả lời về.' },
 { id: 'app', label: 'Không dùng AI – từ dữ liệu app', hint: 'Bản tin nhanh chỉ từ tin đã lấy, chính sách, khách landing của app – không cần AI, không tốn phí.' },
 ];
 export const NEWS_AI = [
 { id: 'rss', label: 'Nguồn RSS – miễn phí', hint: '' },
 { id: 'gemini', label: 'Gemini tìm Google – mất phí AI', auto: true, paid: true, hint: '💰 Mất phí AI (Gemini + tìm Google) – app báo chi phí trước khi chạy; cần ≥ 10 trang uy tín mới dùng được kết quả.' },
-{ id: 'handoff_claude', label: 'Claude qua chat – 0 đồng', hint: 'App chép lời nhắn tìm tin → mở Claude trên web → anh/chị dán câu trả lời (JSON) về.' },
-{ id: 'handoff_gemini', label: 'Gemini qua chat – 0 đồng', hint: 'App chép lời nhắn tìm tin → mở Gemini trên web → anh/chị dán câu trả lời (JSON) về.' },
+{ id: 'handoff_claude', label: 'Claude qua chat – 0 đồng', hint: 'App chép lời nhắn tìm tin → mở Claude trên web → anh/chị dán câu trả lời về.' },
+{ id: 'handoff_gemini', label: 'Gemini qua chat – 0 đồng', hint: 'App chép lời nhắn tìm tin → mở Gemini trên web → anh/chị dán câu trả lời về.' },
 ];
 export const PROVIDER_NAME = { app: 'dữ liệu app', gemini: 'Gemini', claude_api: 'Claude API', ollama: 'Ollama', handoff_claude: 'Claude (chat)', handoff_gemini: 'Gemini (chat)' };
 export const choiceOf = (list, id) => list.find(a => a.id === id) || list[0];
-function _oj(list, saved, { claudeEnabled = false, aiOff = false } = {}, offFallback) {
+function _ol(list, saved, { claudeEnabled = false, aiOff = false } = {}, offFallback) {
 let id = list.some(a => a.id === saved) ? saved : list[0].id;
 if (id === 'claude_api' && !claudeEnabled) id = 'gemini';
 if (aiOff && choiceOf(list, id).auto) id = offFallback;
 return id;
 }
-export const pickWriteAi = (saved, opts) => _oj(WRITE_AI, saved, opts, 'handoff_claude');
-export const pickNewsAi = (saved, opts) => _oj(NEWS_AI, saved, opts, 'rss');
+export const pickWriteAi = (saved, opts) => _ol(WRITE_AI, saved, opts, 'handoff_claude');
+export const pickNewsAi = (saved, opts) => _ol(NEWS_AI, saved, opts, 'rss');
 export function claudeEstimate(prompt, prices) {
-const _oh = (prices && prices.claude_api) || FALLBACK_PRICES.claude_api;
-const _ov = Math.ceil(String(prompt || '').length / 2) + 600, tout = 3000;
-return { tokens_in: _ov, tokens_out: tout, usd: Math.round((_ov * _oh.in + tout * _oh.out) / 1e6 * 10000) / 10000 };
+const _oj = (prices && prices.claude_api) || FALLBACK_PRICES.claude_api;
+const _oy = Math.ceil(String(prompt || '').length / 2) + 600, tout = 3000;
+return { tokens_in: _oy, tokens_out: tout, usd: Math.round((_oy * _oj.in + tout * _oj.out) / 1e6 * 10000) / 10000 };
 }
 export function feedFromFresh(parsed, { area = '', at = Date.now() } = {}) {
-return normalizeNews(parsed, { max: 20 }).map(_of => ({
-title: _of.title, link: _of.source_url, source: _of.source_name, summary: _of.summary, area, via: 'ai',
-published: (_of.date && Date.parse(_of.date + 'T12:00:00+07:00')) || at,
+return normalizeNews(parsed, { max: 20 }).map(_oh => ({
+title: _oh.title, link: _oh.source_url, source: _oh.source_name, summary: _oh.summary, area, via: 'ai',
+published: (_oh.date && Date.parse(_oh.date + 'T12:00:00+07:00')) || at,
 }));
 }
+export const DEMAND_NOTE = 'Khách quan tâm = khách để lại thông tin (landing) ghi dự án thuộc khu vực này, mới trong 7 ngày; chỉ đếm, không lộ tên/số.';
+export const interestedCount = g => ((g && g.demand) || []).reduce((_or, _o7) => _or + (Number(_o7.count) || 0), 0);
+export function dataSummary(g) {
+const _o8 = ms => { const _o7 = new Date(ms); return _ok(_o7.getDate()) + '/' + _ok(_o7.getMonth() + 1); };
+return `Dữ liệu 7 ngày (từ ${_o8(g.since)} đến ${_o8(g.now)}) gồm: ${(g.news || []).length} bài báo · ${interestedCount(g)} khách quan tâm khu vực này · ${(g.policies || []).length} chính sách`;
+}
+export const PLACE_AI = WRITE_AI.filter(a => ['gemini', 'claude_api', 'handoff_claude', 'handoff_gemini'].includes(a.id));
+export const LS_PLACE_AI = 'bds.market.place_ai';
+export const pickPlaceAi = (saved, opts) => _ol(PLACE_AI, saved, opts, 'handoff_claude');
+export function placePrompt(q) {
+return [
+`Người dùng app BĐS gõ tên một địa phương ở Việt Nam: "${String(q || '').slice(0, 80)}" (có thể không dấu, viết tắt hoặc sai chính tả).`,
+'Gợi ý tối đa 8 tên địa phương có thật khớp nhất (tỉnh/thành phố, phường/xã, quận/huyện cũ hay khu vực/khu đô thị thường gọi).',
+'Dùng đơn vị hành chính cấp tỉnh HIỆN HÀNH: 34 tỉnh/thành sau sáp nhập từ 01/7/2025 (Nghị quyết 202/2025/QH15). Tên viết đủ dấu tiếng Việt.',
+'Không bịa địa danh. Không chắc thì bỏ, đừng đoán.',
+'Trả về DUY NHẤT một khối JSON: {"items": [{"label": "tên thường gọi", "tinh_thanh": "tỉnh/thành hiện hành", "ghi_chu": "ngắn: tên cũ / thuộc đâu"}]}',
+].join('\n');
+}
+export function parsePlaceSuggestions(text, { max = 8 } = {}) {
+const _or = String(text ?? '').trim();
+if (!_or) return [];
+const _of = _or.match(/```(?:json)?\s*([\s\S]*?)```/i);
+let j = null;
+const _o3 = [_of ? _of[1] : _or];
+for (const [o, _o5] of [['{', '}'], ['[', ']']]) { const _o9 = _or.indexOf(o), _od = _or.lastIndexOf(_o5); if (_o9 >= 0 && _od > _o9) _o3.push(_or.slice(_o9, _od + 1)); }
+for (const _o4 of _o3) { try { j = JSON.parse(_o4); break; } catch { } }
+const list = Array.isArray(j) ? j : (j && typeof j === 'object' ? (Array.isArray(j.items) ? j.items : Array.isArray(j.suggestions) ? j.suggestions : null) : null);
+if (!list) return [];
+const _ou = new Set(); const out = [];
+for (const x of list) {
+if (!x || typeof x !== 'object' || typeof x.label !== 'string') continue;
+const label = x.label.replace(/\s+/g, ' ').trim().slice(0, 80);
+if (!norm(label)) continue;
+const _oz = typeof x.tinh_thanh === 'string' ? x.tinh_thanh.replace(/\s+/g, ' ').trim().slice(0, 60) : '';
+const key = norm(label) + '|' + norm(_oz);
+if (_ou.has(key)) continue;
+_ou.add(key);
+out.push({ label, tinh_thanh: _oz, ghi_chu: typeof x.ghi_chu === 'string' ? x.ghi_chu.trim().slice(0, 120) : '' });
+if (out.length >= max) break;
+}
+return out;
+}
 export function mergeFeed(cur, add) {
-const _os = new Set((cur || []).map(_o7 => _o7.link || _o7.title));
-return [...(cur || []), ...(add || []).filter(_o7 => { const _ob = _o7.link || _o7.title; if (_os.has(_ob)) return false; _os.add(_ob); return true; })];
+const _ou = new Set((cur || []).map(_o9 => _o9.link || _o9.title));
+return [...(cur || []), ...(add || []).filter(_o9 => { const _od = _o9.link || _o9.title; if (_ou.has(_od)) return false; _ou.add(_od); return true; })];
 }

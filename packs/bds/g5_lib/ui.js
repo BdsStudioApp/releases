@@ -18,9 +18,9 @@ ensureCss();
 const K = kit(ctx);
 const G = {
 K, h, ctx,
-head(title, sub, testid) {
+head(title, sub, testid, beta = true) {
 return h('header', { class: 'g5-head', 'data-testid': testid },
-h('div', { class: 'g5-head-t' }, h('h2', null, title), K.badge(BADGE, 'warn')),
+h('div', { class: 'g5-head-t' }, h('h2', null, title), beta ? K.badge(BADGE, 'warn') : null),
 sub ? h('p', { class: 'bds-muted g5-sub' }, sub) : null);
 },
 note(text, tone = 'info', testid) { return h('p', { class: 'g5-note g5-note-' + tone, role: tone === 'warn' ? 'alert' : null, 'data-testid': testid }, text); },
@@ -79,7 +79,7 @@ return { text: String((_ol && (_ol.text ?? _ol)) || ''), cost_usd: Number(_ol &&
 },
 async aiChat(prompt) {
 if (!ctx.ai || typeof ctx.ai.handoff !== 'function') throw new Error('Chưa có trợ lý chat');
-return ctx.ai.handoff('read_policy', prompt + '\n\n(Đính kèm ảnh/PDF vào khung chat rồi gửi. Chép nguyên JSON AI trả lời, dán lại vào app.)');
+return ctx.ai.handoff('read_policy', prompt + '\n\n(Đính kèm ảnh/PDF vào khung chat rồi gửi. Chép nguyên câu trả lời của AI, dán lại vào app.)');
 },
 canChat() { return !!(ctx.ai && typeof ctx.ai.handoff === 'function'); },
 download(name, data, mime = 'application/octet-stream') {

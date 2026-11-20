@@ -131,12 +131,13 @@ export function deferText(config = {}, { company = false } = {}) {
 return (company ? 'Địa chỉ app công ty (tên miền của công ty)' : 'Địa chỉ riêng (tenkhach.' + baseDomain(config) + ')')
 + ' bên bán sẽ tạo và gửi anh/chị qua email trong vòng 24 giờ – trong lúc chờ cứ dùng app ở địa chỉ này; dữ liệu không mất khi chuyển.';
 }
-export function handoffUrl(appUrl, { execUrl, flow = 'personal', domain = '' } = {}) {
+export function handoffUrl(appUrl, { execUrl, flow = 'personal', domain = '', user = '' } = {}) {
 const _o4 = String(appUrl || '').replace(/[#?].*$/, '').replace(/\/+$/, '');
 if (!/^https:\/\/[a-z0-9.-]+(?::\d+)?$/i.test(_o4) && !/^http:\/\/127\.0\.0\.1(?::\d+)?$/.test(_o4)) return '';
 if (!isExecUrl(execUrl)) return '';
 const q = new URLSearchParams({ may_chu: String(execUrl).trim(), tu: 'cai', luong: flow === 'company' ? 'company' : 'personal' });
 if (domain) q.set('ten_mien', domain);
+if (/^[a-z0-9._-]{3,32}$/.test(String(user || ''))) q.set('ten', user);
 return _o4 + '/#/ket-noi?' + q.toString();
 }
 export class ProvisionError extends Error {

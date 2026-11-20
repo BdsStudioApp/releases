@@ -149,12 +149,14 @@ if (st.tab === 'deals') { _o10(customers, rate); return; }
 const _ow = K.select([[7, '7 ngày'], [30, '30 ngày'], [90, '90 ngày'], [365, '12 tháng']], st.days, { 'data-testid': 'roi-range' });
 _ow.onchange = () => { st.days = Number(_ow.value); Object.assign(st, RO.defaultRange(Date.now(), st.days)); _oy(); };
 _o12.appendChild(h('div', { class: 'g3-row' }, G.field('Khoảng thời gian', _ow), G.tabs(Object.entries(RO.DIMENSIONS), st.dim, k => { st.dim = k; _oy(); }, 'roi-dim')));
+_o12.appendChild(h('div', { class: 'g3-note', 'data-testid': 'roi-sources-link' }, 'Muốn biết nguồn nào ra khách Nóng, hẹn xem, chốt (theo tuần/tháng, theo từng video/bài)? ',
+K.button('Mở "Nguồn khách"', () => K.nav('#/customers/customers?sources=1'), { testid: 'roi-open-sources' })));
 const rep = RO.report({ spends, customers, dim: st.dim, from: st.from, to: st.to, ratePct: rate });
 const t = rep.total;
 _o12.appendChild(h('div', { class: 'g3-grid' }, G.kpi('đã tiêu', G.vnd(t.spend), 'roi-spend'), G.kpi('khách mới', String(t.leads), 'roi-leads'), G.kpi('căn chốt', String(t.deals), 'roi-deals'),
 G.kpi('chi phí/khách từ kênh có chi tiền (' + t.paid_leads + ' khách)', t.cpl === null ? '–' : G.vnd(t.cpl), 'roi-cpl'), G.kpi('chi phí/căn chốt từ kênh có chi tiền', t.cpa === null ? '–' : G.vnd(t.cpa), 'roi-cpa'), G.kpi('ROI kênh có chi tiền (hoa hồng – chi phí)/chi phí', _ou(t.roi), 'roi-roi')));
 _o12.appendChild(K.card({ title: 'Theo ' + RO.DIMENSIONS[st.dim].toLowerCase(), testid: 'roi-report', body: [reportTable(G, rep, 'roi-table'),
-h('p', { class: 'g3-sub' }, 'Khách được tính theo nguồn trên link (utm_source, utm_campaign, mã video v, mã giới thiệu ref). Khách nhập tay không có nguồn nằm ở "Nhập tay". Chi phí/khách, chi phí/căn chốt, ROI ở trên chỉ tính các dòng có chi tiền – khách nhập tay, giới thiệu không làm đẹp số. ' +
+h('p', { class: 'g3-sub' }, 'Khách được tính theo nguồn trên link (utm_source, utm_campaign, mã video v; khách cũ có mã giới thiệu ref vẫn tính vào Giới thiệu). Khách nhập tay không có nguồn nằm ở "Nhập tay". Chi phí/khách, chi phí/căn chốt, ROI ở trên chỉ tính các dòng có chi tiền – khách nhập tay, giới thiệu không làm đẹp số. ' +
 (rate ? 'Hoa hồng chưa ghi được ước theo ' + rate + '% giá căn.' : 'Ghi hoa hồng ở tab "Hoa hồng căn chốt" để có ROI.'))] }));
 const _ot = RO.outliers(RO.report({ spends, customers, dim: st.dim === 'channel' ? 'campaign' : st.dim, from: st.from, to: st.to, ratePct: rate }).rows);
 _o12.appendChild(K.card({ title: 'Bất thường (' + _ot.length + ')', testid: 'roi-outliers', body: _ot.length ? [
@@ -282,7 +284,7 @@ const _ol = {};
 for (const [k, label] of Object.entries(AP.MANUAL_FIELDS)) _ol[k] = G.input({ value: _oq[k] === null || _oq[k] === undefined ? '' : String(_oq[k]), inputmode: 'numeric', 'data-testid': 'ad-f-' + k, placeholder: 'Để trống nếu chưa biết', 'aria-label': label });
 const note = G.area({ rows: 2, 'data-testid': 'ad-f-note', maxlength: 500 }); note.value = _oq.note || '';
 const _os = _om ? {
-name: G.input({ 'data-testid': 'ad-n-name', maxlength: 160, placeholder: 'VD: Video nhà mẫu 2PN' }), campaign: G.input({ 'data-testid': 'ad-n-campaign', maxlength: 160 }),
+name: G.input({ 'data-testid': 'ad-n-name', maxlength: 160, placeholder: 'VD: Bài nhà mẫu 2PN' }), campaign: G.input({ 'data-testid': 'ad-n-campaign', maxlength: 160 }),
 platform: K.select(_o0, 'facebook', { 'data-testid': 'ad-n-platform' }),
 spend: G.input({ inputmode: 'numeric', 'data-testid': 'ad-n-spend', placeholder: 'VD 3000000' }), impressions: G.input({ inputmode: 'numeric', 'data-testid': 'ad-n-impr' }), clicks: G.input({ inputmode: 'numeric', 'data-testid': 'ad-n-clicks' }),
 from: G.input({ type: 'date', 'data-testid': 'ad-n-from' }), to: G.input({ type: 'date', 'data-testid': 'ad-n-to' }),

@@ -454,7 +454,7 @@ const a = st.ai; if (!a) { _o1.replaceChildren(); return; }
 const k = st.img ? { w: st.img.naturalWidth, h: st.img.naturalHeight } : null;
 _o1.replaceChildren(
 h('b', null, '🤖 AI đọc được (gợi ý – anh/chị đối chiếu bản đồ gốc)'),
-a.demo ? G.note('Chế độ Dùng thử: đây là KẾT QUẢ MẪU, không đọc từ ảnh của anh/chị.', 'warn', 'qh-ai-demo') : null,
+a.demo ? G.note('Chế độ Xem thử: đây là KẾT QUẢ MẪU, không đọc từ ảnh của anh/chị.', 'warn', 'qh-ai-demo') : null,
 a.title || a.scale ? h('p', { class: 'g5-small' }, [a.title, a.scale ? 'tỉ lệ ' + a.scale : ''].filter(Boolean).join(' · ')) : null,
 a.source ? h('div', { class: 'g5-row g5-small' }, h('span', null, 'Nguồn AI thấy trên ảnh: ', h('b', null, a.source)),
 a.trusted ? K.button('Dùng làm nguồn (đã đối chiếu)', () => { st.source = a.source; srcIn.value = a.source; _o27(); K.toast('Đã điền nguồn – nhớ đối chiếu văn bản gốc.', 'success'); }, { testid: 'qh-ai-use-source', icon: 'check' }) : null) : null,

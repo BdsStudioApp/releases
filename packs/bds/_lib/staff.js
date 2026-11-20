@@ -34,15 +34,23 @@ export const DEFAULT_ROOM = {
 id: 'video', name: 'Sản xuất video', icon: '🎬', start: '21:00', report_at: '07:00',
 steps: ['writer', 'reviewer', 'render'], budget_usd_day: 0.5, mode: 'auto', max_per_run: 3, paused_reason: '', last_run: '',
 };
+const _ow = v => (Array.isArray(v) ? [...new Set(v.filter(x => typeof x === 'string' && x))].slice(0, 12) : []);
 export function normalizeStaff(saved) {
 const arr = Array.isArray(saved) ? saved : (saved && Array.isArray(saved.staff) ? saved.staff : []);
-const _or = DEFAULT_STAFF.map(d => {
+const _os = DEFAULT_STAFF.map(d => {
 const s = arr.find(x => x && x.id === d.id) || {};
 return { ...d, ...s, provider: safeProvider(s.provider || d.provider), mode: MODES[s.mode] ? s.mode : d.mode, where: WHERE[s.where] ? s.where : d.where,
-rules: Array.isArray(s.rules) ? s.rules : [], pending_rules: Array.isArray(s.pending_rules) ? s.pending_rules : [], edits: Array.isArray(s.edits) ? s.edits : [], scope: SCOPES[d.id] };
+rules: Array.isArray(s.rules) ? s.rules : [], pending_rules: Array.isArray(s.pending_rules) ? s.pending_rules : [], edits: Array.isArray(s.edits) ? s.edits : [], scope: SCOPES[d.id],
+skills: _ow(s.skills), data_access: s.data_access === true };
 });
-for (const s of arr) if (s && s.id && !_or.some(o => o.id === s.id)) _or.push({ ...s, provider: safeProvider(s.provider), scope: ['ideas'], rules: s.rules || [], pending_rules: s.pending_rules || [], edits: s.edits || [] });
-return _or;
+for (const s of arr) {
+if (!s || !s.id || _os.some(o => o.id === s.id)) continue;
+const scope = Array.isArray(s.scope) ? [...new Set(s.scope.filter(x => typeof x === 'string' && x && !PRIVATE_TABLES.includes(x)))] : [];
+_os.push({ ...s, provider: safeProvider(s.provider), mode: MODES[s.mode] ? s.mode : 'semi', where: WHERE[s.where] ? s.where : 'cloud', scope: scope.length ? scope : ['ideas'],
+rules: Array.isArray(s.rules) ? s.rules : [], pending_rules: Array.isArray(s.pending_rules) ? s.pending_rules : [], edits: Array.isArray(s.edits) ? s.edits : [],
+skills: _ow(s.skills), data_access: s.data_access === true });
+}
+return _os;
 }
 export function normalizeRooms(saved) {
 const arr = Array.isArray(saved) ? saved : [];
@@ -61,33 +69,34 @@ return o;
 }
 export function scopedData(staff, data = {}) {
 const scope = (staff && staff.scope) || SCOPES[staff && staff.id] || [];
-const _or = {};
+const _os = {};
 for (const _ok of Object.keys(data)) {
 if (PRIVATE_TABLES.includes(_ok) || !scope.includes(_ok)) continue;
-_or[_ok] = _ok === 'ideas' ? (data[_ok] || []).map(scrubIdea) : _ok === 'scripts' ? redact(data[_ok]) : data[_ok];
+_os[_ok] = _ok === 'ideas' ? (data[_ok] || []).map(scrubIdea) : _ok === 'scripts' ? redact(data[_ok]) : data[_ok];
 }
-return _or;
+return _os;
 }
 export function systemOf(staff) {
 const rules = (staff.rules || []).filter(Boolean);
 return String(staff.prompt || '').trim() + (rules.length ? '\n\nQUY TẮC ANH ĐÃ DUYỆT (bắt buộc theo):\n' + rules.map((r, _oh) => `${_oh + 1}. ${r}`).join('\n') : '');
 }
-export function buildPrompt(staff, payload = {}) {
+export function buildPrompt(staff, payload = {}, { memoryBlock = '' } = {}) {
 const d = scopedData(staff, payload);
-const _os = [systemOf(staff), '---'];
+const _op = redact(String(memoryBlock || '')).trim();
+const _ot = [systemOf(staff), ...(_op ? ['---', _op] : []), '---'];
 if (staff.id === 'writer') {
 const _oh = (d.ideas || [])[0] || {};
-_os.push('Ý TƯỞNG ĐÃ DUYỆT:', 'Tiêu đề: ' + (_oh.title || ''), _oh.summary ? 'Ghi chú: ' + _oh.summary : '', _oh.url ? 'Nguồn: ' + _oh.url : '');
+_ot.push('Ý TƯỞNG ĐÃ DUYỆT:', 'Tiêu đề: ' + (_oh.title || ''), _oh.summary ? 'Ghi chú: ' + _oh.summary : '', _oh.url ? 'Nguồn: ' + _oh.url : '');
 } else if (staff.id === 'reviewer') {
-_os.push('KỊCH BẢN CẦN SOÁT:', d.scripts || '');
+_ot.push('KỊCH BẢN CẦN SOÁT:', d.scripts || '');
 } else if (staff.id === 'researcher') {
-_os.push('Hôm nay: ' + (payload.today || ''), 'CHỦ ĐỀ ĐÃ CÓ (đừng lặp): ' + ((d.ideas || []).map(_oh => _oh.title).join('; ') || 'chưa có'));
-if (d.market) _os.push('BÁO CÁO THỊ TRƯỜNG GẦN NHẤT:', redact(String(d.market)).slice(0, 4000));
-if (d.news && d.news.length) _os.push('TIN MỚI:', d.news.slice(0, 15).map(_op => '- ' + _op.title + (_op.link ? ' (' + _op.link + ')' : '')).join('\n'));
+_ot.push('Hôm nay: ' + (payload.today || ''), 'CHỦ ĐỀ ĐÃ CÓ (đừng lặp): ' + ((d.ideas || []).map(_oh => _oh.title).join('; ') || 'chưa có'));
+if (d.market) _ot.push('BÁO CÁO THỊ TRƯỜNG GẦN NHẤT:', redact(String(d.market)).slice(0, 4000));
+if (d.news && d.news.length) _ot.push('TIN MỚI:', d.news.slice(0, 15).map(_oq => '- ' + _oq.title + (_oq.link ? ' (' + _oq.link + ')' : '')).join('\n'));
 } else {
-_os.push(JSON.stringify(d).slice(0, 6000));
+_ot.push(JSON.stringify(d).slice(0, 6000));
 }
-return _os.filter(x => x !== '').join('\n');
+return _ot.filter(x => x !== '').join('\n');
 }
 export const wantsJson = staff => staff && (staff.id === 'reviewer' || staff.id === 'researcher');
 const _o4 = [/cam kết (lợi nhuận|lãi|tăng giá|sinh lời)/i, /lợi nhuận\s*\d+\s*%/i, /chắc chắn (lãi|lời|tăng)/i, /bảo đảm (lợi nhuận|tăng giá)/i, /không lo lỗ/i, /(tốt|rẻ) nhất (thị trường|hà nội)/i];
@@ -97,7 +106,7 @@ export function localReview(text) {
 const t = String(text || '').normalize('NFC');
 const _on = t.toLowerCase();
 const issues = [];
-for (const _oz of findForbidden(t)) issues.push({ type: 'tu_cam', text: _oz, fix: 'Bỏ cụm "' + _oz + '"' });
+for (const _o11 of findForbidden(t)) issues.push({ type: 'tu_cam', text: _o11, fix: 'Bỏ cụm "' + _o11 + '"' });
 for (const r of _o4) { const _oo = t.match(r); if (_oo) issues.push({ type: 'luat', text: _oo[0], fix: 'Không hứa lợi nhuận/cam kết – Luật Kinh doanh BĐS 2023, Luật Quảng cáo' }); }
 for (const s of t.split(/(?<=[.!?\n])/)) {
 if (_o2.test(s) && /(20[2-4]\d|năm tới|sắp)/i.test(s) && !/dự kiến|kế hoạch|theo quy hoạch|đề xuất|đã\s+(hoàn thành|thông xe|khánh thành|khởi công)/i.test(s)) {
@@ -141,8 +150,8 @@ const _oh = steps.indexOf(staffId);
 if (_oh < 0 || !staffList) return [];
 return steps.slice(_oh + 1).map(id => {
 if (id === 'render') return { staff_id: 'render' };
-const _ov = staffList.find(x => x.id === id);
-return _ov ? { staff_id: _ov.id, name: _ov.name, prefix: buildPrompt(_ov, {}), json: wantsJson(_ov), provider: safeProvider(_ov.provider), mode: modeOf(room, _ov) } : null;
+const _ox = staffList.find(x => x.id === id);
+return _ox ? { staff_id: _ox.id, name: _ox.name, prefix: buildPrompt(_ox, {}), json: wantsJson(_ox), provider: safeProvider(_ox.provider), mode: modeOf(room, _ox) } : null;
 }).filter(Boolean);
 }
 export function makeTask({ room, staff, idea, step, payload, parent, staffList, now = Date.now() }) {
@@ -173,23 +182,23 @@ return ideas.filter(_oh => !Number(_oh.deleted) && _oh.status === 'approved' && 
 .map(_oh => makeTask({ room, staff: writer, idea: _oh, payload: { ideas: [_oh] }, staffList, now }));
 }
 export const inboxApproved = t => t.status === 'queued' && !!(t.output && (t.output.text || t.output.final_text)) && !t.output.error;
-function _ot(task, text, now) {
+function _ou(task, text, now) {
 return {
 type: 'video_map', title: 'Nháp: ' + String(task.title || '').replace(/^[^:]+:\s*/, ''), status: 'waiting_approval', cost_estimate: 0,
 input: JSON.stringify({ idea_id: task.input.idea_id, title: String(task.title || '').replace(/^[^:]+:\s*/, ''), script: text, from_staff: true, staff_task_id: task.id, draft: '480p', mode: 'stills', created_at: now }),
 output: '',
 };
 }
-function _oq(task, text, { room, staffList, now }) {
+function _or(task, text, { room, staffList, now }) {
 const steps = (room && room.steps) || DEFAULT_ROOM.steps;
 const _oh = steps.indexOf(task.input.step || task.input.staff_id);
 const next = _oh >= 0 ? steps[_oh + 1] : null;
 if (!next) return { create: [], render: null };
-if (next === 'render') return { create: [], render: _ot(task, text, now) };
-const _ov = staffList.find(s => s.id === next);
-if (!_ov) return { create: [], render: null };
-const t = makeTask({ room, staff: _ov, payload: { scripts: text, title: String(task.title || '').replace(/^[^:]+:\s*/, '') }, parent: task, staffList, now });
-t.title = `${_ov.name}: ${String(task.title || '').replace(/^[^:]+:\s*/, '')}`.slice(0, 140);
+if (next === 'render') return { create: [], render: _ou(task, text, now) };
+const _ox = staffList.find(s => s.id === next);
+if (!_ox) return { create: [], render: null };
+const t = makeTask({ room, staff: _ox, payload: { scripts: text, title: String(task.title || '').replace(/^[^:]+:\s*/, '') }, parent: task, staffList, now });
+t.title = `${_ox.name}: ${String(task.title || '').replace(/^[^:]+:\s*/, '')}`.slice(0, 140);
 t.input.idea_id = task.input.idea_id;
 t.input.source_text = text;
 return { create: [t], render: null };
@@ -206,12 +215,12 @@ const text = String(result.text).trim();
 const semi = modeOf(room, staff) === 'semi' || t.input.mode === 'semi';
 t.output = { ...t.output, ...base, text };
 if (staff.id === 'reviewer') {
-const _ou = parseReview(text, t.input.source_text || '');
-t.output.pass = _ou.pass; t.output.issues = _ou.issues; t.output.final_text = _ou.fixed_text || t.input.source_text || '';
-if (!_ou.pass || semi) { t.status = 'waiting_approval'; return { update: t, create: [], render: null, ideas: [] }; }
+const _ov = parseReview(text, t.input.source_text || '');
+t.output.pass = _ov.pass; t.output.issues = _ov.issues; t.output.final_text = _ov.fixed_text || t.input.source_text || '';
+if (!_ov.pass || semi) { t.status = 'waiting_approval'; return { update: t, create: [], render: null, ideas: [] }; }
 t.status = 'done';
-const _op = _oq(t, t.output.final_text, { room, staffList, now });
-return { update: t, create: _op.create, render: _op.render, ideas: [] };
+const _oq = _or(t, t.output.final_text, { room, staffList, now });
+return { update: t, create: _oq.create, render: _oq.render, ideas: [] };
 }
 if (staff.id === 'researcher') {
 const list = parseIdeas(text);
@@ -224,8 +233,8 @@ return { update: t, create: [], render: null, ideas };
 }
 if (semi) { t.status = 'waiting_approval'; return { update: t, create: [], render: null, ideas: [] }; }
 t.status = 'done'; t.output.final_text = text;
-const _op = _oq(t, text, { room, staffList, now });
-return { update: t, create: _op.create, render: _op.render, ideas: [] };
+const _oq = _or(t, text, { room, staffList, now });
+return { update: t, create: _oq.create, render: _oq.render, ideas: [] };
 }
 export function approveTask(task, { editedText, room, staffList, now = Date.now() } = {}) {
 const t = { ...task, input: { ...task.input }, output: { ...task.output } };
@@ -233,8 +242,8 @@ const before = String(t.output.final_text || t.output.text || '');
 const after = editedText !== undefined && editedText !== null ? String(editedText).trim() : before;
 const edited = after && after !== before.trim();
 t.status = 'done'; t.output.final_text = after; t.output.approved_at = now; if (edited) t.output.edited = 1;
-const _op = _oq(t, after, { room, staffList, now });
-return { update: t, create: _op.create, render: _op.render, pair: edited ? { staff_id: t.input.staff_id, before: before.slice(0, 4000), after: after.slice(0, 4000), at: now, task_id: t.id } : null };
+const _oq = _or(t, after, { room, staffList, now });
+return { update: t, create: _oq.create, render: _oq.render, pair: edited ? { staff_id: t.input.staff_id, before: before.slice(0, 4000), after: after.slice(0, 4000), at: now, task_id: t.id } : null };
 }
 export function rejectTask(task, reason, now = Date.now()) {
 return { ...task, status: 'error', output: { ...task.output, error: reason || 'Anh/chị không duyệt', rejected: 1, finished_at: now } };
@@ -298,18 +307,18 @@ if (!over || room.mode === 'semi') return { room, spent, cap, over, switched: fa
 return { room: { ...room, mode: 'semi', paused_reason: `Vượt ngân sách ngày (${spent.toFixed(2)}/${cap.toFixed(2)} USD) – đã chuyển Bán tự động lúc ${new Date(now).toTimeString().slice(0, 5)}` }, spent, cap, over, switched: true };
 }
 export function morningReport({ jobs = [], now = Date.now() } = {}) {
-const _ox = new Date(now); _ox.setHours(7, 0, 0, 0);
-const _oc = now >= _ox.getTime() ? _ox.getTime() : now;
-const _ow = new Date(_ox); _ow.setDate(_ow.getDate() - 1);
-const start = _ow.getTime();
-const _o10 = _ob(start);
+const _oz = new Date(now); _oz.setHours(7, 0, 0, 0);
+const _oc = now >= _oz.getTime() ? _oz.getTime() : now;
+const _oy = new Date(_oz); _oy.setDate(_oy.getDate() - 1);
+const start = _oy.getTime();
+const _o12 = _ob(start);
 const _om = (jobs || []).filter(j => !Number(j.deleted));
-const _oi = j => { const _oy = Number(j.updated_at) || 0; return _oy >= start && _oy <= Math.max(_oc, now); };
+const _oi = j => { const _o10 = Number(j.updated_at) || 0; return _o10 >= start && _o10 <= Math.max(_oc, now); };
 const videos_done = _om.filter(j => /^video_/.test(j.type) && j.status === 'done' && _oi(j)).map(j => j.title || 'Video');
 const drafts = _om.filter(j => /^video_/.test(j.type) && j.status === 'waiting_approval' && (parse(j.input).from_staff || parse(j.input).overnight)).map(j => j.title || 'Video nháp');
 const waiting_items = _om.filter(j => j.status === 'waiting_approval' || (j.type === 'post' && j.status === 'draft')).map(j => ({ id: j.id, type: j.type, title: j.title || '' }));
 const tasks = _om.filter(isStaffTask).map(taskView);
-const cost_yesterday = spentOn(tasks, '', _o10);
+const cost_yesterday = spentOn(tasks, '', _o12);
 const errors = tasks.filter(t => t.status === 'error' && !t.output.rejected && _oi(t)).map(t => ({ title: t.title, reason: t.output.error || 'Không rõ' }));
 const money = v => (v ? v.toFixed(2) + ' USD' : '0 USD (Gemini miễn phí/Ollama)');
 const _ol = [
@@ -327,8 +336,8 @@ return { id: t.id, staff_id: t.input.staff_id, prompt: t.input.prompt, provider:
 }
 export function wantsDraft(row) {
 if (!row || row.type !== 'video_map' || Number(row.deleted)) return false;
-const _oj = parse(row.input), _or = parse(row.output);
-if (_or.draft || _or.rejected) return false;
+const _oj = parse(row.input), _os = parse(row.output);
+if (_os.draft || _os.rejected) return false;
 if (_oj.overnight && row.status === 'queued') return !!((_oj.scenes && _oj.scenes.length) || _oj.script || _oj.title);
 if (_oj.from_staff && row.status === 'waiting_approval') return !!(_oj.script || (_oj.scenes && _oj.scenes.length));
 return false;

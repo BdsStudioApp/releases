@@ -46,7 +46,8 @@ _oi.append(ui.segmented([{ value: 'new', label: 'Mua thêm tên miền cho app (
 (v) => { _ok({ use: v }); _od(); }, { label: 'Tên miền cho app', name: 'cty-use' }));
 if (use === 'new') _oi.append(buyAdvice(ui, cfg));
 else _oi.append(h('p', { class: 'wiz-warn', 'data-testid': 'cty-old-warn' }, '⚠️ Cloudflare sẽ quản lý DNS của cả tên miền: khi thêm vào Cloudflare, kiểm đủ bản ghi website và thư (MX) Cloudflare tự quét được TRƯỚC khi đổi nameserver. Mỗi tên con website đang dùng (www, blog…) cần 1 tuyến Worker "None" (mục ③) để trang nhân viên không chiếm chỗ; nhân viên không đặt địa chỉ riêng trùng các tên đó.'));
-} else _oi.append(buyAdvice(ui, cfg));
+} else _oi.append(h('p', { class: 'wiz-note', 'data-testid': 'cty-trial' }, h('strong', null, 'Dùng thử trước? '),
+'Bấm "Làm tiếp sau" ở cuối bước – app vẫn chạy ở địa chỉ miễn phí đang mở. Mua tên miền công ty trước khi dùng thật.'), buyAdvice(ui, cfg));
 _oi.append(_o9(), _om);
 _oe();
 }

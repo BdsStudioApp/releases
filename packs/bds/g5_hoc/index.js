@@ -14,7 +14,7 @@ let tab = 'today', current = null;
 const statBox = h('div', { class: 'g5-row', 'data-testid': 'hoc-stats' });
 const tabs = G.tabs([['today', 'Bài hôm nay'], ['review', 'Ôn tập'], ['all', 'Tất cả bài'], ['shelf', 'Tủ sách']], tab, (v) => { tab = v; current = null; _o5(); }, 'hoc-tab');
 const body = h('div');
-_og.append(G.head('Học, học nữa, học mãi', 'Mỗi ngày một bài 5–10 phút về kỹ năng tư vấn bất động sản, câu hỏi ôn đúng lúc sắp quên, và tủ sách gợi ý.', 'hoc-head'), statBox, tabs, body);
+_og.append(G.head('Học, học nữa, học mãi', 'Mỗi ngày một bài 5–10 phút về kỹ năng tư vấn bất động sản, câu hỏi ôn đúng lúc sắp quên, và tủ sách gợi ý.', 'hoc-head', false), statBox, tabs, body);
 let _oi = Promise.resolve();
 function _oc() {
 _oi = _oi.catch(() => {}).then(async () => {
@@ -116,7 +116,7 @@ return _og;
 export default {
 manifest: {
 id: 'g5_hoc', title: 'Học mỗi ngày', icon: '📚', screen: 'home', order: 520, version: '0.1.0', status: 'ready',
-desc: 'Thử nghiệm · bài 5–10 phút, câu hỏi ôn, tủ sách',
+desc: 'Bài 5–10 phút, câu hỏi ôn, tủ sách',
 help: 'Mỗi ngày một bài ngắn về kỹ năng tư vấn, pháp lý, tài chính, chăm sóc khách; làm 3 câu hỏi; câu sai được hỏi lại đúng lúc sắp quên. Tủ sách gợi ý sách và văn bản pháp luật gốc.',
 },
 mount,

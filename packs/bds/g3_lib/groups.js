@@ -23,14 +23,14 @@ return _o1;
 }
 export function postLink(_o0, group, campaign) { return groupLink(_o0, { group: group.code, campaign }); }
 function vnDay(ms) { return new Date(ms + VN).getUTCDay(); }
-function weekStart(ms) { const _o2 = new Date(ms + VN); const _o4 = (_o2.getUTCDay() + 6) % 7; return Date.UTC(_o2.getUTCFullYear(), _o2.getUTCMonth(), _o2.getUTCDate()) - _o4 * DAY - VN; }
+function _od(ms) { const _o2 = new Date(ms + VN); const _o4 = (_o2.getUTCDay() + 6) % 7; return Date.UTC(_o2.getUTCFullYear(), _o2.getUTCMonth(), _o2.getUTCDate()) - _o4 * DAY - VN; }
 export function checkPost(group, post, posts) {
 const _oc = []; let ok = true;
 const at = post.at || Date.now();
 if (!group.active) { _oc.push('Nhóm đang tạm dừng đăng.'); ok = false; }
 if (group.days.length && !group.days.includes(vnDay(at))) { _oc.push(`Nội quy chỉ cho đăng ${group.days.map(_o2 => DAYS[_o2]).join(', ')}.`); ok = false; }
-const _od = weekStart(at);
-const _oa = posts.filter(p => p.id !== post.id && p.group_id === group.id && p.status !== 'skipped' && (p.posted_at || p.at) >= _od && (p.posted_at || p.at) < _od + 7 * DAY);
+const _oe = _od(at);
+const _oa = posts.filter(p => p.id !== post.id && p.group_id === group.id && p.status !== 'skipped' && (p.posted_at || p.at) >= _oe && (p.posted_at || p.at) < _oe + 7 * DAY);
 if (group.max_per_week && _oa.length >= group.max_per_week) { _oc.push(`Tuần này đã có ${_oa.length}/${group.max_per_week} bài trong nhóm.`); ok = false; }
 const _o8 = posts.filter(p => p.id !== post.id && p.group_id === group.id && p.status !== 'skipped' && Math.abs((p.posted_at || p.at) - at) < DAY);
 if (_o8.length) _oc.push('Đã có bài trong nhóm này trong vòng 24 giờ – nên giãn cách.');
@@ -40,14 +40,14 @@ if (_ob.length) _oc.push(`Cùng nội dung đăng ${_ob.length + 1} nhóm trong 
 return { ok, warnings: _oc };
 }
 export function similar(a, b) {
-const A = new Set(strip(a).split(/\s+/).filter(_oe => _oe.length > 2)), B = new Set(strip(b).split(/\s+/).filter(_oe => _oe.length > 2));
+const A = new Set(strip(a).split(/\s+/).filter(_of => _of.length > 2)), B = new Set(strip(b).split(/\s+/).filter(_of => _of.length > 2));
 if (A.size < 5 || B.size < 5) return false;
-let _o7 = 0; for (const _oe of A) if (B.has(_oe)) _o7++;
+let _o7 = 0; for (const _of of A) if (B.has(_of)) _o7++;
 return _o7 / Math.min(A.size, B.size) > 0.8;
 }
 export function suggestSlots(groups, posts, { from = Date.now(), days = 7, hour = 20 } = {}) {
 const _o9 = [];
-for (const _o5 of groups.filter(_oe => _oe.active)) {
+for (const _o5 of groups.filter(_of => _of.active)) {
 for (let _o6 = 0; _o6 < days; _o6++) {
 const _o3 = Math.floor((from + VN) / DAY) * DAY - VN + _o6 * DAY;
 const at = _o3 + hour * 3600e3;

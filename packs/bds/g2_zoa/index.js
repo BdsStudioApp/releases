@@ -23,7 +23,7 @@ try { _oj = await K.api('g2.zoa.status', {}); }
 catch (e) { _o0.appendChild(h('p', { class: 'bds-warn' }, (e && (e.message || e.userMessage)) || 'Chưa đọc được trạng thái Zalo OA – kiểm tra kết nối máy chủ.')); return; }
 if (!_oj.configured) {
 _o0.appendChild(h('div', { class: 'g2-need', 'data-testid': 'g2-zoa-need' }, h('strong', null, 'Cần đăng ký Zalo OA'), h('p', null, 'Chưa có App ID và Access token của Zalo OA. Các bước:'), h('ol', null, STEPS.map(x => h('li', null, x))),
-h('p', { class: 'bds-muted' }, 'Chi phí: dùng OA và tin tư vấn trả lời khách không mất phí theo chính sách hiện hành của Zalo; tin ZNS (tin mẫu gửi theo số điện thoại) Zalo tính phí từng tin – xem bảng giá trên trang ZNS của Zalo trước khi dùng.')));
+h('p', { class: 'bds-muted' }, 'Chi phí (chính sách Zalo, kiểm 18/11/2026 – xem lại trang chính sách OA của Zalo): tin tư vấn miễn phí 8 tin đầu trong 48 giờ sau lần khách tương tác cuối, quá mức đó Zalo tính phí; tin ZNS (tin mẫu gửi theo số điện thoại) Zalo tính phí từng tin – xem bảng giá trên trang ZNS của Zalo trước khi dùng.')));
 } else {
 _o0.appendChild(K.card({ title: 'Kết nối', testid: 'g2-zoa-status', body: [
 h('p', null, 'App ID ' + _oj.app_id + (_oj.last ? ' · ' + (_oj.last.ok ? '✓ ' : '✕ ') + _oj.last.message + ' (' + G.dt(_oj.last.at) + ')' : ' · chưa kiểm tra')),
@@ -64,7 +64,7 @@ const ta = h('textarea', { rows: 5, 'data-testid': 'g2-zoa-text', placeholder: '
 const _o4 = h('strong', null, '0');
 const card = K.card({ title: 'Người quan tâm OA', testid: 'g2-zoa-fcard', actions: [K.button('Tải danh sách', () => _od(), { testid: 'g2-zoa-load', icon: 'refresh' })], body: [list,
 h('h4', null, 'Gửi tin tư vấn'), K.field('Mẫu', _on), ta,
-h('p', { class: 'g2-src' }, 'Zalo chỉ cho OA gửi tin tư vấn tới người đã tương tác với OA trong khoảng thời gian Zalo quy định; ngoài khoảng đó Zalo báo lỗi và app hiện nguyên văn. Tối đa 30 người mỗi lần.'),
+h('p', { class: 'g2-src' }, 'Zalo chỉ cho OA gửi tin tư vấn (qua API) tới người quan tâm trong 7 ngày kể từ lần cuối người đó nhắn tin hoặc tương tác với OA – không nhắn được bất cứ lúc nào. Quá hạn: chờ khách nhắn lại OA, hoặc dùng tin ZNS theo mẫu đã duyệt (tính phí). Zalo từ chối thì app hiện nguyên văn lỗi. Tối đa 30 người mỗi lần.'),
 h('div', { class: 'bds-row' }, h('span', null, 'Đã chọn ', _o4), K.button('Gửi tin', send, { kind: 'primary', testid: 'g2-zoa-send' }))] });
 (async () => {
 const [cfg, mine, zcfg, skills] = await Promise.all([K.setting('g2.scripts', null), G.objectsOf('g2_script'), K.setting('zalo_templates', {}), K.setting('skills', [])]);
@@ -146,8 +146,8 @@ try { await K.api('g2.zoa.zns', { phone: phone.value, template_id: _ol.value.tri
 await _oi();
 }
 export default {
-manifest: { id: 'g2_zoa', title: 'Zalo OA', icon: '🟦', screen: 'customers', order: 290, version: '0.1.0', status: 'thu-nghiem', pack: 'care',
-help: 'Kết nối Zalo Official Account bằng API chính thức: gửi tin tư vấn theo mẫu tới người quan tâm, nhận tin nhắn qua Webhook. Không tự động hoá Zalo cá nhân.' },
+manifest: { id: 'g2_zoa', title: 'Zalo OA', icon: '🟦', screen: 'customers', order: 290, version: '0.1.0', status: 'thu-nghiem', pack: 'leads',
+help: 'Kết nối Zalo Official Account bằng API chính thức: nhận tin nhắn qua Webhook, trả lời bằng tin tư vấn theo mẫu cho người quan tâm trong 7 ngày kể từ lần cuối người đó nhắn tin hoặc tương tác với OA (quy định Zalo). Không tự động hoá Zalo cá nhân.' },
 mount,
 async selftest(ctx) { return selftestCommon(ctx, ['fmt.money']); },
 };

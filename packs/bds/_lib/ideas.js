@@ -1,21 +1,33 @@
-import { findForbidden, CHANNEL } from './video.js';
+import { findForbidden, CHANNEL, kenhBds } from './video.js';
 export const DEFAULT_FEEDS = [
-{ id: 'vne_bds', name: 'VnExpress – Bất động sản', url: 'https://vnexpress.net/rss/bat-dong-san.rss', link_rss: 'https://vnexpress.net/rss' },
-{ id: 'vne_ts', name: 'VnExpress – Thời sự', url: 'https://vnexpress.net/rss/thoi-su.rss', link_rss: 'https://vnexpress.net/rss' },
-{ id: 'tt_nhadat', name: 'Tuổi Trẻ – Nhà đất', url: 'https://tuoitre.vn/rss/nha-dat.rss', link_rss: 'https://tuoitre.vn/rss.htm' },
-{ id: 'tn_kinhte', name: 'Thanh Niên – Kinh tế', url: 'https://thanhnien.vn/rss/kinh-te.rss', link_rss: 'https://thanhnien.vn/rss.html' },
-{ id: 'cafef_bds', name: 'CafeF – Bất động sản', url: 'https://cafef.vn/bat-dong-san.rss', link_rss: 'https://cafef.vn/rss.chn' },
-{ id: 'bcp', name: 'Báo Chính phủ – Chính sách mới', url: 'https://baochinhphu.vn/chinh-sach-moi.rss', link_rss: 'https://baochinhphu.vn/rss.htm', verify: true },
-{ id: 'hnm', name: 'Hà Nội Mới – Đô thị', url: 'https://hanoimoi.vn/rss/do-thi.rss', link_rss: 'https://hanoimoi.vn/rss', verify: true },
+{ id: 'vne_bds', name: 'VnExpress – Bất động sản', url: 'https://vnexpress.net/rss/bat-dong-san.rss', link_rss: 'https://vnexpress.net/rss', tag: 'bds' },
+{ id: 'vne_ts', name: 'VnExpress – Thời sự', url: 'https://vnexpress.net/rss/thoi-su.rss', link_rss: 'https://vnexpress.net/rss', tag: 'thoi_su' },
+{ id: 'tt_nhadat', name: 'Tuổi Trẻ – Nhà đất', url: 'https://tuoitre.vn/rss/nha-dat.rss', link_rss: 'https://tuoitre.vn/rss.htm', tag: 'bds' },
+{ id: 'tn_kinhte', name: 'Thanh Niên – Kinh tế', url: 'https://thanhnien.vn/rss/kinh-te.rss', link_rss: 'https://thanhnien.vn/rss.html', tag: 'kinh_te' },
+{ id: 'cafef_bds', name: 'CafeF – Bất động sản', url: 'https://cafef.vn/bat-dong-san.rss', link_rss: 'https://cafef.vn/rss.chn', tag: 'bds' },
+{ id: 'bcp', name: 'Báo Chính phủ – Chính sách mới', url: 'https://baochinhphu.vn/chinh-sach-moi.rss', link_rss: 'https://baochinhphu.vn/rss.htm', tag: 'chinh_sach', verify: true },
+{ id: 'hnm', name: 'Hà Nội Mới – Đô thị', url: 'https://hanoimoi.vn/rss/do-thi.rss', link_rss: 'https://hanoimoi.vn/rss', tag: 'ha_tang', verify: true },
+{ id: 'dt_bds', name: 'Dân trí – Bất động sản', url: 'https://dantri.com.vn/rss/bat-dong-san.rss', link_rss: 'https://dantri.com.vn/rss.htm', tag: 'bds', verify: true },
+{ id: 'vnn_bds', name: 'VietnamNet – Bất động sản', url: 'https://vietnamnet.vn/rss/bat-dong-san.rss', link_rss: 'https://vietnamnet.vn/rss', tag: 'bds', verify: true },
+{ id: 'ld_bds', name: 'Lao Động – Bất động sản', url: 'https://laodong.vn/rss/bat-dong-san.rss', link_rss: 'https://laodong.vn/rss', tag: 'bds', verify: true },
+];
+export const MORE_FEEDS = [
+{ id: 'vne_kd', name: 'VnExpress – Kinh doanh', url: 'https://vnexpress.net/rss/kinh-doanh.rss', link_rss: 'https://vnexpress.net/rss', tag: 'kinh_te' },
+{ id: 'tt_kd', name: 'Tuổi Trẻ – Kinh doanh', url: 'https://tuoitre.vn/rss/kinh-doanh.rss', link_rss: 'https://tuoitre.vn/rss.htm', tag: 'kinh_te' },
+{ id: 'dt_kd', name: 'Dân trí – Kinh doanh', url: 'https://dantri.com.vn/rss/kinh-doanh.rss', link_rss: 'https://dantri.com.vn/rss.htm', tag: 'kinh_te', verify: true },
+{ id: 'vnn_kd', name: 'VietnamNet – Kinh doanh', url: 'https://vietnamnet.vn/rss/kinh-doanh.rss', link_rss: 'https://vietnamnet.vn/rss', tag: 'kinh_te', verify: true },
+{ id: 'vneco_dc', name: 'VnEconomy – Địa ốc', url: 'https://vneconomy.vn/dia-oc.rss', link_rss: 'https://vneconomy.vn', tag: 'bds', verify: true },
+{ id: 'vneco_tc', name: 'VnEconomy – Tài chính', url: 'https://vneconomy.vn/tai-chinh.rss', link_rss: 'https://vneconomy.vn', tag: 'tai_chinh', verify: true },
+{ id: 'bcp_kt', name: 'Báo Chính phủ – Kinh tế', url: 'https://baochinhphu.vn/kinh-te.rss', link_rss: 'https://baochinhphu.vn/rss.htm', tag: 'chinh_sach', verify: true },
 ];
 export const TRUSTED = ['vnexpress.net', 'tuoitre.vn', 'thanhnien.vn', 'cafef.vn', 'baochinhphu.vn', 'chinhphu.vn', 'hanoimoi.vn',
-'vietnamplus.vn', 'nhandan.vn', 'vtv.vn', 'laodong.vn', 'dantri.com.vn', 'vneconomy.vn', 'thuvienphapluat.vn', 'quochoi.vn', 'kinhtedothi.vn'];
+'vietnamplus.vn', 'nhandan.vn', 'vtv.vn', 'laodong.vn', 'dantri.com.vn', 'vneconomy.vn', 'vietnamnet.vn', 'thuvienphapluat.vn', 'quochoi.vn', 'kinhtedothi.vn'];
 export const norm = _o1l => String(_o1l ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g, 'd')
 .toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 const has = (_o16, kw) => (' ' + _o16 + ' ').includes(' ' + kw + ' ');
 const hits = (_o16, list) => list.filter(_o11 => has(_o16, _o11));
-const clamp = (x, a, _ok) => Math.max(a, Math.min(_ok, x));
-const isUrl = _o1l => /^https?:\/\/[^\s/$.?#][^\s]*$/i.test(String(_o1l || '').trim());
+const clamp = (x, a, _oj) => Math.max(a, Math.min(_oj, x));
+const _oy = _o1l => /^https?:\/\/[^\s/$.?#][^\s]*$/i.test(String(_o1l || '').trim());
 export const CATEGORIES = {
 quy_hoach: { label: 'Quy hoạch', icon: '🗺️', kw: ['quy hoach', 'phan khu', 'do thi', 'dieu chinh quy hoach', 'quy hoach chung', 'sap nhap', 'phuong moi', 'khu do thi moi', 'truc dong luc', 'do an', 'chuyen muc dich', 'thanh pho truc thuoc'] },
 ha_tang: { label: 'Hạ tầng', icon: '🌉', kw: ['cau', 'vanh dai', 'metro', 'duong sat', 'cao toc', 'nut giao', 'thong xe', 'khoi cong', 'hop long', 'ham chui', 'san bay', 'tuyen duong', 'lan xe', 'cau vuot', 'giai phong mat bang', 'gpmb', 'duong truc'] },
@@ -26,31 +38,31 @@ thi_truong: { label: 'Thị trường', icon: '📈', kw: ['thi truong', 'gia ch
 };
 export function classify(text) {
 const _o16 = norm(text);
-let _om = { category: '', label: 'Chưa rõ', confidence: 0, hits: [], w: 0 };
+let _ol = { category: '', label: 'Chưa rõ', confidence: 0, hits: [], w: 0 };
 let _o1o = 0;
 for (const [id, c] of Object.entries(CATEGORIES)) {
 const h = hits(_o16, c.kw);
 const w = h.reduce((_o1l, _o11) => _o1l + _o11.split(' ').length, 0);
-if (w > _om.w) { _o1o = _om.w; _om = { category: id, label: c.label, hits: h, w }; } else if (w > _o1o) _o1o = w;
+if (w > _ol.w) { _o1o = _ol.w; _ol = { category: id, label: c.label, hits: h, w }; } else if (w > _o1o) _o1o = w;
 }
-if (!_om.w) return { category: '', label: 'Chưa rõ', confidence: 0, hits: [] };
-const confidence = Math.round(clamp(_om.w / 4, 0.2, 1) * clamp((_om.w - _o1o) / _om.w + 0.4, 0, 1) * 100) / 100;
-return { category: _om.category, label: _om.label, confidence, hits: _om.hits };
+if (!_ol.w) return { category: '', label: 'Chưa rõ', confidence: 0, hits: [] };
+const confidence = Math.round(clamp(_ol.w / 4, 0.2, 1) * clamp((_ol.w - _o1o) / _ol.w + 0.4, 0, 1) * 100) / 100;
+return { category: _ol.category, label: _ol.label, confidence, hits: _ol.hits };
 }
 function _o10(text) {
 const _o1l = String(text ?? '').trim();
 const _o13 = _o1l.match(/```(?:json)?\s*([\s\S]*?)```/i);
-const _on = _o13 ? _o13[1] : _o1l;
-try { return JSON.parse(_on); } catch { }
-for (const [a, _ok] of [['{', '}'], ['[', ']']]) {
-const _ox = _on.indexOf(a); const j = _on.lastIndexOf(_ok);
-if (_ox >= 0 && j > _ox) { try { return JSON.parse(_on.slice(_ox, j + 1)); } catch { } }
+const _om = _o13 ? _o13[1] : _o1l;
+try { return JSON.parse(_om); } catch { }
+for (const [a, _oj] of [['{', '}'], ['[', ']']]) {
+const _ow = _om.indexOf(a); const j = _om.lastIndexOf(_oj);
+if (_ow >= 0 && j > _ow) { try { return JSON.parse(_om.slice(_ow, j + 1)); } catch { } }
 }
 return null;
 }
-export function buildClassifyPrompt(text) {
+export function buildClassifyPrompt(text, { channel = CHANNEL } = {}) {
 return [
-`Phân loại tin/chủ đề sau cho kênh BĐS "${CHANNEL}" (Hà Nội).`,
+`Phân loại tin/chủ đề sau cho ${kenhBds(channel)} (Hà Nội).`,
 'Nhóm: ' + Object.entries(CATEGORIES).map(([_o11, c]) => `${_o11} (${c.label})`).join(', ') + '.',
 'Nếu là ảnh: đọc chữ trong ảnh (tiêu đề báo, văn bản) rồi tóm tắt.',
 'Không bịa số liệu; giữ nguyên chữ "đề xuất/dự kiến/dự thảo" nếu nguồn ghi như vậy.',
@@ -68,7 +80,7 @@ export function detectInput(_o1h) {
 const _o19 = [];
 for (const _o12 of String(_o1h || '').split(/\r?\n/)) {
 const _o1y = _o12.match(/https?:\/\/[^\s<>"']+/gi) || [];
-for (const _o1x of _o1y) if (isUrl(_o1x)) _o19.push({ type: 'link', url: _o1x.replace(/[),.;]+$/, ''), text: '' });
+for (const _o1x of _o1y) if (_oy(_o1x)) _o19.push({ type: 'link', url: _o1x.replace(/[),.;]+$/, ''), text: '' });
 const _o1k = _o1y.reduce((_o1l, _o1x) => _o1l.replace(_o1x, ' '), _o12).replace(/\s+/g, ' ').trim();
 if (_o1k.length >= 3) _o19.push({ type: 'topic', text: _o1k, url: '' });
 }
@@ -78,16 +90,16 @@ export function canonUrl(_o1x) {
 try {
 const x = new URL(String(_o1x || '').trim());
 if (!/^https?:$/.test(x.protocol)) return '';
-const _ov = x.hostname.toLowerCase().replace(/^(www|m|amp|mobile)\./, '');
+const _ou = x.hostname.toLowerCase().replace(/^(www|m|amp|mobile)\./, '');
 const _o1b = [...x.searchParams.entries()].filter(([_o11]) => !/^(utm_|fbclid|gclid|zarsrc|zalo|ref$|source$)/i.test(_o11));
 const _o1g = _o1b.length ? '?' + _o1b.map(([_o11, v]) => _o11 + '=' + v).join('&') : '';
-return _ov + x.pathname.replace(/\/+$/, '') + _o1g;
+return _ou + x.pathname.replace(/\/+$/, '') + _o1g;
 } catch { return ''; }
 }
 export function isTrusted(url) {
 try {
-const _ov = new URL(url).hostname.toLowerCase();
-return /\.gov\.vn$/.test(_ov) || TRUSTED.some(_oq => _ov === _oq || _ov.endsWith('.' + _oq));
+const _ou = new URL(url).hostname.toLowerCase();
+return /\.gov\.vn$/.test(_ou) || TRUSTED.some(_op => _ou === _op || _ou.endsWith('.' + _op));
 } catch { return false; }
 }
 const _oe = new Set(['va', 'cua', 'cho', 'tai', 'o', 'the', 'nay', 'voi', 'la', 'co', 'duoc', 'se', 'da', 'dang', 'mot', 'nhung', 'cac',
@@ -95,36 +107,36 @@ const _oe = new Set(['va', 'cua', 'cho', 'tai', 'o', 'the', 'nay', 'voi', 'la', 
 'ngay', 'hom', 'tin', 'video', 'phan', 'nhat', 'gi', 'sao', 'bao', 'nao', 'ai', 'tu']);
 export function tokens(text) {
 const _o1h = norm(text).split(' ').filter(Boolean);
-return [...new Set(_o1h.filter((w, _ox) => !_oe.has(w) || (w === 'tu' && _o1h[_ox + 1] && !_oe.has(_o1h[_ox + 1]) && _ox > 0)))];
+return [...new Set(_o1h.filter((w, _ow) => !_oe.has(w) || (w === 'tu' && _o1h[_ow + 1] && !_oe.has(_o1h[_ow + 1]) && _ow > 0)))];
 }
 export const topicKey = text => tokens(text).sort().join('-').slice(0, 80);
 function pd(_o1l) { if (_o1l && typeof _o1l === 'object') return _o1l; try { return JSON.parse(_o1l || '{}') || {}; } catch { return {}; } }
 function _o1e({ ideas = [], jobs = [] } = {}) {
 const _o19 = [];
-for (const _ox of ideas || []) if (_ox && !Number(_ox.deleted)) _o19.push({ kind: 'idea', ref: _ox, title: _ox.title || '', url: _ox.url || '', status: _ox.status, data: pd(_ox.data), at: Number(_ox.updated_at) || 0 });
+for (const _ow of ideas || []) if (_ow && !Number(_ow.deleted)) _o19.push({ kind: 'idea', ref: _ow, title: _ow.title || '', url: _ow.url || '', status: _ow.status, data: pd(_ow.data), at: Number(_ow.updated_at) || 0 });
 for (const j of jobs || []) {
 if (!j || Number(j.deleted)) continue;
-const _oy = pd(j.input);
-_o19.push({ kind: 'job', ref: j, title: j.title || _oy.title || '', url: _oy.url || '', status: j.status === 'done' ? 'done' : 'job', data: {}, at: Number(j.updated_at) || 0 });
+const _ox = pd(j.input);
+_o19.push({ kind: 'job', ref: j, title: j.title || _ox.title || '', url: _ox.url || '', status: j.status === 'done' ? 'done' : 'job', data: {}, at: Number(j.updated_at) || 0 });
 }
 return _o19;
 }
-function _o1r(a, _ok) {
-const A = tokens(a); const B = new Set(tokens(_ok));
+function _o1r(a, _oj) {
+const A = tokens(a); const B = new Set(tokens(_oj));
 if (!A.length || !B.size) return { dice: 0, overlap: 0, coef: 0 };
 const overlap = A.filter(w => B.has(w)).length;
 return { dice: (2 * overlap) / (A.length + B.size), overlap, coef: overlap / Math.min(A.length, B.size) };
 }
 export function findDuplicate(cand, ctx = {}, { threshold = 0.6 } = {}) {
-const _op = canonUrl(cand && cand.url);
-let _om = { match: null, kind: '', by: '', similarity: 0 };
+const _oo = canonUrl(cand && cand.url);
+let _ol = { match: null, kind: '', by: '', similarity: 0 };
 for (const _o1a of _o1e(ctx)) {
 if (_o1a.ref && cand && _o1a.ref.id && _o1a.ref.id === cand.id) continue;
-if (_op && canonUrl(_o1a.url) === _op) return { match: _o1a.ref, kind: _o1a.kind, by: 'url', similarity: 1 };
+if (_oo && canonUrl(_o1a.url) === _oo) return { match: _o1a.ref, kind: _o1a.kind, by: 'url', similarity: 1 };
 const _o1l = _o1r(cand && cand.title, _o1a.title).dice;
-if (_o1l >= threshold && _o1l > _om.similarity) _om = { match: _o1a.ref, kind: _o1a.kind, by: 'keywords', similarity: Math.round(_o1l * 100) / 100 };
+if (_o1l >= threshold && _o1l > _ol.similarity) _ol = { match: _o1a.ref, kind: _o1a.kind, by: 'keywords', similarity: Math.round(_o1l * 100) / 100 };
 }
-return _om;
+return _ol;
 }
 export function seriesHint(cand, ctx = {}) {
 let done = null; let _o18 = false;
@@ -149,28 +161,28 @@ export function score(idea, { now = Date.now() } = {}) {
 const _o16 = norm([idea.title, idea.summary].join(' '));
 const parts = [];
 const _o1f = Number(idea.published) || 0;
-const _oh = _o1f ? (now - _o1f) / 3600e3 : null;
-let _ow = 0; const why = [];
-if (_oh === null) { _ow += 8; why.push('chưa rõ ngày đăng'); }
-else if (_oh <= 24) { _ow += 25; why.push('tin trong 24 giờ'); }
-else if (_oh <= 72) { _ow += 18; why.push('tin 3 ngày gần đây'); }
-else if (_oh <= 168) { _ow += 10; why.push('tin trong tuần'); }
-else if (_oh <= 720) { _ow += 4; why.push('tin trong tháng'); }
+const _og = _o1f ? (now - _o1f) / 3600e3 : null;
+let _ov = 0; const why = [];
+if (_og === null) { _ov += 8; why.push('chưa rõ ngày đăng'); }
+else if (_og <= 24) { _ov += 25; why.push('tin trong 24 giờ'); }
+else if (_og <= 72) { _ov += 18; why.push('tin 3 ngày gần đây'); }
+else if (_og <= 168) { _ov += 10; why.push('tin trong tuần'); }
+else if (_og <= 720) { _ov += 4; why.push('tin trong tháng'); }
 else why.push('tin cũ hơn 30 ngày');
-if (idea.url && isTrusted(idea.url)) { _ow += 10; why.push('nguồn uy tín'); }
-else if (idea.url || idea.source) { _ow += 3; why.push('có nguồn – cần kiểm uy tín'); }
+if (idea.url && isTrusted(idea.url)) { _ov += 10; why.push('nguồn uy tín'); }
+else if (idea.url || idea.source) { _ov += 3; why.push('có nguồn – cần kiểm uy tín'); }
 else why.push('chưa có nguồn');
-if (hits(_o16, _o9).length) { _ow += 5; why.push('sự kiện: ' + hits(_o16, _o9)[0]); }
-parts.push({ label: 'Độ nóng', points: Math.min(40, _ow), max: 40, why: why.join(', ') });
-const _os = hits(_o16, _o4); const _ou = _os.length ? ['ha noi'] : hits(_o16, _o8); const _or = hits(_o16, _o3);
-const _ot = (_ou.length || _os.length ? 10 : 0) + (_or.length ? 10 : 0) + (_os.length ? 15 : 0);
-parts.push({ label: 'Hợp kênh', points: _ot, max: 35, why: [_ou.length || _os.length ? 'Hà Nội' : 'chưa thấy Hà Nội', _or.length ? 'dự án ' + _or[0] : '', _os.length ? 'phía Đông (' + _os[0] + ')' : ''].filter(Boolean).join(', ') });
+if (hits(_o16, _o9).length) { _ov += 5; why.push('sự kiện: ' + hits(_o16, _o9)[0]); }
+parts.push({ label: 'Độ nóng', points: Math.min(40, _ov), max: 40, why: why.join(', ') });
+const _or = hits(_o16, _o4); const _ot = _or.length ? ['ha noi'] : hits(_o16, _o8); const _oq = hits(_o16, _o3);
+const _os = (_ot.length || _or.length ? 10 : 0) + (_oq.length ? 10 : 0) + (_or.length ? 15 : 0);
+parts.push({ label: 'Hợp kênh', points: _os, max: 35, why: [_ot.length || _or.length ? 'Hà Nội' : 'chưa thấy Hà Nội', _oq.length ? 'dự án ' + _oq[0] : '', _or.length ? 'phía Đông (' + _or[0] + ')' : ''].filter(Boolean).join(', ') });
 const _o15 = hits(_o16, _oa); const _o1c = hits(_o16, _o8.concat(_o4, ['khu mau b', 'khu mau d', 'khu mau a']));
 const _o14 = (_o15.length ? 15 : 0) + (_o1c.length ? 10 : 0);
 parts.push({ label: 'Làm bản đồ', points: _o14, max: 25, why: _o15.length ? 'có công trình/vị trí: ' + _o15.slice(0, 2).join(', ') + (_o1c.length ? '; địa danh ' + _o1c[0] : '') : 'khó vẽ bản đồ – hợp bản tin đồ hoạ' });
-const _ol = findForbidden([idea.title, idea.summary].join(' '));
+const _ok = findForbidden([idea.title, idea.summary].join(' '));
 const _o1v = parts.reduce((_o1l, _o1a) => _o1l + _o1a.points, 0);
-if (_ol.length) parts.push({ label: 'Trừ điểm', points: -Math.min(40, _o1v), max: 0, why: 'từ nên tránh: ' + _ol.join(', ') });
+if (_ok.length) parts.push({ label: 'Trừ điểm', points: -Math.min(40, _o1v), max: 0, why: 'từ nên tránh: ' + _ok.join(', ') });
 return { score: clamp(parts.reduce((_o1l, _o1a) => _o1l + _o1a.points, 0), 0, 100), parts };
 }
 export const scoreText = parts => (parts || []).map(_o1a => `${_o1a.label} ${_o1a.points > 0 ? '+' : ''}${_o1a.points}: ${_o1a.why}`).join(' · ');
@@ -247,20 +259,20 @@ const _o19 = [];
 for (const [type, _o1i] of _o6) {
 _o1i.lastIndex = 0;
 for (const _o13 of _o1l.matchAll(_o1i)) {
-const a = _o13.index; const _ok = a + _o13[0].length;
-if (_o1w.some(([x, y]) => a < y && _ok > x)) continue;
-_o1w.push([a, _ok]); _o19.push({ type, text: _o13[0].trim(), at: a });
+const a = _o13.index; const _oj = a + _o13[0].length;
+if (_o1w.some(([x, y]) => a < y && _oj > x)) continue;
+_o1w.push([a, _oj]); _o19.push({ type, text: _o13[0].trim(), at: a });
 }
 }
 return _o19.sort((x, y) => x.at - y.at).map(({ type, text }) => ({ type, text }));
 }
-const _o1z = (f, url, name) => ({ ...f, source: isUrl(url) ? url : null, source_name: name || '', status: isUrl(url) ? 'ok' : 'missing' });
+const _o1z = (f, url, name) => ({ ...f, source: _oy(url) ? url : null, source_name: name || '', status: _oy(url) ? 'ok' : 'missing' });
 export function buildScenes(idea) {
-const _oq = pd(idea && idea.data);
+const _op = pd(idea && idea.data);
 const text = [idea.title, idea.summary].filter(Boolean).join('. ');
 const template = matchTemplate(text);
 const _o1q = template ? TEMPLATES[template].scenes : _o7;
-const src = idea.url || (Array.isArray(_oq.sources) && _oq.sources[0] && _oq.sources[0].url) || '';
+const src = idea.url || (Array.isArray(_op.sources) && _op.sources[0] && _op.sources[0].url) || '';
 const facts = extractFacts([idea.summary, idea.title].filter(Boolean).join(' . ')).map(f => _o1z(f, src, idea.source));
 const scenes = _o1q.map(_o1l => ({ kind: _o1l.kind, title: _o1l.title, facts: [] }));
 for (const f of facts) {
@@ -268,15 +280,15 @@ let _o11 = _o1q.findIndex(_o1l => _o1l.takes.includes(f.type));
 if (_o11 < 0) _o11 = Math.max(0, _o1q.findIndex(_o1l => _o1l.kind === 'stat'));
 if (!scenes[_o11].facts.some(x => x.text === f.text)) scenes[_o11].facts.push(f);
 }
-return { template, label: template ? TEMPLATES[template].label : 'Tin lạ – nhờ AI dàn cảnh', need_ai: !template, scenes };
+return { template, label: template ? TEMPLATES[template].label : 'Tin lạ – nhờ AI dàn ý', need_ai: !template, scenes };
 }
 export const factsSummary = scenes => {
-const _oi = (scenes || []).flatMap(_o1l => _o1l.facts || []);
-return { total: _oi.length, ok: _oi.filter(f => f.status === 'ok').length, missing: _oi.filter(f => f.status !== 'ok').length };
+const _oh = (scenes || []).flatMap(_o1l => _o1l.facts || []);
+return { total: _oh.length, ok: _oh.filter(f => f.status === 'ok').length, missing: _oh.filter(f => f.status !== 'ok').length };
 };
-export function buildScenesPrompt(idea) {
+export function buildScenesPrompt(idea, { channel = CHANNEL } = {}) {
 return [
-`Dàn cảnh video dọc 60–90 giây cho kênh BĐS "${CHANNEL}" từ tin sau (4–7 cảnh):`,
+`Dàn ý bài đăng mạng xã hội (ảnh/carousel, mỗi phần một ý) cho ${kenhBds(channel)} từ tin sau (4–7 cảnh):`,
 `Tiêu đề: ${idea.title || ''}`, idea.summary ? 'Tóm tắt: ' + idea.summary : '', idea.url ? 'Link nguồn: ' + idea.url : '',
 'Loại cảnh: ' + Object.entries(SCENE_KINDS).map(([_o11, v]) => `${_o11} (${v})`).join(', ') + '. Cảnh 1 là hook, cảnh cuối là checklist.',
 'Mỗi số liệu phải kèm link nguồn ("source"); không có nguồn thì để "source": "" (app sẽ tô vàng để kiểm chứng). Không bịa số.',
@@ -317,58 +329,58 @@ const _o1s = docNumbers(source);
 for (const _o1l of _o1p(script)) {
 const _o16 = norm(_o1l);
 if (hits(_o16, _od).length) continue;
-const _oo = _o0.filter(a => has(_o16, 'da ' + a) || has(_o16, 'da duoc ' + a) || (has(_o16, 'chinh thuc') && has(_o16, a)));
-for (const _og of _oo) {
-const _o1j = _o1u.filter(x => has(x, _og));
-const _o1t = _o1j.some(x => hits(x, _od).length) && !_o1j.some(x => has(x, 'da ' + _og) || has(x, 'da duoc ' + _og));
+const _on = _o0.filter(a => has(_o16, 'da ' + a) || has(_o16, 'da duoc ' + a) || (has(_o16, 'chinh thuc') && has(_o16, a)));
+for (const act of _on) {
+const _o1j = _o1u.filter(x => has(x, act));
+const _o1t = _o1j.some(x => hits(x, _od).length) && !_o1j.some(x => has(x, 'da ' + act) || has(x, 'da duoc ' + act));
 if (_o1t || (!_o1j.length && claimStage(source) === 'proposed')) {
-issues.push({ level: 'block', sentence: _o1l, message: `Nguồn chỉ ghi "đề xuất/dự kiến" – không được viết "đã ${_o1[_og]}". Sửa thành "dự kiến ${_o1[_og]}".` });
+issues.push({ level: 'block', sentence: _o1l, message: `Nguồn chỉ ghi "đề xuất/dự kiến" – không được viết "đã ${_o1[act]}". Sửa thành "dự kiến ${_o1[act]}".` });
 continue;
 }
-if (_ob.includes(_og) && !_o1n.length) {
-issues.push({ level: 'block', sentence: _o1l, message: `"Đã ${_o1[_og]}" phải kèm số văn bản (vd Quyết định số …/QĐ-TTg).` });
+if (_ob.includes(act) && !_o1n.length) {
+issues.push({ level: 'block', sentence: _o1l, message: `"Đã ${_o1[act]}" phải kèm số văn bản (vd Quyết định số …/QĐ-TTg).` });
 }
 }
 }
-for (const _oq of _o1n) if (source && !_o1s.includes(_oq)) issues.push({ level: 'warn', sentence: _oq, message: `Số văn bản ${_oq} không thấy trong nguồn – kiểm lại.` });
+for (const _op of _o1n) if (source && !_o1s.includes(_op)) issues.push({ level: 'warn', sentence: _op, message: `Số văn bản ${_op} không thấy trong nguồn – kiểm lại.` });
 return { ok: !issues.length, issues };
 }
 export function batchPick(ideas, _o16 = 10) {
-return (ideas || []).filter(_ox => _ox && !Number(_ox.deleted) && _ox.status === 'new')
-.sort((a, _ok) => (Number(_ok.score) || 0) - (Number(a.score) || 0)).slice(0, _o16);
+return (ideas || []).filter(_ow => _ow && !Number(_ow.deleted) && _ow.status === 'new')
+.sort((a, _oj) => (Number(_oj.score) || 0) - (Number(a.score) || 0)).slice(0, _o16);
 }
 export function batchJobs(ideas, { now = Date.now() } = {}) {
-return (ideas || []).map(_ox => {
-const _oq = pd(_ox.data);
-const _o1d = Array.isArray(_oq.scenes_outline) && _oq.scenes_outline.length ? { template: _oq.template || null, scenes: _oq.scenes_outline } : buildScenes(_ox);
+return (ideas || []).map(_ow => {
+const _op = pd(_ow.data);
+const _o1d = Array.isArray(_op.scenes_outline) && _op.scenes_outline.length ? { template: _op.template || null, scenes: _op.scenes_outline } : buildScenes(_ow);
 return {
-type: 'video_map', title: _ox.title, status: 'queued', output: '', cost_estimate: 0,
-input: JSON.stringify({ idea_id: _ox.id, title: _ox.title, url: _ox.url || '', topic: _ox.summary || '', category: _oq.category || '',
-template: _o1d.template, scenes: _o1d.scenes, sources: _oq.sources || (_ox.url ? [{ url: _ox.url, name: _ox.source || '' }] : []),
-series: _oq.series || null, overnight: true, approved_at: now }),
+type: 'video_map', title: _ow.title, status: 'queued', output: '', cost_estimate: 0,
+input: JSON.stringify({ idea_id: _ow.id, title: _ow.title, url: _ow.url || '', topic: _ow.summary || '', category: _op.category || '',
+template: _o1d.template, scenes: _o1d.scenes, sources: _op.sources || (_ow.url ? [{ url: _ow.url, name: _ow.source || '' }] : []),
+series: _op.series || null, overnight: true, approved_at: now }),
 };
 });
 }
-const ymd = (_oq, sep = '') => _oq.getFullYear() + sep + String(_oq.getMonth() + 1).padStart(2, '0') + sep + String(_oq.getDate()).padStart(2, '0');
+const ymd = (_op, sep = '') => _op.getFullYear() + sep + String(_op.getMonth() + 1).padStart(2, '0') + sep + String(_op.getDate()).padStart(2, '0');
 export function batchReminder(now = Date.now(), count = 0) {
-const _oq = new Date(now);
-return { id: 'ideas21h' + ymd(_oq), object_id: '', kind: 'custom', title: `21h: duyệt hàng loạt ${count} ý tưởng video (máy dựng làm qua đêm)`,
-due_at: new Date(_oq.getFullYear(), _oq.getMonth(), _oq.getDate(), 21, 0, 0).getTime(), remind_before_days: 0, amount: 0, installment: 0, done: 0,
+const _op = new Date(now);
+return { id: 'ideas21h' + ymd(_op), object_id: '', kind: 'custom', title: `21h: duyệt hàng loạt ${count} ý tưởng video (máy dựng làm qua đêm)`,
+due_at: new Date(_op.getFullYear(), _op.getMonth(), _op.getDate(), 21, 0, 0).getTime(), remind_before_days: 0, amount: 0, installment: 0, done: 0,
 data: JSON.stringify({ module: 'ideas', link: '#/content/ideas?batch=1' }) };
 }
 export function followedFrom(v) {
-const _oj = Array.isArray(v) ? v : (v && Array.isArray(v.topics) ? v.topics : []);
-return [...new Set(_oj.map(x => String(x || '').trim()).filter(Boolean))];
+const _oi = Array.isArray(v) ? v : (v && Array.isArray(v.topics) ? v.topics : []);
+return [...new Set(_oi.map(x => String(x || '').trim()).filter(Boolean))];
 }
 export function feedsFrom(v) {
-const _oj = (v && Array.isArray(v.feeds) ? v.feeds : []).map(f => String((f && f.url) || f || '').trim()).filter(_o1x => /^https?:\/\/[^\s]+$/i.test(_o1x));
-return _oj.length ? [...new Set(_oj)] : DEFAULT_FEEDS.map(f => f.url);
+const _oi = (v && Array.isArray(v.feeds) ? v.feeds : []).map(f => String((f && f.url) || f || '').trim()).filter(_o1x => /^https?:\/\/[^\s]+$/i.test(_o1x));
+return _oi.length ? [...new Set(_oi)] : DEFAULT_FEEDS.map(f => f.url);
 }
 export const matchTopics = (text, topics) => { const _o16 = norm(text); return (topics || []).filter(t => norm(t) && has(_o16, norm(t))); };
 export function newsToIdeas(items, { topics = [], ideas = [], jobs = [], now = Date.now(), since = 0 } = {}) {
 const _o19 = [];
 for (const _oz of items || []) {
-if (!_oz || !_oz.title || !isUrl(_oz.link)) continue;
+if (!_oz || !_oz.title || !_oy(_oz.link)) continue;
 const _o1f = Number(_oz.published) || 0;
 if (since && _o1f && _o1f < since) continue;
 const text = [_oz.title, _oz.summary].filter(Boolean).join(' ');

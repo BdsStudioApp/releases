@@ -1,1 +1,1 @@
-{ "id": "g4_phaply", "title": "Kiểm tra pháp lý", "pack": "source", "screen": "sales", "icon": "⚖️", "order": 140, "status": "thu-nghiem" }
+{ "id": "g4_phaply", "title": "Kiểm tra pháp lý", "pack": "closing", "screen": "sales", "icon": "⚖️", "order": 140, "status": "thu-nghiem" }
