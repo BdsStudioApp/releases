@@ -1,5 +1,5 @@
 // Service worker – cache vỏ app theo phiên bản; API luôn qua mạng, không cache phản hồi API.
-const VERSION = 'v1.0.6-28268d8f22';
+const VERSION = 'v1.0.6-856d3b8ad5';
 const CACHE = 'bds-shell-' + VERSION;
 const FONT_CACHE = 'bds-fonts-v1';
 // SHELL: bản đóng gói (tools/build_zip.mjs) TỰ SINH lại danh sách này từ mọi core/*.js|css + packs/**/*.js|json|css (tên theo hash)
@@ -16,7 +16,7 @@ const SHELL = [
  "core/ai.8d26d4c959.js",
  "core/ai_cost.2fb10e6822.js",
  "core/api.8a9774059d.js",
- "core/app.a4283ad8b3.js",
+ "core/app.c960f5ab60.js",
  "core/archive.31dd24ed44.js",
  "core/ask.00dfbde78f.js",
  "core/ask_kb.ba0a76db5d.js",

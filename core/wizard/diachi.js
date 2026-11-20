@@ -14,6 +14,7 @@ const _o10 = (p) => ctl.set(M.setData(ctl.state, { diachi: { ...data(), ...p } }
 const _oy = h('div', { class: 'wiz-box wiz-diachi', 'data-testid': 'diachi' });
 const _om = h('div', { class: 'wiz-diachi-live', 'aria-live': 'polite', 'data-testid': 'diachi-live' });
 let _o2 = false;
+let _o1b = null, tsId = null;
 if (!_o7.configured) {
 _oy.append(h('div', { 'data-testid': 'diachi-noservice' }, wishBox(ctl, ui, { company })));
 return _oy;
@@ -172,7 +173,6 @@ return cf;
 return h('div', { class: 'wiz-diachi-cf', 'data-testid': 'diachi-cf' }, h('p', { class: 'wiz-note' }, 'App nằm trong tài khoản Cloudflare CỦA CÔNG TY: công ty giữ toàn quyền; bên bán chỉ dùng mã giới hạn (chỉ Cloudflare Pages) để đưa bản cập nhật đã ký lên.'),
 guide, h('div', { class: 'grid-2' }, acct, _o19), _ob);
 }
-let _o1b = null, tsId = null;
 async function captchaToken() {
 const key = String(_o5.TURNSTILE_SITEKEY || '').trim();
 if (!key) return '';
