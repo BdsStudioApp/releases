@@ -133,7 +133,7 @@ return { score, parts, excluded: false, why: '' };
 }
 export function matchUnits(customer, projects, opts = {}) {
 const _ob = crm.needGroup(customer && customer.need);
-if (_ob !== 'mua') return { list: [], note: 'Bảng hàng hiện chỉ có giá bán sơ cấp – chưa ghép được nhu cầu "' + (customer.need || '') + '".', excluded: 0 };
+if (_ob !== 'mua') return { list: [], note: 'Thông tin dự án hiện chỉ có giá bán sơ cấp – chưa ghép được nhu cầu "' + (customer.need || '') + '".', excluded: 0 };
 const _oc = new Set(g2Of(customer).hidden_matches || []);
 let excluded = 0;
 const list = [];
@@ -238,11 +238,11 @@ for (const _o9 of r.call_reasons || []) if (_om && mentions(_o9.project || '', [
 if (_om && _om.handover) {
 const [y, m] = String(_om.handover).split('-').map(Number);
 const _oe = vnStamp(y, m || 1, 1);
-if (_oe > now && _oe - now < 120 * DAY) out.push({ kind: 'handover', at: now, text: 'Dự án ' + _om.name + ' sắp bàn giao (' + String(m).padStart(2, '0') + '/' + y + ')', source: 'Bảng hàng' });
+if (_oe > now && _oe - now < 120 * DAY) out.push({ kind: 'handover', at: now, text: 'Dự án ' + _om.name + ' sắp bàn giao (' + String(m).padStart(2, '0') + '/' + y + ')', source: 'Thông tin dự án' });
 }
 if (typeof ctx.matches === 'function') {
 const _ow = ctx.matches(c).filter(u => u.score >= 70 && u.project.overridden && num(u.project.updated_at) > since);
-if (_ow[0]) out.push({ kind: 'unit', at: num(_ow[0].project.updated_at), text: 'Bảng hàng cập nhật: ' + _ow[0].project.name + ' ' + _ow[0].type + ' hợp ' + _ow[0].score + ' điểm', source: 'Bảng hàng' });
+if (_ow[0]) out.push({ kind: 'unit', at: num(_ow[0].project.updated_at), text: 'Thông tin dự án cập nhật: ' + _ow[0].project.name + ' ' + _ow[0].type + ' hợp ' + _ow[0].score + ' điểm', source: 'Thông tin dự án' });
 }
 out.sort((a, _o6) => _o6.at - a.at);
 return out;

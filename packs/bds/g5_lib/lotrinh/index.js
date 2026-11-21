@@ -1,0 +1,10 @@
+import tuvan from './tuvan.js';
+import tuchoi from './tuchoi.js';
+import phaply from './phaply.js';
+import taichinh from './taichinh.js';
+import thue from './thue.js';
+import quyhoach from './quyhoach.js';
+import marketing from './marketing.js';
+import duan from './duan.js';
+export { EXTRA_QUIZ, META } from './_them_bai_cu.js';
+export const GROUP_LISTS = { tuvan, tuchoi, phaply, taichinh, thue, quyhoach, marketing, duan };

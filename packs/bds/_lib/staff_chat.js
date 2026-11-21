@@ -1,6 +1,7 @@
 import { redact, extractJson } from './staff.js';
 import { fold } from './staff_skills.js';
 import { gate } from './consent.js';
+import { withRulesJson } from '../../../shared/ai_rules.js';
 export const CHAT_KIND = 'staff_chat';
 export const CHAT_LIMITS = {
 maxSteps: 6, maxMsgs: 200, maxAgeDays: 30, textMax: 2000, partMax: 300, promptMax: 4000, valueMax: 45000,
@@ -13,9 +14,9 @@ export const RUN_STATE = { planned: 'Chờ anh/chị bấm Chạy', running: 'Đ
 export const STEP_STATE = { wait: 'Chờ', running: 'Đang làm', done: 'Xong', error: 'Lỗi', skip: 'Bỏ qua', stopped: 'Đã dừng' };
 export const STEP_FOOTER = 'Chỉ làm đúng phần được giao; không tự giao thêm việc cho ai, không gửi tin cho khách, không đăng bài – kết quả là bản nháp để Chủ duyệt.';
 const DAY = 86400000;
-const _oy = () => Math.random().toString(36).slice(2, 10).padEnd(8, '0');
-export const newMsgId = () => 'sc_' + Date.now().toString(36) + _oy();
-export const newRunId = () => 'run_' + Date.now().toString(36) + _oy();
+const _ox = () => Math.random().toString(36).slice(2, 10).padEnd(8, '0');
+export const newMsgId = () => 'sc_' + Date.now().toString(36) + _ox();
+export const newRunId = () => 'run_' + Date.now().toString(36) + _ox();
 const _o8 = s => String(s ?? '').normalize('NFC').replace(/\r\n?/g, '\n').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '');
 const _oa = ms => { const d = new Date(Number(ms) || 0); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
 const parse = v => { if (v && typeof v === 'object') return v; try { return JSON.parse(v || '{}') || {}; } catch { return {}; } };
@@ -26,16 +27,16 @@ if (s.length > CHAT_LIMITS.textMax) return { ok: false, error: `Yêu cầu tối
 return { ok: true, text: s };
 }
 const VIDEO_MEMBERS = ['researcher', 'writer', 'reviewer'];
-export function roomMembers(_oz, staffList) {
-if (!_oz) return [];
-const ids = _oz.id === 'video' ? VIDEO_MEMBERS
-: [...(Array.isArray(_oz.staff_ids) ? _oz.staff_ids : []), ...(Array.isArray(_oz.steps) ? _oz.steps : []).map(s => (typeof s === 'string' ? s : s && s.staff_id))];
-const _ot = [];
+export function roomMembers(_oy, staffList) {
+if (!_oy) return [];
+const ids = _oy.id === 'video' ? VIDEO_MEMBERS
+: [...(Array.isArray(_oy.staff_ids) ? _oy.staff_ids : []), ...(Array.isArray(_oy.steps) ? _oy.steps : []).map(s => (typeof s === 'string' ? s : s && s.staff_id))];
+const _os = [];
 for (const id of ids) {
 const s = (staffList || []).find(x => x && x.id === id);
-if (s && s.enabled !== false && !_ot.includes(s)) _ot.push(s);
+if (s && s.enabled !== false && !_os.includes(s)) _os.push(s);
 }
-return _ot;
+return _os;
 }
 const WORDS = {
 research: ['gom tin', 'nghien cuu', 'chu de', 'tin tuc', 'tin moi', 'thi truong', 'quy hoach', 'ha tang', 'bao cao', 'tim hieu', 'xu huong', 'gia dat', 'chinh sach', 'lai suat'],
@@ -73,9 +74,9 @@ let sc = 0;
 for (const g of _oc(staff)) for (const _oi of WORDS[g] || []) if (has(t, _oi)) sc += 2;
 const _ol = norm(staff.name || '').trim();
 if (_ol.length >= 3 && has(t, _ol)) sc += 5;
-const _o10 = (lib || []).filter(_of => _of && (staff.skills || []).includes(_of.id)).map(_of => _of.name || '').join(' ');
-const _ou = new Set(norm((staff.role || '') + ' ' + _o10).trim().split(' ').filter(_o16 => _o16.length >= 5 && !_o3.has(_o16)));
-for (const _o16 of _ou) if (tokens.has(_o16)) sc += 1;
+const _oz = (lib || []).filter(_of => _of && (staff.skills || []).includes(_of.id)).map(_of => _of.name || '').join(' ');
+const _ot = new Set(norm((staff.role || '') + ' ' + _oz).trim().split(' ').filter(_o15 => _o15.length >= 5 && !_o3.has(_o15)));
+for (const _o15 of _ot) if (tokens.has(_o15)) sc += 1;
 return sc;
 }
 const _o2 = {
@@ -83,19 +84,19 @@ const _o2 = {
 2: 'Soát và hoàn thiện theo yêu cầu.',
 sum: 'Tổng hợp kết quả các bước trước thành bản cuối gọn; soát lỗi luật quảng cáo, số liệu thiếu nguồn.',
 };
-const _ov = s => (staffStage(s) === 0 ? _o2[0] : staffStage(s) === 2 ? _o2[2] : ('Làm phần chính theo yêu cầu' + (s.role ? ' – đúng vai: ' + s.role : '') + '.').slice(0, CHAT_LIMITS.partMax));
+const _ou = s => (staffStage(s) === 0 ? _o2[0] : staffStage(s) === 2 ? _o2[2] : ('Làm phần chính theo yêu cầu' + (s.role ? ' – đúng vai: ' + s.role : '') + '.').slice(0, CHAT_LIMITS.partMax));
 function compose(doers, members, source) {
-const _o11 = [...doers].sort((a, b) => staffStage(a.s) - staffStage(b.s) || b.sc - a.sc);
-const _o15 = members.filter(isSummarizer).find(_oj => !_o11.some(d => d.s.id === _oj.id));
-const _oz = CHAT_LIMITS.maxSteps - (_o15 ? 1 : 0);
-const _ox = _o11.slice(0, _oz);
-const steps = _ox.map((d, i) => ({ n: i + 1, staff_id: d.s.id, part: _ov(d.s), deps: [] }));
-const _o14 = [...new Set(_ox.map(d => staffStage(d.s)))];
-steps.forEach((_o13, i) => {
-const _of = _o14.indexOf(staffStage(_ox[i].s));
-if (_of > 0) _o13.deps = steps.filter((_, j) => staffStage(_ox[j].s) === _o14[_of - 1]).map(x => x.n);
+const _o10 = [...doers].sort((a, b) => staffStage(a.s) - staffStage(b.s) || b.sc - a.sc);
+const _o14 = members.filter(isSummarizer).find(_oj => !_o10.some(d => d.s.id === _oj.id));
+const _oy = CHAT_LIMITS.maxSteps - (_o14 ? 1 : 0);
+const _ow = _o10.slice(0, _oy);
+const steps = _ow.map((d, i) => ({ n: i + 1, staff_id: d.s.id, part: _ou(d.s), deps: [] }));
+const _o13 = [...new Set(_ow.map(d => staffStage(d.s)))];
+steps.forEach((_o12, i) => {
+const _of = _o13.indexOf(staffStage(_ow[i].s));
+if (_of > 0) _o12.deps = steps.filter((_, j) => staffStage(_ow[j].s) === _o13[_of - 1]).map(x => x.n);
 });
-if (_o15 && steps.length) steps.push({ n: steps.length + 1, staff_id: _o15.id, part: _o2.sum, deps: steps.map(x => x.n), summary: true });
+if (_o14 && steps.length) steps.push({ n: steps.length + 1, staff_id: _o14.id, part: _o2.sum, deps: steps.map(x => x.n), summary: true });
 return validatePlan({ steps, source }, members);
 }
 export function planByRules({ text, members = [], lib = [] } = {}) {
@@ -111,11 +112,12 @@ const r = compose(doers, doers.length === 1 && isSummarizer(doers[0].s) ? member
 return r;
 }
 export function selectStaff(text, staffList = [], lib = []) {
-const _oq = (staffList || []).filter(s => s && s.id && s.enabled !== false);
-if (!_oq.length) return { staff: null, matched: false, score: 0 };
+const all = (staffList || []).filter(s => s && s.id);
+if (!all.length) return { staff: null, matched: false, score: 0 };
+const on = all.filter(s => s.enabled !== false);
 let _o6 = null, bestSc = 0;
-for (const s of _oq) { const sc = scoreStaff(text, s, lib); if (sc > bestSc) { _o6 = s; bestSc = sc; } }
-return _o6 ? { staff: _o6, matched: true, score: bestSc } : { staff: _oq[0], matched: false, score: 0 };
+for (const s of [...on, ...all.filter(s => s.enabled === false)]) { const sc = scoreStaff(text, s, lib); if (sc > bestSc) { _o6 = s; bestSc = sc; } }
+return _o6 ? { staff: _o6, matched: true, score: bestSc } : { staff: on[0] || all[0], matched: false, score: 0 };
 }
 export function planFromPick({ text, members = [], staffId } = {}) {
 const s = members.find(_oj => _oj.id === staffId);
@@ -131,33 +133,33 @@ if (new Set(_on).size !== _on.length) return { ok: false, error: 'Số bước b
 const steps = [];
 for (let i = 0; i < raw.length; i++) {
 const s = raw[i] || {};
-const _o13 = members.find(_oj => _oj.id === s.staff_id);
-if (!_o13) return { ok: false, error: `${s.name || s.staff_id || 'Bước ' + _on[i]} không ở trong phòng (hoặc đang tắt).` };
+const _o12 = members.find(_oj => _oj.id === s.staff_id);
+if (!_o12) return { ok: false, error: `${s.name || s.staff_id || 'Bước ' + _on[i]} không ở trong phòng (hoặc đang tắt).` };
 const deps = [...new Set((Array.isArray(s.deps) ? s.deps : []).map(Number))];
 for (const d of deps) {
 if (d === _on[i]) return { ok: false, error: `Bước ${_on[i]} không thể chờ chính nó.` };
 if (!_on.includes(d)) return { ok: false, error: `Bước ${_on[i]} chờ bước ${d} – bước này không có.` };
 }
 const part = _o8(s.part).replace(/\s+/g, ' ').trim().slice(0, CHAT_LIMITS.partMax) || 'Làm theo yêu cầu.';
-steps.push({ n: _on[i], staff_id: _o13.id, name: _o13.name || '', icon: _o13.icon || '🤖', part, deps, ...(s.summary ? { summary: true } : {}) });
+steps.push({ n: _on[i], staff_id: _o12.id, name: _o12.name || '', icon: _o12.icon || '🤖', part, deps, ...(s.summary ? { summary: true } : {}) });
 }
-const _os = [], done = new Set();
-while (_os.length < steps.length) {
+const _or = [], done = new Set();
+while (_or.length < steps.length) {
 const _oo = steps.find(s => !done.has(s.n) && s.deps.every(d => done.has(d)));
 if (!_oo) return { ok: false, error: 'Kế hoạch có phụ thuộc vòng (các bước chờ lẫn nhau) – sửa lại thứ tự.' };
-_os.push(_oo); done.add(_oo.n);
+_or.push(_oo); done.add(_oo.n);
 }
-const map = new Map(_os.map((s, i) => [s.n, i + 1]));
-return { ok: true, plan: { steps: _os.map(s => ({ ...s, n: map.get(s.n), deps: s.deps.map(d => map.get(d)).sort((a, b) => a - b) })), source: (plan && plan.source) || 'edit' } };
+const map = new Map(_or.map((s, i) => [s.n, i + 1]));
+return { ok: true, plan: { steps: _or.map(s => ({ ...s, n: map.get(s.n), deps: s.deps.map(d => map.get(d)).sort((a, b) => a - b) })), source: (plan && plan.source) || 'edit' } };
 }
 export function planPrompt({ text, members = [] } = {}) {
 const list = members.map(s => `- id "${s.id}": ${s.name}${s.role ? ' – ' + s.role : ''}${isSummarizer(s) ? ' (soát/tổng hợp)' : ''}`).join('\n');
-return `Anh/chị là TRƯỞNG PHÒNG ảo. Chia yêu cầu của Chủ cho các nhân viên dưới đây.
+return withRulesJson(`Anh/chị là TRƯỞNG PHÒNG ảo. Chia yêu cầu của Chủ cho các nhân viên dưới đây.
 NHÂN VIÊN TRONG PHÒNG:
 ${list}
 YÊU CẦU: ${redact(_o8(text)).slice(0, CHAT_LIMITS.textMax)}
 Quy tắc: tối đa ${CHAT_LIMITS.maxSteps} bước; chỉ dùng nhân viên có trong danh sách; ai không hợp thì bỏ; bước cần kết quả bước khác thì ghi "after"; không vòng; không thêm việc ngoài yêu cầu; nếu có người soát/tổng hợp thì để làm bước cuối ("summary": true).
-Chỉ trả về JSON đúng mẫu: {"steps":[{"staff":"<id>","part":"phần việc ngắn","after":[số bước trước]}]}`;
+Chỉ trả về JSON đúng mẫu: {"steps":[{"staff":"<id>","part":"phần việc ngắn","after":[số bước trước]}]}`);
 }
 export function parsePlanReply(text, members = []) {
 const j = extractJson(text);
@@ -167,9 +169,9 @@ const steps = [];
 for (let i = 0; i < _o5.length; i++) {
 const x = _o5[i] || {};
 const _oh = String(x.staff ?? x.staff_id ?? x.who ?? '').trim();
-const _o13 = members.find(_oj => _oj.id === _oh) || members.find(_oj => fold(_oj.name || '') === fold(_oh));
-if (!_o13) return { ok: false, error: `AI giao cho "${_oh || '?'}" – không có trong phòng.` };
-steps.push({ n: i + 1, staff_id: _o13.id, part: String(x.part ?? x.task ?? ''), deps: x.after ?? x.deps ?? x.depends_on ?? [], summary: !!x.summary });
+const _o12 = members.find(_oj => _oj.id === _oh) || members.find(_oj => fold(_oj.name || '') === fold(_oh));
+if (!_o12) return { ok: false, error: `AI giao cho "${_oh || '?'}" – không có trong phòng.` };
+steps.push({ n: i + 1, staff_id: _o12.id, part: String(x.part ?? x.task ?? ''), deps: x.after ?? x.deps ?? x.depends_on ?? [], summary: !!x.summary });
 }
 return validatePlan({ steps, source: 'ai' }, members);
 }
@@ -198,11 +200,11 @@ r.steps[i] = { ...s, state: 'done', error: '' };
 if (r.steps.every(x => x.state === 'done')) r.status = 'done';
 return r;
 }
-const _o17 = String(error || 'không rõ lý do').slice(0, 300);
-r.steps[i] = { ...s, state: 'error', error: _o17 };
+const _o16 = String(error || 'không rõ lý do').slice(0, 300);
+r.steps[i] = { ...s, state: 'error', error: _o16 };
 r.steps = r.steps.map(x => (x.state === 'wait' ? { ...x, state: 'skip' } : x));
 r.status = 'error';
-r.error = `Bước ${s.n}${s.name ? ' (' + s.name + ')' : ''} lỗi: ${_o17} – đã dừng chuỗi, các bước sau không chạy.`;
+r.error = `Bước ${s.n}${s.name ? ' (' + s.name + ')' : ''} lỗi: ${_o16} – đã dừng chuỗi, các bước sau không chạy.`;
 return r;
 }
 export function stopRun(run, now = Date.now()) {
@@ -222,24 +224,24 @@ export const threadBusy = (msgs, now = Date.now()) => (msgs || []).some(_oj => _
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 export function scrubForStaff(text, staff, customers = []) {
 let s = redact(_o8(text));
-const _or = staff && staff.data_access === true;
-const _ok = [...new Set((customers || []).filter(c => c && !Number(c.deleted) && (!c.kind || c.kind === 'customer') && (!_or || !gate(c, 'ai').ok))
+const _oq = staff && staff.data_access === true;
+const _ok = [...new Set((customers || []).filter(c => c && !Number(c.deleted) && (!c.kind || c.kind === 'customer') && (!_oq || !gate(c, 'ai').ok))
 .map(c => _o8(c.name).replace(/\s+/g, ' ').trim()).filter(n => n.length >= 3))].sort((a, b) => b.length - a.length);
 for (const n of _ok) s = s.replace(new RegExp(esc(n), 'gi'), '[khách]');
 return s;
 }
 export function buildStepText({ request, run, index, results = {}, staff, customers = [] } = {}) {
-const _o13 = run.steps[index];
+const _o12 = run.steps[index];
 const N = run.steps.length;
-const _od = [`YÊU CẦU CỦA CHỦ: ${_o8(request).trim().slice(0, 1500)}`, `PHẦN VIỆC CỦA BẠN (bước ${_o13.n}/${N}): ${_o13.part}`].join('\n');
-const deps = _o13.deps || [];
-const _oz = CHAT_LIMITS.promptMax - _od.length - STEP_FOOTER.length - 8;
-const _ow = deps.length ? Math.max(200, Math.floor(_oz / deps.length)) : 0;
+const _od = [`YÊU CẦU CỦA CHỦ: ${_o8(request).trim().slice(0, 1500)}`, `PHẦN VIỆC CỦA BẠN (bước ${_o12.n}/${N}): ${_o12.part}`].join('\n');
+const deps = _o12.deps || [];
+const _oy = CHAT_LIMITS.promptMax - _od.length - STEP_FOOTER.length - 8;
+const _ov = deps.length ? Math.max(200, Math.floor(_oy / deps.length)) : 0;
 const blocks = deps.map(d => {
 const r = results[d] || {};
-const _o12 = run.steps.find(x => x.n === d) || {};
-const title = `KẾT QUẢ BƯỚC ${d}${_o12.name ? ' (' + _o12.name + ')' : ''}:\n`;
-return title + scrubForStaff(String(r.text || '(trống)'), staff, customers).trim().slice(0, Math.max(0, _ow - title.length - 2));
+const _o11 = run.steps.find(x => x.n === d) || {};
+const title = `KẾT QUẢ BƯỚC ${d}${_o11.name ? ' (' + _o11.name + ')' : ''}:\n`;
+return title + scrubForStaff(String(r.text || '(trống)'), staff, customers).trim().slice(0, Math.max(0, _ov - title.length - 2));
 });
 return [_od, ...blocks, STEP_FOOTER].join('\n\n').slice(0, CHAT_LIMITS.promptMax);
 }
@@ -273,9 +275,9 @@ export const threadMsgs = (rows, threadId) => (rows || []).map(objectToMsg).filt
 .sort((a, b) => a.at - b.at || String(a.id).localeCompare(String(b.id)));
 export function pruneThread(msgs, now = Date.now()) {
 const _og = _oj => _oj.role === 'plan' && isActive(_oj.run, now);
-const _o11 = [...(msgs || [])].sort((a, b) => (Number(a.at) || 0) - (Number(b.at) || 0));
+const _o10 = [...(msgs || [])].sort((a, b) => (Number(a.at) || 0) - (Number(b.at) || 0));
 const drop = [], keep = [];
-for (const _oj of _o11) (!_og(_oj) && now - (Number(_oj.at) || 0) > CHAT_LIMITS.maxAgeDays * DAY ? drop : keep).push(_oj);
+for (const _oj of _o10) (!_og(_oj) && now - (Number(_oj.at) || 0) > CHAT_LIMITS.maxAgeDays * DAY ? drop : keep).push(_oj);
 let _ob = keep.length - CHAT_LIMITS.maxMsgs;
 for (let i = 0; _ob > 0 && i < keep.length; i++) if (!_og(keep[i])) { drop.push(keep[i]); keep.splice(i, 1); i--; _ob--; }
 return { keep, drop: drop.sort((a, b) => (Number(a.at) || 0) - (Number(b.at) || 0)) };

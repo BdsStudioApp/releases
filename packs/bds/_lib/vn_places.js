@@ -31,8 +31,8 @@ export const PROVINCES = [
 { label: 'An Giang', from: ['Kiên Giang'] },
 ];
 const _o0 = {
-'Hà Nội': 'Hoàn Kiếm|Ba Đình|Đống Đa|Hai Bà Trưng|Cầu Giấy|Thanh Xuân|Tây Hồ|Long Biên|Hoàng Mai|Hà Đông|Nam Từ Liêm|Bắc Từ Liêm|Gia Lâm|Đông Anh|Mê Linh|Sóc Sơn|Hoài Đức|Thanh Trì|Đan Phượng|Thạch Thất|Hòa Lạc|Quốc Oai|Chương Mỹ|Sơn Tây|Ba Vì|Thường Tín|Phú Xuyên|Ứng Hòa|Mỹ Đức|Thanh Oai|Phúc Thọ|Mỹ Đình|Linh Đàm|Chủ đầu tư Mẫu AN|Dự án Mẫu 26|Dự án Mẫu 25',
-'TP Hồ Chí Minh': 'Quận 1|Quận 3|Quận 4|Quận 5|Quận 7|Quận 8|Quận 10|Quận 12|Bình Thạnh|Phú Nhuận|Gò Vấp|Tân Bình|Tân Phú|Bình Tân|Thủ Đức|Thủ Thiêm|Nhà Bè|Bình Chánh|Hóc Môn|Củ Chi|Cần Giờ|Chủ đầu tư Mẫu Y|Thủ Dầu Một|Dĩ An|Thuận An|Bến Cát|Tân Uyên|Bàu Bàng|Vũng Tàu|Bà Rịa|Phú Mỹ|Long Hải|Hồ Tràm|Côn Đảo',
+'Hà Nội': 'Hoàn Kiếm|Ba Đình|Đống Đa|Hai Bà Trưng|Cầu Giấy|Thanh Xuân|Tây Hồ|Long Biên|Hoàng Mai|Hà Đông|Nam Từ Liêm|Bắc Từ Liêm|Gia Lâm|Đông Anh|Mê Linh|Sóc Sơn|Hoài Đức|Thanh Trì|Đan Phượng|Thạch Thất|Hòa Lạc|Quốc Oai|Chương Mỹ|Sơn Tây|Ba Vì|Thường Tín|Phú Xuyên|Ứng Hòa|Mỹ Đức|Thanh Oai|Phúc Thọ|Mỹ Đình|Linh Đàm',
+'TP Hồ Chí Minh': 'Quận 1|Quận 3|Quận 4|Quận 5|Quận 7|Quận 8|Quận 10|Quận 12|Bình Thạnh|Phú Nhuận|Gò Vấp|Tân Bình|Tân Phú|Bình Tân|Thủ Đức|Thủ Thiêm|Nhà Bè|Bình Chánh|Hóc Môn|Củ Chi|Cần Giờ|Thủ Dầu Một|Dĩ An|Thuận An|Bến Cát|Tân Uyên|Bàu Bàng|Vũng Tàu|Bà Rịa|Phú Mỹ|Long Hải|Hồ Tràm|Côn Đảo',
 'Hải Phòng': 'Hồng Bàng|Lê Chân|Ngô Quyền|Hải An|Kiến An|Dương Kinh|Đồ Sơn|Thủy Nguyên|An Dương|Cát Bà|Vũ Yên|TP Hải Dương|Chí Linh|Kinh Môn',
 'Quảng Ninh': 'Hạ Long|Bãi Cháy|Vân Đồn|Móng Cái|Cẩm Phả|Uông Bí|Quảng Yên|Đông Triều',
 'Đà Nẵng': 'Hải Châu|Sơn Trà|Ngũ Hành Sơn|Liên Chiểu|Thanh Khê|Cẩm Lệ|Hòa Vang|Hội An|Tam Kỳ|Điện Bàn|Điện Ngọc|Núi Thành',
@@ -47,7 +47,7 @@ const _o0 = {
 'Quảng Trị': 'Đông Hà|Đồng Hới|Phong Nha',
 'Quảng Ngãi': 'TP Quảng Ngãi|Dung Quất|Lý Sơn|TP Kon Tum',
 'Bắc Ninh': 'TP Bắc Ninh|Từ Sơn|Yên Phong|Quế Võ|TP Bắc Giang|Việt Yên',
-'Hưng Yên': 'Văn Giang|Khu Mẫu F|Văn Lâm|Mỹ Hào|Phố Hiến|TP Thái Bình',
+'Hưng Yên': 'Văn Giang|Văn Lâm|Mỹ Hào|Phố Hiến|TP Thái Bình',
 'Ninh Bình': 'Hoa Lư|Tràng An|Tam Cốc|Phủ Lý|TP Nam Định|Kim Bảng',
 'Phú Thọ': 'Việt Trì|Vĩnh Yên|Phúc Yên|Tam Đảo|TP Hòa Bình|Lương Sơn',
 'Thanh Hóa': 'TP Thanh Hóa|Sầm Sơn|Nghi Sơn',
@@ -89,4 +89,14 @@ _o9.add(_o3); _o8.push({ label: p.label, tinh_thanh: p.tinh_thanh, ghi_chu: p.gh
 if (_o8.length >= max) break;
 }
 return _o8;
+}
+export function provinceOf(name) {
+const _o2 = fold(name);
+if (!_o2) return null;
+return PROVINCES.find(p => [p.label, ...(p.alias || [])].some(x => fold(x) === _o2)) || null;
+}
+export function localsOf(tinh) {
+const p = provinceOf(tinh);
+if (!p) return [];
+return [...p.from.map(x => ({ label: x, note: 'tỉnh cũ' })), ...String(_o0[p.label] || '').split('|').filter(Boolean).map(x => ({ label: x, note: '' }))];
 }

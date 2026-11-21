@@ -2,6 +2,7 @@ import { kit, h, selftestCommon } from '../_lib/kit.js';
 import * as crm from '../_lib/crm.js';
 import * as S from '../_lib/sales.js';
 import { withG2, g2Of, vnDate } from './core.js';
+import { withRules } from '../../../shared/ai_rules.js';
 export { h, crm, selftestCommon };
 const _o0 = 'bds-g2-css';
 export function ensureG2Css() {
@@ -28,6 +29,7 @@ return K.put('objects', { ...fresh, ...rowPatch, data: withG2(fresh, patch) });
 g2Of,
 badgeTest: () => h('span', { class: 'g2-test', title: 'Gói thử nghiệm: dùng miễn phí, đang hoàn thiện – góp ý qua nút 💬' }, 'Thử nghiệm'),
 head(title, ...actions) { return h('div', { class: 'bds-head' }, h('h2', null, title, ' ', G.badgeTest()), actions.length ? h('div', { class: 'bds-row bds-wrap' }, actions) : null); },
+headCore(title, ...actions) { return h('div', { class: 'bds-head' }, h('h2', null, title), actions.length ? h('div', { class: 'bds-row bds-wrap' }, actions) : null); },
 tabs(list, cur, onPick, testid) {
 return h('div', { class: 'g2-tabs', role: 'tablist', 'data-testid': testid }, list.map(([id, label]) => h('button', {
 type: 'button', role: 'tab', class: 'g2-tab' + (id === cur ? ' on' : ''), 'aria-selected': String(id === cur), 'data-testid': (testid || 'tab') + '-' + id, onclick: () => onPick(id),
@@ -44,6 +46,7 @@ if (!t) throw new Error('AI chưa trả lời');
 return t;
 },
 async handoff(task, prompt) {
+prompt = withRules(prompt);
 if (ctx.ai && typeof ctx.ai.handoff === 'function') { try { return await ctx.ai.handoff(task, prompt, { target: 'claude' }); } catch { } }
 await K.copy(prompt); K.toast('Đã chép lời nhắn – dán vào Claude hoặc Gemini', 'info');
 return null;

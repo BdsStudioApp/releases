@@ -1,6 +1,11 @@
 import { fold } from './core.js';
 import { LIB_SCRIPTS as WARM_SCRIPTS } from './warm.js';
 import { gate, stateOf } from '../_lib/consent.js';
+import { withRules, withRulesJson } from '../../../shared/ai_rules.js';
+import { RULES, detect, norm, projectFacts, composeReply, factsBlock } from './reply_kb.js';
+export { projectFacts, composeReply, factsBlock };
+import { detectComplaints, rebuttals, rebutPrompt, parseRebut } from './rebut.js';
+export { detectComplaints, rebuttals, rebutPrompt, parseRebut };
 export const SCRIPT_CATS = [
 ['objection', 'Xử lý từ chối'], ['open', 'Mở lời'], ['followup', 'Sau gặp / xem nhà'], ['close', 'Chốt – bước tiếp theo'], ['reply', 'Trả lời bình luận'], ['warm', 'Người quen'],
 ];
@@ -63,13 +68,13 @@ const c = teamCfg && typeof teamCfg === 'object' ? teamCfg : {};
 const ov = c.overrides && typeof c.overrides === 'object' ? c.overrides : {};
 const hidden = new Set(Array.isArray(c.hidden) ? c.hidden : []);
 const _o5 = DEFAULT_SCRIPTS.filter(s => !hidden.has(s.id)).map(s => (ov[s.id] ? { ...s, ...ov[s.id], id: s.id, edited: true, scope: 'team' } : { ...s, scope: 'default' }));
-const _on = (Array.isArray(c.custom) ? c.custom : []).filter(s => s && s.text && !hidden.has(s.id)).map(s => ({ cat: 'objection', triggers: [], ...s, scope: 'team' }));
-const _oe = (personal || []).filter(_og => _og && !Number(_og.deleted)).map(_og => {
-let _o8 = {}; try { _o8 = typeof _og.data === 'string' ? JSON.parse(_og.data) : (_og.data || {}); } catch { _o8 = {}; }
-return { id: _og.id, cat: _o8.cat || 'objection', title: _og.name || 'Kịch bản riêng', text: _o8.text || '', tip: _o8.tip || '', triggers: _o8.triggers || [], scope: 'mine', row: _og, hidden: !!_o8.hidden, from: _o8.from || '' };
+const _or = (Array.isArray(c.custom) ? c.custom : []).filter(s => s && s.text && !hidden.has(s.id)).map(s => ({ cat: 'objection', triggers: [], ...s, scope: 'team' }));
+const _oh = (personal || []).filter(_oj => _oj && !Number(_oj.deleted)).map(_oj => {
+let _o8 = {}; try { _o8 = typeof _oj.data === 'string' ? JSON.parse(_oj.data) : (_oj.data || {}); } catch { _o8 = {}; }
+return { id: _oj.id, cat: _o8.cat || 'objection', title: _oj.name || 'Kịch bản riêng', text: _o8.text || '', tip: _o8.tip || '', triggers: _o8.triggers || [], scope: 'mine', row: _oj, hidden: !!_o8.hidden, from: _o8.from || '' };
 }).filter(s => s.text && !s.hidden);
-const _ol = new Set(_oe.map(s => s.from).filter(Boolean));
-return _o5.concat(_on).filter(s => !_ol.has(s.id)).concat(_oe);
+const _op = new Set(_oh.map(s => s.from).filter(Boolean));
+return _o5.concat(_or).filter(s => !_op.has(s.id)).concat(_oh);
 }
 export function parseTriggers(s) { return String(s || '').split(/[,;\n]+/).map(t => fold(t)).filter(Boolean).slice(0, 20); }
 export function saveTeamScript(cfg, script, patch) {
@@ -81,75 +86,78 @@ if (script && script.scope === 'team' && DEFAULT_SCRIPTS.some(_o8 => _o8.id === 
 if (script && script.scope === 'team') return { ...c, custom: c.custom.map(x => (x.id === script.id ? { ...x, ...clean } : x)) };
 return { ...c, custom: c.custom.concat([{ id: 'tm_' + Date.now().toString(36), ...clean }]) };
 }
-export function resetTeamScript(cfg, id) { const c = { overrides: {}, custom: [], hidden: [], ...(cfg || {}) }; const _og = { ...c.overrides }; delete _og[id]; return { ...c, overrides: _og }; }
-export const INTENTS = [
-{ id: 'gia', label: 'Hỏi giá', kw: ['gia', 'bao nhieu', 'xin gia', 'bang gia', 'tr m2', 'trieu', 'ty'] },
-{ id: 'phap_ly', label: 'Hỏi pháp lý', kw: ['phap ly', 'so do', 'so hong', 'giay phep', 'hdmb', 'bao lanh', 'lau dai', '50 nam'] },
-{ id: 'vi_tri', label: 'Hỏi vị trí / đi lại', kw: ['o dau', 'vi tri', 'dia chi', 'xa', 'gan', 'duong nao', 'ban do'] },
-{ id: 'tien_do', label: 'Hỏi tiến độ / bàn giao', kw: ['tien do', 'ban giao', 'bao gio', 'khi nao', 'xay den dau', 'cat noc'] },
-{ id: 'vay', label: 'Hỏi vay / thanh toán', kw: ['vay', 'lai suat', 'tra gop', 'thanh toan', 'chiet khau', 'chinh sach'] },
-{ id: 'xem', label: 'Muốn xem nhà', kw: ['xem nha', 'nha mau', 'di xem', 'tham quan', 'hen'] },
-{ id: 'che', label: 'Chê / nghi ngờ', kw: ['lua', 'dat qua', 'cao qua', 'ao', 'phong gia', 'ngao', 'tham'] },
-{ id: 'gia_cao', label: 'Chê giá cao', kw: ['dat qua', 'cao qua', 'mac qua', 'gia cao'] },
-{ id: 'cho', label: 'Chần chừ', kw: ['de sau', 'cho them', 'chua vo', 'suy nghi them', 'tu tu', 'cho gia giam'] },
-];
+export function resetTeamScript(cfg, id) { const c = { overrides: {}, custom: [], hidden: [], ...(cfg || {}) }; const _oj = { ...c.overrides }; delete _oj[id]; return { ...c, overrides: _oj }; }
+export const INTENTS = RULES;
 const _o2 = /(https?:\/\/|bit\.ly|zalo\.me\/|\b0\d{9}\b).*(kiem tien|viec nhe|lai \d+%|cho vay nhanh)|kiem tien online|viec nhe luong cao/;
-const _o0 = { gia: 'binh_luan', gia_cao: 'gia_cao', che: 'gia_cao', cho: 'cho_them', phap_ly: 'phap_ly', vi_tri: 'xa', vay: 'vay' };
-const words = s => ' ' + fold(s).replace(/[^a-z0-9]+/g, ' ').trim() + ' ';
-const hasWord = (_of, k) => _of.includes(' ' + k + ' ');
-export function classify(text) {
-const _of = words(text);
-if (!_of.trim()) return { intents: [], spam: false };
+const _o0 = { gia: 'binh_luan', gia_cao: 'gia_cao', che: 'gia_cao', cho: 'cho_them', phap_ly: 'phap_ly', vi_tri: 'xa', vay: 'vay', chinh_sach: 'vay', so_sanh: 'tc_ben_kia_re' };
+const words = norm;
+const hasWord = (_oi, k) => _oi.includes(' ' + k + ' ');
+export function classify(text, opts = {}) {
+const _oi = words(text);
+if (!_oi.trim()) return { intents: [], spam: false };
 const spam = _o2.test(fold(text));
-const intents = INTENTS.map(_ob => ({ id: _ob.id, label: _ob.label, hits: _ob.kw.filter(k => hasWord(_of, k)) })).filter(_ob => _ob.hits.length)
-.sort((_o3, b) => b.hits.length - _o3.hits.length);
-return { intents, spam };
+return { intents: detect(text, opts), spam };
 }
-export function suggestReplies(text, { scripts = DEFAULT_SCRIPTS, channel = 'comment', vars = {} } = {}) {
-const _o7 = classify(text);
+export function suggestReplies(text, { scripts = DEFAULT_SCRIPTS, channel = 'comment', vars = {}, project = null, projects = [], policies = null } = {}) {
+const _o7 = classify(text, { project, projects });
 const warnings = [];
 if (_o7.spam) warnings.push('Có dấu hiệu tin rác/lừa đảo – không trả lời, có thể ẩn bình luận.');
 if (/\b0\d{9}\b/.test(String(text))) warnings.push('Bình luận có số điện thoại – không nhắc lại số này công khai.');
-const _of = words(text);
-const _om = _o7.spam ? [] : scripts.map(s => {
+const _oi = words(text);
+const _oq = _o7.spam ? [] : scripts.map(s => {
 let pts = 0;
-for (const t of s.triggers || []) if (t && hasWord(_of, words(t).trim())) pts += 2;
-for (const _ob of _o7.intents) if (_o0[_ob.id] === s.id) pts += 3;
+for (const t of s.triggers || []) if (t && hasWord(_oi, words(t).trim())) pts += 2;
+for (const _od of _o7.intents) if (_o0[_od.id] === s.id) pts += 3;
 return { s, pts };
 }).filter(x => x.pts > 0).sort((_o3, b) => b.pts - _o3.pts).map(x => x.s);
 const fill = t => String(t || '').replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined && vars[k] !== '' ? String(vars[k]) : (k === 'du_an' ? 'dự án' : k === 'ten' ? '' : '…'))).replace(/\s{2,}/g, ' ').replace(/ ([,.])/g, '$1').trim();
-const _oo = _o7.intents[0];
-const _ok = _o7.spam ? '' : channel === 'comment'
-? (_oo && (_oo.id === 'che' || _oo.id === 'gia_cao')
+const facts = projectFacts(project, { policies });
+if (!facts && !_o7.spam) warnings.push('Chọn Dự án để câu trả lời có vị trí, giá, bàn giao… đúng dự án.');
+const _os = _o7.intents[0];
+const _of = _o7.spam ? null : composeReply(text, _o7.intents, facts);
+const _on = _o7.spam || channel !== 'comment' ? '' : _of ? _of.public
+: (_os && (_os.id === 'che' || _os.id === 'gia_cao')
 ? 'Dạ em cảm ơn góp ý của anh/chị ạ. Em gửi riêng anh/chị bảng so sánh giá có nguồn để mình tham khảo thêm nhé ạ.'
-: 'Dạ em cảm ơn anh/chị đã quan tâm ạ. ' + (_oo ? 'Phần ' + _oo.label.toLowerCase().replace(/^hỏi /, '') + ' ' : 'Thông tin chi tiết ') + 'em gửi riêng qua tin nhắn để anh/chị xem đầy đủ nhé ạ.')
-: '';
-const _oj = _om[0] ? fill(_om[0].text) : (_o7.spam ? '' : fill('Dạ em chào anh/chị, em cảm ơn anh/chị đã nhắn. Anh/chị đang quan tâm căn để ở hay đầu tư, khoảng vốn bao nhiêu để em gửi thông tin {du_an} phù hợp ạ?'));
-return { intents: _o7.intents, spam: _o7.spam, public: _ok, private: _oj, scripts: _om.slice(0, 4), warnings };
+: 'Dạ em cảm ơn anh/chị đã quan tâm ạ. ' + (_os ? 'Phần ' + _os.label.toLowerCase().replace(/^(hỏi|muốn) /, '') + ' ' : 'Thông tin chi tiết ') + 'em gửi riêng qua tin nhắn để anh/chị xem đầy đủ nhé ạ.');
+const _om = _o7.spam ? '' : _of ? _of.private : _oq[0] ? fill(_oq[0].text) : fill('Dạ em chào anh/chị, em cảm ơn anh/chị đã nhắn. Anh/chị đang quan tâm căn để ở hay đầu tư, khoảng vốn bao nhiêu để em gửi thông tin {du_an} phù hợp ạ?');
+const complaints = _o7.spam ? [] : detectComplaints(text);
+const rebut = complaints.map((c) => ({ id: c.id, label: c.label, ways: rebuttals(c.id, facts) })).filter((x) => x.ways.length);
+let _oo = _on, priv2 = _om;
+if (rebut.length) {
+const _o9 = (t) => (/^Dạ/.test(t) ? t : 'Dạ ' + t[0].toLowerCase() + t.slice(1));
+const _ob = rebut[0].ways[0].say;
+if (channel === 'comment') _oo = _o9(_ob).replace(/\s*$/, '') + ' Em nhắn riêng thêm thông tin để anh/chị tham khảo nhé ạ.';
+priv2 = 'Dạ em cảm ơn anh/chị đã nói thẳng ạ. ' + rebut.map((r) => r.ways.slice(0, 2).map((w) => { const t = w.say.replace(/^Dạ\s+/, ''); return t[0].toUpperCase() + t.slice(1); }).join(' ')).join(' ') + ' Anh/chị băn khoăn nhất điểm nào để em gửi đúng tài liệu ạ?';
 }
-export function replyPrompt(text, { channel = 'comment', project = '', me = {} } = {}) {
-return [
+return { intents: _o7.intents, spam: _o7.spam, public: _oo, private: priv2, scripts: _oq.slice(0, 4), warnings, facts, fromProject: !!_of, complaints, rebut };
+}
+export function replyPrompt(text, { channel = 'comment', project = '', me = {}, facts = null, intents = [] } = {}) {
+return withRulesJson([
 'Bạn là chuyên viên tư vấn bất động sản tại Việt Nam, nói chuyện lịch sự, trung thực.',
 'Viết 2 câu trả lời cho ' + (channel === 'comment' ? 'BÌNH LUẬN công khai' : 'TIN NHẮN riêng') + ' dưới đây (tiếng Việt có dấu, xưng "em", gọi "anh/chị"):',
 '1) "public": trả lời công khai ngắn (dưới 40 chữ), không nêu giá cụ thể, không nhắc số điện thoại, mời nhắn riêng.',
-'2) "private": tin nhắn riêng (dưới 110 chữ) trả lời đúng câu hỏi, hỏi thêm 1 câu về nhu cầu.',
+'1b) Câu public phải TRẢ LỜI ĐÚNG Ý khách trước (vd khách hỏi "Hưng Yên à" → xác nhận/điều chỉnh vị trí dự án), kèm 1–2 điểm nổi bật từ dữ liệu dự án, rồi mới mời nhắn riêng.',
+'2) "private": tin nhắn riêng (dưới 110 chữ) trả lời đúng câu hỏi bằng dữ liệu dự án, hỏi thêm 1 câu về nhu cầu.',
+'Câu khách viết thường cụt, không dấu, viết tắt: đoán ý hợp lý nhất theo ngữ cảnh bất động sản ("đất" = mảnh đất/khu đất, "đắt" = giá cao).',
 'Luật: ' + ETHICS.join(' ') + ' Không dùng chữ "xin lỗi". Không bịa số liệu – cần số thì ghi [cần kiểm tra].',
 project ? 'Dự án: ' + project : '',
+facts ? factsBlock(facts) : '',
+intents.length ? 'Luật của app đoán ý khách: ' + intents.slice(0, 3).map(_od => _od.label).join(', ') + ' (chỉ để tham khảo).' : '',
 'Người trả lời: ' + (me.name || 'chuyên viên tư vấn'),
 '',
 'Nội dung khách viết: """' + String(text || '').replace(/\b0\d{9}\b/g, '[số điện thoại]').slice(0, 1500) + '"""',
 'Trả về JSON: {"public": "…", "private": "…"}',
-].filter(Boolean).join('\n');
+].filter(Boolean).join('\n'));
 }
 export function parseReplyJson(t) {
 const s = String(t || '');
 for (const _o6 of [s, (s.match(/```(?:json)?\s*([\s\S]*?)```/) || [])[1], s.slice(s.indexOf('{'), s.lastIndexOf('}') + 1)]) {
 if (!_o6) continue;
-try { const _oc = JSON.parse(_o6); if (_oc && (_oc.public || _oc.private)) return { public: String(_oc.public || ''), private: String(_oc.private || '') }; } catch { }
+try { const _oe = JSON.parse(_o6); if (_oe && (_oe.public || _oe.private)) return { public: String(_oe.public || ''), private: String(_oe.private || '') }; } catch { }
 }
-const _oh = s.trim();
-if (!_oh || /^(```|\{|\[)/.test(_oh)) return null;
-return { public: '', private: _oh };
+const _ok = s.trim();
+if (!_ok || /^(```|\{|\[)/.test(_ok)) return null;
+return { public: '', private: _ok };
 }
 export const READ_FIELDS = [
 { id: 'purpose', label: 'Mục đích', opts: [['', '—'], ['o', 'Để ở'], ['dau_tu', 'Đầu tư (bán lại)'], ['cho_thue', 'Đầu tư cho thuê'], ['cho_con', 'Mua cho con / bố mẹ']] },
@@ -168,18 +176,18 @@ export const GUARDRAILS = [
 ];
 const _o1 = /tôn giáo|đạo phật|công giáo|chính trị|đảng viên|bệnh|ung thư|mang thai|ly hôn|nợ xấu|tiền án|dân tộc/i;
 export function consentState(c) {
-const _oa = gate(c, 'profile');
-if (!_oa.ok && c && stateOf(c).withdrawn) return { ok: false, text: _oa.reason + ' Không lập hồ sơ nhu cầu cho khách này.' };
-if (_oa.ok) return { ok: true, text: 'Khách đã đồng ý xử lý dữ liệu cá nhân.' };
+const _oc = gate(c, 'profile');
+if (!_oc.ok && c && stateOf(c).withdrawn) return { ok: false, text: _oc.reason + ' Không lập hồ sơ nhu cầu cho khách này.' };
+if (_oc.ok) return { ok: true, text: 'Khách đã đồng ý xử lý dữ liệu cá nhân.' };
 return { ok: false, text: 'Khách CHƯA đồng ý xử lý dữ liệu cá nhân (theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15). Chỉ lập hồ sơ nhu cầu khi khách đồng ý – ghi nhận đồng ý trong hồ sơ khách trước.' };
 }
 export function redact(text) {
 return String(text || '').replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, '[email]').replace(/\b\d{9,16}\b/g, '[số]').replace(/(\+84|0)[\d .]{8,12}\d/g, '[số điện thoại]');
 }
-export function sensitiveHits(text) { const _od = String(text || '').match(new RegExp(_o1.source, 'gi')); return _od ? [...new Set(_od.map(x => x.toLowerCase()))] : []; }
+export function sensitiveHits(text) { const _og = String(text || '').match(new RegExp(_o1.source, 'gi')); return _og ? [...new Set(_og.map(x => x.toLowerCase()))] : []; }
 export function readCustomer(c, answers = {}, extra = {}) {
 const _o3 = answers || {};
-const _oi = new Set(_o3.priorities || []);
+const _ol = new Set(_o3.priorities || []);
 const need = [];
 const tips = [];
 const docs = [];
@@ -187,12 +195,12 @@ const _o4 = (arr, t, why) => arr.push({ text: t, why });
 if (c.budget) _o4(need, 'Vốn khoảng ' + extra.money(c.budget), 'Khách đã nói');
 if (c.unit_type) _o4(need, 'Loại căn ' + c.unit_type, 'Khách đã nói');
 if (c.project) _o4(need, 'Quan tâm ' + (extra.projectName ? extra.projectName(c.project) : c.project), 'Khách đã nói');
-const label = (fid, v) => { const _o9 = READ_FIELDS.find(x => x.id === fid); const _og = _o9 && _o9.opts.find(x => x[0] === v); return _og ? _og[1] : ''; };
-for (const _o9 of READ_FIELDS) if (_o3[_o9.id]) _o4(need, _o9.label + ': ' + label(_o9.id, _o3[_o9.id]), 'Anh/chị ghi nhận khi trao đổi');
-if (_oi.size) _o4(need, 'Ưu tiên: ' + PRIORITIES.filter(p => _oi.has(p[0])).map(p => p[1]).join(', '), 'Anh/chị ghi nhận khi trao đổi');
+const label = (fid, v) => { const _oa = READ_FIELDS.find(x => x.id === fid); const _oj = _oa && _oa.opts.find(x => x[0] === v); return _oj ? _oj[1] : ''; };
+for (const _oa of READ_FIELDS) if (_o3[_oa.id]) _o4(need, _oa.label + ': ' + label(_oa.id, _o3[_oa.id]), 'Anh/chị ghi nhận khi trao đổi');
+if (_ol.size) _o4(need, 'Ưu tiên: ' + PRIORITIES.filter(p => _ol.has(p[0])).map(p => p[1]).join(', '), 'Anh/chị ghi nhận khi trao đổi');
 if (_o3.purpose === 'o') { _o4(tips, 'Nói về cuộc sống hằng ngày: đi làm, trường học, tiện ích quanh căn – đo thời gian đi lại thật.', 'Mục đích để ở'); docs.push('Bản đồ đi lại giờ cao điểm', 'Danh sách trường, chợ, bệnh viện quanh dự án'); }
 if (_o3.purpose === 'dau_tu') { _o4(tips, 'Trình bày cả rủi ro: thanh khoản, nguồn cung khu vực, chi phí vốn. Không hứa tăng giá.', 'Mục đích đầu tư'); docs.push('Lịch sử giá khu vực có nguồn', 'Bảng chi phí vốn nếu vay'); }
-if (_o3.purpose === 'cho_thue' || _oi.has('loi_suat')) { _o4(tips, 'Đưa giá thuê thực tế có nguồn, lợi suất gộp và ròng (trừ phí quản lý, thời gian trống).', 'Quan tâm cho thuê'); docs.push('Bảng lợi suất cho thuê'); }
+if (_o3.purpose === 'cho_thue' || _ol.has('loi_suat')) { _o4(tips, 'Đưa giá thuê thực tế có nguồn, lợi suất gộp và ròng (trừ phí quản lý, thời gian trống).', 'Quan tâm cho thuê'); docs.push('Bảng lợi suất cho thuê'); }
 if (_o3.decider === 'vo_chong' || _o3.decider === 'gia_dinh') _o4(tips, 'Hẹn khi người cùng quyết định có mặt; gửi tài liệu để cả nhà cùng đọc.', 'Không phải một người quyết');
 if (_o3.decider === 'doi_tac') _o4(tips, 'Chuẩn bị tài liệu đứng tên/đồng sở hữu; khuyên tham khảo luật sư về thoả thuận góp vốn.', 'Có người cùng góp');
 if (_o3.pay === 'vay') { _o4(tips, 'Làm bảng trả nợ cả giai đoạn ưu đãi và thả nổi; giữ tổng trả nợ trong khả năng.', 'Cần vay'); docs.push('Bảng tính khoản vay'); }
@@ -203,22 +211,22 @@ if (_o3.style === 'so_lieu') _o4(tips, 'Gửi bảng tính, so sánh có nguồn
 if (_o3.style === 'ngan') _o4(tips, 'Tin nhắn ngắn 3–4 dòng, ý chính trước, tài liệu đính kèm sau.', 'Thích ngắn gọn');
 if (_o3.style === 'ky') _o4(tips, 'Gửi đủ giấy tờ, hợp đồng mẫu; dành thời gian trả lời từng câu.', 'Thích kỹ lưỡng');
 if (_o3.style === 'gap' || _o3.channel === 'gap') _o4(tips, 'Hẹn xem nhà mẫu/căn thực tế; chuẩn bị sẵn bảng tính in ra.', 'Thích gặp trực tiếp');
-if (_oi.has('phap_ly')) { _o4(tips, 'Mở đầu bằng giấy tờ pháp lý có số hiệu, mời kiểm tra độc lập.', 'Ưu tiên pháp lý'); docs.push('Bộ giấy tờ pháp lý dự án'); }
-if (_oi.has('truong')) docs.push('Danh sách trường học + khoảng cách');
-if (_oi.has('phong_thuy')) _o4(tips, 'Gửi hướng cửa/ban công từng căn; phong thuỷ là sở thích của khách, không phải cam kết.', 'Quan tâm hướng');
+if (_ol.has('phap_ly')) { _o4(tips, 'Mở đầu bằng giấy tờ pháp lý có số hiệu, mời kiểm tra độc lập.', 'Ưu tiên pháp lý'); docs.push('Bộ giấy tờ pháp lý dự án'); }
+if (_ol.has('truong')) docs.push('Danh sách trường học + khoảng cách');
+if (_ol.has('phong_thuy')) _o4(tips, 'Gửi hướng cửa/ban công từng căn; phong thuỷ là sở thích của khách, không phải cam kết.', 'Quan tâm hướng');
 if (_o3.channel === 'zalo') _o4(tips, 'Liên lạc chính qua Zalo, gọi khi khách hẹn trước.', 'Kênh Zalo');
 if (_o3.channel === 'goi') _o4(tips, 'Gọi giờ khách tiện; nhắn trước khi gọi.', 'Kênh gọi điện');
 if (!tips.length) _o4(tips, 'Chưa đủ thông tin – hỏi thêm mục đích, người quyết định, thời gian và cách thanh toán.', 'Hồ sơ còn trống');
-const missing = READ_FIELDS.filter(_o9 => !_o3[_o9.id]).map(_o9 => _o9.label);
+const missing = READ_FIELDS.filter(_oa => !_o3[_oa.id]).map(_oa => _oa.label);
 return { need, tips, docs: [...new Set(docs)], missing, guardrails: GUARDRAILS };
 }
 export function readPrompt(c, answers, notesText, extra = {}) {
 const r = readCustomer(c, answers, extra);
-return [
+return withRules([
 'Bạn là chuyên gia tư vấn bất động sản trung thực. Dựa trên hồ sơ nhu cầu dưới đây (đã ẩn tên, số điện thoại), gợi ý CÁCH TƯ VẤN phù hợp.',
 'Luật bắt buộc: ' + GUARDRAILS.join(' ') + ' ' + SENSITIVE_NOTE + ' Không đoán tính cách, chỉ dựa trên dữ kiện. Không dùng chữ "xin lỗi".',
-'', 'Nhu cầu:', ...r.need.map(_of => '- ' + _of.text),
+'', 'Nhu cầu:', ...r.need.map(_oi => '- ' + _oi.text),
 notesText ? '\nGhi chú trao đổi (đã ẩn số):\n' + redact(notesText).slice(0, 2000) : '',
 '', 'Trả về 5–7 gạch đầu dòng: nên nói gì trước, tài liệu cần chuẩn bị, câu hỏi nên hỏi thêm, điều nên tránh.',
-].join('\n');
+].join('\n'));
 }

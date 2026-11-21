@@ -1,16 +1,17 @@
 import { extractJsonObj, normalizeLayout, DIRS } from '../g1_lib/logic.js';
 import { fold, parseNum } from '../_lib/sales.js';
 import { KINDS, cleanRooms, validate, areas, bounds } from './plan3d.js';
+import { withRulesJson } from '../../../shared/ai_rules.js';
 export const LAYOUT_MARK = 'BDS_G5_LAYOUT3D';
 export const MIN_SIDE = 0.5, MAX_SIDE = 30;
 const _oi = (x) => Math.round(x * 100) / 100;
 const vn = (x, d = 1) => String(Math.round(x * 10 ** d) / 10 ** d).replace('.', ',');
 export function layoutPrompt({ unit = '', project = '' } = {}) {
-return [
+return withRulesJson([
 LAYOUT_MARK,
 `Đọc ảnh/PDF mặt bằng (layout) căn hộ${project ? ' dự án ' + project : ''}${unit ? ', căn ' + unit : ''} để dựng mô hình 3D. Chỉ ghi điều NHÌN THẤY trên ảnh, không đoán thêm phòng.`,
 'Quy ước toạ độ: gốc (0,0) ở góc TRÊN-TRÁI hình chữ nhật bao ngoài căn hộ trên ảnh; x tăng sang phải, y tăng xuống dưới; đơn vị MÉT. Mỗi phòng xấp xỉ bằng 1 hình chữ nhật.',
-'Kích thước lấy theo số ghi trên ảnh (mm → m) hoặc thước tỉ lệ; nếu ảnh không ghi kích thước thì ước lượng theo diện tích ghi trong phòng và ghi dims_from = "uoc_luong".',
+'Kích thước lấy theo số ghi trên ảnh (mm → m) hoặc thước tỉ lệ; ảnh không ghi kích thước nhưng có ghi diện tích phòng thì tính ra từ diện tích GHI TRÊN ẢNH và ghi dims_from = "uoc_luong" (người dùng soát lại). Ảnh không có số nào thì không tự nghĩ ra số đo: hạ confidence và ghi vào notes.',
 'Trả về DUY NHẤT một đối tượng JSON:',
 '{"unit_code":"mã căn nếu ghi trên ảnh hoặc rỗng","area_m2":số hoặc null,"area_kind":"thong_thuy|tim_tuong|khong_ro","bedrooms":số,"wc":số,',
 '"corner":true|false|null,"north_arrow":true|false,"north_deg":góc mũi tên chỉ Bắc so với phía TRÊN của ảnh, theo chiều kim đồng hồ (0 = Bắc ở trên) hoặc null,',
@@ -19,7 +20,7 @@ LAYOUT_MARK,
 '"doors":[{"between":["Phòng khách","Phòng ngủ 1"]}],"entry":{"room":"tên phòng có cửa chính","side":"top|bottom|left|right"},',
 '"confidence":0..1,"notes":"điều người xem cần kiểm lại"}',
 'Không có mũi tên chỉ Bắc thì north_arrow=false, north_deg=null. Không bịa số đo: thấy không rõ thì hạ confidence và ghi vào notes.',
-].join('\n');
+].join('\n'));
 }
 const _o2 = [
 ['bancong', ['ban cong', 'lo gia', 'logia', 'loggia', 'balcony', 'san phoi', 'bancong']],

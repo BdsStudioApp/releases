@@ -1,7 +1,7 @@
 import * as G from './gcai.js';
 import { DRIVE_ABOUT, accountId, captchaToken, slotsLabel, slotsLeftText, slotStateOf, gcaiPlan } from './gcai_slots.js';
 import { setSetupToken, setupToken } from '../setup_gate.d66104e8e0.js';
-import { privacyUrl } from '../instance.087c1b328a.js';
+import { privacyUrl } from '../instance.ffcba07fb7.js';
 const STEPS = [
 { n: 1, title: 'Đăng nhập Google', sub: 'Chọn tài khoản → Cho phép. Trang tự tạo Sheet + máy chủ trong Drive của anh/chị.' },
 { n: 2, title: 'Bật Apps Script API', sub: 'Chỉ khi Google hỏi: gạt 1 nút sang Bật rồi quay lại.' },

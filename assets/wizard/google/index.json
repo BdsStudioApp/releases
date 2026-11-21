@@ -1,6 +1,6 @@
 {
  "note": "Ảnh minh hoạ (vẽ lại, không phải ảnh chụp Google) cho Trợ lý cài đặt – các bước làm trên trang Google (và trang ngoài: Telegram, AI Studio, trang quản lý tên miền – thư mục assets/wizard/ext/), khớp luồng Tạo bản sao / dán tay + hộp Triển khai của CaiDat.gs. Đường dẫn file tính từ web/ (giống shots.json). PNG 1280×800, 1x (trợ lý chưa dùng srcset). Mỗi ảnh có nhãn \"Ảnh minh hoạ\" ở góc phải dưới.",
- "generated": "2026-11-17",
+ "generated": "2026-11-20",
  "width": 1280,
  "height": 800,
  "scale": 1,
@@ -180,15 +180,15 @@
   "sheet-menu": {
    "file": "assets/wizard/google/sheet-menu.png",
    "step": 8,
-   "alt": "Trong Google Sheet: bấm menu BDS Studio rồi bấm Cài đặt",
-   "caption": "Trong Sheet: đợi 10–20 giây cho menu \"BDS Studio\" hiện → bấm BDS Studio › Cài đặt. Google hỏi quyền lần nữa: làm như bước cấp quyền."
+   "alt": "Trong Google Sheet: chờ menu BDS Studio hiện rồi bấm BDS Studio, Cài đặt",
+   "caption": "Trong Sheet: chờ 10–20 giây cho menu \"BDS Studio\" hiện → bấm BDS Studio › ⚙️ Cài đặt."
   },
   "sheet-deploy-dialog": {
    "file": "assets/wizard/google/sheet-deploy-dialog.png",
    "step": 9,
    "part": "1/5",
-   "alt": "Hộp Triển khai máy chủ trong Sheet: 6 cú bấm, mỗi dòng một việc, rồi nút Tôi đã triển khai xong",
-   "caption": "Hộp \"Triển khai máy chủ\" hiện 6 cú bấm (có ảnh): Triển khai → Tuỳ chọn triển khai mới (New deployment) → ⚙ Ứng dụng web → Thực thi: Tôi → Truy cập: Bất kỳ ai → Triển khai → Cho phép → Sao chép URL. Làm xong bấm \"Tôi đã triển khai xong\" – hộp hiện nút \"Quay lại trang cài đặt và kết nối\"."
+   "alt": "Hộp Triển khai máy chủ trong Sheet: các bước triển khai, mỗi dòng một việc, rồi nút Tôi đã triển khai xong",
+   "caption": "Hộp \"Triển khai máy chủ\" trong Sheet: làm theo từng dòng (chỉ 1 lần), xong bấm \"Tôi đã triển khai xong\"."
   },
   "deploy-menu": {
    "file": "assets/wizard/google/deploy-menu.png",
@@ -215,8 +215,8 @@
    "file": "assets/wizard/google/deploy-url.png",
    "step": 9,
    "part": "5/5",
-   "alt": "Triển khai xong: ô URL ứng dụng web kết thúc bằng /exec và nút Sao chép",
-   "caption": "Hiện \"URL ứng dụng web\" dạng https://script.google.com/macros/s/…/exec → bấm Sao chép (Copy) → Xong."
+   "alt": "Triển khai xong: hiện Đã triển khai và URL ứng dụng web kết thúc bằng /exec, bấm Xong",
+   "caption": "Hiện \"Đã triển khai\" và URL ứng dụng web …/exec → bấm Xong (Done). Sao chép (Copy) chỉ cần khi hộp trong Sheet chưa tự thấy địa chỉ."
   },
   "app-connect": {
    "file": "assets/wizard/google/app-connect.png",
@@ -233,14 +233,14 @@
   "ext-botfather": {
    "file": "assets/wizard/ext/ext-botfather.png",
    "step": "telegram",
-   "alt": "Telegram: tìm @BotFather, gõ /newbot, đặt tên và tên đăng nhập bot kết thúc bằng bot, BotFather gửi mã bot để chép",
-   "caption": "Telegram → ô tìm kiếm gõ @BotFather → gõ /newbot → đặt tên bot → đặt tên đăng nhập kết thúc bằng \"bot\" → BotFather gửi mã bot dạng 123456:ABC… → chép mã."
+   "alt": "Telegram: gõ /newbot, đặt tên hiển thị, đặt tên đăng nhập kết thúc bằng bot; tên đã có người dùng thì thêm số",
+   "caption": "Gõ /newbot → đặt tên hiển thị → đặt tên đăng nhập kết thúc bằng \"bot\" (đã có người dùng thì thêm số)."
   },
   "ext-aistudio": {
    "file": "assets/wizard/ext/ext-aistudio.png",
    "step": "ai",
    "alt": "Trang AI Studio tiếng Anh: bấm Get API key (Lấy khoá API), Create API key (Tạo khoá API), rồi Copy (Chép) khoá",
-   "caption": "Trang AI Studio bằng tiếng Anh: \"Get API key\" = Lấy khoá API → \"Create API key\" = Tạo khoá API → \"Copy\" = Chép khoá AIza… → dán vào Cài đặt › Kết nối › Gemini."
+   "caption": "Trang AI Studio bằng tiếng Anh: \"Get API key\" = Lấy khoá API → \"Create API key\" = Tạo khoá API → \"Copy\" = Chép khoá AIza… → QUAY LẠI tab BDS Studio, dán vào ô Khoá Gemini."
   },
   "ext-dns-cname": {
    "file": "assets/wizard/ext/ext-dns-cname.png",
@@ -259,6 +259,42 @@
    "step": 11,
    "alt": "Hộp Cài đặt xong trong Sheet: nút to Quay lại trang cài đặt và kết nối",
    "caption": "Máy chủ đã triển khai: bấm \"Quay lại trang cài đặt và kết nối\" – trang cài đặt mở ở thẻ mới, tự nối máy chủ và mở màn đặt mật khẩu. Không cần chép gì."
+  },
+  "sheet-installing": {
+   "file": "assets/wizard/google/sheet-installing.png",
+   "step": 8,
+   "alt": "Hộp Cài đặt máy chủ trong Sheet: Đang cài đặt máy chủ, khoảng 30 giây, đừng tải lại trang",
+   "caption": "Bấm ⚙️ Cài đặt lần 2: hộp \"Đang cài đặt máy chủ…\" hiện ra – chờ khoảng 30 giây, đừng tải lại trang."
+  },
+  "sheet-ext-menu": {
+   "file": "assets/wizard/google/sheet-ext-menu.png",
+   "step": 9,
+   "alt": "Trong Google Sheet: bấm Tiện ích mở rộng rồi chọn Apps Script",
+   "caption": "Trên thanh menu của Sheet bấm \"Tiện ích mở rộng\" (Extensions) → \"Apps Script\" – mở thẻ mới."
+  },
+  "deploy-authorize": {
+   "file": "assets/wizard/google/deploy-authorize.png",
+   "step": 9,
+   "alt": "Hộp Tuỳ chọn triển khai mới: Ứng dụng web cần quyền truy cập, bấm Uỷ quyền truy cập rồi chọn Gmail",
+   "caption": "Lần triển khai đầu Google hỏi quyền: bấm \"Uỷ quyền truy cập\" (Authorize access) → chọn Gmail → Nâng cao → Đi tới… (không an toàn) → Cho phép."
+  },
+  "ext-tg-botfather": {
+   "file": "assets/wizard/ext/ext-tg-botfather.png",
+   "step": "telegram",
+   "alt": "Telegram: ô tìm kiếm gõ @BotFather, chọn BotFather có dấu tích xanh, bấm Start",
+   "caption": "Telegram: ô tìm kiếm gõ @BotFather → chọn đúng BotFather có dấu tích xanh ✔ → bấm Start (Bắt đầu)."
+  },
+  "ext-tg-token": {
+   "file": "assets/wizard/ext/ext-tg-token.png",
+   "step": "telegram",
+   "alt": "Telegram: tin Done Congratulations của BotFather có link t.me tới bot và dòng mã bot dạng 7123456789:AAH, chạm để chép",
+   "caption": "BotFather gửi tin \"Done! Congratulations…\": chạm vào dòng mã dạng 7123456789:AAH… để chép. Link t.me/… trong tin là để mở bot ở bước sau."
+  },
+  "ext-tg-start": {
+   "file": "assets/wizard/ext/ext-tg-start.png",
+   "step": "telegram",
+   "alt": "Telegram: mở bot vừa tạo, bấm Start rồi gõ chào và gửi",
+   "caption": "Mở bot vừa tạo (link t.me/… trong tin của BotFather) → bấm Start → gõ \"chào\" → gửi."
   }
  },
  "slots": {
@@ -276,5 +312,5 @@
   "ext-dns-cname": "ext-dns-cname",
   "ext-google-account": "ext-google-account"
  },
- "slotsNote": "Ô ảnh (slot) đang có trong web/core/wizard/steps.js → ảnh tương ứng; nhiều ảnh = chuỗi theo thứ tự. Bước 4 (tệp kê khai) là bước \"3b\" mới chèn sau bước dán mã; các bước sau đã đánh số lại. Ô ext-google-account, ext-botfather, ext-dns-cname, ext-aistudio: ảnh minh hoạ trong assets/wizard/ext/ (vẽ bằng tools/wizard_art/render.mjs). Mọi ảnh vẽ lại – không logo bên thứ ba, không chữ dạng email. (17/11) Cách A (CaiMayChu.gs) đã bỏ – các ảnh bước 1–3, 5–7 (script-api, script-new, paste-save, run, auth-*, exec-log) chỉ còn dùng chỗ khớp (cấp quyền = ext-google-allow; kê khai = bước 4 của cách dán tay)."
+ "slotsNote": "Ô ảnh (slot) đang có trong web/core/wizard/steps.js → ảnh tương ứng; nhiều ảnh = chuỗi theo thứ tự. Bước 4 (tệp kê khai) là bước \"3b\" mới chèn sau bước dán mã; các bước sau đã đánh số lại. Ô ext-google-account, ext-botfather, ext-dns-cname, ext-aistudio: ảnh minh hoạ trong assets/wizard/ext/ (vẽ bằng tools/wizard_art/render.mjs). Mọi ảnh vẽ lại – không logo bên thứ ba, không chữ dạng email. (17/11) Cách A (CaiMayChu.gs) đã bỏ – các ảnh bước 1–3, 5–7 (script-api, script-new, paste-save, run, auth-*, exec-log) chỉ còn dùng chỗ khớp (cấp quyền = ext-google-allow; kê khai = bước 4 của cách dán tay). (20/11) Trợ lý cài đặt đọc ảnh theo khoá ở steps.js › actions[].imgs (1 dòng chữ ↔ đúng ảnh của nó, chú thích đứng TRƯỚC ảnh); steps/slots giữ cho công cụ cũ."
 }

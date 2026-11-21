@@ -1,4 +1,6 @@
-export const LESSONS = [
+import { buildRoute } from './route.js';
+import { GROUP_LISTS, EXTRA_QUIZ, META } from './lotrinh/index.js';
+export const BASE_LESSONS = [
 {
 id: 'l01', title: 'Gọi lại khách mới trong 5 phút đầu', minutes: 6, topic: 'Tìm khách',
 intro: 'Khách để lại số trên landing thường đang mở nhiều trang cùng lúc. Người gọi sớm nhất có lợi thế lớn nhất: khách còn nhớ mình vừa xem gì.',
@@ -137,7 +139,7 @@ intro: 'Khách xem video, đọc bài của anh/chị nhiều lần trước khi
 sections: [
 { h: 'Hữu ích trước, bán hàng sau', p: 'Giải thích quy hoạch, hạ tầng, cách tính dòng tiền, kinh nghiệm nhận nhà. Phần giới thiệu dự án chỉ nên là một phần nhỏ.' },
 { h: 'Ghi nguồn, ghi thời điểm', p: 'Mọi con số về giá, hạ tầng, quy hoạch ghi rõ nguồn và tháng/năm. Ảnh phối cảnh ghi "Ảnh minh hoạ". Không dùng chữ "chắc chắn tăng giá", "cam kết lợi nhuận".' },
-{ h: 'Đều đặn', p: 'Ba nội dung tốt mỗi tuần, đều đặn trong nhiều tháng, hiệu quả hơn nhiều nội dung dồn vào một tuần rồi nghỉ. Lịch đăng 14 ngày ở Nguồn ý tưởng giúp giữ nhịp.' },
+{ h: 'Đều đặn', p: 'Ba nội dung tốt mỗi tuần, đều đặn trong nhiều tháng, hiệu quả hơn nhiều nội dung dồn vào một tuần rồi nghỉ. Lịch & Đăng trong app giúp giữ nhịp.' },
 ],
 exercise: 'Viết 3 tiêu đề video cho tuần tới: 1 về hạ tầng (có nguồn), 1 về tài chính mua nhà, 1 về kinh nghiệm thực tế.',
 takeaways: ['Hữu ích trước', 'Luôn có nguồn và thời điểm', 'Đều đặn quan trọng hơn dồn dập'],
@@ -164,6 +166,7 @@ quiz: [
 ],
 },
 ];
+export const LESSONS = buildRoute(BASE_LESSONS, GROUP_LISTS, EXTRA_QUIZ, META);
 export const SHELF = [
 { id: 'b1', title: 'SPIN Selling', author: 'Neil Rackham', kind: 'sach', why: 'Hỏi để hiểu nhu cầu trong bán hàng giá trị lớn.' },
 { id: 'b2', title: 'Never Split the Difference (Đàm phán không khoan nhượng)', author: 'Chris Voss, Tahl Raz', kind: 'sach', why: 'Lắng nghe, gọi tên cảm xúc khi đàm phán.' },
@@ -175,7 +178,7 @@ export const SHELF = [
 { id: 'v3', title: 'Luật Đất đai 2024 (số 31/2024/QH15)', author: 'Quốc hội', kind: 'luat', why: 'Quy hoạch sử dụng đất, giấy chứng nhận.' },
 { id: 'v4', title: 'Luật Bảo vệ dữ liệu cá nhân 2025 (số 91/2025/QH15) và Nghị định 356/2025/NĐ-CP', author: 'Quốc hội, Chính phủ', kind: 'luat', why: 'Thu thập, xử lý dữ liệu khách hàng.' },
 ];
-export const BOX_DAYS = [0, 1, 3, 7, 16];
+export const BOX_DAYS = [0, 1, 3, 7, 16, 35, 80];
 const DAY = 86400000;
 export const ymd = (ms, tz = 7) => new Date(ms + tz * 3600000).toISOString().slice(0, 10);
 export function emptyProgress() { return { done: {}, cards: {}, days: [], shelf: {}, custom: [] }; }

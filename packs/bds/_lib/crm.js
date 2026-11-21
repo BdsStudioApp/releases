@@ -70,13 +70,13 @@ const _o9 = new Set(['cho', 'hỏi', 'giá', 'căn', 'cần', 'mua', 'bán', 'th
 'gọi', 'liên', 'hệ', 'ơi', 'ạ', 'là', 'tên', 'của', 'và', 'với', 'được', 'không', 'có', 'bao', 'nhiêu', 'tầm', 'khoảng', 'về', 'ở', 'tại', 'hộ', 'đất', 'nền',
 'khách', 'chào', 'dạ', 'vâng', 'nhé', 'nè', 'đây', 'shop', 'bạn', 'admin', 'em', 'anh', 'chị', 'đang', 'đã', 'sẽ']);
 const _o8 = new Set(['số', 'sđt', 'sdt', 'zalo', 'tên', 'là', 'cần', 'hỏi', 'mua', 'bán', 'thuê', 'muốn', 'xem', 'cho', 'giá', 'căn']);
-const _o1f = (_o24) => { const _o19 = _o24.toLocaleLowerCase('vi'); return _o8.has(_o19) || (!_o14(_o24) && _o9.has(_o19)); };
+const _o1f = (_o25) => { const _o19 = _o25.toLocaleLowerCase('vi'); return _o8.has(_o19) || (!_o14(_o25) && _o9.has(_o19)); };
 const _o3 = new RegExp('^(?:(?:xin\\s+)?ch[aà]o(?:\\s+(?:em|anh|chị|chi|bạn|shop|ad|admin|cả\\s+nhà|mọi\\s+người))?|(?:em|anh|chị|chi|mình|tôi)\\s+ch[aà]o\\s+(?:em|anh|chị|chi|bạn|shop|cả\\s+nhà)|d[aạ]|vâng|alo|hi|hello|ơi|ạ|nhé)(?:\\s+(?:ạ|ơi|nhé|nha))?(?=[\\s,.;:!?]|$)[\\s,.;:!?–\\-]*', 'i');
 const _oc = /(?:\s+|^)(?:ạ|nhé|nha|nè|đây|ơi|à|nhá)$/i;
 const _o2 = /(?:s[đd]t|s[oố](?:\s*(?:[đd]i[eệ]n\s*tho[aạ]i|[đd]t|em|anh|chị|chi|mình|tôi|của\s+\S+))?|[đd]t|phone|zalo|li[eê]n\s*h[eệ]|g[oọ]i)\s*[:：]?\s*$/i;
-const _o23 = (_o24) => _o24.charAt(0).toLocaleUpperCase('vi') + _o24.slice(1).toLocaleLowerCase('vi');
-const _o16 = (_o24) => /^\p{L}+$/u.test(_o24);
-const _o14 = (_o24) => /^\p{Lu}/u.test(_o24);
+const _o24 = (_o25) => _o25.charAt(0).toLocaleUpperCase('vi') + _o25.slice(1).toLocaleLowerCase('vi');
+const _o16 = (_o25) => /^\p{L}+$/u.test(_o25);
+const _o14 = (_o25) => /^\p{Lu}/u.test(_o25);
 function _ol(seg) {
 let x = String(seg || '').replace(/\s+/g, ' ').trim();
 for (let i = 0; i < 4 && _o3.test(x); i++) x = x.replace(_o3, '').trim();
@@ -86,21 +86,21 @@ return x.replace(/^[\s:：\-–—,.;|/]+/, '').trim();
 const _or = (x) => x.split(/\s+(?:c[aầ]n|h[oỏ]i|mu[oố]n|quan\s*t[aâ]m|mua|thu[eê]|b[aá]n|xem|[đd][aã]|đang|dang|nè|đây|ạ)(?:\s|$)/i)[0].trim();
 function _o13(x, kin) {
 const words = [];
-for (const _o24 of _ol(x).split(' ')) { if (!_o16(_o24) || _o1f(_o24)) break; words.push(_o24); if (words.length === 4) break; }
+for (const _o25 of _ol(x).split(' ')) { if (!_o16(_o25) || _o1f(_o25)) break; words.push(_o25); if (words.length === 4) break; }
 if (!words.length) return '';
-const nm = words.map(_o23).join(' ');
-return words.length === 1 && /^(?:anh|chị|chi)$/i.test(kin || '') ? _o23(kin.replace(/^chi$/i, 'chị')) + ' ' + nm : nm;
+const nm = words.map(_o24).join(' ');
+return words.length === 1 && /^(?:anh|chị|chi)$/i.test(kin || '') ? _o24(kin.replace(/^chi$/i, 'chị')) + ' ' + nm : nm;
 }
 function _o1n(x) {
-const _o24 = _or(_ol(x)).split(' ').filter(Boolean);
-if (!_o24.length || _o24.length > 5 || !_o24.every(_o16)) return '';
-if (_o7.test(_o24[0])) {
-const rest = _o24.slice(1, 5);
-return rest.length && rest.every((r) => _o14(r) && !_o1f(r)) ? [_o24[0], ...rest].join(' ') : '';
+const _o25 = _or(_ol(x)).split(' ').filter(Boolean);
+if (!_o25.length || _o25.length > 5 || !_o25.every(_o16)) return '';
+if (_o7.test(_o25[0])) {
+const rest = _o25.slice(1, 5);
+return rest.length && rest.every((r) => _o14(r) && !_o1f(r)) ? [_o25[0], ...rest].join(' ') : '';
 }
-if (_o24.length > 4 || _o24.some(_o1f)) return '';
-if (_o24.every(_o14)) return _o24.join(' ');
-return _o24.length >= 2 ? _o24.map(_o23).join(' ') : '';
+if (_o25.length > 4 || _o25.some(_o1f)) return '';
+if (_o25.every(_o14)) return _o25.join(' ');
+return _o25.length >= 2 ? _o25.map(_o24).join(' ') : '';
 }
 const _o6 = new RegExp('(?:^|[\\s,.;:!?])(?:(' + _ob + ')\\s+(?:t[eê]n\\s+(?:l[aà]\\s+)?|l[aà]\\s+)|(?:(' + _ob + ')\\s+)?t[eê]n(?:\\s+l[aà]|\\s*[:：])?\\s+)([^\\n,.;!?\\d]+)', 'iu');
 export function leadName(text, phoneAt = -1) {
@@ -129,8 +129,8 @@ if (!phone || !validPhone(phone)) return null;
 const name = leadName(_o1q, m.index);
 const _oi = strip(_o1q).match(/(\d+(?:[.,]\d+)?)\s*(ty|ti|trieu|tr)\b(?:\s*(\d{1,3})\b)?/);
 const budget = _oi ? parseMoney(_oi[1] + ' ' + _oi[2] + (_oi[3] && /^t[yi]$/.test(_oi[2]) ? ' ' + _oi[3] : '')) || 0 : 0;
-const _o22 = _o1q.match(/\b([1-5])\s*(?:PN|pn|N|n|phòng ngủ|phong ngu)\b(\+?)/);
-return { name, phone, budget, unit_type: _o22 ? _o22[1] + 'N' + _o22[2] : (/\bstudio\b/i.test(_o1q) ? 'Studio' : ''), note: _o1q.slice(0, 1000) };
+const _o23 = _o1q.match(/\b([1-5])\s*(?:PN|pn|N|n|phòng ngủ|phong ngu)\b(\+?)/);
+return { name, phone, budget, unit_type: _o23 ? _o23[1] + 'N' + _o23[2] : (/\bstudio\b/i.test(_o1q) ? 'Studio' : ''), note: _o1q.slice(0, 1000) };
 }
 export function findDuplicatePhone(list, phone, exceptId) {
 const _o1j = normPhone(phone);
@@ -169,9 +169,9 @@ export function nextBirthday(bday, now) {
 const m = String(bday || '').match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
 if (!m) return null;
 const [start] = dayRange(now);
-const _o27 = new Date(now).getFullYear();
-let t = new Date(_o27, +m[2] - 1, +m[3]).getTime();
-if (t < start) t = new Date(_o27 + 1, +m[2] - 1, +m[3]).getTime();
+const _o28 = new Date(now).getFullYear();
+let t = new Date(_o28, +m[2] - 1, +m[3]).getTime();
+if (t < start) t = new Date(_o28 + 1, +m[2] - 1, +m[3]).getTime();
 return t;
 }
 export function greeting(hour) { return greetWord(hour); }
@@ -255,12 +255,12 @@ return _o1i('normal', 'none');
 }
 export function heatTitle(h) {
 if (!h) return '';
-const _o26 = h.source === 'manual' ? 'anh/chị đã chọn'
+const _o27 = h.source === 'manual' ? 'anh/chị đã chọn'
 : h.source === 'lead' ? 'theo Mức độ của lead công ty cấp'
 : h.source === 'tag' ? 'theo nhãn "nóng"'
 : h.source === 'score' ? 'app tự tính theo hành vi (' + h.score + ' điểm)'
 : 'chưa đánh giá';
-return 'Mức quan tâm: ' + h.label + ' – ' + _o26;
+return 'Mức quan tâm: ' + h.label + ' – ' + _o27;
 }
 export function heatPatch(c, level, now = Date.now()) {
 const _o1b = HEAT_IDS.includes(level) ? level : null;
@@ -316,7 +316,7 @@ if (f.consent === 'withdrawn' && !consent.stateOf(c).withdrawn) return false;
 if (words.length) {
 const _o11 = _o12(c);
 const _o1m = _o1p.length >= 3 && (normPhone(c.phone).includes(_o1p) || String(c.phone || '').includes(_o1p));
-if (!_o1m && !words.every(_o24 => _o11.includes(_o24))) return false;
+if (!_o1m && !words.every(_o25 => _o11.includes(_o25))) return false;
 }
 return true;
 });
@@ -506,25 +506,27 @@ if (!_o1o || String(_o1j.month || '') > String(_o1o.month || '')) latest.set(_o1
 }
 return [...latest.values()].filter(_o1j => String(_o1j.month || '') < _op);
 }
-const _o1 = ['followup', 'custom', 'birthday', 'referral', 'handover', 'policy_stale'];
+const _o1 = ['followup', 'custom', 'birthday', 'referral', 'handover'];
 export function buildBrief({ customers, events, reminders, policies, now, logic }) {
 const _oo = activeCustomers(customers);
 const [a, _oi] = dayRange(now);
-const act = _of(consent.visibleReminders(reminders, _oo)).sort(_ok);
+const act = _of(consent.visibleReminders(reminders, _oo)).filter(r => r.kind !== 'policy_stale').sort(_ok);
 const _ox = new Map(), contacted = new Set();
 for (const e of events || []) {
 if (Number(e.deleted)) continue;
 let _o19 = _ox.get(e.object_id); if (!_o19) _ox.set(e.object_id, _o19 = []); _o19.push(e);
 if (e.type === 'call' || e.type === 'zalo') contacted.add(e.object_id);
 }
-const _oy = id => (_ox.get(id) || []).slice().sort((x, _o27) => (_o27.at || 0) - (x.at || 0));
-const newLeads = _oo.filter(c => isNewLead(c, events, contacted)).sort((x, _o27) => (_o27.created_at || 0) - (x.created_at || 0));
+const _o21 = new Set();
+for (const e of events || []) if (!Number(e.deleted) && Number(e.at) >= a) _o21.add(e.object_id);
+const _oy = id => (_ox.get(id) || []).slice().sort((x, _o28) => (_o28.at || 0) - (x.at || 0));
+const newLeads = _oo.filter(c => isNewLead(c, events, contacted)).sort((x, _o28) => (_o28.created_at || 0) - (x.created_at || 0));
 const dueToday = act.filter(r => _o1.includes(r.kind || 'followup') && r.due_at >= a && r.due_at <= _oi);
 const _o10 = logic && logic.remind && logic.remind.followupDue;
 if (typeof _o10 === 'function') {
 const _om = new Set(dueToday.map(r => r.object_id).concat(newLeads.map(c => c.id)));
 for (const c of _oo) {
-if (_om.has(c.id) || !consent.gate(c, 'contact').ok) continue;
+if (_om.has(c.id) || _o21.has(c.id) || !consent.gate(c, 'contact').ok) continue;
 let due = false;
 try { due = _o10(c, _oy(c.id), now); } catch { due = false; }
 if (due) dueToday.push({ id: 'fu_' + c.id, object_id: c.id, kind: 'followup', title: 'Đến hạn gọi chăm sóc', due_at: a, virtual: true });
@@ -536,7 +538,7 @@ dueToday,
 overdue: act.filter(r => r.due_at < a),
 paymentsSoon: act.filter(r => r.kind === 'payment' && r.due_at >= a && r.due_at <= _oi + 7 * DAY),
 meetingsToday: act.filter(r => r.kind === 'meeting' && r.due_at >= a && r.due_at <= _oi),
-stalePolicies: stalePolicies(policies, now),
+stalePolicies: [],
 };
 }
 export function normalizePlan(plan) {
@@ -560,9 +562,9 @@ let date = it.date || it.dueDate || it.due || it.due_date || '';
 const _o1d = it.due_at ?? it.at;
 if (!date && _o1d) date = ymd(_o1d);
 if (!date && it.dueYM) {
-const [_o27, m] = String(it.dueYM).split('-').map(Number);
-const _o1a = new Date(_o27, m, 0).getDate();
-date = _o27 + '-' + _o1k(m) + '-' + _o1k(Math.min(_o1x || 1, _o1a));
+const [_o28, m] = String(it.dueYM).split('-').map(Number);
+const _o1a = new Date(_o28, m, 0).getDate();
+date = _o28 + '-' + _o1k(m) + '-' + _o1k(Math.min(_o1x || 1, _o1a));
 }
 if (date && !/^\d{4}-\d{2}-\d{2}/.test(date)) { const t = parseYmd(date); date = Number.isFinite(t) ? ymd(t) : ''; }
 const pct = Number(it.pct ?? it.percent ?? 0);
@@ -581,11 +583,11 @@ const _o1y = parseYmd(_o1z);
 const _o1x = new Date(_o1y).getDate();
 const _o1t = logic && logic.pay && logic.pay.schedule;
 if (typeof _o1t === 'function') {
-const _o21 = [
+const _o22 = [
 () => _o1t(project, plan, total, _o1z),
 () => _o1t({ total, price_total: total, plan, start: _o1z, start_at: _o1y, project }),
 ];
-for (const t of _o21) {
+for (const t of _o22) {
 try {
 const r = t();
 let items = Array.isArray(r) ? r : (r && (r.rows || r.items || r.schedule));
@@ -627,7 +629,7 @@ let _od = 0;
 export function fallbackId() { return Date.now().toString(36) + (++_od).toString(36) + Math.random().toString(36).slice(2, 8); }
 const _o0 = 9 * 3600e3;
 export function careReminders({ object_id, name = '', rows = [], handover, birthday, referral, now = Date.now(), newId = fallbackId, project = '' }) {
-const _o25 = name ? ' – ' + name : '';
+const _o26 = name ? ' – ' + name : '';
 const _oj = (kind, title, due_at, extra = {}, dataExtra = {}) => ({
 id: newId(), object_id, kind, title, due_at, remind_before_days: 0, amount: 0, installment: 0,
 done: 0, notified_at: 0, data: JSON.stringify({ source: 'care', project, ...dataExtra }),
@@ -637,14 +639,14 @@ const _o1i = [];
 for (const r of rows) {
 const t = parseYmd(r.date);
 if (!Number.isFinite(t)) continue;
-_o1i.push(_oj('payment', (r.label || ('Đợt ' + r.installment)) + _o25, t + _o0, {
+_o1i.push(_oj('payment', (r.label || ('Đợt ' + r.installment)) + _o26, t + _o0, {
 amount: Number(r.amount) || 0, installment: Number(r.installment) || 0, remind_before_days: Number(r.before) || 0,
 }));
 }
-if (handover && Number.isFinite(parseYmd(handover))) _o1i.push(_oj('handover', 'Bàn giao nhà' + _o25, parseYmd(handover) + _o0, { remind_before_days: 7 }));
+if (handover && Number.isFinite(parseYmd(handover))) _o1i.push(_oj('handover', 'Bàn giao nhà' + _o26, parseYmd(handover) + _o0, { remind_before_days: 7 }));
 const _o1e = nextBirthday(birthday, now);
-if (_o1e) _o1i.push(_oj('birthday', 'Sinh nhật' + _o25, _o1e + _o0, { remind_before_days: 1 }, { yearly: 1 }));
-if (referral && Number.isFinite(parseYmd(referral))) _o1i.push(_oj('referral', 'Hỏi giới thiệu' + _o25, parseYmd(referral) + _o0));
+if (_o1e) _o1i.push(_oj('birthday', 'Sinh nhật' + _o26, _o1e + _o0, { remind_before_days: 1 }, { yearly: 1 }));
+if (referral && Number.isFinite(parseYmd(referral))) _o1i.push(_oj('referral', 'Hỏi giới thiệu' + _o26, parseYmd(referral) + _o0));
 return _o1i;
 }
 export function anonymize(c, now = Date.now()) {

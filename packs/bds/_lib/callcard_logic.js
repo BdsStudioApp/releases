@@ -1,4 +1,5 @@
 import { parseData, givenName, dmy, hm } from './crm.js';
+import { withRulesJson } from '../../../shared/ai_rules.js';
 const _o2 = 365.25 * 86400000;
 export const SALUTATIONS = ['anh', 'chị', 'cô', 'chú', 'anh/chị'];
 const _o1 = /^(nam|m|male|trai|anh|chu|chú|ông|ong)$/i;
@@ -132,13 +133,13 @@ const text = ['Cuộc gọi: ' + _og[1], reminder ? 'hẹn ' + dmy(reminder.due_
 return { event: { object_id: c.id, type: 'call', text, at: now, data: JSON.stringify({ outcome, src: 'callcard', ...(reminder ? { remind_at: reminder.due_at } : {}) }) }, reminder };
 }
 export function aiOpenerPrompt({ xh = 'anh/chị' } = {}) {
-return [
+return withRulesJson([
 'Bạn là huấn luyện viên telesale bất động sản trung thực tại Việt Nam.',
 'Viết 3 câu mở đầu cuộc gọi khác nhau, mỗi câu đọc trong khoảng 10 giây (dưới 40 chữ): chào, giới thiệu "em là {ten_toi}", nhắc khách đã quan tâm {du_an}, xin 1 phút.',
 'Xưng "em", gọi khách là "' + xh + ' {ten}". Giữ nguyên các biến {ten}, {du_an}, {ten_toi} – không tự điền tên.',
 'Luật: không hứa lợi nhuận, không tạo khan hiếm giả, không ép, không dùng chữ "xin lỗi".',
 'Trả về JSON là mảng 3 chuỗi: ["…", "…", "…"]',
-].join('\n');
+].join('\n'));
 }
 function _ob(text, _or) {
 const _oa = { ten: '', du_an: 'dự án', ten_toi: 'chuyên viên tư vấn' };

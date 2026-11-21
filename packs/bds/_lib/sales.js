@@ -1,3 +1,4 @@
+import { withRulesJson } from '../../../shared/ai_rules.js';
 const DAY = 864e5;
 export function fmtMoney(n) {
 n = Number(n) || 0;
@@ -535,14 +536,15 @@ return L.join("\n");
 export const PLAN_SCHEMA = `{"plans":[{"name":"Tên phương án","sub":"Mô tả ngắn","discount":"Chiết khấu % trên giá niêm yết (số)","factor":"Tổng phải trả / giá niêm yết, ví dụ 0.917 (nếu có)","loan":"Tỷ lệ vay % (0 nếu không vay)","htls":"Số tháng hỗ trợ lãi 0% hoặc \\"H\\" nếu đến bàn giao","steps":[{"name":"Tên đợt","pct":10,"at":"0 | số tháng sau ký | \\"HD\\" | \\"HD+1\\" | \\"H\\"","bank":false,"when":"Ghi chú thời điểm như trên phiếu"}]}]}`;
 export function readPolicyPrompt(project) {
 const p = project || {};
-return [
+return withRulesJson([
 `Đọc phiếu tính giá / chính sách bán hàng của dự án "${p.name || ""}"${p.dev ? " (chủ đầu tư " + p.dev + ")" : ""}.`,
 "Trích TẤT CẢ phương án thanh toán. Trả về DUY NHẤT một JSON đúng mẫu sau, không thêm lời giải thích:",
 PLAN_SCHEMA,
 "Quy ước: pct là số phần trăm của tổng giá (tổng các đợt của mỗi phương án = 100). at: 0 = khi ký thoả thuận/đặt cọc; số = số tháng sau khi ký; \"HD\" = khi ký HĐMB; \"HD+1\" = 1 tháng sau ký HĐMB; \"H\" = khi bàn giao. bank=true nếu đợt do ngân hàng giải ngân.",
 "Nếu phiếu ghi số tiền thay vì %, thêm trường \"total\" (tổng giá, đồng) và \"amount\" cho từng đợt.",
 "KHÔNG ghi tên khách, số điện thoại, CCCD hay mã căn của khách – che/bỏ nếu có trên phiếu.",
-].join("\n");
+"Chỉ lấy số GHI TRÊN phiếu (nguồn = phiếu anh/chị tải lên); ô phiếu không ghi thì để null, không tự tính bù hay đoán.",
+].join("\n"));
 }
 export const COLORS = { navy: "#0F1E33", navy2: "#18304F", gold: "#C9A24A", gold2: "#E7CF97", cream: "#F7F3EA", ink: "#0F1E33", muted: "#6B7385", line: "#E3DCCB", ok: "#1E7A4F", bad: "#B3261E", white: "#FFFFFF" };
 const W = 1080, H = 1350;
@@ -767,6 +769,15 @@ if (v && typeof v === "object") { const P = normProfile(v); if (!P.email) P.emai
 }
 return normProfile({ email: _o1a });
 }
+export const SELFTEST_PROJECT = Object.freeze({ id: "_tu_kiem", name: "Tự kiểm", dev: "", status: "sale", handover: "2028-12", price: [50, 60], types: [{ n: "2N", a: [60, 70] }] });
+export const SELFTEST_PLANS = Object.freeze([{ id: "tu_kiem", name: "Theo tiến độ", factor: 1, loan: 0,
+steps: [{ name: "Đặt cọc", pct: 20, when: "Khi ký thoả thuận", mo: 0 }, { name: "Ký HĐMB", pct: 10, mo: "HD" }, { name: "Theo tiến độ", pct: 40, mo: 12 }, { name: "Bàn giao", pct: 30, mo: "H" }] }]);
+export function selftestSubject(env) {
+const p = env && env.projects ? env.projects.find(sellable) : null;
+const plans = p ? env.plansFor(p).plans : [];
+if (p && plans.length) return { project: p, plans, own: true };
+return { project: p || normProject(SELFTEST_PROJECT), plans: normalizePlans(SELFTEST_PLANS.map((x) => JSON.parse(JSON.stringify(x)))).plans, own: false };
+}
 export async function selftestSales(ctx, needLogic = []) {
 const details = [];
 try {
@@ -775,18 +786,16 @@ for (const _o1k of ["fmt.money", ...needLogic]) {
 const fn = _o1k.split(".").reduce((_o1g, k) => (_o1g ? _o1g[k] : undefined), env.L);
 if (typeof fn !== "function") details.push("Thiếu logic." + _o1k);
 }
-const p = env.projects.find(sellable);
-if (!p) details.push("Không có dự án mẫu đang bán");
+const { project: p, plans, own } = selftestSubject(env);
+if (!plans.length) details.push("Không dựng được phương án tự kiểm");
 else {
-const { plans } = env.plansFor(p);
-if (!plans.length) details.push("Dự án mẫu chưa có phương án");
 const t = p.types.find((x) => !x.ask);
 const _o1c = plans.slice(0, 3).map((plan) => buildQuote({ project: p, type: t.n, area: t.a[0], unitPrice: p.price[0], plan, capital: 1e9, rate: env.cfg.RATE, years: env.cfg.LOAN_YEARS }));
 _o1c.forEach((m) => { if (!m.check.ok) details.push(`Báo giá mẫu ${p.id}/${m.plan.id} lệch tổng`); });
 if (_o1c.length) { quoteLayout(_o1c[0], {}); comparePlans(_o1c); }
 if (env.L && env.L.pay && typeof env.L.pay.total === "function" && _o1c[0]) {
 const lp = env.L.pay.plans(p, env.defaultPolicies).find((x) => x.id === _o1c[0].plan.id);
-if (lp && !env.plansFor(p).policy && Math.abs(env.L.pay.total(p, lp, t.a[0], p.price[0]) - _o1c[0].total) > 1000) details.push("Tổng giá lệch BDSLogic.pay.total");
+if (own && lp && !env.plansFor(p).policy && Math.abs(env.L.pay.total(p, lp, t.a[0], p.price[0]) - _o1c[0].total) > 1000) details.push("Tổng giá lệch BDSLogic.pay.total");
 }
 }
 } catch (e) { details.push("Lỗi: " + (e && e.message)); }

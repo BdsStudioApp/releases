@@ -1,5 +1,6 @@
 import { fold } from './core.js';
 import { redact } from '../_lib/staff.js';
+import { withRulesJson } from '../../../shared/ai_rules.js';
 export { fold };
 export const LIMITS = { maxChars: 6000, maxLines: 200, factMax: 200, factsMax: 5, aiFieldMax: 1200 };
 export const STATS_KEY = 'bds.g2.wingman.stats';
@@ -230,7 +231,7 @@ export function buildPrompt({ chat = '', facts = '', me = '', project = '', slot
 const masked = _o1m(maskPII(_o1m(_oq(chat), LIMITS.maxChars)).text, LIMITS.maxChars);
 const _ox = Array.isArray(facts) ? facts.map(f => maskPII(f).text) : parseFacts(facts);
 const _o1i = Array.isArray(slots) && slots.filter(Boolean).length >= 2 ? slots.slice(0, 2) : suggestSlots(now);
-return [
+return withRulesJson([
 'Bạn là trợ lý cho nhân viên môi giới bất động sản TRUNG THỰC ở Việt Nam. Dưới đây là đoạn chat Zalo với khách (đã che số điện thoại, email, số tài khoản, CCCD).',
 me ? 'Tin của nhân viên mang tên: ' + maskPII(me).text.slice(0, 80) + ' (còn lại là của khách).' : '',
 project ? 'Dự án đang tư vấn: ' + String(project).slice(0, 80) + '.' : '',
@@ -244,7 +245,7 @@ _ox.length
 '- meet: mời gặp trực tiếp/xem nhà vào ' + _o1i[0] + ' hoặc ' + _o1i[1] + '.',
 'Luật bắt buộc: không bịa số liệu, không hứa lợi nhuận, không cam kết tăng giá, không tạo khan hiếm giả, không nói xấu dự án/chủ đầu tư khác, không dùng chữ "xin lỗi".',
 'Chỉ trả về JSON: {"concern":"…","reason":"…","soft":"…","urgency":"…","meet":"…"}',
-].filter(Boolean).join('\n');
+].filter(Boolean).join('\n'));
 }
 const _of = /chi con|sap het|cuoi cung|sap tang|tang gia|het han|duy nhat|hom nay thoi|het hom nay/;
 export function parseAiJson(t, { facts = '' } = {}) {

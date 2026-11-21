@@ -159,7 +159,7 @@ h('li', null, 'Đăng nhập dash.cloudflare.com bằng tài khoản Cloudflare 
 h('li', null, 'Chọn ', h('strong', null, 'Create Custom Token'), ' → đặt tên "BDS Studio" → Permissions: ', h('strong', null, 'Account › Cloudflare Pages › Edit'), ' (CHỈ quyền này).'),
 h('li', null, 'Account Resources: ', h('strong', null, 'Include › tài khoản của công ty'), ' → (nên) đặt ngày hết hạn → ', h('strong', null, 'Continue to summary › Create Token'), ' → bấm Copy.'),
 h('li', null, 'Account ID: trang Workers & Pages của tài khoản đó, cột phải "Account ID" (32 ký tự).'),
-h('li', null, 'Dán vào 2 ô dưới (chỉ 1 lần): mã gửi thẳng tới dịch vụ tạo app, được mã hoá ngay, KHÔNG lưu trên trình duyệt, không hiện lại. Thu hồi bất kỳ lúc nào ở trang API Tokens (khi đó bên bán không đưa được bản cập nhật lên nữa).'));
+h('li', null, 'Tạo xong → ', h('strong', null, 'QUAY LẠI tab BDS Studio này'), ' → dán vào 2 ô dưới (chỉ 1 lần): mã gửi thẳng tới dịch vụ tạo app, được mã hoá ngay, KHÔNG lưu trên trình duyệt, không hiện lại. Thu hồi bất kỳ lúc nào ở trang API Tokens (khi đó bên bán không đưa được bản cập nhật lên nữa).'));
 const acct = ui.field({ label: 'Account ID của Cloudflare công ty', id: 'diachi-cf-account', autocomplete: 'off', placeholder: '32 ký tự 0-9 a-f' });
 acct.input.setAttribute('data-testid', 'diachi-cf-account');
 const _o19 = ui.field({ label: 'Mã Cloudflare (API token)', id: 'diachi-cf-token', type: 'password', autocomplete: 'off', placeholder: 'dán mã vừa tạo' });
@@ -219,7 +219,7 @@ note ? h('p', { class: 'muted small' }, note) : null, ui.spinner(), ' ', P.progr
 _o12('cho');
 let _ox;
 try {
-_ox = await P.waitReady(_o7, slug, { intervalMs: ctl.pollMs || Number(_o5.PROVISION_POLL_MS) || 5000, timeoutMs: 8 * 60000, until: domain ? ['ok', 'cho_dns'] : ['ok'],
+_ox = await P.waitReady(_o7, slug, { intervalMs: ctl.pollMs || Number(_o5.PROVISION_POLL_MS) || 5000, timeoutMs: 20 * 60000 , until: domain ? ['ok', 'cho_dns'] : ['ok'],
 onTick: (x) => { alive(); _o12(x.status); } });
 if (_ox.cname_target && _ox.cname_target !== data().cname_target) _o10({ cname_target: _ox.cname_target });
 if (_ox.status === 'cho_dns') {

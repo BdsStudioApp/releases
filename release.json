@@ -1,20 +1,20 @@
 {
-  "version": "1.0.6",
-  "build_id": "3ef2b533fdea90cf",
-  "gas_build_id": "e3e6178a3dc7b36a",
-  "boot_version": 1,
-  "core_build_id": "67c64c6e16b6d934",
+  "version": "1.1.15",
+  "build_id": "6146f4c349d09bc4",
+  "gas_build_id": "5c0e4749dac72b98",
+  "boot_version": 2,
+  "core_build_id": "d29b07e0cc710342",
   "core_requires_boot": 1,
   "parts": {
-    "web": "1.0.6",
-    "gas": "1.0.6",
+    "web": "1.1.15",
+    "gas": "1.1.0",
     "engine": "1.0.6"
   },
   "files": [
     {
       "path": "downloads/TatCa.gs",
-      "sha256": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe",
-      "size": 791695
+      "sha256": "543c74f330c9218f09e344188a5e84aae49865495887e0b7d2486341cf1c731a",
+      "size": 900669
     },
     {
       "path": "downloads/appsscript.json",
@@ -23,13 +23,13 @@
     },
     {
       "path": "version.json",
-      "sha256": "280ac3def378c53839188d784505327cbf2eb401f554d0ded4048d420782302a",
-      "size": 52880
+      "sha256": "a02c343f5aa6a3168c8132f7a0c56cd4cd393dca504d69bf1f22f21c63cf339d",
+      "size": 84439
     },
     {
       "path": "downloads/CaiDat.gs",
-      "sha256": "6d0e3c51193f454e3f342f4b117db91b0e54d5a326b82f8d5bacf8eed84e5d2c",
-      "size": 30622
+      "sha256": "24e22d4b889ba712b3da91725285fec9756a860c1026ccc4a3662062daee6c16",
+      "size": 43602
     },
     {
       "path": "downloads/sheet/appsscript.json",
@@ -38,8 +38,8 @@
     },
     {
       "path": "downloads/ServerCore.js",
-      "sha256": "67c64c6e16b6d9344552ac37dbfc623a21c62f2f74918bc25d9462b3bc17b657",
-      "size": 742321
+      "sha256": "d29b07e0cc710342cb5ddb93cdc1c5c4ec9954bc8ce9f37ebd8b20fd2ed7f4ff",
+      "size": 845450
     }
   ],
   "channel": "sale",

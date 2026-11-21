@@ -1,0 +1,15 @@
+{
+  "id": "g5_dandan",
+  "title": "Nhân vật dẫn",
+  "pack": "video",
+  "pack_group": "g5",
+  "screen": "content",
+  "icon": "🎙️",
+  "order": 510,
+  "status": "thu-nghiem",
+  "version": "0.1.0",
+  "requires": "video",
+  "items": [
+    "26"
+  ]
+}

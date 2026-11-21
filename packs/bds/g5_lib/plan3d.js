@@ -42,127 +42,127 @@ export const TEMPLATES = [
 { id: 'bc', kind: 'bancong', name: 'Lô gia', x: 5.0, y: 7.2, w: 5.6, d: 1.4 },
 ], links: [['sanh', 'khach'], ['sanh', 'ngu3'], ['sanh', 'wc1'], ['hl', 'khach'], ['hl', 'wc1'], ['bep', 'khach'], ['ngu2', 'khach'], ['ngu1', 'ngu2'], ['ngu1', 'wc2'], ['khach', 'bc']] },
 ];
-const _ox = (n) => Math.round(n * 100) / 100;
-const _ol = (n) => _ox(n).toFixed(2);
+const _ow = (n) => Math.round(n * 100) / 100;
+const _ok = (n) => _ow(n).toFixed(2);
 export function cleanRooms(rooms) {
-return (rooms || []).map((_ow, _oh) => ({
-id: String(_ow.id || 'p' + (_oh + 1)).replace(/[^a-z0-9_]/gi, '').slice(0, 20) || 'p' + (_oh + 1),
-kind: KINDS[_ow.kind] ? _ow.kind : 'khach', name: String(_ow.name || (KINDS[_ow.kind] || KINDS.khach).vi).slice(0, 40),
-x: _ox(Number(_ow.x) || 0), y: _ox(Number(_ow.y) || 0), w: _ox(Math.max(0.5, Math.min(30, Number(_ow.w) || 0))), d: _ox(Math.max(0.5, Math.min(30, Number(_ow.d) || 0))),
+return (rooms || []).map((_ov, _og) => ({
+id: String(_ov.id || 'p' + (_og + 1)).replace(/[^a-z0-9_]/gi, '').slice(0, 20) || 'p' + (_og + 1),
+kind: KINDS[_ov.kind] ? _ov.kind : 'khach', name: String(_ov.name || (KINDS[_ov.kind] || KINDS.khach).vi).slice(0, 40),
+x: _ow(Number(_ov.x) || 0), y: _ow(Number(_ov.y) || 0), w: _ow(Math.max(0.5, Math.min(30, Number(_ov.w) || 0))), d: _ow(Math.max(0.5, Math.min(30, Number(_ov.d) || 0))),
 }));
 }
 export function bounds(rooms) {
 if (!rooms.length) return { x: 0, y: 0, w: 0, d: 0 };
-const _o12 = Math.min(...rooms.map((_ow) => _ow.x)), y0 = Math.min(...rooms.map((_ow) => _ow.y));
-const x1 = Math.max(...rooms.map((_ow) => _ow.x + _ow.w)), y1 = Math.max(...rooms.map((_ow) => _ow.y + _ow.d));
-return { x: _o12, y: y0, w: x1 - _o12, d: y1 - y0 };
+const _o10 = Math.min(...rooms.map((_ov) => _ov.x)), y0 = Math.min(...rooms.map((_ov) => _ov.y));
+const x1 = Math.max(...rooms.map((_ov) => _ov.x + _ov.w)), y1 = Math.max(...rooms.map((_ov) => _ov.y + _ov.d));
+return { x: _o10, y: y0, w: x1 - _o10, d: y1 - y0 };
 }
 export function areas(rooms) {
-const indoor = rooms.filter((_ow) => !(KINDS[_ow.kind] || {}).outdoor).reduce((t, _ow) => t + _ow.w * _ow.d, 0);
-const outdoor = rooms.filter((_ow) => (KINDS[_ow.kind] || {}).outdoor).reduce((t, _ow) => t + _ow.w * _ow.d, 0);
-return { indoor: _ox(indoor), outdoor: _ox(outdoor), total: _ox(indoor + outdoor), bedrooms: rooms.filter((_ow) => _ow.kind === 'ngu').length, baths: rooms.filter((_ow) => _ow.kind === 'wc').length };
+const indoor = rooms.filter((_ov) => !(KINDS[_ov.kind] || {}).outdoor).reduce((t, _ov) => t + _ov.w * _ov.d, 0);
+const outdoor = rooms.filter((_ov) => (KINDS[_ov.kind] || {}).outdoor).reduce((t, _ov) => t + _ov.w * _ov.d, 0);
+return { indoor: _ow(indoor), outdoor: _ow(outdoor), total: _ow(indoor + outdoor), bedrooms: rooms.filter((_ov) => _ov.kind === 'ngu').length, baths: rooms.filter((_ov) => _ov.kind === 'wc').length };
 }
 export function validate(rooms) {
-const _ob = [];
+const _oa = [];
 const ids = new Set();
-rooms.forEach((_ow) => { if (ids.has(_ow.id)) _ob.push('Trùng mã phòng "' + _ow.id + '"'); ids.add(_ow.id); });
-for (let _oh = 0; _oh < rooms.length; _oh++) for (let _oj = _oh + 1; _oj < rooms.length; _oj++) {
-const a = rooms[_oh], b = rooms[_oj];
-const _or = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), oy = Math.min(a.y + a.d, b.y + b.d) - Math.max(a.y, b.y);
-if (_or > 0.05 && oy > 0.05) _ob.push(`"${a.name}" chồng lên "${b.name}"`);
+rooms.forEach((_ov) => { if (ids.has(_ov.id)) _oa.push('Trùng mã phòng "' + _ov.id + '"'); ids.add(_ov.id); });
+for (let _og = 0; _og < rooms.length; _og++) for (let _oi = _og + 1; _oi < rooms.length; _oi++) {
+const a = rooms[_og], b = rooms[_oi];
+const _oq = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), oy = Math.min(a.y + a.d, b.y + b.d) - Math.max(a.y, b.y);
+if (_oq > 0.05 && oy > 0.05) _oa.push(`"${a.name}" chồng lên "${b.name}"`);
 }
-return _ob;
+return _oa;
 }
-function _o9(_ow) {
+function _o8(_ov) {
 return [
-{ o: 'h', c: _ow.y, a: _ow.x, b: _ow.x + _ow.w, side: 'top' }, { o: 'h', c: _ow.y + _ow.d, a: _ow.x, b: _ow.x + _ow.w, side: 'bottom' },
-{ o: 'v', c: _ow.x, a: _ow.y, b: _ow.y + _ow.d, side: 'left' }, { o: 'v', c: _ow.x + _ow.w, a: _ow.y, b: _ow.y + _ow.d, side: 'right' },
+{ o: 'h', c: _ov.y, a: _ov.x, b: _ov.x + _ov.w, side: 'top' }, { o: 'h', c: _ov.y + _ov.d, a: _ov.x, b: _ov.x + _ov.w, side: 'bottom' },
+{ o: 'v', c: _ov.x, a: _ov.y, b: _ov.y + _ov.d, side: 'left' }, { o: 'v', c: _ov.x + _ov.w, a: _ov.y, b: _ov.y + _ov.d, side: 'right' },
 ];
 }
 export function autoLinks(rooms) {
-const _o10 = _o11(rooms);
-const _o1 = (a, b) => _o10.some((_os) => _os.rooms.includes(a) && _os.rooms.includes(b));
-const _oq = [];
-const _og = rooms.filter((_ow) => (KINDS[_ow.kind] || {}).hub);
-for (const _ow of rooms) {
-if ((KINDS[_ow.kind] || {}).hub && _ow.kind !== 'khach') { const _ok = rooms.find((x) => x.kind === 'khach' && _o1(x.id, _ow.id)); if (_ok) _oq.push([_ow.id, _ok.id]); continue; }
-if (_ow.kind === 'khach') continue;
-const hub = _og.find((x) => _o1(x.id, _ow.id)) || rooms.find((x) => x.id !== _ow.id && _o1(x.id, _ow.id));
-if (hub) _oq.push([_ow.id, hub.id]);
+const _oy = _oz(rooms);
+const _o1 = (a, b) => _oy.some((_or) => _or.rooms.includes(a) && _or.rooms.includes(b));
+const _op = [];
+const _of = rooms.filter((_ov) => (KINDS[_ov.kind] || {}).hub);
+for (const _ov of rooms) {
+if ((KINDS[_ov.kind] || {}).hub && _ov.kind !== 'khach') { const _oj = rooms.find((x) => x.kind === 'khach' && _o1(x.id, _ov.id)); if (_oj) _op.push([_ov.id, _oj.id]); continue; }
+if (_ov.kind === 'khach') continue;
+const hub = _of.find((x) => _o1(x.id, _ov.id)) || rooms.find((x) => x.id !== _ov.id && _o1(x.id, _ov.id));
+if (hub) _op.push([_ov.id, hub.id]);
 }
-return _o8(_oq);
+return _o7(_op);
 }
-const _o8 = (links) => { const s = new Set(); return links.filter(([a, b]) => { const _ok = [a, b].sort().join('|'); if (s.has(_ok)) return false; s.add(_ok); return true; }); };
-function _o11(rooms) {
-const _om = new Map();
-for (const _ow of rooms) for (const e of _o9(_ow)) {
-const _ok = e.o + _ol(e.c);
-if (!_om.has(_ok)) _om.set(_ok, { o: e.o, c: _ox(e.c), segs: [] });
-_om.get(_ok).segs.push({ a: _ox(e.a), b: _ox(e.b), room: _ow.id, side: e.side });
+const _o7 = (links) => { const s = new Set(); return links.filter(([a, b]) => { const _oj = [a, b].sort().join('|'); if (s.has(_oj)) return false; s.add(_oj); return true; }); };
+function _oz(rooms) {
+const _ol = new Map();
+for (const _ov of rooms) for (const e of _o8(_ov)) {
+const _oj = e.o + _ok(e.c);
+if (!_ol.has(_oj)) _ol.set(_oj, { o: e.o, c: _ow(e.c), segs: [] });
+_ol.get(_oj).segs.push({ a: _ow(e.a), b: _ow(e.b), room: _ov.id, side: e.side });
 }
-const _ot = [];
-for (const _on of _om.values()) {
-const _ov = [...new Set(_on.segs.flatMap((s) => [s.a, s.b]))].sort((x, y) => x - y);
-let _o6 = null;
-for (let _oh = 0; _oh < _ov.length - 1; _oh++) {
-const a = _ov[_oh], b = _ov[_oh + 1], _oo = (a + b) / 2;
-const _o5 = _on.segs.filter((s) => s.a <= _oo && s.b >= _oo);
-const ids = _o5.map((s) => s.room).sort();
+const _os = [];
+for (const _om of _ol.values()) {
+const _ou = [...new Set(_om.segs.flatMap((s) => [s.a, s.b]))].sort((x, y) => x - y);
+let _o5 = null;
+for (let _og = 0; _og < _ou.length - 1; _og++) {
+const a = _ou[_og], b = _ou[_og + 1], _on = (a + b) / 2;
+const _o4 = _om.segs.filter((s) => s.a <= _on && s.b >= _on);
+const ids = _o4.map((s) => s.room).sort();
 const sig = ids.join('|');
-if (_o6 && _o6.sig === sig && Math.abs(_o6.b - a) < 1e-6) _o6.b = b;
-else { if (_o6) _ot.push(_o6); _o6 = ids.length ? { o: _on.o, c: _on.c, a, b, sig, rooms: ids, sides: _o5.map((s) => ({ room: s.room, side: s.side })) } : null; }
+if (_o5 && _o5.sig === sig && Math.abs(_o5.b - a) < 1e-6) _o5.b = b;
+else { if (_o5) _os.push(_o5); _o5 = ids.length ? { o: _om.o, c: _om.c, a, b, sig, rooms: ids, sides: _o4.map((s) => ({ room: s.room, side: s.side })) } : null; }
 }
-if (_o6) _ot.push(_o6);
+if (_o5) _os.push(_o5);
 }
-return _ot;
+return _os;
 }
 export function buildWalls(plan) {
 const rooms = plan.rooms;
-const _o3 = Object.fromEntries(rooms.map((_ow) => [_ow.id, _ow]));
-const links = _o8((plan.links && plan.links.length ? plan.links : autoLinks(rooms)).filter(([a, b]) => _o3[a] && _o3[b]));
-const _ot = _o11(rooms);
+const byId = Object.fromEntries(rooms.map((_ov) => [_ov.id, _ov]));
+const links = _o7((plan.links && plan.links.length ? plan.links : autoLinks(rooms)).filter(([a, b]) => byId[a] && byId[b]));
+const _os = _oz(rooms);
 const doors = [];
-const _o7 = new Map();
-const outdoor = (id) => !!(KINDS[(_o3[id] || {}).kind] || {}).outdoor;
+const _o6 = new Map();
+const outdoor = (id) => !!(KINDS[(byId[id] || {}).kind] || {}).outdoor;
 for (const [a, b] of links) {
-const _o4 = _ot.filter((_os) => _os.rooms.length === 2 && _os.rooms.includes(a) && _os.rooms.includes(b)).sort((_os, q) => (q.b - q.a) - (_os.b - _os.a))[0];
-if (!_o4) continue;
-const L = _o4.b - _o4.a;
-const _oe = outdoor(a) || outdoor(b);
-const w = _oe ? Math.min(GLASS_W, Math.max(0, L - 0.4)) : Math.min(DOOR_W, L - 0.2);
+const _o3 = _os.filter((_or) => _or.rooms.length === 2 && _or.rooms.includes(a) && _or.rooms.includes(b)).sort((_or, q) => (q.b - q.a) - (_or.b - _or.a))[0];
+if (!_o3) continue;
+const L = _o3.b - _o3.a;
+const _od = outdoor(a) || outdoor(b);
+const w = _od ? Math.min(GLASS_W, Math.max(0, L - 0.4)) : Math.min(DOOR_W, L - 0.2);
 if (!(w >= 0.6)) continue;
-const _oo = _oe ? (_o4.a + _o4.b) / 2 : Math.min(_o4.b - w / 2 - 0.15, _o4.a + 0.15 + w / 2 + 0.3);
-const from = _oo - w / 2, to = _oo + w / 2;
-if (!_o7.has(_o4)) _o7.set(_o4, []);
-_o7.get(_o4).push({ from, to });
-doors.push({ ...pointOn(_o4, _oo), w: _ox(w), o: _o4.o, between: [a, b], kind: _oe ? 'glass' : 'door' });
+const _on = _od ? (_o3.a + _o3.b) / 2 : Math.min(_o3.b - w / 2 - 0.15, _o3.a + 0.15 + w / 2 + 0.3);
+const from = _on - w / 2, to = _on + w / 2;
+if (!_o6.has(_o3)) _o6.set(_o3, []);
+_o6.get(_o3).push({ from, to });
+doors.push({ ...pointOn(_o3, _on), w: _ow(w), o: _o3.o, between: [a, b], kind: _od ? 'glass' : 'door' });
 }
-if (plan.entry && _o3[plan.entry.room]) {
-const _o4 = _ot.find((_os) => _os.rooms.length === 1 && _os.rooms[0] === plan.entry.room && _os.sides[0].side === plan.entry.side);
-if (_o4 && _o4.b - _o4.a >= 1.1) {
-const _oo = (_o4.a + _o4.b) / 2, w = 1.0;
-if (!_o7.has(_o4)) _o7.set(_o4, []);
-_o7.get(_o4).push({ from: _oo - w / 2, to: _oo + w / 2 });
-doors.push({ ...pointOn(_o4, _oo), w, o: _o4.o, between: [plan.entry.room], kind: 'entry' });
+if (plan.entry && byId[plan.entry.room]) {
+const _o3 = _os.find((_or) => _or.rooms.length === 1 && _or.rooms[0] === plan.entry.room && _or.sides[0].side === plan.entry.side);
+if (_o3 && _o3.b - _o3.a >= 1.1) {
+const _on = (_o3.a + _o3.b) / 2, w = 1.0;
+if (!_o6.has(_o3)) _o6.set(_o3, []);
+_o6.get(_o3).push({ from: _on - w / 2, to: _on + w / 2 });
+doors.push({ ...pointOn(_o3, _on), w, o: _o3.o, between: [plan.entry.room], kind: 'entry' });
 }
 }
 const walls = [];
-for (const _os of _ot) {
-const _oi = _os.rooms.length === 1 && outdoor(_os.rooms[0]);
-const _od = (_o7.get(_os) || []).sort((x, y) => x.from - y.from);
-let s = _os.a;
-for (const _oc of _od) { if (_oc.from - s > 0.01) walls.push(_oz(_os, s, _oc.from, _oi)); s = _oc.to; }
-if (_os.b - s > 0.01) walls.push(_oz(_os, s, _os.b, _oi));
+for (const _or of _os) {
+const _oh = _or.rooms.length === 1 && outdoor(_or.rooms[0]);
+const _oc = (_o6.get(_or) || []).sort((x, y) => x.from - y.from);
+let s = _or.a;
+for (const _ob of _oc) { if (_ob.from - s > 0.01) walls.push(seg(_or, s, _ob.from, _oh)); s = _ob.to; }
+if (_or.b - s > 0.01) walls.push(seg(_or, s, _or.b, _oh));
 }
 return { walls, doors, links };
 }
-const pointOn = (_os, t) => (_os.o === 'h' ? { x: _ox(t), y: _os.c } : { x: _os.c, y: _ox(t) });
-const _oz = (_os, a, b, rail) => (_os.o === 'h'
-? { x1: _ox(a), y1: _os.c, x2: _ox(b), y2: _os.c, h: rail ? RAIL_H : WALL_H, kind: rail ? 'rail' : 'wall' }
-: { x1: _os.c, y1: _ox(a), x2: _os.c, y2: _ox(b), h: rail ? RAIL_H : WALL_H, kind: rail ? 'rail' : 'wall' });
+const pointOn = (_or, t) => (_or.o === 'h' ? { x: _ow(t), y: _or.c } : { x: _or.c, y: _ow(t) });
+const seg = (_or, a, b, rail) => (_or.o === 'h'
+? { x1: _ow(a), y1: _or.c, x2: _ow(b), y2: _or.c, h: rail ? RAIL_H : WALL_H, kind: rail ? 'rail' : 'wall' }
+: { x1: _or.c, y1: _ow(a), x2: _or.c, y2: _ow(b), h: rail ? RAIL_H : WALL_H, kind: rail ? 'rail' : 'wall' });
 export function furniture(room) {
-const { x, y, w, d } = room, _oq = [];
-const add = (fx, fy, fw, fd, h, color, label) => { if (fw > 0.2 && fd > 0.2 && fx >= x - 1e-6 && fy >= y - 1e-6 && fx + fw <= x + w + 1e-6 && fy + fd <= y + d + 1e-6) _oq.push({ x: _ox(fx), y: _ox(fy), w: _ox(fw), d: _ox(fd), h, color, label, room: room.id }); };
+const { x, y, w, d } = room, _op = [];
+const add = (fx, fy, fw, fd, h, color, label) => { if (fw > 0.2 && fd > 0.2 && fx >= x - 1e-6 && fy >= y - 1e-6 && fx + fw <= x + w + 1e-6 && fy + fd <= y + d + 1e-6) _op.push({ x: _ow(fx), y: _ow(fy), w: _ow(fw), d: _ow(fd), h, color, label, room: room.id }); };
 if (room.kind === 'ngu') {
 const bw = Math.min(1.8, w - 0.9), bd = Math.min(2.0, d - 0.8);
 add(x + (w - bw) / 2, y + 0.1, bw, bd, 0.5, '#B9A27A', 'Giường');
@@ -184,9 +184,9 @@ add(x + w - 0.6, y + 0.2, 0.4, 0.4, 0.7, '#5E8C5A', 'Cây');
 } else if (room.kind === 'lamviec') {
 add(x + 0.1, y + 0.1, Math.min(1.4, w - 0.2), 0.7, 0.75, '#9C7F55', 'Bàn làm việc');
 }
-return _oq;
+return _op;
 }
-const center = (_ow) => ({ x: _ox(_ow.x + _ow.w / 2), y: _ox(_ow.y + _ow.d / 2) });
+const center = (_ov) => ({ x: _ow(_ov.x + _ov.w / 2), y: _ow(_ov.y + _ov.d / 2) });
 const _o0 = {
 sanh: 'Bước vào là sảnh nhỏ, có chỗ để giày dép gọn gàng.',
 hanhlang: 'Hành lang ngắn nối các phòng, không lãng phí diện tích.',
@@ -201,43 +201,43 @@ export function walkPath(plan) {
 const rooms = plan.rooms;
 if (!rooms.length) return [];
 const { doors } = buildWalls(plan);
-const _o3 = Object.fromEntries(rooms.map((_ow) => [_ow.id, _ow]));
-const _of = {};
-rooms.forEach((_ow) => { _of[_ow.id] = []; });
-doors.filter((d) => d.between.length === 2).forEach((d) => { _of[d.between[0]].push({ to: d.between[1], door: d }); _of[d.between[1]].push({ to: d.between[0], door: d }); });
-const start = (plan.entry && _o3[plan.entry.room]) ? plan.entry.room : (rooms.find((_ow) => _ow.kind === 'sanh') || rooms.find((_ow) => _ow.kind === 'khach') || rooms[0]).id;
-const _oy = { sanh: 0, hanhlang: 1, khach: 2, bep: 3, ngu: 4, lamviec: 5, wc: 7, bancong: 8 };
-const _op = rooms.filter((_ow) => _ow.kind !== 'wc' && _ow.kind !== 'hanhlang' && _ow.id !== start)
-.sort((a, b) => (_oy[a.kind] ?? 6) - (_oy[b.kind] ?? 6) || (/master/i.test(b.name) - /master/i.test(a.name)) || a.id.localeCompare(b.id));
+const byId = Object.fromEntries(rooms.map((_ov) => [_ov.id, _ov]));
+const _oe = {};
+rooms.forEach((_ov) => { _oe[_ov.id] = []; });
+doors.filter((d) => d.between.length === 2).forEach((d) => { _oe[d.between[0]].push({ to: d.between[1], door: d }); _oe[d.between[1]].push({ to: d.between[0], door: d }); });
+const start = (plan.entry && byId[plan.entry.room]) ? plan.entry.room : (rooms.find((_ov) => _ov.kind === 'sanh') || rooms.find((_ov) => _ov.kind === 'khach') || rooms[0]).id;
+const _ox = { sanh: 0, hanhlang: 1, khach: 2, bep: 3, ngu: 4, lamviec: 5, wc: 7, bancong: 8 };
+const _oo = rooms.filter((_ov) => _ov.kind !== 'wc' && _ov.kind !== 'hanhlang' && _ov.id !== start)
+.sort((a, b) => (_ox[a.kind] ?? 6) - (_ox[b.kind] ?? 6) || (/master/i.test(b.name) - /master/i.test(a.name)) || a.id.localeCompare(b.id));
 const _o2 = (from, to) => {
-const _ou = { [from]: null }, q = [from];
-while (q.length) { const c = q.shift(); if (c === to) break; for (const e of _of[c]) if (!(e.to in _ou)) { _ou[e.to] = { from: c, door: e.door }; q.push(e.to); } }
-if (!(to in _ou)) return null;
+const _ot = { [from]: null }, q = [from];
+while (q.length) { const c = q.shift(); if (c === to) break; for (const e of _oe[c]) if (!(e.to in _ot)) { _ot[e.to] = { from: c, door: e.door }; q.push(e.to); } }
+if (!(to in _ot)) return null;
 const steps = []; let c = to;
-while (_ou[c]) { steps.unshift({ room: c, door: _ou[c].door }); c = _ou[c].from; }
+while (_ot[c]) { steps.unshift({ room: c, door: _ot[c].door }); c = _ot[c].from; }
 return steps;
 };
-const _oq = [];
-const stop = (id) => { const _ow = _o3[id]; _oq.push({ ...center(_ow), room: id, name: _ow.name, say: _o0[_ow.kind] || '', stop: true }); };
-let _o6 = start;
-const _oa = doors.find((d) => d.kind === 'entry');
-if (_oa) _oq.push({ x: _oa.x, y: _oa.y, room: start, name: 'Cửa vào', say: 'Chào anh chị, mời anh chị vào xem căn hộ.', stop: true });
+const _op = [];
+const stop = (id) => { const _ov = byId[id]; _op.push({ ...center(_ov), room: id, name: _ov.name, say: _o0[_ov.kind] || '', stop: true }); };
+let _o5 = start;
+const _o9 = doors.find((d) => d.kind === 'entry');
+if (_o9) _op.push({ x: _o9.x, y: _o9.y, room: start, name: 'Cửa vào', say: 'Chào anh chị, mời anh chị vào xem căn hộ.', stop: true });
 stop(start);
-for (const _ow of _op) {
-const steps = _o2(_o6, _ow.id);
+for (const _ov of _oo) {
+const steps = _o2(_o5, _ov.id);
 if (!steps) continue;
 for (const s of steps) {
-_oq.push({ x: s.door.x, y: s.door.y, room: s.room, name: '', say: '', stop: false });
-if (s.room === _ow.id) stop(_ow.id); else _oq.push({ ...center(_o3[s.room]), room: s.room, name: '', say: '', stop: false });
+_op.push({ x: s.door.x, y: s.door.y, room: s.room, name: '', say: '', stop: false });
+if (s.room === _ov.id) stop(_ov.id); else _op.push({ ...center(byId[s.room]), room: s.room, name: '', say: '', stop: false });
 }
-_o6 = _ow.id;
+_o5 = _ov.id;
 }
-return _oq;
+return _op;
 }
 export function towerBoxes(towers, floorH = 3.2) {
-return (towers || []).map((t, _oh) => ({
-name: String(t.name || 'Toà ' + (_oh + 1)), floors: Math.max(1, Math.min(100, Math.round(Number(t.floors) || 1))),
-x: Number(t.x) || _oh * 50, y: Number(t.y) || 0, w: Math.max(10, Number(t.w) || 30), d: Math.max(10, Number(t.d) || 25),
+return (towers || []).map((t, _og) => ({
+name: String(t.name || 'Toà ' + (_og + 1)), floors: Math.max(1, Math.min(100, Math.round(Number(t.floors) || 1))),
+x: Number(t.x) || _og * 50, y: Number(t.y) || 0, w: Math.max(10, Number(t.w) || 30), d: Math.max(10, Number(t.d) || 25),
 h: Math.max(1, Math.min(100, Math.round(Number(t.floors) || 1))) * floorH,
 }));
 }

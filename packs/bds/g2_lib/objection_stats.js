@@ -2,6 +2,7 @@ import { fold } from './core.js';
 import { redact } from './talk.js';
 import { givenName } from '../_lib/crm.js';
 import { gate } from '../_lib/consent.js';
+import { withRulesJson } from '../../../shared/ai_rules.js';
 export const USE_KIND = 'g2_script_use';
 export const MIN_USES = 3;
 export const MERGE_MS = 10 * 60000;
@@ -110,8 +111,8 @@ const text = String((script && script.text) || '')
 .replace(/\{(\w+)\}/g, (_, _o9) => { const _og = vars[_o9]; return _og !== undefined && _og !== '' ? String(_og) : (_o2[_o9] ?? ''); })
 .replace(/[ \t]{2,}/g, ' ').replace(/ ([,.?!])/g, '$1').trim();
 const note = ok ? 'Đã điền theo hồ sơ khách (khách đã đồng ý lưu dữ liệu).'
-: customer ? 'Khách chưa đồng ý lưu dữ liệu cá nhân – dùng bản chung, không điền tên hay nhu cầu.'
-: 'Bản chung – chọn khách để điền tên, dự án (nếu khách đã đồng ý).';
+: customer ? 'Khách chưa đồng ý lưu dữ liệu – lời mẫu chưa có tên và nhu cầu của khách.'
+: '';
 return { text, personal: ok, note };
 }
 export function examplesFor(textOrId, scripts, stats = {}, max = 3) {
@@ -121,12 +122,12 @@ return id ? rankScripts(scriptsFor(id, scripts), stats).slice(0, max) : [];
 export function newScriptPrompt(objText, { examples = [], stats = {}, ethics = [] } = {}) {
 const clip = (t, n) => redact(String(t || '')).replace(/\s+/g, ' ').trim().slice(0, n);
 const ex = (examples || []).slice(0, 3);
-return [
+return withRulesJson([
 'Bạn là chuyên gia đào tạo môi giới BĐS trung thực tại Việt Nam. Khách nói: "' + clip(objText, 300) + '".',
 'Viết kịch bản trả lời (dưới 100 chữ, xưng "em", gọi "anh/chị", có thể dùng {ten}, {du_an}) và 1 mẹo ngắn.',
 'Luật: ' + ethics.join(' ') + ' Không dùng chữ "xin lỗi". Không bịa số liệu lãi suất, pháp lý – cần số thì ghi [cần kiểm tra chính sách hiện hành].',
 ...(ex.length ? ['', 'Ví dụ kịch bản cùng loại trong kho của đội (học cách nói, không chép nguyên):',
 ...ex.map((s, i) => (i + 1) + '. ' + clip(s.title, 80) + ' (' + statLine(stats[s.id]) + '): ' + clip(s.text, 600)), ''] : []),
 'Trả về JSON: {"title": "…", "text": "…", "tip": "…"}',
-].join('\n');
+].join('\n'));
 }

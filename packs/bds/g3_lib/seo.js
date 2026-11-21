@@ -10,8 +10,8 @@ if (!_o3) return '';
 const p = String(path || '').replace(/^\/+/, '');
 return p ? _o3 + '/' + p : _o3 + '/';
 }
-function _oz(p) { return (p.types || []).map(t => t && t.n).filter(Boolean); }
-function _os(p) {
+function _oy(p) { return (p.types || []).map(t => t && t.n).filter(Boolean); }
+function priceText(p) {
 const _or = Array.isArray(p.price) ? p.price.filter(x => Number(x) > 0) : [];
 if (!_or.length) return '';
 return _or.length > 1 && _or[0] !== _or[1] ? `${_or[0]}–${_or[1]} triệu/m²` : `${_or[0]} triệu/m²`;
@@ -21,9 +21,9 @@ export function projectSeo(p, { brand = '', base = '', month = '' } = {}) {
 p = p || {};
 const name = String(p.name || p.id || '').trim();
 const slug = slugify(name) || slugify(p.id);
-const types = _oz(p);
+const types = _oy(p);
 const loc = String(p.loc || p.area || '').trim();
-const price = _os(p);
+const price = priceText(p);
 const _of = handoverText(p.handover);
 const title = _oa(`${name}: giá, chính sách${month ? ' ' + month : ''}${brand ? ' | ' + brand : ''}`, LIMITS.titleMax);
 const _o5 = [`${name}${p.dev ? ' (' + p.dev + ')' : ''}${loc ? ' tại ' + loc : ''}.`];
@@ -73,9 +73,9 @@ export function breadcrumbLd(items) {
 return _o9({ '@context': _o0, '@type': 'BreadcrumbList', itemListElement: items.filter(x => x && x.name).map((x, _og) => ({ '@type': 'ListItem', position: _og + 1, name: x.name, item: x.url || undefined })) });
 }
 export function faqLd(faq) {
-const _ou = (faq || []).filter(f => f && f.q && f.a);
-if (!_ou.length) return null;
-return { '@context': _o0, '@type': 'FAQPage', mainEntity: _ou.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
+const _ot = (faq || []).filter(f => f && f.q && f.a);
+if (!_ot.length) return null;
+return { '@context': _o0, '@type': 'FAQPage', mainEntity: _ot.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
 }
 export function isoVN(ms) {
 if (!Number.isFinite(Number(ms)) || !ms) return '';
@@ -110,17 +110,17 @@ if (_ol.canonical) t.push('<meta property="og:url" content="' + escHtml(_ol.cano
 if (_ol.image) t.push('<meta property="og:image" content="' + escHtml(_o1(_ol.image, _ol.canonical) || _ol.image) + '">');
 return t.join('\n');
 }
-function _o10(v) {
+function _oz(v) {
 if (!v) return '';
 if (/^\d{4}-\d{2}-\d{2}$/.test(String(v))) return String(v);
 const _ob = new Date(Number(v) || v);
 return Number.isFinite(_ob.getTime()) ? _ob.toISOString().slice(0, 10) : '';
 }
 export function sitemapXml(urls) {
-const _ox = new Set();
-const _ov = (urls || []).filter(u => u && /^https?:\/\//.test(u.loc || '') && !_ox.has(u.loc) && _ox.add(u.loc)).slice(0, LIMITS.sitemapMax);
-const _o6 = _ov.map(u => {
-const _ok = _o10(u.lastmod);
+const _ow = new Set();
+const _ou = (urls || []).filter(u => u && /^https?:\/\//.test(u.loc || '') && !_ow.has(u.loc) && _ow.add(u.loc)).slice(0, LIMITS.sitemapMax);
+const _o6 = _ou.map(u => {
+const _ok = _oz(u.lastmod);
 return '  <url>\n    <loc>' + escXml(u.loc) + '</loc>' + (_ok ? '\n    <lastmod>' + _ok + '</lastmod>' : '') + '\n  </url>';
 }).join('\n');
 return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + _o6 + (_o6 ? '\n' : '') + '</urlset>\n';
@@ -153,9 +153,9 @@ const _op = [];
 const add = (id, label, status, detail, fix = '') => _op.push({ id, label, status, detail, fix: status === 'ok' ? '' : fix });
 const _oj = strip(keyword);
 const has = s => !_oj || strip(s).includes(_oj);
-const _oy = (page.title || '').length;
-add('title', 'Tiêu đề trang (thẻ title)', !_oy ? 'fail' : _oy < LIMITS.titleMin || _oy > LIMITS.titleMax ? 'warn' : has(page.title) ? 'ok' : 'warn',
-_oy ? `${_oy} ký tự${_oj && !has(page.title) ? ', chưa có từ khoá chính' : ''}` : 'Chưa có tiêu đề',
+const _ox = (page.title || '').length;
+add('title', 'Tiêu đề trang (thẻ title)', !_ox ? 'fail' : _ox < LIMITS.titleMin || _ox > LIMITS.titleMax ? 'warn' : has(page.title) ? 'ok' : 'warn',
+_ox ? `${_ox} ký tự${_oj && !has(page.title) ? ', chưa có từ khoá chính' : ''}` : 'Chưa có tiêu đề',
 `Viết ${LIMITS.titleMin}–${LIMITS.titleMax} ký tự, có tên dự án ở đầu.`);
 const _od = (page.description || '').length;
 add('description', 'Mô tả (meta description)', !_od ? 'fail' : _od < LIMITS.descMin || _od > LIMITS.descMax ? 'warn' : 'ok',
@@ -189,8 +189,8 @@ add('sitemap', 'Có trong sitemap.xml và đã gửi Google Search Console', inS
 return _op;
 }
 export function checklistScore(list) {
-const _ow = list.filter(x => x.status !== 'manual');
-if (!_ow.length) return 0;
-const _ot = _ow.reduce((s, x) => s + (x.status === 'ok' ? 1 : x.status === 'warn' ? 0.5 : 0), 0);
-return Math.round(_ot / _ow.length * 100);
+const _ov = list.filter(x => x.status !== 'manual');
+if (!_ov.length) return 0;
+const _os = _ov.reduce((s, x) => s + (x.status === 'ok' ? 1 : x.status === 'warn' ? 0.5 : 0), 0);
+return Math.round(_os / _ov.length * 100);
 }

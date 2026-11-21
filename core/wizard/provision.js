@@ -246,13 +246,14 @@ if (elapsed >= timeoutMs) throw new ProvisionError('TIMEOUT', 'Chờ quá lâu �
 await sleep(intervalMs);
 }
 }
+export const WAIT_TEXT = 'thường 2–5 phút, có khi tới 15 phút (chờ chứng chỉ https)';
 export function progressText(status, elapsedMs) {
 const s = Math.round((Number(elapsedMs) || 0) / 1000);
 const t = s < 60 ? s + ' giây' : Math.floor(s / 60) + ' phút ' + (s % 60) + ' giây';
 if (status === 'cho_dns') return 'App đã tạo xong. Đang chờ tên miền chạy (thêm CNAME xong thường 5–30 phút, lâu nhất 24 giờ)… đã chờ ' + t + '.';
 if (s < 20) return 'Đang gửi yêu cầu tạo app… (' + t + ')';
-if (s < 100) return 'Đang dựng app riêng của anh/chị từ bản phát hành đã ký… (' + t + ', thường 1–3 phút)';
-return 'Sắp xong – đang bật địa chỉ và chứng chỉ bảo mật (https)… (' + t + ')';
+if (s < 100) return 'Đang dựng app riêng của anh/chị từ bản phát hành đã ký… (' + t + ' – ' + WAIT_TEXT + ')';
+return 'Đang bật địa chỉ và chứng chỉ bảo mật (https)… (' + t + ' – ' + WAIT_TEXT + '). Cứ để trang này mở, xong app tự chuyển.';
 }
 export function pickInstallToken(info = {}, parse) {
 const list = Array.isArray(info.tokens) ? info.tokens : [];

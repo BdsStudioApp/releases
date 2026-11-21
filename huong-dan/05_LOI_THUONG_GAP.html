@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>5. Lỗi thường gặp – BDS Studio</title><meta name="robots" content="noindex"><style>:root{--bg:#f7f5f0;--card:#fff;--ink:#1d2433;--muted:#5d6577;--line:#e4dfd3;--accent:#8a6512;--accent-bg:#f6efdf}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1626;--card:#16203a;--ink:#e9ecf3;--muted:#a3abbd;--line:#28344f;--accent:#e4bf6a;--accent-bg:#2a2a22}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:12px;align-items:center;z-index:1}
+header a{color:var(--accent);font-weight:600;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+main{max-width:820px;margin:0 auto;padding:16px 16px 48px;background:var(--card)}
+h1{font-size:1.6em;line-height:1.3}h2{margin-top:1.8em;font-size:1.3em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{margin-top:1.4em;font-size:1.1em}
+a{color:var(--accent)}img,video{max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;display:block;margin:10px 0}
+code{background:var(--accent-bg);padding:1px 6px;border-radius:6px;font-size:.92em;word-break:break-all}
+blockquote{margin:12px 0;padding:8px 14px;border-left:4px solid var(--accent);background:var(--accent-bg);border-radius:6px}
+.tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.95em}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+hr{border:0;border-top:1px solid var(--line);margin:24px 0}li{margin:4px 0}</style></head><body><header><a href="./">📖 Mục lục hướng dẫn</a></header><main><h1 id="5-lỗi-thường-gặp">5. Lỗi thường gặp</h1>
+<p>Mỗi lỗi trong app có 2 phần: <strong>❌ nguyên nhân</strong> và <strong>Cách sửa</strong>.<br>Làm theo <strong>Cách sửa</strong> trước. Vẫn lỗi thì gửi bên hỗ trợ (cuối trang).</p>
+<h2 id="bảng-tra-nhanh">Bảng tra nhanh</h2>
+<div class="tbl"><table><thead><tr><th>App báo</th><th>Nguyên nhân</th><th>Cách sửa</th></tr></thead><tbody><tr><td>Máy chủ chưa cài xong trong Sheet (<code>SETUP_REQUIRED</code>)</td><td>Chưa chạy <strong>Cài đặt</strong> trong Sheet, hoặc đang cài lần đầu</td><td>Mục 1</td></tr><tr><td>Máy chủ gặp sự cố. Thử lại sau ít phút. (mã lỗi E-xxxxxx)</td><td>Máy chủ Google gặp lỗi</td><td>Mục 2</td></tr><tr><td>Đang tải dữ liệu lần đầu… mãi không xong</td><td>Mạng chậm, Google bận, địa chỉ máy chủ sai</td><td>Mục 3</td></tr><tr><td>Có người gửi &quot;bộ cài&quot; để cài</td><td>Bản này không có bộ cài nào</td><td>Mục 4</td></tr><tr><td>Lúc Triển khai chưa chọn 'Bất kỳ ai'</td><td>Quyền truy cập máy chủ sai</td><td>Mục 5</td></tr><tr><td>Địa chỉ chưa đúng / Đây là địa chỉ của Sheet</td><td>Dán nhầm địa chỉ</td><td>Mục 6</td></tr><tr><td>Máy chủ chưa có chức năng này – cần cập nhật máy chủ</td><td>Máy chủ bản cũ</td><td>Mục 7</td></tr><tr><td>Tài khoản đã đăng nhập trên một máy khác. Máy này đã đăng xuất.</td><td>Tài khoản vừa vào máy khác cùng loại</td><td>Mục 8</td></tr><tr><td>Xác nhận đổi máy – nhập mã 6 số trong email</td><td>Đang có máy cùng loại đăng nhập</td><td>Mục 8</td></tr><tr><td>Muốn chuyển sang máy này cần mã… nhưng tài khoản chưa có email</td><td>Tài khoản chưa có email</td><td>Mục 8</td></tr></tbody></table></div>
+<hr>
+<h2 id="1-setuprequired--máy-chủ-chưa-cài-xong-trong-sheet">1. SETUP_REQUIRED – &quot;Máy chủ chưa cài xong trong Sheet&quot;</h2>
+<p><img src="anh/l02-may-chu-chua-cai.webp" alt="Máy chủ chưa cài" loading="lazy"></p>
+<ol><li>Mở Sheet máy chủ (Sheet đã tạo bản sao ở bước 2).</li><li>Bấm menu <strong>BDS Studio › Cài đặt</strong>.</li><li>Google hỏi quyền: <strong>Nâng cao</strong> → <strong>Đi tới…</strong> → <strong>Cho phép</strong>.</li><li>Chờ khoảng 30 giây.</li><li>Quay lại app, bấm <strong>Kiểm tra bước này</strong> (hoặc tải lại app).</li></ol>
+<p>Lỗi ghi <strong>&quot;đang tự cài lần đầu&quot;</strong>: chỉ cần chờ 30–60 giây rồi kiểm lại.<br>Không thấy menu <strong>BDS Studio</strong>: bấm F5 trong Sheet, chờ 10–20 giây.<br>Vẫn không thấy: <strong>Tiện ích mở rộng › Apps Script</strong> → chọn hàm <strong>bdsCaiDat</strong> ở thanh trên → <strong>Chạy</strong> → <strong>Cho phép</strong>.</p>
+<h2 id="2-máy-chủ-gặp-sự-cố--mã-lỗi-e-xxxxxx">2. &quot;Máy chủ gặp sự cố&quot; + mã lỗi E-xxxxxx</h2>
+<p><img src="anh/l03-may-chu-gap-su-co.webp" alt="Máy chủ gặp sự cố, có mã lỗi" loading="lazy"></p>
+<ol><li>Chờ vài phút.</li><li>Bấm thử lại.</li><li>Vẫn lỗi: ghi lại <strong>mã lỗi</strong> (dạng <code>E-3FA91C</code>, chữ E và 6 ký tự).</li><li>Bấm <strong>Chi tiết kỹ thuật</strong> để xem thêm <strong>Nguyên nhân</strong>.</li><li>Gửi mã lỗi cho bên hỗ trợ (cuối trang).</li></ol>
+<p>Mã lỗi giúp bên hỗ trợ tìm đúng lỗi trong nhật ký máy chủ của anh/chị.<br>Mã lỗi không chứa dữ liệu khách hay mật khẩu.</p>
+<h2 id="3-tải-mãi-không-xong">3. Tải mãi không xong</h2>
+<p><strong>Lần đầu đăng nhập trên máy mới</strong>, app hiện khung <strong>&quot;Đang tải dữ liệu lần đầu&quot;</strong>.<br>Thường mất 10–30 giây. Anh/chị vẫn xem được các màn trong lúc chờ.</p>
+<p>Quá 60 giây, app báo <strong>&quot;Lâu hơn bình thường&quot;</strong>:</p>
+<ol><li>Kiểm tra mạng (Wi-Fi/4G).</li><li>Bấm <strong>Thử lại</strong>.</li><li>Vẫn chậm: bấm <strong>Gửi cho hỗ trợ</strong> (hoặc <strong>Chép thông tin cho hỗ trợ</strong>).</li></ol>
+<p><strong>App trắng hoặc quay mãi ngay khi mở:</strong></p>
+<ol><li>Tải lại trang (F5, hoặc kéo xuống trên điện thoại).</li><li>Thử mạng khác. Mạng công ty có thể chặn Google Apps Script, thử 4G.</li><li>Dùng trình duyệt mới: Chrome/Edge từ bản 100, Safari từ bản 15.</li><li>Không dùng chế độ ẩn danh cho app hằng ngày.</li></ol>
+<p><strong>App báo &quot;Máy chủ trả về một trang web thay cho dữ liệu&quot;:</strong><br>Địa chỉ máy chủ sai, hoặc chưa chọn <strong>Bất kỳ ai</strong> lúc Triển khai. Xem mục 5 và 6.</p>
+<h2 id="4-có-người-gửi-bộ-cài--bản-này-không-có-bộ-cài-nào">4. Có người gửi &quot;bộ cài&quot; – bản này không có bộ cài nào</h2>
+<p>App chạy hoàn toàn trên trình duyệt. Không có tệp nào phải tải về cài trên máy.</p>
+<p>Ai đó gửi tệp &quot;bộ cài BDS Studio&quot; qua Zalo, email: <strong>không mở</strong>, báo bên hỗ trợ.</p>
+<h2 id="5-lúc-triển-khai-chưa-chọn-bất-kỳ-ai">5. &quot;Lúc Triển khai chưa chọn 'Bất kỳ ai'&quot;</h2>
+<ol><li>Mở Sheet máy chủ → <strong>Tiện ích mở rộng › Apps Script</strong>.</li><li>Bấm <strong>Triển khai › Quản lý triển khai</strong> (Deploy › Manage deployments).</li><li>Bấm bút chì <strong>Sửa</strong> (Edit).</li><li>Ô <strong>Người có quyền truy cập</strong>: chọn <strong>Bất kỳ ai</strong> (Anyone).</li><li>Bấm <strong>Triển khai</strong> (Deploy).</li><li>Địa chỉ <code>/exec</code> giữ nguyên. Quay lại app, bấm kiểm lại.</li></ol>
+<p>Tài khoản Google công ty không có lựa chọn <strong>Bất kỳ ai</strong>: nhờ quản trị viên Google Workspace cho phép.</p>
+<h2 id="6-dán-nhầm-địa-chỉ-máy-chủ">6. Dán nhầm địa chỉ máy chủ</h2>
+<p><img src="anh/l01-chua-dan-dia-chi.webp" alt="Chưa dán địa chỉ máy chủ" loading="lazy"></p>
+<p>Địa chỉ đúng:</p>
+<ul><li>Bắt đầu bằng <code>https://script.google.com/macros/s/</code>.</li><li>Kết thúc bằng <code>/exec</code>.</li></ul>
+<p>Hay nhầm:</p>
+<ul><li>Địa chỉ của Sheet (<code>docs.google.com/spreadsheets/…</code>).</li><li>Trang soạn mã Apps Script (<code>script.google.com/home…</code>).</li><li>Địa chỉ chạy thử, kết thúc bằng <code>/dev</code>.</li></ul>
+<p>Lấy lại địa chỉ đúng:</p>
+<ol><li>Mở Sheet máy chủ.</li><li>Bấm <strong>BDS Studio › Lấy URL máy chủ</strong>.</li><li>Bấm <strong>Chép URL</strong>.</li><li>Dán vào ô <strong>Địa chỉ máy chủ (kết thúc bằng /exec)</strong> → <strong>Kiểm tra bước này</strong>.</li></ol>
+<p>Không còn menu <strong>BDS Studio</strong> (bình thường sau lần cập nhật máy chủ đầu tiên):</p>
+<ol><li>Trên Sheet: <strong>Tiện ích mở rộng › Apps Script</strong>.</li><li><strong>Triển khai › Quản lý triển khai</strong>.</li><li>Chép <strong>URL ứng dụng web</strong> (kết thúc bằng <code>/exec</code>).</li></ol>
+<h2 id="7-máy-chủ-bản-cũ">7. Máy chủ bản cũ</h2>
+<p>App báo &quot;Máy chủ chưa có chức năng này – cần cập nhật máy chủ&quot;:</p>
+<ol><li>Vào <strong>Cài đặt › Phiên bản</strong>.</li><li>Bấm <strong>Cập nhật máy chủ</strong>.</li><li>Làm theo hướng dẫn hiện ra.</li></ol>
+<p>Không cần bật gì trên trang Google Cloud.</p>
+<h2 id="8-đổi-máy-và-bị-đăng-xuất">8. Đổi máy và bị đăng xuất</h2>
+<p>Mỗi tài khoản đăng nhập cùng lúc <strong>1 máy tính + 1 điện thoại</strong> (iPad, máy tính bảng tính là điện thoại).</p>
+<p><strong>Đang đăng nhập máy mới, app hỏi &quot;Xác nhận đổi máy&quot;:</strong></p>
+<ol><li>Mở email của tài khoản, tìm thư <strong>Mã xác nhận đổi máy BDS Studio</strong>. Không thấy: xem Thư rác.</li><li>Nhập mã 6 số, bấm <strong>Xác nhận đổi máy</strong>.</li><li>Mã hết hạn (10 phút) hoặc nhập sai 5 lần: bấm <strong>Gửi lại mã</strong> (sau 60 giây).</li><li>Máy cũ cùng loại sẽ tự đăng xuất. Không muốn vậy: bấm <strong>Quay lại đăng nhập</strong>.</li></ol>
+<p><strong>Máy báo &quot;Tài khoản đã đăng nhập trên một máy khác … Máy này đã đăng xuất&quot;:</strong></p>
+<ul><li>Tài khoản vừa đăng nhập trên một máy cùng loại khác (trong ngoặc ghi loại máy và giờ).</li><li>Dữ liệu không mất: app đã gửi nốt thay đổi chưa gửi. Còn sót (mất mạng) thì vẫn nằm trên máy này; đăng nhập lại đúng tài khoản là tự gửi. Màn còn nút <strong>Tải tệp các thay đổi chưa gửi</strong> – tải về để nhập lại ở <strong>Cài đặt › Bảo trì &amp; Sao lưu › Khôi phục từ tệp</strong> khi cần.</li><li>Muốn dùng tiếp máy này: bấm <strong>Đăng nhập lại</strong> → nhập mã trong email. Máy kia sẽ đăng xuất.</li><li>Không phải anh/chị đăng nhập ở máy kia: đăng nhập lại ngay, rồi <strong>đổi mật khẩu</strong> ở <strong>Cài đặt › Bảo mật</strong>.</li></ul>
+<p><strong>Máy báo &quot;đã được đăng xuất từ xa&quot;:</strong> có người bấm <strong>Đăng xuất máy này</strong> cho máy đó (anh/chị, hoặc Quản trị ở bản Công ty). Đăng nhập lại là dùng tiếp. Nếu người đó tick <strong>Máy bị mất – xoá dữ liệu trên máy</strong> thì dữ liệu và thay đổi chưa gửi trên máy này đã bị xoá; không tick thì dữ liệu vẫn giữ.</p>
+<p><strong>App báo &quot;… nhưng tài khoản chưa có email&quot;:</strong></p>
+<ol><li>Trên máy đang dùng: <strong>Cài đặt › Thông tin cá nhân</strong> → thêm email → <strong>Gửi mã</strong> → nhập mã.</li><li>Hoặc trên máy đang dùng: <strong>Cài đặt › Bảo mật › Thiết bị</strong> → <strong>Đăng xuất máy này</strong> cho máy cũ. Máy mới đăng nhập được ngay, không cần mã.</li><li>Nhân viên: nhờ Quản trị đăng xuất máy cũ giúp (<strong>Cài đặt › Người dùng</strong>).</li><li>Chủ / Quản trị không còn máy nào mở được app và chưa có email: mở Sheet máy chủ → <strong>Tiện ích mở rộng › Apps Script</strong> → chọn hàm <code>khoiPhuc2Lop</code> → bấm <strong>Chạy</strong>.<br>Trong 24 giờ, lần đăng nhập kế tiếp của Chủ không hỏi mã; máy cũ cùng loại tự đăng xuất. Đăng nhập xong: thêm email ngay ở <strong>Cài đặt › Thông tin cá nhân</strong>.</li></ol>
+<p><strong>Không đổi máy được vì &quot;Đã gửi mã nhiều lần&quot;:</strong> chờ đúng giờ app ghi rồi thử lại (mỗi tài khoản tối đa 3 mã trong 15 phút, 10 mã mỗi ngày).</p>
+<h2 id="lỗi-khác-hay-gặp">Lỗi khác hay gặp</h2>
+<div class="tbl"><table><thead><tr><th>Hiện tượng</th><th>Cách sửa</th></tr></thead><tbody><tr><td>Không nhận được mã 6 số qua email</td><td>Xem Thư rác/Quảng cáo. Chờ 60 giây, bấm <strong>Gửi lại mã</strong>.</td></tr><tr><td>App ghi &quot;Chế độ chỉ xem&quot;</td><td>Hết dùng thử (hoặc bản quyền có thời hạn đã hết). Mua hoặc nhập mã ở <strong>Cài đặt › Bản quyền</strong> – xem <a href="ban-quyen">Bản quyền</a>. Dữ liệu không mất.</td></tr><tr><td>Nút AI không hiện</td><td>Chưa có khoá AI. Xem <a href="03_AI_VA_CHI_PHI">03_AI_VA_CHI_PHI.md</a>.</td></tr></tbody></table></div>
+<hr>
+<h2 id="gửi-lỗi-cho-bên-hỗ-trợ">Gửi lỗi cho bên hỗ trợ</h2>
+<p><strong>Khi đang cài (Trợ lý cài đặt):</strong></p>
+<ol><li>Bấm <strong>Cần giúp?</strong> ở đầu Trợ lý.</li><li>App soạn sẵn báo cáo cài đặt, có cả mã lỗi.</li><li>Bấm <strong>Chép báo cáo</strong> (hoặc <strong>Tải tệp</strong>, <strong>Gửi…</strong>).</li><li>Gửi qua email, Zalo hoặc Telegram của bên hỗ trợ (địa chỉ hiện trong hộp).</li></ol>
+<p><strong>Khi đang dùng app:</strong></p>
+<ol><li>Bấm <strong>Chi tiết kỹ thuật</strong> dưới thông báo lỗi. Chép <strong>Mã lỗi E-xxxxxx</strong>.</li><li>Bấm nút <strong>✨ Trợ lý AI</strong> ở góc dưới phải → <strong>Góp ý / Gửi cho người bán</strong>.</li><li>Dán mã lỗi, ghi đang làm gì thì lỗi.</li><li>Chủ tài khoản bấm <strong>Gửi cho người bán</strong>. App soạn sẵn email.</li></ol>
+<p>Báo cáo của app không chứa mật khẩu, mã bot hay khoá AI.<br>Ảnh chụp màn hình: che tên, số điện thoại khách trước khi gửi.</p>
+<p><strong>Gửi kèm:</strong></p>
+<ul><li>Mã lỗi (nếu có).</li><li>Màn đang mở, nút vừa bấm.</li><li>Máy gì (điện thoại/máy tính), trình duyệt gì.</li></ul>
+<hr>
+<p>Trước: <a href="03_AI_VA_CHI_PHI">03_AI_VA_CHI_PHI.md</a> · Về đầu: <a href="01_BAT_DAU">01_BAT_DAU.md</a></p></main></body></html>

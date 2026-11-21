@@ -2,9 +2,10 @@ import * as crm from './crm.js';
 import { readAttribution } from '../g3_lib/attribution.js';
 import { DEAL_STATUSES, parseAmount } from '../g3_lib/roi.js';
 import { csvCellSafe } from './import_logic.js';
+import { withRules } from '../../../shared/ai_rules.js';
 export const SOURCE_GROUPS = [
-['video', 'TikTok/Reels'], ['facebook', 'Bài Facebook'], ['landing', 'Landing'],
-['referral', 'Giới thiệu'], ['zalo', 'Zalo'], ['magnet', 'Mồi câu'], ['other', 'Khác'],
+['video', 'Video TikTok/Reels'], ['facebook', 'Bài Facebook'], ['landing', 'Landing'],
+['referral', 'Giới thiệu'], ['zalo', 'Zalo'], ['magnet', 'Mồi câu'], ['owner', 'Chủ căn'], ['other', 'Khác'],
 ];
 const _o2 = SOURCE_GROUPS.map(g => g[0]);
 const LABEL = Object.fromEntries(SOURCE_GROUPS);
@@ -15,6 +16,7 @@ export const NO_DETAIL = '(không ghi chi tiết)';
 export const COSTS_KEY = 'source_roi.costs';
 const WORDS = [
 [/^moi cau|magnet/, 'magnet'],
+[/^chu can\b|^chu nha\b/, 'owner'],
 [/tiktok|\btt\b|reels?|youtube|shorts|video|clip/, 'video'],
 [/facebook|\bfb\b|fanpage|meta|instagram|\big\b|messenger|group|nhom/, 'facebook'],
 [/gioi thieu|referral|nguoi quen|ctv|ban be/, 'referral'],
@@ -32,7 +34,7 @@ const _o4 = /^moi-cau-(.+)$/i;
 export function sourceOf(_oc) {
 if (!_oc) return 'other';
 const _o14 = String(_oc.source || '').trim();
-if (['video', 'facebook', 'referral', 'zalo', 'magnet'].includes(_o14)) return _o14;
+if (['video', 'facebook', 'referral', 'zalo', 'magnet', 'owner'].includes(_o14)) return _o14;
 if (_o14 === 'warm') return 'referral';
 if (_o14 === 'landing' || !_o14) {
 const _o7 = readAttribution(_oc);
@@ -239,5 +241,5 @@ for (const d of g.details.slice(0, 5)) if (d.label !== NO_DETAIL) L.push(`   · 
 }
 L.push('Khuyến nghị app đã tính theo luật (chỉ khi ≥ ' + MIN_SAMPLE + ' khách):', ...recs.map(_o11 => '- ' + _o11.text));
 L.push('Viết 3–5 gạch đầu dòng tiếng Việt ngắn gọn: nên làm thêm gì, xem lại gì. Chỉ dùng số liệu ở trên, không bịa số, nói rõ khi cỡ mẫu nhỏ.');
-return L.join('\n');
+return withRules(L.join('\n'));
 }

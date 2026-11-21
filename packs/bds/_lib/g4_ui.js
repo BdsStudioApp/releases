@@ -1,14 +1,12 @@
 import { kit, h } from './kit.js';
 import { mergeProjects } from './sales.js';
 import * as G from './g4_logic.js';
-import { addDefaults } from '../../../core/xkit.e7637ba4a6.js';
+import { addDefaults } from '../../../core/xkit.71d637c634.js';
 try {
 addDefaults({
 'ask.kind.g4_partner': 'Đối tác', 'ask.path.g4_partner': 'customers/g4_doitac?open={id}',
-'ask.kind.g4_listing': 'Căn thứ cấp', 'ask.path.g4_listing': 'sales/g4_giohang?open={id}',
-'ask.kind.g4_booking': 'Giữ chỗ', 'ask.path.g4_booking': 'sales/g4_giucho?open={id}',
-'ask.kind.g4_priceref': 'Giá tham chiếu', 'ask.path.g4_priceref': 'sales/g4_banggia',
-'ask.kind.g4_sitelog': 'Nhật ký công trường', 'ask.path.g4_sitelog': 'sales/g4_congtruong',
+'ask.kind.g4_listing': 'Căn thứ cấp (dữ liệu cũ)', 'ask.kind.g4_booking': 'Giữ chỗ (dữ liệu cũ)',
+'ask.kind.g4_priceref': 'Giá tham chiếu (dữ liệu cũ)', 'ask.kind.g4_sitelog': 'Nhật ký công trường (dữ liệu cũ)',
 });
 } catch { }
 const _o0 = 'bds-g4-css';
@@ -90,7 +88,7 @@ i.addEventListener('input', _oj);
 return { el: h('span', { class: 'g4-money' }, i, _oc), input: i, get value() { return G.parseMoney(i.value); } };
 },
 projectSelect(projects, value, attrs = {}) {
-return _o1.select([['', '– Chọn dự án –'], ...projects.map((p) => [p.id, p.name || p.id])], G.projectKey(projects, value) || value, attrs);
+return _o1.select([['', projects.length ? '– Chọn dự án –' : '– Chưa có dự án (thêm ở Thông tin dự án) –'], ...projects.map((p) => [p.id, p.name || p.id])], G.projectKey(projects, value) || value, attrs);
 },
 links(list, { prefix = 'Link', testid } = {}) {
 const ok = (list || []).map((x) => (typeof x === 'string' ? { url: x } : x)).filter((x) => G.safeUrl(x.url));
@@ -119,7 +117,7 @@ const details = [];
 let ok = true;
 const _oi = ctx && ctx.store;
 for (const _oa of ['list', 'get', 'put']) if (!_oi || typeof _oi[_oa] !== 'function') { ok = false; details.push('Thiếu store.' + _oa); }
-if (typeof G.compareListing !== 'function') { ok = false; details.push('Thiếu g4_logic'); }
+if (typeof G.inventoryRows !== 'function') { ok = false; details.push('Thiếu g4_logic'); }
 if (ok && render && typeof document !== 'undefined') {
 const _o8 = document.createElement('div');
 _o8.style.display = 'none';

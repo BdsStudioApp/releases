@@ -31,22 +31,6 @@ export const G1_CSS = `
 @media (max-width:600px){.g1-tbl.g1-stack thead{display:none}.g1-tbl.g1-stack tr{display:block;border-bottom:1px solid var(--sl-line,rgba(127,127,127,.25));padding:6px 0}.g1-tbl.g1-stack td{display:block;border:0;padding:3px 0}.g1-tbl.g1-stack td.n{text-align:left}
   .g1-tbl.g1-stack td[data-l]::before{content:attr(data-l) ": ";font-size:.8em;color:var(--sl-muted,rgba(127,127,127,.95))}}
 `;
-export const GUEST_CSS = `
-html[data-g1-guest="1"] [data-private],html[data-g1-guest="1"] .g1-private,html[data-g1-guest="1"] .bds-note,
-html[data-g1-guest="1"] .top-account,html[data-g1-guest="1"] #ask-open,html[data-g1-guest="1"] [data-testid="quick-note"],html[data-g1-guest="1"] [data-testid="save-note"],
-html[data-g1-guest="1"] [data-testid="tile-g1_policywatch"],html[data-g1-guest="1"] [data-testid="quote-recent"],
-${G.GUEST_SCREENS.length ? ['home', 'customers', 'inbox', 'settings'].filter((_oi) => !G.GUEST_SCREENS.includes(_oi)).map((_oi) => `html[data-g1-guest="1"] .nav-item[data-screen="${_oi}"]`).join(',') : ''}{display:none !important}
-/* riêng một luật: trình duyệt cũ chưa hiểu :has thì chỉ bỏ luật này, không làm hỏng luật ẩn ở trên (Báo giá: ô chọn khách liệt kê tên + SĐT mọi khách) */
-html[data-g1-guest="1"] label.sl-f:has([data-testid="quote-customer"]){display:none !important}
-.g1-guest-fab{position:fixed;left:14px;bottom:calc(var(--nav-h,64px) + 14px + env(safe-area-inset-bottom,0px));z-index:46;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid rgba(201,162,74,.6);
-  background:#0F1E33;color:#F7F3EA;font:inherit;font-size:.9rem;box-shadow:0 4px 16px rgba(0,0,0,.25);cursor:pointer}
-html[data-g1-guest="1"] .g1-guest-fab{background:#C9A24A;color:#0F1E33;font-weight:700}
-.g1-guest-bar{position:fixed;left:0;right:0;top:0;z-index:95;background:#C9A24A;color:#0F1E33;text-align:center;font-size:.85rem;padding:4px 8px;font-weight:700;pointer-events:none}
-@media (max-width:600px){.g1-guest-fab{width:48px;height:48px;padding:0;font-size:1.25rem;opacity:.92}.g1-guest-fab .g1-fab-l{display:none}}
-@media (min-width:900px){.g1-guest-fab{left:auto;right:20px;bottom:20px}}
-/* 18/11 chia lại gói: Chế độ khách xem (Gói 3) chạy cùng Pháp lý / Giữ chỗ – cột chi tiết bên phải đang mở thì nút nổi dời sang trái cột, không che nút Lưu của biểu mẫu */
-@media (min-width:900px){#app.has-sheet ~ .g1-guest-fab{right:calc(max(400px, 42%) + 20px)}}
-`;
 function _o1(id, css) {
 if (typeof document === 'undefined' || document.getElementById(id) || (_o1.done && _o1.done[id])) return;
 _o1.done = _o1.done || {}; _o1.done[id] = 1;
@@ -54,8 +38,6 @@ try { const _ok = new CSSStyleSheet(); _ok.replaceSync(css); document.adoptedSty
 const _oi = document.createElement('style'); _oi.id = id; _oi.textContent = css; document.head.appendChild(_oi);
 }
 export const ensureCss = () => _o1('g1-css', G1_CSS);
-export const ensureGuestCss = () => _o1('g1-guest-css', GUEST_CSS);
-export const isGuest = () => typeof document !== 'undefined' && document.documentElement.dataset.g1Guest === '1';
 export function moneyIn(st, key, label, attrs = {}, onInput) {
 return h('label', { class: 'sl-f' }, label, h('input', { type: 'text', inputmode: 'decimal', value: st[key] ?? '', 'data-testid': attrs.testid, placeholder: attrs.placeholder || '',
 oninput: (e) => { st[key] = e.target.value; onInput && onInput(); } }));
@@ -156,12 +138,14 @@ h('div', { class: 'sl-form' }, h('label', { class: 'sl-f' }, 'Họ tên', name),
 h('div', { class: 'sl-row sl-end' }, K.button('Huỷ', () => { _ob.close(); res(null); }), K.button('Tiếp tục', ok, { kind: 'primary', icon: 'next', testid: 'g1-wm-ok' }))] });
 });
 }
-export const AI_CHOICES = [['gemini', 'Gemini (mặc định)'], ['claude_api', 'Claude API'], ['ollama', 'Ollama trên máy (cần mô hình đọc ảnh)'], ['handoff', 'Làm bằng Claude/Gemini qua chat']];
-export const AI_NAME = { gemini: 'Gemini', claude_api: 'Claude API', ollama: 'Ollama', handoff_claude: 'Claude (chat)', handoff_gemini: 'Gemini (chat)', handoff: 'Chat' };
+export const AI_CHOICES = [['gemini', 'Gemini (mặc định)'], ['claude_api', 'Claude API'], ['handoff', 'Làm bằng Claude/Gemini qua chat']];
+export const AI_NAME = { gemini: 'Gemini', claude_api: 'Claude API', handoff_claude: 'Claude (chat)', handoff_gemini: 'Gemini (chat)', handoff: 'Chat' };
 export function aiSelect(K, ctx, key, testid) {
 let cur = 'gemini';
 try { cur = localStorage.getItem(key) || (ctx.ai && ctx.ai.provider ? ctx.ai.provider('read_policy') : 'gemini'); } catch { }
 if (/^handoff/.test(cur)) cur = 'handoff';
+if (!AI_CHOICES.some(([v]) => v === cur)) { try { cur = ctx.ai && ctx.ai.provider ? ctx.ai.provider('read_policy', cur) : 'gemini'; } catch { cur = 'gemini'; } }
+if (!AI_CHOICES.some(([v]) => v === cur)) cur = 'gemini';
 const _o3 = !!(ctx.settings && typeof ctx.settings.get === 'function' && ctx.settings.get('ai.claude_api_enabled', false) === true);
 const _oj = K.select(AI_CHOICES, cur, { 'data-testid': testid, class: 'sl-in', onchange: (e) => { try { localStorage.setItem(key, e.target.value); } catch { } } });
 const _oe = _oj.querySelector('option[value="claude_api"]');

@@ -2,8 +2,8 @@ export const FLOWS = {
 personal: ['allow', 'account', 'telegram', 'backup', 'domain', 'ai', 'finish'],
 company: ['prepare', 'company', 'allow', 'account', 'telegram', 'tfa', 'doingu', 'domain', 'ai', 'finish', 'handover']
 };
-const _o6 = (list) => { const _o3 = list.indexOf('account'); return [...list.slice(0, _o3 + 1), 'diachi', ...list.slice(_o3 + 1)]; };
-export const PORTAL_FLOWS = { personal: _o6(FLOWS.personal), company: _o6(FLOWS.company) };
+const _o5 = (list) => { const _o2 = list.indexOf('account'); return [...list.slice(0, _o2 + 1), 'diachi', ...list.slice(_o2 + 1)]; };
+export const PORTAL_FLOWS = { personal: _o5(FLOWS.personal), company: _o5(FLOWS.company) };
 export function flowIds(flow, { portal = false } = {}) { return ((portal ? PORTAL_FLOWS : FLOWS)[flow]) || []; }
 export const FLOW_LABEL = { personal: 'Cá nhân', company: 'Công ty' };
 export const FLOW_INTRO = {
@@ -20,8 +20,8 @@ points: ['Chuẩn bị Google công ty, tên miền', 'Tên, mã số thuế, lo
 };
 export const TRIAL_COMPANY_SEATS = 10;
 export function trialCompanySeats(config) {
-const _o4 = config && config.licensing;
-const v = Math.floor(Number(_o4 && _o4.trial_company_seats));
+const _o3 = config && config.licensing;
+const v = Math.floor(Number(_o3 && _o3.trial_company_seats));
 return v >= 1 && v <= 10000 ? v : TRIAL_COMPANY_SEATS;
 }
 export function flowWho(flow, config) {
@@ -42,7 +42,6 @@ hint: 'Gemini có mức miễn phí (giới hạn số lần/ngày).' },
 { id: 'landing', required: false, label: 'Trang giới thiệu (landing) của công ty, nếu có, để khách để lại số',
 hint: 'Không có cũng được – nhập khách bằng tay hoặc làm sau.' }
 ];
-const _o1 = 'Trang Google – ảnh hướng dẫn sẽ bổ sung';
 export const URL_FIELD_LABEL = 'Địa chỉ máy chủ (kết thúc bằng /exec)';
 export const NOT_PUBLIC_TEXT = "Lúc Triển khai chưa chọn 'Bất kỳ ai' – vào Triển khai › Quản lý triển khai › sửa → Bất kỳ ai";
 export const NOT_PUBLIC_FIX = 'Mở Apps Script của Sheet máy chủ (Tiện ích mở rộng › Apps Script) → Triển khai › Quản lý triển khai (Deploy › Manage deployments) → bấm bút chì "Sửa" (Edit) → Người có quyền truy cập: Bất kỳ ai (Who has access: Anyone) → Triển khai (Deploy). Địa chỉ …/exec giữ nguyên – bấm kiểm lại.';
@@ -54,199 +53,127 @@ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? v : SUPPORT_EMAIL_FALLBACK;
 }
 export const isSaleEdition = (config = {}) => !!config && String(config.edition || 'owner') !== 'owner';
 const _o0 = 'Miễn phí';
+export const BACK_HERE = 'QUAY LẠI tab BDS Studio này';
+export const UNSAFE_WHY = 'Vì sao Google ghi "không an toàn"? Đây là bản sao nằm trong Drive của chính anh/chị – Google chỉ xác minh ứng dụng phát hành cho nhiều người dùng. '
++ 'Kiểm tra đúng email của mình rồi bấm tiếp; bên bán không xem được dữ liệu.';
+export const PREPARE_TIP = 'Dùng thử: nên dùng một Gmail phụ để thử các chức năng. Khi mua bản quyền, chuyển sang email theo tên miền công ty để dữ liệu đứng tên công ty, nhân viên nghỉ việc không mang đi được.';
+export const SETUP_CODE_WHERE = 'Trong Sheet: BDS Studio › 🔗 Mở lại hộp kết nối → Mã cài đặt';
 export const STEPS = {
 prepare: {
-id: 'prepare', phase: 'any', required: true, check: 'manual', flows: ['company'],
+id: 'prepare', phase: 'any', required: true, check: 'info', flows: ['company'], noBadge: true,
 title: 'Chuẩn bị trước',
-trial: 'Muốn dùng thử trước? Bỏ qua các mục chưa có – chuẩn bị sau, trước khi dùng thật.',
-head: 'Để buổi cài không phải dừng giữa chừng vì thiếu thứ gì.',
-note: 'Khi dùng thật, mọi tài khoản nên đứng tên công ty – nhân viên nghỉ việc không mang dữ liệu đi được.',
-todo: [
-'Nên có tài khoản Google Workspace (Gmail mang tên công ty).',
-'Hỏi ai đang quản lý tên miền của công ty.',
-'Tạo bot Telegram (tài khoản tự nhắn tin) cho công ty.',
-'Đánh dấu các mục đã có (chưa có thì bỏ trống) → bấm **Kiểm tra bước này**.'
-],
-time: 'Khoảng 30–60 phút, làm trước buổi cài (dùng thử: bỏ qua được)',
-cost: 'Dùng thử: 0 đ · Khi dùng thật có tốn phí: Google Workspace trả theo tháng, tên miền .com khoảng 10–15 USD/năm (giá tham khảo, xem lại trước khi mua)',
-actions: [
-{ text: 'Nên có: quản trị viên công ty tạo một tài khoản Google Workspace riêng cho BDS Studio, vd bds@congty.vn (dùng thử: Gmail cá nhân cũng được). Hôm cài: bấm ảnh đại diện góc phải trang Google để chắc đúng tài khoản này.', slot: 'ext-google-account', note: _o1 },
-{ text: 'Hỏi người quản lý tên miền: ai thêm được bản ghi CNAME (một dòng trỏ tên miền con, vd app.congty.vn, về app) ở nơi mua tên miền hoặc Cloudflare.' },
-{ text: 'Tạo bot Telegram: mở Telegram → tìm **@BotFather** → gõ **/newbot** → đặt tên → lưu **mã bot** (dạng 123456:ABC…).', slot: 'ext-botfather', note: 'Trang Telegram – ảnh hướng dẫn sẽ bổ sung' },
-{ text: 'Đánh dấu các mục đã có ở danh sách dưới (chưa có thì bỏ trống – dùng thử vẫn được), rồi bấm **Kiểm tra bước này**.' }
-]
+tip: PREPARE_TIP,
+head: 'Một lời khuyên trước khi cài – đọc xong bấm Tiếp tục.',
+time: 'Khoảng 1 phút', cost: 'Dùng thử: 0 đ',
+actions: []
 },
 company: {
 id: 'company', phase: 'any', required: true, check: 'form', flows: ['company'],
 title: 'Thông tin công ty',
-head: 'Để tên và logo công ty hiện trên app, trên báo giá gửi khách và trên biên bản bàn giao.',
-todo: [
-'Gõ tên công ty đúng như giấy phép kinh doanh.',
-'Gõ mã số thuế (10 số; chi nhánh thêm 3 số).',
-'Chọn tệp logo (ảnh PNG hoặc JPG).'
-],
+head: 'Tên và logo hiện trên app, trên báo giá gửi khách và trên biên bản bàn giao.',
 time: 'Khoảng 2 phút', cost: _o0,
-actions: [
-{ text: 'Gõ tên công ty đúng như trên giấy phép kinh doanh.' },
-{ text: 'Gõ mã số thuế: 10 số, chi nhánh có thêm 3 số (vd 0101234567-001).' },
-{ text: 'Chọn tệp logo (PNG/JPG, nền trong suốt càng đẹp). App tự thu nhỏ.' }
-]
+actions: []
 },
 allow: {
-id: 'allow', phase: 'pre', main: true, required: true, check: 'auto', flows: ['personal', 'company'],
+id: 'allow', phase: 'pre', main: true, required: true, check: 'auto', flows: ['personal', 'company'], widgetLast: true,
 title: 'Tạo máy chủ',
 titleCompany: 'Tạo máy chủ công ty',
-head: 'Để có nơi cất dữ liệu khách ngay trong Google của anh/chị – không ai khác xem được, kể cả bên bán.',
-headCompany: 'Để dữ liệu khách nằm trong Google CÔNG TY – nhân viên nghỉ việc không mang đi được, bên cài đặt cũng không xem được.',
-note: 'Máy chủ ở đây là một trang tính Google (Sheet) do Google chạy giúp – không cần mua máy, không cài gì.',
-todo: [
-'Bấm **Tạo bản sao** (bên dưới, rồi trên trang Google).',
-'Trong Sheet: menu **BDS Studio › Cài đặt** → **Cho phép**.',
-'Trong hộp hiện ra: **Triển khai → Tuỳ chọn triển khai mới**.',
-'Bấm **Mở BDS Studio và kết nối** (hoặc **Chép URL** → dán vào ô dưới).'
-],
-todoCompany: [
-'Dùng Google CÔNG TY (dùng thử: Gmail cá nhân cũng được), bấm **Tạo bản sao** (bên dưới, rồi trên trang Google).',
-'Trong Sheet: menu **BDS Studio › Cài đặt** → **Cho phép**.',
-'Trong hộp hiện ra: **Triển khai → Tuỳ chọn triển khai mới**.',
-'Bấm **Mở BDS Studio và kết nối** (hoặc **Chép URL** → dán vào ô dưới).'
-],
-todoManual: [
-'Tạo Sheet mới, dán 3 tệp theo hướng dẫn dưới (có nút **Chép** sẵn).',
-'Tải lại Sheet → menu **BDS Studio › Cài đặt** → **Cho phép**.',
-'Trong hộp hiện ra: **Triển khai → Tuỳ chọn triển khai mới**.',
-'Bấm **Mở BDS Studio và kết nối** (hoặc **Chép URL** → dán vào ô dưới).'
-],
+head: 'Máy chủ là một trang tính Google (Sheet) trong Google của anh/chị – không ai khác xem được, kể cả bên bán.',
+headCompany: 'Máy chủ là một Sheet trong Google CÔNG TY – nhân viên nghỉ việc không mang đi được, bên cài đặt cũng không xem được.',
 todoGoogle: [
 'Bấm **Cài bằng tài khoản Google** → chọn tài khoản → **Cho phép**.',
 'Google hỏi thì bật **Google Apps Script API** (trang mở sẵn) rồi quay lại.',
 'Bấm **Cho phép máy chủ chạy** → **Cho phép** – app tự sang bước kế.'
 ],
 timeGoogle: 'Khoảng 3–5 phút',
-time: 'Khoảng 5 phút (dán tay: 10–15 phút)', cost: _o0,
+time: 'Khoảng 5–10 phút (dán tay: 10–15 phút)', cost: _o0,
 actions: [
-{ way: 'copy', text: 'Bấm **Tạo bản sao** bên dưới → Google hỏi → bấm **Tạo bản sao** (Make a copy).',
-textCompany: 'Bấm **Tạo bản sao** bên dưới bằng tài khoản Google CÔNG TY → bấm **Tạo bản sao** (Make a copy).',
-link: 'template', guide: 'copy', note: _o1 },
+{ way: 'copy', text: 'Bấm **Tạo bản sao** → trang Google hỏi → bấm **Tạo bản sao** (Make a copy).',
+textCompany: 'Dùng Google CÔNG TY (dùng thử: Gmail phụ), bấm **Tạo bản sao** → trang Google hỏi → bấm **Tạo bản sao** (Make a copy).',
+link: 'template', imgs: ['template-copy'] },
 { way: 'manual', text: 'Mở **sheets.new** (Sheet trống mới) bằng đúng tài khoản Google giữ dữ liệu.',
 textCompany: 'Mở **sheets.new** (Sheet trống mới) bằng tài khoản Google CÔNG TY.', link: 'sheetsNew' },
-{ way: 'manual', text: 'Trên Sheet: **Tiện ích mở rộng › Apps Script** (Extensions › Apps Script – nơi dán mã).' },
+{ way: 'manual', text: 'Trên Sheet: **Tiện ích mở rộng › Apps Script** (Extensions › Apps Script – nơi dán mã).', imgs: ['sheet-ext-menu'] },
 { way: 'manual', text: 'Bấm tệp **Mã.gs** (Code.gs) ở cột trái → Ctrl+A → dán **TatCa.gs** → đổi tên thành TatCa.', installer: 'tatca' },
 { way: 'manual', text: 'Bấm **+** › **Tập lệnh** (Script) → tên CaiDat → Ctrl+A → dán **CaiDat.gs**.', installer: 'caidat' },
-{ way: 'manual', text: 'Bánh răng **Cài đặt dự án** → tick **Hiện tệp kê khai "appsscript.json"**.', guide: '4', note: _o1 },
-{ way: 'manual', text: 'Quay lại **< >** → bấm **appsscript.json** → Ctrl+A → dán **appsscript.json** → Lưu (Ctrl+S).', installer: 'manifest' },
-{ way: 'manual', text: 'Quay lại thẻ Sheet → bấm **Tải lại** (F5) – menu **BDS Studio** hiện ra.' },
-{ text: 'Trong Sheet vừa mở: menu **BDS Studio › Cài đặt** → **Cho phép** (Allow).', slot: 'ext-sheet-menu', note: _o1 },
-{ text: 'Google ghi "chưa xác minh" (bình thường): **Nâng cao** (Advanced) → **Đi tới…** (Go to) → **Cho phép**.', slot: 'ext-google-allow', note: _o1 },
-{ text: 'Hộp **Triển khai máy chủ** trong Sheet: bấm **Triển khai → Tuỳ chọn triển khai mới** (New deployment).', guide: '9', note: _o1 },
-{ text: 'Mục **Quản lý triển khai** trống là bình thường (bản sao Sheet chưa có triển khai – phải bấm triển khai mới 1 lần).' },
-{ text: '⚙ **Ứng dụng web** (Web app) → Thực thi: **Tôi** (Me) → Truy cập: **Bất kỳ ai** (Anyone).' },
-{ text: 'Bấm **Triển khai** (Deploy) → **Cho phép** (Allow) → **Sao chép URL** (Copy).' },
-{ text: 'Quay lại hộp trong Sheet → bấm **Tôi đã triển khai xong**.' },
-{ text: 'Hộp có nút **Mở BDS Studio và kết nối**? Bấm – app tự điền, tự kiểm.', guide: '11', note: _o1 },
-{ text: 'Chưa có nút: bấm **Chép URL** trong hộp → dán vào ô dưới → **Kiểm tra bước này**.', guide: '10' },
-{ text: 'Hộp hỏi địa chỉ app? Dán dòng **Địa chỉ app của anh/chị** (ngay dưới) vào ô đó.' }
+{ way: 'manual', text: 'Bánh răng **Cài đặt dự án** → tick **Hiện tệp kê khai "appsscript.json"**.', imgs: ['manifest-tick'] },
+{ way: 'manual', text: 'Quay lại **< >** → bấm **appsscript.json** → Ctrl+A → dán **appsscript.json** → Lưu (Ctrl+S).', installer: 'manifest', imgs: ['manifest-paste'] },
+{ way: 'manual', text: 'Quay lại thẻ Sheet → bấm **Tải lại** (F5).' },
+{ text: 'Trong Sheet: chờ 10–20 giây cho menu **BDS Studio** hiện → bấm **BDS Studio › ⚙️ Cài đặt**.', imgs: ['sheet-menu'] },
+{ text: 'Google hỏi quyền: **Xem xét quyền** → chọn đúng Gmail của anh/chị → **Nâng cao** (Advanced) → **Đi tới… (không an toàn)** → **Cho phép** (Allow).',
+why: UNSAFE_WHY, imgs: ['auth-review', 'auth-advanced', 'auth-allow'] },
+{ text: 'Cho phép xong, bấm **BDS Studio › ⚙️ Cài đặt** LẦN NỮA → hộp "Đang cài đặt máy chủ…" hiện ra: chờ khoảng 30 giây, đừng tải lại trang.', imgs: ['sheet-installing'] },
+{ text: 'Hộp **Triển khai máy chủ** hiện ra – làm theo các dòng trong hộp (chỉ 1 lần):', imgs: ['sheet-deploy-dialog'], sub: [
+{ text: 'Bấm **Tiện ích mở rộng › Apps Script** (Extensions › Apps Script).', imgs: ['sheet-ext-menu'] },
+{ text: 'Góc phải: **Triển khai › Tuỳ chọn triển khai mới** (Deploy › New deployment). Mục "Quản lý triển khai" trống là bình thường.', imgs: ['deploy-menu'] },
+{ text: 'Bánh răng ⚙ cạnh **Chọn loại** → **Ứng dụng web** (Web app).', imgs: ['deploy-type'] },
+{ text: 'Thực thi: **Tôi** (Me) · Người có quyền truy cập: **Bất kỳ ai** (Anyone) → bấm **Triển khai** (Deploy).', imgs: ['deploy-config'] },
+{ text: 'Google hỏi: bấm **Uỷ quyền truy cập** (Authorize access) → chọn Gmail → **Nâng cao** → **Đi tới… (không an toàn)** → **Cho phép**.', imgs: ['deploy-authorize'] },
+{ text: 'Hiện **Đã triển khai** và URL ứng dụng web …/exec → bấm **Xong** (Done).', imgs: ['deploy-url'] }
+] },
+{ text: 'Quay lại thẻ Sheet → bấm **Tôi đã triển khai xong** → hộp hiện **Mở BDS Studio và kết nối** → bấm – app tự điền, tự kiểm.', imgs: ['sheet-open-app'], imgPortal: true },
+{ text: 'Hộp không có nút đó? Bấm **Chép URL** trong hộp → ' + BACK_HERE + ' → dán vào ô dưới → bấm **Kiểm tra bước này**.' }
 ]
 },
 account: {
 id: 'account', phase: 'pre', main: true, required: true, check: 'auto', flows: ['personal', 'company'],
 title: 'Tạo tài khoản',
 titleCompany: 'Tạo tài khoản Quản trị (Admin)',
-head: 'Để chỉ anh/chị đăng nhập được app – mật khẩu chỉ anh/chị biết, kể cả bên bán cũng không xem được.',
-headCompany: 'Để tạo tài khoản Quản trị (Admin) – người giữ quyền cao nhất công ty (thường là giám đốc); mật khẩu chỉ người đó biết.',
-todo: [
-'Gõ email (để lấy lại mật khẩu khi quên) → bấm **Gửi mã**.',
-'Gõ mã 6 số trong thư → bấm **Tạo tài khoản**.',
-'Đặt tên đăng nhập và mật khẩu (từ 8 ký tự).',
-'Bấm **Tạo mật khẩu** – app tự sang bước kế.'
-],
+head: 'Chỉ anh/chị đăng nhập được app – mật khẩu chỉ anh/chị biết, kể cả bên bán cũng không xem được.',
+headCompany: 'Tài khoản Quản trị (Admin) – người giữ quyền cao nhất công ty (thường là giám đốc); mật khẩu chỉ người đó biết.',
 time: 'Khoảng 3 phút', cost: _o0,
-actions: [
-{ text: 'Gõ **email** của anh/chị (bắt buộc) → bấm **Gửi mã**. Thư gửi từ chính tài khoản Google đã cài máy chủ.' },
-{ text: 'Mở thư, gõ **mã 6 số** vào ô (dùng được 15 phút). Không thấy thư: xem mục Thư rác/Spam, Quảng cáo, hoặc chờ 60 giây rồi bấm **Gửi lại mã**.' },
-{ text: 'Máy chủ báo không gửi được thư (Google giới hạn số thư/ngày, hoặc công ty chặn gửi thư)? Bấm **Dùng email tài khoản Google đang chạy máy chủ** nếu đó là email của anh/chị.' },
-{ text: 'Xác nhận xong, bấm **Tạo tài khoản**.', shot: 'app-setup' },
-{ text: 'Đặt **tên đăng nhập**: chữ thường, không dấu, vd lan.nguyen.' },
-{ text: 'Đặt **mật khẩu** từ 8 ký tự. Ghi lại nơi an toàn.' },
-{ text: 'Bấm **Tạo mật khẩu** – app tự mở lại trợ lý ở bước kế.' }
-]
+actions: []
 },
 diachi: {
 id: 'diachi', phase: 'post', main: true, required: true, deferrable: true, check: 'auto', flows: ['personal', 'company'], portalOnly: true,
 title: 'Chọn địa chỉ app',
 titleCompany: 'Địa chỉ app công ty',
-head: 'Để có địa chỉ web riêng mở app của anh/chị – miễn phí dạng ten.bdsstudio.app, hoặc tên miền riêng.',
-headCompany: 'Để có địa chỉ web riêng mở app của công ty – tên miền công ty, hoặc miễn phí dạng tencongty.bdsstudio.app.',
+head: 'Địa chỉ web riêng mở app của anh/chị – miễn phí dạng ten.bdsstudio.app, hoặc tên miền riêng.',
+headCompany: 'Địa chỉ web riêng mở app của công ty – tên miền công ty, hoặc miễn phí dạng tencongty.bdsstudio.app.',
 note: 'Mỗi khách một app riêng, không dùng chung. Trang này chỉ để cài, không giữ dữ liệu: tạo xong app tự chuyển sang địa chỉ mới.',
-todo: [
-'Chọn **Dùng địa chỉ miễn phí** hoặc **Gán tên miền riêng**.',
-'Gõ tên muốn dùng, chờ dòng **✅ Còn trống**.',
-'Bấm **Tạo ngay**, chờ khoảng 1–3 phút.',
-'App tự mở ở địa chỉ mới – đăng nhập ở đó.'
-],
 todoQuick: [
 'Tên đã điền sẵn theo tên đăng nhập – sửa nếu muốn (chọn rồi không đổi được).',
-'Bấm **Tạo ngay** – khoảng 1–3 phút app riêng tự mở, đăng nhập bằng mật khẩu vừa đặt.'
+'Bấm **Tạo ngay** – thường 2–5 phút (có khi tới 15 phút) app riêng tự mở, đăng nhập bằng mật khẩu vừa đặt.'
 ],
 todoNoService: [
 'Gõ tên muốn dùng → bấm **Gửi tên cho bên bán**.',
 'Bấm **Làm sau** – dùng app ngay ở địa chỉ này.',
 'Bên bán gửi địa chỉ riêng qua email trong 24 giờ.'
 ],
-todoCompany: [
-'Trả lời **Công ty đã có tên miền chưa?** bên dưới.',
-'Gõ tên miền hoặc tên muốn dùng theo hướng dẫn hiện ra.',
-'Bấm **Tạo ngay**, chờ khoảng 1–3 phút.',
-'App tự mở ở địa chỉ mới – đăng nhập ở đó.'
-],
-time: 'Khoảng 1–3 phút (tên miền riêng: chờ thêm tới 24 giờ, thường dưới 30 phút)',
+time: 'Thường 2–5 phút, có khi tới 15 phút (chờ chứng chỉ https); tên miền riêng: chờ thêm tới 24 giờ, thường dưới 30 phút',
 cost: 'Địa chỉ miễn phí: 0 đ · Tên miền riêng: tự trả tiền tên miền, .com khoảng 10–15 USD/năm (giá tham khảo)',
-actions: [
-{ text: 'Chọn **Dùng địa chỉ miễn phí** hoặc **Gán tên miền riêng** bên dưới.', textCompany: 'Trả lời **Công ty đã có tên miền chưa?** bên dưới.' },
-{ text: 'Địa chỉ miễn phí: gõ tên muốn dùng (chữ thường không dấu, số, dấu "-") → chờ dòng **✅ Còn trống** → bấm **Tạo ngay**.' },
-{ text: 'Tên miền riêng: gõ tên miền (vd app.tencuaban.com) → thêm 1 dòng CNAME (dòng trỏ tên miền về app) đúng như bảng hiện ra → bấm **Tạo ngay** → chờ tên miền chạy.' },
-{ text: 'Tạo xong (khoảng 1–3 phút): app tự mở ở địa chỉ mới và tự nối máy chủ – anh/chị đăng nhập ở đó để làm tiếp các bước còn lại.' }
-]
+actions: []
 },
 telegram: {
 skipNote: 'Không nhận tin báo khách mới, nhắc việc qua Telegram. Nối sau được ở Cài đặt › Kết nối.',
-id: 'telegram', phase: 'post', required: false, check: 'auto', flows: ['personal', 'company'], requiredIn: ['company'], deferrable: true,
+id: 'telegram', phase: 'post', required: false, check: 'auto', flows: ['personal', 'company'], requiredIn: ['company'], deferrable: true, inline: true,
 laterNoteCompany: 'Đã lưu. Chưa có Telegram: ở bước Bảo mật 2 lớp bật bằng ứng dụng xác thực (hoặc Làm sau). Nối Telegram trước khi dùng thật – bot báo khách mới, nhắc việc, gửi mã đăng nhập.',
 title: 'Nhận tin qua Telegram',
-head: 'Để app nhắn Telegram cho anh/chị khi có khách mới, đến hẹn gọi lại, đến ngày đóng tiền.',
-headCompany: 'Để app nhắn Telegram khi có khách mới, đến hẹn gọi lại, và gửi mã đăng nhập (bảo mật 2 lớp).',
+head: 'App nhắn Telegram cho anh/chị khi có khách mới, đến hẹn gọi lại, đến ngày đóng tiền.',
+headCompany: 'App nhắn Telegram khi có khách mới, đến hẹn gọi lại, và gửi mã đăng nhập (bảo mật 2 lớp).',
 notePersonal: 'Nối xong, đăng nhập ở máy lạ sẽ hỏi thêm mã 6 số gửi qua Telegram (bảo mật 2 lớp) – bước sau tạo mã dự phòng.',
-todo: [
-'Chưa có Telegram? Bấm **Tải Telegram**.',
-'Trong Telegram, nhắn **@BotFather** để tạo bot (tài khoản tự nhắn tin), chép mã bot.',
-'Bấm **Mở Cài đặt › Kết nối** → dán mã bot → **Lưu**.',
-'Nhắn "chào" cho bot → bấm **Tự tìm chat id** (mã cuộc trò chuyện) → **Lưu**.'
-],
+security: '🔒 Mã bot giống chìa khoá: ai có mã là điều khiển được bot của anh/chị. Không gửi mã cho ai (kể cả bên bán), không dán vào Zalo hay nhóm chat.',
 time: 'Khoảng 5–10 phút', cost: _o0,
 actions: [
-{ text: 'Chưa có Telegram? Bấm **Tải Telegram** (điện thoại hoặc máy tính).', link: 'telegramDownload' },
-{ text: 'Trong Telegram tìm **@BotFather** → gõ **/newbot** → đặt tên bot.', slot: 'ext-botfather', note: 'Trang Telegram – ảnh hướng dẫn sẽ bổ sung' },
-{ text: 'Đặt tên đăng nhập cho bot (phải kết thúc bằng "bot") → chép **mã bot** (dạng 123456:ABC…).' },
-{ text: 'Bấm **Mở Cài đặt › Kết nối** → mục Telegram: dán mã bot → **Lưu**.', shot: 'app-connection', go: 'connection' },
-{ text: 'Nhắn "chào" cho bot → trong app bấm **Tự tìm chat id** (mã số cuộc trò chuyện với bot) → **Lưu**.' },
-{ text: 'Bấm **Kiểm tra bước này** – app gửi 1 tin thử.' }
+{ phase: 'token', text: 'Chưa có Telegram? Bấm **Tải Telegram**, cài rồi đăng ký bằng số điện thoại.', link: 'telegramDownload' },
+{ phase: 'token', text: 'Trong Telegram: ô tìm kiếm gõ **@BotFather** → chọn đúng tài khoản có dấu tích xanh ✔ → bấm **Start** (Bắt đầu).', imgs: ['ext-tg-botfather'] },
+{ phase: 'token', text: 'Gõ **/newbot** → gửi. BotFather hỏi tên hiển thị: gõ tên tuỳ ý, vd Nhắc việc BĐS.' },
+{ phase: 'token', text: 'BotFather hỏi tên đăng nhập (username): gõ không dấu, kết thúc bằng **bot**, vd lan_nhacviec_bot. Báo tên đã có người dùng thì thêm số, vd lan_nhacviec_2026_bot.', imgs: ['ext-botfather'] },
+{ phase: 'token', text: 'BotFather gửi tin "Done! Congratulations…" có dòng mã dạng **7123456789:AAH…** → chạm vào dòng mã đó để chép (hoặc chép cả tin).', imgs: ['ext-tg-token'] },
+{ phase: 'token', widget: true, text: BACK_HERE + ' → dán mã vào ô dưới → app tự kiểm mã.' },
+{ phase: 'chat', text: 'Mở bot vừa tạo (bấm **t.me/…** – link trong tin của BotFather) → bấm **Start** → gõ **chào** → gửi.', imgs: ['ext-tg-start'] },
+{ phase: 'chat', widget: true, text: BACK_HERE + ' → bấm **Tự tìm mã cuộc trò chuyện** → app gửi tin "✅ BDS Studio đã kết nối Telegram…" vào Telegram – thấy tin là Telegram đã hoạt động.' }
 ]
 },
 tfa: {
 id: 'tfa', phase: 'post', required: true, deferrable: true, check: 'auto', flows: ['company'],
 title: 'Bảo mật 2 lớp',
-head: 'Để kẻ gian có mật khẩu cũng không vào được – đăng nhập phải nhập thêm mã 6 số gửi tới điện thoại.',
-note: 'Bắt buộc trước khi dùng thật: dữ liệu khách của cả công ty nằm ở đây, phải giữ an toàn theo Luật Bảo vệ dữ liệu cá nhân (Luật số 91/2025/QH15). Đang dùng thử, chưa có Telegram: bật bằng **Cài ứng dụng xác thực**, hoặc bấm **Làm sau**.',
+head: 'Kẻ gian có mật khẩu cũng không vào được – đăng nhập phải nhập thêm mã 6 số gửi tới điện thoại.',
+note: 'Bắt buộc trước khi dùng thật (Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15). Đang dùng thử, chưa có Telegram: bật bằng **Cài ứng dụng xác thực**, hoặc bấm **Làm sau**.',
 laterNote: 'Đã lưu. Bảo mật 2 lớp vẫn BẮT BUỘC trước khi dùng thật với khách – bấm nút Trợ lý cài đặt ở góc màn hình để làm nốt (Telegram hoặc ứng dụng xác thực).',
-todo: [
-'Đã nối Telegram: mã tự gửi qua Telegram, không phải làm thêm.',
-'Chưa có Telegram: bấm **Cài ứng dụng xác thực** (app tạo mã trên điện thoại; chỉ dùng thử thì Làm sau được).',
-'Bấm **Tạo mã dự phòng**, in hoặc tải về, cất kỹ.',
-'Bấm **Kiểm tra bước này**.'
-],
 time: 'Khoảng 3 phút', cost: _o0,
 actions: [
-{ text: 'Đã nối Telegram ở bước trước thì mã tự gửi qua Telegram. Muốn chắc hơn: bấm **Cài ứng dụng xác thực** và quét mã QR bằng Google Authenticator.', shot: 'app-security' },
+{ text: 'Đã nối Telegram ở bước trước: mã tự gửi qua Telegram. Chưa có: bấm **Cài ứng dụng xác thực** ở khung trên, quét mã QR bằng Google Authenticator.' },
 { text: 'Bấm **Tạo mã dự phòng**: 10 mã, in ra hoặc tải về, cất nơi an toàn (dùng khi mất điện thoại).' },
 { text: 'Bấm **Kiểm tra bước này**.' }
 ]
@@ -255,20 +182,13 @@ backup: {
 skipNote: 'Mất điện thoại hoặc Telegram thì không đăng nhập được ở máy mới. Tạo sau được ở Cài đặt › Bảo mật.',
 id: 'backup', phase: 'post', required: false, check: 'auto', flows: ['personal'],
 title: 'Mã dự phòng',
-head: 'Để vẫn đăng nhập được khi mất điện thoại hoặc mất Telegram.',
+head: 'Vẫn đăng nhập được khi mất điện thoại hoặc mất Telegram.',
 note: 'Chưa nối Telegram thì chưa cần – bấm **Kiểm tra bước này**, app sẽ báo.',
-todo: [
-'Bấm **Tạo mã dự phòng** → gõ mật khẩu.',
-'Bấm **Gửi mã qua Telegram** → gõ 6 số vừa nhận → **Tạo mã**.',
-'Bấm **In** hoặc **Tải tệp**, cất kỹ → **Tôi đã lưu**.',
-'Bấm **Kiểm tra bước này**.'
-],
 time: 'Khoảng 2 phút', cost: _o0,
 actions: [
-{ text: 'Bấm **Tạo mã dự phòng** trong khung dưới → nhập mật khẩu.', shot: 'app-security' },
+{ text: 'Bấm **Tạo mã dự phòng** ở khung trên → nhập mật khẩu.' },
 { text: 'Bấm **Gửi mã qua Telegram** → nhập 6 số vừa nhận → **Tạo mã**.' },
-{ text: 'Bấm **In** hoặc **Tải tệp** 10 mã, cất nơi an toàn → **Tôi đã lưu**.' },
-{ text: 'Bấm **Kiểm tra bước này**.' }
+{ text: 'Bấm **In** hoặc **Tải tệp** 10 mã, cất nơi an toàn → **Tôi đã lưu** → **Kiểm tra bước này**.' }
 ]
 },
 domain: {
@@ -278,15 +198,10 @@ laterLabelCompany: 'Làm tiếp sau',
 laterNoteCompany: 'Đã lưu. App vẫn chạy ở địa chỉ đang mở (miễn phí). Bước "Tên miền công ty" vẫn bắt buộc trước khi dùng thật – có tên miền thì bấm nút Trợ lý cài đặt ở góc màn hình để làm nốt.',
 title: 'Địa chỉ mở app',
 titleCompany: 'Tên miền công ty',
-head: 'Để mở app bằng tên miền riêng của anh/chị (vd app.tenanh.com) cho chuyên nghiệp khi gửi link.',
-headCompany: 'Để app công ty chạy ở app.tencongty.vn và mỗi nhân viên có ngay trang riêng ten.tencongty.vn kéo khách về danh sách của chính mình.',
-noteCompany: 'Bắt buộc trước khi dùng thật. Đã có website thì nên mua THÊM 1 tên miền riêng cho app – app và dữ liệu khách không đụng website cũ. Đang dùng thử, chưa có tên miền, hoặc đang chờ tên miền chạy? Bấm **Làm tiếp sau** – dùng app ngay ở địa chỉ miễn phí đang mở; bước này vẫn ghi "chưa xong".',
+head: 'Mở app bằng tên miền riêng của anh/chị (vd app.tenanh.com) cho chuyên nghiệp khi gửi link.',
+headCompany: 'App công ty chạy ở app.tencongty.vn và mỗi nhân viên có trang riêng ten.tencongty.vn kéo khách về danh sách của chính mình.',
+noteCompany: 'Bắt buộc trước khi dùng thật. Đang dùng thử, chưa có tên miền, hoặc đang chờ tên miền chạy? Bấm **Làm tiếp sau** – dùng app ngay ở địa chỉ miễn phí đang mở.',
 note: 'Không cần tên miền riêng? Dùng địa chỉ có sẵn (vd tenkhach.bdsstudio.app) – miễn phí, chạy y như nhau.',
-todo: [
-'Gửi email cho bên bán, kèm tên miền muốn dùng.',
-'Thêm 1 dòng CNAME (dòng trỏ tên miền về app) theo bảng dưới.',
-'Gõ tên miền vào ô dưới → bấm **Kiểm tra bước này**.'
-],
 todoShared: [
 'Giữ **Địa chỉ mặc định (miễn phí)** – không cần làm gì thêm.',
 'Bấm **Kiểm tra bước này** → **Tiếp**.'
@@ -295,47 +210,32 @@ todoSharedWait: [
 'Gõ tên muốn dùng → bấm **Gửi tên cho bên bán**.',
 'Bấm **Làm sau** – dùng app ngay ở địa chỉ này.'
 ],
-todoCompany: [
-'Trả lời **Công ty đã có tên miền chưa?**, gõ tên miền.',
-'Thêm tên miền vào Cloudflare gói **Free**, đổi nameserver ở nơi mua.',
-'Bật trang nhân viên: **Chép mã Worker** → dán vào Cloudflare (1 lần).',
-'Bấm **Kiểm tra bước này** – xanh là xong.'
-],
 time: 'Khoảng 10 phút, rồi chờ tên miền chạy (thường 30 phút, lâu nhất 24 giờ)',
 timeCompany: 'Khoảng 20–30 phút, rồi chờ nameserver đổi xong (thường dưới 1 giờ, lâu nhất 24 giờ)',
 cost: 'Địa chỉ có sẵn: miễn phí · Tên miền .com khoảng 10–15 USD/năm (giá tham khảo)',
 costCompany: 'Cloudflare gói Free (DNS, https, Worker 100.000 lượt/ngày): 0 đ · Tên miền: công ty tự trả nhà đăng ký, .com khoảng 10–15 USD/năm (giá tham khảo)',
 actionsCompany: [
-{ text: 'Trả lời **Công ty đã có tên miền chưa?** bên dưới. Chưa có: bấm **Mua tên miền** (Cloudflare bán đúng giá gốc; đuôi .vn mua ở nhà đăng ký Việt Nam).' },
-{ text: 'Cloudflare của công ty › **Add a domain** → gõ tên miền → chọn gói **Free** → đổi 2 nameserver (máy chủ tên miền) ở nơi mua sang 2 tên Cloudflare đưa → bấm **Kiểm tra tên miền**.' },
-{ text: 'Gắn app.<tên miền> vào app, rồi bật Worker (chương trình nhỏ chạy trên Cloudflare) cho trang nhân viên theo 4 dòng ở khung dưới – hoặc nhờ bên bán làm bằng token (mã quyền giới hạn).' },
-{ text: 'Bấm **Kiểm tra bước này**: app kiểm tên miền đã chạy trên Cloudflare, app.<tên miền> mở đúng app và trang nhân viên đã chạy.' }
+{ text: 'Trả lời **Công ty đã có tên miền chưa?** ở khung trên. Chưa có: bấm **Mua tên miền** (Cloudflare bán đúng giá gốc; đuôi .vn mua ở nhà đăng ký Việt Nam).' },
+{ text: 'Cloudflare của công ty › **Add a domain** → gõ tên miền → gói **Free** → đổi 2 nameserver (máy chủ tên miền) ở nơi mua sang 2 tên Cloudflare đưa → ' + BACK_HERE + ' → bấm **Kiểm tra tên miền**.' },
+{ text: 'Gắn app.<tên miền> vào app, bật Worker (chương trình nhỏ chạy trên Cloudflare) cho trang nhân viên theo 4 dòng ở khung trên (hoặc nhờ bên bán làm bằng token) → ' + BACK_HERE + ' → bấm **Kiểm tra bước này**.' }
 ],
 actions: [
-{ text: 'Vào trang quản lý tên miền (nơi mua tên miền hoặc Cloudflare) → thêm bản ghi CNAME (một dòng trỏ tên miền con về app) đúng như bảng dưới; TTL (thời gian lưu tạm) để Tự động.', slot: 'ext-dns-cname', note: 'Trang quản lý tên miền – ảnh hướng dẫn sẽ bổ sung' },
+{ text: 'Vào trang quản lý tên miền (nơi mua tên miền hoặc Cloudflare) → thêm bản ghi CNAME (một dòng trỏ tên miền con về app) đúng như bảng dưới; TTL (thời gian lưu tạm) để Tự động.', imgs: ['ext-dns-cname'] },
 { text: 'Báo bên cài đặt để gắn tên miền vào app (một lần).',
-textPersonal: 'Tên miền được gắn ở phía bên bán: gửi email cho bên bán (địa chỉ ở khung dưới) kèm tên miền muốn dùng. Bên bán gửi lại giá trị "Trỏ tới" của dòng CNAME và báo khi gắn xong.' },
-{ text: 'Gõ tên miền vào ô dưới rồi bấm **Kiểm tra bước này** – máy chủ thử mở tên miền đó.' }
+textPersonal: 'Tên miền gắn ở phía bên bán: gửi email (địa chỉ ở khung dưới) kèm tên miền muốn dùng – bên bán gửi lại giá trị "Trỏ tới" và báo khi gắn xong.' },
+{ text: 'Thêm CNAME xong → ' + BACK_HERE + ' → gõ tên miền vào ô dưới → bấm **Kiểm tra bước này**.' }
 ]
 },
 ai: {
 skipNote: 'Các nút AI ẩn đi, app vẫn chạy bình thường. Bật sau được ở Cài đặt › Kết nối.',
-id: 'ai', phase: 'post', required: false, check: 'auto', flows: ['personal', 'company'],
+id: 'ai', phase: 'post', required: false, check: 'auto', flows: ['personal', 'company'], inline: true,
 title: 'Bật AI (Gemini)',
-head: 'Để AI soạn sẵn tin Zalo, tóm tắt khách, đọc phiếu chính sách giúp anh/chị.',
+head: 'AI soạn sẵn tin Zalo, tóm tắt khách, đọc phiếu chính sách giúp anh/chị.',
 note: 'Khoá miễn phí: Google có thể dùng nội dung gửi lên để cải thiện sản phẩm. Làm với khách thật nên dùng khoá trả phí; không gửi số CCCD của khách.',
-todo: [
-'Bấm **Mở aistudio.google.com**, đăng nhập Google.',
-'Bấm **Get API key** → **Create API key** → **Copy** (chép khoá AI – mã để app dùng AI).',
-'Bấm **Mở Cài đặt › Kết nối** → dán vào mục Gemini → **Lưu**.',
-'Bấm **Kiểm tra bước này**.'
-],
 time: 'Khoảng 3–5 phút', cost: 'Miễn phí trong hạn mức của Google (giới hạn số lần/ngày) · khoá trả phí tính tiền theo lượt dùng',
 actions: [
-{ text: 'Bấm **Mở aistudio.google.com** → đăng nhập. Trang AI Studio bằng tiếng Anh: bấm **Get API key** (Lấy khoá API).', link: 'aistudio', slot: 'ext-aistudio', note: _o1 },
-{ text: 'Bấm **Create API key** (Tạo khoá API) → **Copy** (Chép) khoá AIza….' },
-{ text: 'Bấm **Mở Cài đặt › Kết nối** → mục Gemini: dán khoá → **Lưu**.', shot: 'app-connection-gemini', go: 'connection' },
-{ text: 'Bấm **Kiểm tra bước này** – app hỏi thử AI một câu.' }
+{ text: 'Bấm **Mở aistudio.google.com** → đăng nhập Gmail. Trang tiếng Anh: bấm **Get API key** (Lấy khoá API) → **Create API key** (Tạo khoá API) → **Copy** (Chép) khoá AIza….', link: 'aistudio', imgs: ['ext-aistudio'] },
+{ widget: true, text: 'Lấy khoá xong → ' + BACK_HERE + ' → dán vào ô dưới → app tự kiểm.' }
 ]
 },
 engine: {
@@ -367,31 +267,22 @@ doingu: {
 id: 'doingu', phase: 'post', required: false, check: 'form', flows: ['company'],
 title: 'Đội ngũ',
 head: 'Để mỗi nhân viên có tài khoản riêng – nhận link mời qua email, tự đặt mật khẩu; Sale chỉ thấy khách được chia cho mình.',
-note: 'Chưa biết ai thì để 0, mời sau ở Cài đặt › Người dùng.',
-skipNote: 'Chỉ mình anh/chị dùng app lúc này. Mời nhân viên sau ở Cài đặt › Người dùng.',
-todo: [
-'Chọn số nhân viên bán hàng (Sale) muốn tạo sẵn.',
-'Gõ họ tên và email từng người (số điện thoại nếu có).',
-'Bấm **Tạo lời mời và gửi email**.',
-'Chưa cần? Bấm **Bỏ qua bước này**.'
-],
+note: 'Chưa biết ai thì để 0, mời sau ở Cài đặt › Nhân sự.',
+skipNote: 'Chỉ mình anh/chị dùng app lúc này. Mời nhân viên sau ở Cài đặt › Nhân sự.',
 time: 'Khoảng 1 phút mỗi người', cost: _o0,
 actions: [
 { text: 'Bấm **+** để chọn số nhân viên bán hàng (Sale); cần Quản lý / Trưởng nhóm thì chọn thêm ở ô dưới.' },
 { text: 'Gõ **họ tên** và **email** từng người (bắt buộc – app gửi link mời và mã xác nhận tới email này); số điện thoại giúp gửi qua Zalo.' },
 { text: 'Bấm **Tạo lời mời và gửi email**. Thư gửi từ chính tài khoản Google đang chạy máy chủ.' },
 { text: 'Ai chưa nhận được thư: bấm **Chép link mời** hoặc **Gửi qua Zalo**. Link dùng 1 lần, hết hạn sau 7 ngày.' },
-{ text: 'Nhân viên bấm link → đặt mật khẩu → nhập mã 6 số trong email → vào app với đúng vai trò.' }
+{ text: 'Nhân viên bấm link → đặt mật khẩu → nhập mã 6 số trong email → vào app với đúng vai trò.' },
+{ text: 'Chưa cần mời ai? Bấm **Bỏ qua bước này**.' }
 ]
 },
 finish: {
-id: 'finish', phase: 'post', main: true, required: true, check: 'auto', flows: ['personal', 'company'],
+id: 'finish', phase: 'post', main: true, required: true, check: 'auto', flows: ['personal', 'company'], widgetLast: true,
 title: 'Kiểm tra toàn bộ',
 head: 'Để chắc mọi phần chạy thật trước khi dùng với khách.',
-todo: [
-'Bấm **Kiểm tra toàn bộ**.',
-'Dòng ❌: làm theo **Cách sửa** ngay dưới, rồi kiểm lại.'
-],
 time: 'Khoảng 1 phút', cost: _o0,
 actions: [
 { text: 'Bấm **Kiểm tra toàn bộ** – app kiểm máy chủ, Sheet, nhắc việc tự động, Telegram, AI.', shot: 'app-selftest' },
@@ -399,15 +290,10 @@ actions: [
 ]
 },
 handover: {
-id: 'handover', phase: 'post', required: true, check: 'manual', flows: ['company'],
+id: 'handover', phase: 'post', required: true, check: 'manual', flows: ['company'], widgetLast: true,
 title: 'Biên bản bàn giao',
 head: 'Để hai bên ký xác nhận đã cài xong và đã giao tài khoản Quản trị (Admin).',
 note: 'Bên cài đặt không giữ mật khẩu. Biên bản ghi ngày hết dùng thử (tính từ lần đầu app mở sau khi tạo tài khoản Quản trị).',
-todo: [
-'Xem lại biên bản bên dưới.',
-'Bấm **In / Lưu PDF** → hai bên ký.',
-'Tích **Đã in và hai bên đã ký** → **Kiểm tra bước này**.'
-],
 time: 'Khoảng 5 phút', cost: _o0,
 actions: [
 { text: 'Xem lại biên bản bên dưới: thông tin công ty, tài khoản Quản trị (Admin), tên miền, phiên bản, kết quả kiểm tra.' },
@@ -441,26 +327,26 @@ full: 'Hướng dẫn đầy đủ (cả cảnh báo bảo mật và mã lỗi B
 export function stepFor(id, flow) {
 const s = STEPS[id];
 if (!s) return null;
-const _o2 = flow === 'company', pe = flow === 'personal';
+const _o1 = flow === 'company', pe = flow === 'personal';
 const required = s.required || (Array.isArray(s.requiredIn) && s.requiredIn.includes(flow));
-const _o5 = (k) => (_o2 && s[k + 'Company']) || (pe && s[k + 'Personal']) || s[k];
+const _o4 = (k) => (_o1 && s[k + 'Company']) || (pe && s[k + 'Personal']) || s[k];
 return {
 ...s,
 required,
 deferrable: !!s.deferrable && !(Array.isArray(s.strictIn) && s.strictIn.includes(flow)),
-title: (_o2 && s.titleCompany) || s.title,
-laterLabel: _o5('laterLabel') || 'Làm sau',
-laterNote: _o5('laterNote') || '',
-head: _o5('head'),
-note: _o5('note') || '',
-todo: _o5('todo') || [],
-time: _o5('time'),
-cost: _o5('cost'),
-actions: ((_o2 && s.actionsCompany) || s.actions).map((a) => ({ ...a, text: (_o2 && a.textCompany) || (pe && a.textPersonal) || a.text }))
+title: (_o1 && s.titleCompany) || s.title,
+laterLabel: _o4('laterLabel') || 'Làm sau',
+laterNote: _o4('laterNote') || '',
+head: _o4('head'),
+note: _o4('note') || '',
+todo: _o4('todo') || [],
+time: _o4('time'),
+cost: _o4('cost'),
+actions: ((_o1 && s.actionsCompany) || s.actions).map((a) => ({ ...a, text: (_o1 && a.textCompany) || (pe && a.textPersonal) || a.text }))
 };
 }
 export function stepsFor(flow, opts) { return flowIds(flow, opts).map((id) => stepFor(id, flow)); }
 export function boldParts(text) {
-return String(text || '').split('**').map((t, _o3) => ({ t, b: _o3 % 2 === 1 })).filter((x) => x.t);
+return String(text || '').split('**').map((t, _o2) => ({ t, b: _o2 % 2 === 1 })).filter((x) => x.t);
 }
 export default { flowWho, trialCompanySeats, boldParts, FLOWS, PORTAL_FLOWS, flowIds, FLOW_LABEL, FLOW_INTRO, CHECKLIST, STEPS, ENGINE_GUIDE, stepFor, stepsFor, URL_FIELD_LABEL, NOT_PUBLIC_TEXT, supportEmail, isSaleEdition };

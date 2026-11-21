@@ -72,9 +72,12 @@ trialNote(license)
 }
 export function notDoneItems(state) {
 if (!state || state.flow !== 'company') return [];
-const _o1 = state.data || {}, marks = _o1.checklist || {};
-const _o6 = CHECKLIST.filter((c) => c.recommended && !marks[c.id]).map((c) => c.short || c.label);
-if (!_o1.companyAccount) _o6.push('Máy chủ trong tài khoản Google công ty (đang dùng thử bằng Gmail cá nhân)');
+const _o1 = state.data || {}, res = state.res || {};
+const ok = (id) => !!(res[id] && res[id].s === 'ok');
+const _o6 = [];
+if (!_o1.companyAccount) _o6.push('Máy chủ trong tài khoản Google công ty – email theo tên miền công ty (đang dùng thử bằng Gmail cá nhân)');
+if (!ok('domain')) _o6.push(CHECKLIST.find((c) => c.id === 'domain').short);
+if (!ok('telegram')) _o6.push(CHECKLIST.find((c) => c.id === 'telegram').short);
 return _o6;
 }
 const dmy = (ms) => { const _o1 = new Date(Number(ms)); const _o7 = (_o5) => String(_o5).padStart(2, '0'); return _o7(_o1.getDate()) + '/' + _o7(_o1.getMonth() + 1) + '/' + _o1.getFullYear(); };

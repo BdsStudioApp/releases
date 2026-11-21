@@ -1,4 +1,5 @@
 import { normPhone } from '../_lib/crm.js';
+import { withRulesJson } from '../../../shared/ai_rules.js';
 export const KIND = 'g2_warm';
 export const SOURCE = ['warm', 'Người quen'];
 export const NUDGE_DAYS = 3;
@@ -190,7 +191,7 @@ return { ok: true, row: { name: _ok(x.name), phone: x.phone ? normPhone(x.phone)
 }
 export function aiPrompt(sceneId, opts = {}) {
 const sc = sceneOf(sceneId);
-return [
+return withRulesJson([
 'Bạn giúp một người mới làm môi giới bất động sản ở Việt Nam viết tin nhắn cho người quen, kiểu hỏi thăm / chia sẻ thông tin thị trường, KHÔNG chào bán thẳng.',
 'Tình huống: ' + sc.title + '. Người nhận: ' + relLabel(opts.rel || (_o3.has(sceneId) ? sceneId : 'khac')) + '.',
 'Viết 3 biến thể mới, tiếng Việt có dấu, mỗi biến thể dưới 70 chữ, giọng tự nhiên, khác hẳn nhau và khác các mẫu bên dưới.',
@@ -198,7 +199,7 @@ return [
 'Mỗi biến thể phải có câu "không cần phản hồi nếu không tiện". Không gây áp lực, không nói giá chắc chắn tăng, sắp hết căn, cơ hội cuối; không hứa lợi nhuận; không dùng chữ "xin lỗi".',
 'Mẫu đang có:', ...sc.variants.map(v => '- ' + v),
 'Trả về JSON: ["…", "…", "…"]',
-].join('\n');
+].join('\n'));
 }
 export function parseAiVariants(text) {
 const s = String(text || '').trim();

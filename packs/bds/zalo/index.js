@@ -4,6 +4,7 @@ import { phonePrompt, askMyPhone } from '../_lib/my_phone.js';
 export const PHONE_MARK = '[SĐT của anh/chị]';
 export const NAME_MARK = '[Tên của anh/chị]';
 import { gate } from '../_lib/consent.js';
+import { withRules } from '../../../shared/ai_rules.js';
 export async function allTemplates(_o0) {
 const _os = await _o0.setting('skills', []);
 const cfg = await _o0.setting('zalo_templates', {});
@@ -17,7 +18,7 @@ if (_og.ok === true && _og.data) return _o2(_og.data);
 return _og.text || _og.output || _og.result || '';
 }
 export function buildPrompt({ customer, me, vars, purpose, current }) {
-return [
+return withRules([
 'Bạn là chuyên viên tư vấn bất động sản chuyên nghiệp tại Việt Nam.',
 'Viết MỘT tin nhắn Zalo gửi khách, tiếng Việt có dấu, lịch sự, xưng "em", gọi khách là "anh/chị".',
 'Yêu cầu: ngắn gọn (dưới 120 chữ), thân thiện, rõ ràng; không hứa hẹn lợi nhuận hay cam kết tăng giá; không dùng chữ "xin lỗi"; không bịa số liệu; tối đa 1 biểu tượng cảm xúc.',
@@ -32,10 +33,11 @@ vars.ngay ? 'Ngày: ' + vars.ngay : '',
 customer.status ? 'Tình trạng khách: ' + customer.status : '',
 'Người gửi: ' + (me.name || 'chuyên viên tư vấn') + (me.phone ? ' – ' + me.phone : ''),
 current ? '\nBản nháp hiện có (có thể dựa vào để viết lại tốt hơn):\n' + current : '',
-].filter(x => x !== '').join('\n');
+].filter(x => x !== '').join('\n'));
 }
 export async function openComposer(ctx, customer, opts = {}) {
 const _o0 = kit(ctx);
+await _o0.loadProjects();
 const _o9 = customer && customer.id ? (await _o0.get('objects', customer.id)) || customer : customer;
 const _o5 = gate(_o9, 'contact');
 if (!_o5.ok) { _o0.toast(_o5.reason, 'warn'); return null; }
@@ -110,7 +112,7 @@ if (d) await _o0.put('events', { ...d, text });
 } else {
 await _o0.put('events', { object_id: customer.id, type: 'zalo_draft', text, at: Date.now(), data: JSON.stringify({ status: 'pending', template: current ? current.id : '' }) });
 }
-_o0.toast('Đã lưu nháp ở mục Chờ duyệt', 'success');
+_o0.toast('Đã lưu nháp – xem ở Việc cần duyệt (Bảng tin)', 'success');
 _or.close();
 };
 async function _of() {
@@ -146,7 +148,7 @@ if (Array.isArray(list) && list.some(x => x.id === id)) await _o0.setSetting('za
 export async function mount(el, ctx) {
 const _o0 = kit(ctx);
 const me = await _o0.me();
-const projects = _o0.projects();
+const projects = await _o0.loadProjects();
 const _o7 = projects.find(_oe => Array.isArray(_oe.types) && _oe.types.some(t => Array.isArray(t.a))) || projects[0] || {};
 const _o8 = ((_o7.types || []).find(t => Array.isArray(t.a)) || {}).n || '2N';
 const _op = { ten: 'Hoa', project: _o7.id || '', loai_can: _o8, so_tien: crm.fromPrice(_o7, _o8), ngay: crm.dmy(Date.now() + 2 * 86400000) };

@@ -1,5 +1,6 @@
 import { h } from './kit.js';
 import { FRESH_MIN_SOURCES, freshHost, freshReputable, countFresh } from './fresh_domains.js';
+import { withRulesJson } from '../../../shared/ai_rules.js';
 export { freshHost, freshReputable, countFresh };
 export const ACTION = 'ai.fresh';
 export const MIN_SOURCES = FRESH_MIN_SOURCES;
@@ -17,7 +18,7 @@ const _o8 = new Date((now || Date.now()) + 7 * 3600e3);
 return String(_o8.getUTCDate()).padStart(2, '0') + '/' + String(_o8.getUTCMonth() + 1).padStart(2, '0') + '/' + _o8.getUTCFullYear();
 }
 export function freshPrompt(topic, { ask, shape, now } = {}) {
-return [
+return withRulesJson([
 'BDS_AI_FRESH topic=' + topic,
 'Hôm nay là ' + _o17(now) + ' (giờ Việt Nam). Bạn là trợ lý nghiên cứu cho môi giới bất động sản tại Việt Nam.',
 'Việc cần làm: ' + String(ask || '').trim(),
@@ -26,7 +27,7 @@ return [
 '2. Chỉ lấy thông tin MỚI NHẤT (gần ngày hôm nay nhất). Ghi rõ ngày đăng/ngày hiệu lực của từng thông tin; bỏ thông tin cũ đã bị thay thế.',
 '3. Không bịa số. Không tìm thấy thì ghi null. Mỗi mục phải có link nguồn thật (source_url) và tên trang (source_name).',
 '4. Trả lời bằng tiếng Việt, cuối cùng in DUY NHẤT một khối ```json … ``` đúng cấu trúc: ' + String(shape || '{"items":[{"title":"…","summary":"…","source_name":"…","source_url":"https://…","date":"YYYY-MM-DD"}]}'),
-].join('\n');
+].join('\n'));
 }
 export function parseFreshJson(text) {
 const t = String(text || '');
@@ -42,11 +43,11 @@ export function freshMorePrompt(topic, base, { check, round = 2 } = {}) {
 const _o2 = check || { domains: [], reputable: 0 };
 const _oh = (_o2.domains || []).filter((_o8) => _o8.reputable).map((_o8) => _o8.domain).slice(0, 30);
 const _ov = Math.max(1, MIN_SOURCES - (Number(_o2.reputable) || 0));
-return [String(base || '').trim(), '',
+return withRulesJson([String(base || '').trim(), '',
 'BỔ SUNG – LƯỢT TÌM THÊM SỐ ' + round + ':',
 'Các lượt trước mới có ' + (Number(_o2.reputable) || 0) + ' trang uy tín' + (_oh.length ? ': ' + _oh.join(', ') : '') + '.',
 'Hãy tìm thêm ÍT NHẤT ' + _ov + ' trang uy tín KHÁC (KHÁC TÊN MIỀN với các trang đã liệt kê), ưu tiên: ' + (_o0[topic] || 'nguồn chính thức') + '.',
-'Chỉ trả về các mục MỚI (chưa có ở các lượt trước) hoặc mục có thông tin MỚI HƠN; vẫn in DUY NHẤT một khối ```json … ``` CÙNG CẤU TRÚC như yêu cầu ở trên.'].join('\n');
+'Chỉ trả về các mục MỚI (chưa có ở các lượt trước) hoặc mục có thông tin MỚI HƠN; vẫn in DUY NHẤT một khối ```json … ``` CÙNG CẤU TRÚC như yêu cầu ở trên.'].join('\n'));
 }
 export function freshErrorText(e) {
 const code = String((e && e.code) || '');

@@ -1,4 +1,4 @@
-import { platformOf } from '../a2hs.dd832a10b4.js';
+import { platformOf } from '../a2hs.1403f674ce.js';
 export function installDevice(nav = typeof navigator !== 'undefined' ? navigator : {}) {
 const _o1 = nav || {};
 const _o2 = platformOf(_o1);

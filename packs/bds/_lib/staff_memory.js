@@ -124,14 +124,14 @@ const _oc = (s, max) => { const t = redact(String(s ?? '')).trim(); return t.len
 const _oe = {
 good: m => `- Việc: ${_oc(m.task, 200) || '(không ghi)'}\n${_oc(m.text, _o3)}`,
 edit: m => `- Việc: ${_oc(m.task, 200) || '(không ghi)'}\nBản nhân viên viết:\n${_oc(m.before, _o3 / 2)}\nAnh sửa thành:\n${_oc(m.text, _o3 / 2)}`,
-bad: m => `- ${_oc(m.text, _o3)}\nLý do anh/chị bác: ${_oc(m.reason, L.reasonMax) || '(anh/chị không ghi lý do)'}`,
+bad: m => `- ${_oc(m.text, _o3)}\nLý do anh bác: ${_oc(m.reason, L.reasonMax) || '(anh không ghi lý do)'}`,
 notes: m => `- ${_oc(m.text, L.noteMax)}${m.tags && m.tags.length ? ` [${m.tags.map(t => _oc(t, 40)).join(', ')}]` : ''}`,
 };
 export function composeMemoryBlock(_o10) {
 if (!_o10 || typeof _o10 !== 'object') return '';
 const _oy = ['good', 'edit', 'bad', 'notes'].map(_ol => [_ol, (Array.isArray(_o10[_ol]) ? _o10[_ol] : []).filter(m => m && m.text)]).filter(([, l]) => l.length);
 if (!_oy.length) return '';
-const _oi = 'TRÍ NHỚ CỦA NHÂN VIÊN (học theo thói quen làm việc của anh/chị):';
+const _oi = 'TRÍ NHỚ CỦA NHÂN VIÊN (học theo thói quen làm việc của anh):';
 const _o14 = '\n\n' + MEM_BLOCK_FOOTER;
 let out = _oi;
 for (const [_ol, list] of _oy) {

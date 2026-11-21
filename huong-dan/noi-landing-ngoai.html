@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nối landing đang chạy quảng cáo (LadiPage, WordPress, Google Sheet…) – BDS Studio</title><meta name="robots" content="noindex"><style>:root{--bg:#f7f5f0;--card:#fff;--ink:#1d2433;--muted:#5d6577;--line:#e4dfd3;--accent:#8a6512;--accent-bg:#f6efdf}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1626;--card:#16203a;--ink:#e9ecf3;--muted:#a3abbd;--line:#28344f;--accent:#e4bf6a;--accent-bg:#2a2a22}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:12px;align-items:center;z-index:1}
+header a{color:var(--accent);font-weight:600;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+main{max-width:820px;margin:0 auto;padding:16px 16px 48px;background:var(--card)}
+h1{font-size:1.6em;line-height:1.3}h2{margin-top:1.8em;font-size:1.3em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{margin-top:1.4em;font-size:1.1em}
+a{color:var(--accent)}img,video{max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;display:block;margin:10px 0}
+code{background:var(--accent-bg);padding:1px 6px;border-radius:6px;font-size:.92em;word-break:break-all}
+blockquote{margin:12px 0;padding:8px 14px;border-left:4px solid var(--accent);background:var(--accent-bg);border-radius:6px}
+.tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.95em}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+hr{border:0;border-top:1px solid var(--line);margin:24px 0}li{margin:4px 0}</style></head><body><header><a href="./">📖 Mục lục hướng dẫn</a></header><main><h1 id="nối-landing-đang-chạy-quảng-cáo-ladipage-wordpress-google-sheet">Nối landing đang chạy quảng cáo (LadiPage, WordPress, Google Sheet…)</h1>
+<p>Anh/chị đã có landing làm ở nơi khác và đang chạy quảng cáo? Không cần làm lại trang. Dán <strong>địa chỉ nhận khách</strong> của app vào landing đó: khách để lại số là về app, kèm <strong>kênh</strong> và <strong>chiến dịch</strong>.</p>
+<ul><li><strong>Bản Công ty:</strong> khách không gắn sale vào <strong>Kho lead công ty</strong> → đẩy số cho nhóm, trưởng nhóm bấm <strong>Đã nhận</strong>… như khách nhập Excel (<a href="cong-ty-kho-lead">Kho lead và Đẩy số</a>).</li><li><strong>Bản thường:</strong> khách vào <strong>Khách hàng</strong>, nguồn <code>webhook:&lt;tên nguồn&gt;</code>.</li></ul>
+<p><strong>Nối thêm, không thay thế.</strong> Landing, Google Sheet, email đang nhận khách vẫn chạy như cũ, app chỉ nhận thêm 1 bản. Số điện thoại đã có (trong Kho lead hoặc Khách hàng) được gộp vào khách cũ: không tạo trùng, không giao cho 2 người.</p>
+<p>Chỉ <strong>Quản trị</strong> và <strong>Quản lý</strong> mở được mục này. Thêm/sửa nguồn: chỉ Quản trị.</p>
+<h2 id="bước-1-mở-mục-nối-landing">Bước 1. Mở mục Nối landing</h2>
+<ol><li>Vào <strong>Khách hàng</strong>, bấm <strong>⋯ Thêm</strong>, chọn <strong>Nối landing có sẵn</strong>.</li><li>Lần đầu Quản trị mở, app tự tạo khoá nhận khách.</li></ol>
+<h2 id="bước-2-tạo-1-nguồn-cho-mỗi-landing">Bước 2. Tạo 1 nguồn cho mỗi landing</h2>
+<ol><li>Ở mục <strong>📣 Nguồn quảng cáo</strong>, bấm <strong>➕ Thêm nguồn</strong>.</li><li>Đặt tên, vd <code>LP dự án A – FB tháng 11</code>.</li><li>Chọn <strong>Kênh</strong> (Facebook, Google, TikTok, Zalo…), gõ <strong>Chiến dịch</strong>. Nhóm quảng cáo và dự án thì điền nếu cần.</li><li>Bấm <strong>💾 Lưu nguồn</strong>, rồi bấm <strong>📋 Chép</strong> để lấy địa chỉ của nguồn.</li></ol>
+<p>Địa chỉ của nguồn = địa chỉ chung + <code>&amp;src=&lt;tên nguồn&gt;</code>. Muốn đổi chiến dịch thì sửa nguồn trong app, không phải dán lại địa chỉ.<br>Nếu form gửi kèm <code>utm_source</code> / <code>utm_campaign</code> / <code>utm_content</code> (lấy từ link quảng cáo), app dùng giá trị của form trước, giá trị của nguồn chỉ để điền khi form không có.</p>
+<p>Không muốn lưu nguồn? Thêm thẳng vào cuối địa chỉ, vd <code>&amp;src=lp-a&amp;utm_source=facebook&amp;campaign=VH-T11</code>.</p>
+<h2 id="bước-3-dán-địa-chỉ-vào-landing">Bước 3. Dán địa chỉ vào landing</h2>
+<p>Trong app, mở mục <strong>Hướng dẫn từng nơi</strong> để làm theo từng bước và chép đoạn mã có sẵn địa chỉ. Ở ô <strong>Địa chỉ trong hướng dẫn</strong>, chọn nguồn để đoạn mã dùng đúng nguồn đó.</p>
+<h3 id="ladipage">LadiPage</h3>
+<p>Các bước theo tài liệu &quot;Lưu data về API&quot; của LadiPage. Không thấy đúng tên mục thì kiểm tra lại tên mục trong LadiPage, vì giao diện có thể đổi.</p>
+<ol><li>Vào builder.ladipage.com → <strong>Tích hợp → Tài khoản liên kết → Tạo tài khoản liên kết</strong>, chọn loại <strong>API</strong>.</li><li>Dán địa chỉ của nguồn vào ô URL API. Ở <strong>Đồng bộ các trường thông tin</strong>, ghép ô của form sang <code>name</code>, <code>phone</code>, <code>email</code>, <code>note</code> → Lưu.</li><li>Mở trang landing → bấm vào form → <strong>Lưu data</strong> → chọn cấu hình có tài khoản vừa tạo → <strong>Cập nhật</strong> → Xuất bản lại.</li><li>Nơi lưu data cũ (Google Sheet…) cứ để nguyên, chỉ thêm tài khoản API bên cạnh.</li></ol>
+<h3 id="wordpress-contact-form-7">WordPress (Contact Form 7)</h3>
+<ol><li>Cài plugin miễn phí <strong>CF7 to Webhook</strong> (tên cũ: CF7 to Zapier).</li><li>Mở form → tab <strong>Webhook</strong> (bản cũ ghi &quot;Zapier&quot;) → dán địa chỉ vào ô <strong>Webhook URL</strong> → Lưu.</li><li>Ô số điện thoại đặt tên <code>your-tel</code> hoặc <code>phone</code>. App tự nhận các ô <code>your-name</code>, <code>your-email</code>, <code>your-message</code>.</li></ol>
+<h3 id="website-tự-làm-html">Website tự làm (HTML)</h3>
+<p>Chép <strong>Đoạn form HTML</strong> (chưa có form) hoặc <strong>Đoạn JS</strong> (đã có form, dán trước <code>&lt;/body&gt;</code>). Form cũ vẫn chạy như trước.</p>
+<h3 id="trang-đang-ghi-khách-vào-google-sheet">Trang đang ghi khách vào Google Sheet</h3>
+<ol><li>Mở Sheet → <strong>Tiện ích mở rộng → Apps Script</strong>, dán <strong>Mã cho Google Sheet</strong> → Lưu.</li><li>Chọn hàm <code>batDau</code> → <strong>Chạy</strong> → cho phép quyền.</li><li>Cứ 5 phút, các dòng <strong>mới</strong> được chép về app. Mã <strong>chỉ đọc</strong>: không sửa, không chuyển, không xoá dòng nào trong Sheet. Dòng có từ trước khi bật thì không gửi.</li><li>Dòng 1 của Sheet là tên cột (Họ tên, Số điện thoại, Email, utm_source, utm_campaign…).</li></ol>
+<p>Đây không phải <strong>Sheet landing</strong> của app (Cài đặt › Landing). Sheet landing thì app tự đọc rồi, không cần mã.</p>
+<h3 id="facebook-lead-ads">Facebook Lead Ads</h3>
+<p>App <strong>chưa</strong> nối thẳng được Facebook Lead Ads: Meta chỉ gửi khách tới ứng dụng đã qua duyệt quyền (App Review), việc này cần lập trình viên và mất nhiều tuần. Hai cách làm được ngay:</p>
+<ul><li>Dùng <strong>Make</strong> hoặc <strong>Zapier</strong> (có thể tốn phí trên tài khoản của anh/chị): Facebook Lead Ads → HTTP POST tới địa chỉ của nguồn, gửi kèm <code>campaign_name</code>, <code>adset_name</code>.</li><li>Tải CSV khách từ Facebook, rồi <strong>Nhập Excel</strong> vào Kho lead.</li></ul>
+<h2 id="bước-4-gửi-thử">Bước 4. Gửi thử</h2>
+<ol><li>Bấm <strong>🧪 Gửi thử</strong> ở dòng của nguồn (hoặc nút chung).</li><li>App gửi 1 khách thử tên <strong>&quot;Khách thử (nối landing)&quot;</strong>, số <code>0900000000</code>, theo đúng đường của khách thật. Kết quả hiện ngay bên dưới: khách vào đâu, kênh, chiến dịch.</li><li>Bản Công ty: khách thử nằm trong Kho lead. Gửi thử lại thì bản cũ (chưa đẩy) được thay. Lỡ đẩy cho sale rồi thì Quản trị xoá trong Kho lead.</li><li>Bản thường: khách thử có nhãn <strong>thử</strong> trong Khách hàng, xoá như khách thường.</li></ol>
+<p>Mỗi số chỉ gửi thử được 3 lần / 10 phút.</p>
+<h2 id="lưu-ý">Lưu ý</h2>
+<ul><li>Địa chỉ có khoá bí mật. Chỉ dán vào công cụ của anh/chị. Bị lộ thì bấm <strong>🔑 Đổi khoá</strong> và dán lại địa chỉ mới vào mọi nơi.</li><li>Form nên có ô tick đồng ý (ô <code>consent</code>). Thiếu ô này, khách vẫn được lưu nhưng ở trạng thái &quot;chưa đồng ý&quot; (Luật 91/2025/QH15).</li><li>Xoá nguồn chỉ bỏ phần tự gắn kênh/chiến dịch. Địa chỉ đó vẫn nhận khách cho tới khi đổi khoá.</li></ul></main></body></html>

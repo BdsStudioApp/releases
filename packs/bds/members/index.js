@@ -3,79 +3,79 @@ import * as crm from '../_lib/crm.js';
 import * as L from './logic.js';
 import { ensureMembersCss, loadMembers, memberPicker, openReassign, renderDupList, renderDataStatus } from './panel.js';
 const _o0 = { call: '📞', zalo: '💬', note: '📝', status: '🔁', meeting: '📅', quote: '🧾', payment: '💳' };
-const _o7 = (e, fb) => (e && (e.userMessage || e.message)) || fb;
+const errText = (e, fb) => (e && (e.userMessage || e.message)) || fb;
 export async function mount(el, ctx) {
 const _o1 = kit(ctx);
 ensureMembersCss();
 const F = L.mxFlags(ctx.user);
-const _ov = L.readOnlyApi((a, p) => _o1.api(a, p));
-const _ok = new URLSearchParams((location.hash.split('?')[1]) || '');
-const _os = { tab: _ok.get('tab') || 'member', member: _ok.has('m') ? _ok.get('m') : null, members: [], cache: new Map(), q: '', page: 1,
+const _ou = L.readOnlyApi((a, p) => _o1.api(a, p));
+const _oj = new URLSearchParams((location.hash.split('?')[1]) || '');
+const _or = { tab: _oj.get('tab') || 'member', member: _oj.has('m') ? _oj.get('m') : null, members: [], cache: new Map(), q: '', page: 1,
 search: { q: '', rows: [], total: 0, offset: 0, more: false, done: false } };
-const _op = h('div', { class: 'bds-screen', 'data-testid': 'mx-screen' });
-el.replaceChildren(_op);
-const _of = (id) => (id === '' ? 'Kho chung' : L.memberName(_os.members.find((_ob) => _ob.id === id)) || 'nhân viên');
-try { _os.members = (await loadMembers(_o1)).members; } catch (e) { _op.replaceChildren(_oa(), _o1.empty(_o7(e, 'Chưa tải được danh sách nhân viên.'))); return; }
-function _oa() { return h('div', { class: 'bds-head' }, h('h2', null, '🏢 Khách toàn công ty')); }
-const _ot = () => [['member', 'Theo nhân viên', 'user'], ['search', 'Tìm toàn công ty', '🔎'], F.move ? ['move', 'Chuyển khách', 'send'] : null,
+const _oo = h('div', { class: 'bds-screen', 'data-testid': 'mx-screen' });
+el.replaceChildren(_oo);
+const _oe = (id) => (id === '' ? 'Kho chung' : L.memberName(_or.members.find((_oa) => _oa.id === id)) || 'nhân viên');
+try { _or.members = (await loadMembers(_o1)).members; } catch (e) { _oo.replaceChildren(_o9(), _o1.empty(errText(e, 'Chưa tải được danh sách nhân viên.'))); return; }
+function _o9() { return h('div', { class: 'bds-head' }, h('h2', null, '🏢 Khách toàn công ty')); }
+const _os = () => [['member', 'Theo nhân viên', 'user'], ['search', 'Tìm toàn công ty', '🔎'], F.move ? ['move', 'Chuyển khách', 'send'] : null,
 ['dup', 'Số trùng', '📞'], F.status ? ['status', 'Tình trạng dữ liệu', 'shield'] : null].filter(Boolean);
-function _on() {
-const _ou = _ot();
-if (!_ou.some((t) => t[0] === _os.tab)) _os.tab = 'member';
-const bar = h('div', { class: 'bds-row bds-wrap mx-tabs', role: 'tablist', 'data-testid': 'mx-tabs' }, _ou.map(([k, l, ic]) =>
-_o1.button(l, () => { _os.tab = k; _on(); }, { kind: _os.tab === k ? 'primary' : 'ghost', icon: ic, testid: 'mx-tab-' + k })));
-const body = h('div', { 'data-testid': 'mx-body-' + _os.tab });
-_op.replaceChildren(_oa(), bar, body);
-if (_os.tab === 'member') _oc(body);
-else if (_os.tab === 'search') _oq(body);
-else if (_os.tab === 'move') _od(body);
-else if (_os.tab === 'dup') renderDupList(body, ctx, { onView: (_ob, _o2) => _og(_ob, _o2) });
-else renderDataStatus(body, ctx, { onReassign: (_ob) => openReassign(ctx, { from: _ob.id, onDone: () => _os.cache.clear() }) });
+function _om() {
+const _ot = _os();
+if (!_ot.some((t) => t[0] === _or.tab)) _or.tab = 'member';
+const bar = h('div', { class: 'bds-row bds-wrap mx-tabs', role: 'tablist', 'data-testid': 'mx-tabs' }, _ot.map(([k, l, ic]) =>
+_o1.button(l, () => { _or.tab = k; _om(); }, { kind: _or.tab === k ? 'primary' : 'ghost', icon: ic, testid: 'mx-tab-' + k })));
+const body = h('div', { 'data-testid': 'mx-body-' + _or.tab });
+_oo.replaceChildren(_o9(), bar, body);
+if (_or.tab === 'member') _ob(body);
+else if (_or.tab === 'search') _op(body);
+else if (_or.tab === 'move') _oc(body);
+else if (_or.tab === 'dup') renderDupList(body, ctx, { onView: (_oa, _o2) => _of(_oa, _o2) });
+else renderDataStatus(body, ctx, { onReassign: (_oa) => openReassign(ctx, { from: _oa.id, onDone: () => _or.cache.clear() }) });
 }
-async function dataOf(_ob) {
-if (_os.cache.has(_ob)) return _os.cache.get(_ob);
-const _ol = await _ov('members.view', { member_id: _ob, limit: 5000 });
-const _o3 = (_ol && _ol.changes) || {};
-const _o5 = { objects: L.liveCustomers(_o3.objects), events: (_o3.events || []).filter((x) => Number(x.deleted) !== 1), reminders: (_o3.reminders || []).filter((x) => Number(x.deleted) !== 1), quotes: _o3.quotes || [], member: _ol && _ol.member };
-_os.cache.set(_ob, _o5);
+async function dataOf(_oa) {
+if (_or.cache.has(_oa)) return _or.cache.get(_oa);
+const _ok = await _ou('members.view', { member_id: _oa, limit: 5000 });
+const _o3 = (_ok && _ok.changes) || {};
+const _o5 = { objects: L.liveCustomers(_o3.objects), events: (_o3.events || []).filter((x) => Number(x.deleted) !== 1), reminders: (_o3.reminders || []).filter((x) => Number(x.deleted) !== 1), quotes: _o3.quotes || [], member: _ok && _ok.member };
+_or.cache.set(_oa, _o5);
 return _o5;
 }
-function _oc(body) {
-const _oj = memberPicker(_o1, _os.members, { value: _os.member || '', pool: true, testid: 'mx-member', label: 'Xem khách của', onPick: (id) => { _os.member = id; _os.page = 1; _os.q = ''; _o6(); } });
-if (_os.member !== null) _oj.value = _os.member;
-const _oh = h('div', { 'data-testid': 'mx-member-out' });
-body.append(_o1.field('Xem khách của', _oj.el), _oh);
-if (_os.member === null) _oh.replaceChildren(h('p', { class: 'bds-muted' }, 'Chọn một nhân viên (hoặc Kho chung) để xem khách – chỉ xem, không sửa được.'));
+function _ob(body) {
+const _oi = memberPicker(_o1, _or.members, { value: _or.member || '', pool: true, testid: 'mx-member', label: 'Xem khách của', onPick: (id) => { _or.member = id; _or.page = 1; _or.q = ''; _o6(); } });
+if (_or.member !== null) _oi.value = _or.member;
+const _og = h('div', { 'data-testid': 'mx-member-out' });
+body.append(_o1.field('Xem khách của', _oi.el), _og);
+if (_or.member === null) _og.replaceChildren(h('p', { class: 'bds-muted' }, 'Chọn một nhân viên (hoặc Kho chung) để xem khách – chỉ xem, không sửa được.'));
 else _o6();
 async function _o6() {
-const _ob = _os.member;
-_oh.replaceChildren(h('p', { class: 'bds-muted' }, 'Đang tải khách của ' + _of(_ob) + '…'));
+const _oa = _or.member;
+_og.replaceChildren(h('p', { class: 'bds-muted' }, 'Đang tải khách của ' + _oe(_oa) + '…'));
 let _o5;
-try { _o5 = await dataOf(_ob); } catch (e) { _oh.replaceChildren(_o1.empty(_o7(e, 'Chưa tải được dữ liệu.'))); return; }
-if (_os.member !== _ob) return;
+try { _o5 = await dataOf(_oa); } catch (e) { _og.replaceChildren(_o1.empty(errText(e, 'Chưa tải được dữ liệu.'))); return; }
+if (_or.member !== _oa) return;
 const due = crm.nextDueByCustomer(_o5.reminders);
-const search = h('input', { type: 'search', value: _os.q, placeholder: 'Tìm tên, số điện thoại…', 'aria-label': 'Tìm trong khách của ' + _of(_ob), 'data-testid': 'mx-filter', oninput: (e) => { _os.q = e.target.value; _os.page = 1; _oi(); } });
+const search = h('input', { type: 'search', value: _or.q, placeholder: 'Tìm tên, số điện thoại…', 'aria-label': 'Tìm trong khách của ' + _oe(_oa), 'data-testid': 'mx-filter', oninput: (e) => { _or.q = e.target.value; _or.page = 1; _oh(); } });
 const _o4 = h('span', { class: 'bds-muted', 'data-testid': 'mx-count' });
 const list = h('div', { class: 'bds-list mx-ro', 'data-testid': 'mx-list' });
 const more = h('div', { class: 'mx-more' });
-const _oi = () => {
-const rows = L.filterLocal(_o5.objects, _os.q), shown = rows.slice(0, _os.page * L.PAGE);
+const _oh = () => {
+const rows = L.filterLocal(_o5.objects, _or.q), shown = rows.slice(0, _or.page * L.PAGE);
 _o4.textContent = rows.length + ' khách' + (rows.length > shown.length ? ' · đang hiện ' + shown.length : '');
-list.replaceChildren(...(shown.length ? shown.map((_o2) => _oo(_o2, { due: due.get(_o2.id), open: () => _og(_ob, _o2.id) })) : [_o1.empty(_o5.objects.length ? 'Không có khách khớp.' : _of(_ob) + ' chưa có khách nào.')]));
-more.replaceChildren(rows.length > shown.length ? _o1.button('Xem thêm ' + Math.min(L.PAGE, rows.length - shown.length) + ' khách', () => { _os.page++; _oi(); }, { icon: 'plus', testid: 'mx-more' }) : '');
+list.replaceChildren(...(shown.length ? shown.map((_o2) => _on(_o2, { due: due.get(_o2.id), open: () => _of(_oa, _o2.id) })) : [_o1.empty(_o5.objects.length ? 'Không có khách khớp.' : _oe(_oa) + ' chưa có khách nào.')]));
+more.replaceChildren(rows.length > shown.length ? _o1.button('Xem thêm ' + Math.min(L.PAGE, rows.length - shown.length) + ' khách', () => { _or.page++; _oh(); }, { icon: 'plus', testid: 'mx-more' }) : '');
 };
-_oh.replaceChildren(banner(_ob),
+_og.replaceChildren(banner(_oa),
 h('div', { class: 'bds-toolbar' }, search, _o4),
-F.move && _ob !== '' ? h('div', { class: 'bds-row bds-tools' }, _o1.button('Chuyển khách của ' + _of(_ob) + '…', () => openReassign(ctx, { from: _ob, onDone: () => { _os.cache.delete(_ob); _o6(); } }), { kind: 'ghost', icon: 'send', testid: 'mx-reassign-from' })) : null,
+F.move && _oa !== '' ? h('div', { class: 'bds-row bds-tools' }, _o1.button('Chuyển khách của ' + _oe(_oa) + '…', () => openReassign(ctx, { from: _oa, onDone: () => { _or.cache.delete(_oa); _o6(); } }), { kind: 'ghost', icon: 'send', testid: 'mx-reassign-from' })) : null,
 list, more);
-_oi();
+_oh();
 }
 }
-function banner(_ob) {
-return h('div', { class: 'mx-banner', role: 'note', 'data-testid': 'ro-banner' }, '🔒', h('div', null, 'Chỉ xem – khách của ' + _of(_ob),
-h('small', null, 'Dữ liệu nằm ở Sheet riêng của ' + (_ob === '' ? 'công ty (kho chung)' : _of(_ob)) + '. Muốn đổi người chăm sóc: dùng "Chuyển khách".')));
+function banner(_oa) {
+return h('div', { class: 'mx-banner', role: 'note', 'data-testid': 'ro-banner' }, '🔒', h('div', null, 'Chỉ xem – khách của ' + _oe(_oa),
+h('small', null, 'Dữ liệu nằm ở Sheet riêng của ' + (_oa === '' ? 'công ty (kho chung)' : _oe(_oa)) + '. Muốn đổi người chăm sóc: dùng "Chuyển khách".')));
 }
-function _oo(_o2, { due, owner, open }) {
+function _on(_o2, { due, owner, open }) {
 return h('div', { class: 'bds-item', 'data-id': _o2.id, 'data-testid': 'ro-row' },
 h('button', { type: 'button', class: 'bds-row-main', onclick: open, 'data-testid': 'ro-open-' + _o2.id },
 h('strong', { class: 'bds-name' }, _o2.name || '(chưa có tên)'),
@@ -84,64 +84,64 @@ owner ? h('span', { class: 'bds-owner' }, 'Của: ' + owner) : null,
 due ? h('span', { class: 'bds-sub' }, 'Hẹn: ' + _o1.date(due)) : null),
 _o1.badge(_o2.status || 'Mới', crm.statusTone(_o2.status)));
 }
-async function _og(_ob, id) {
+async function _of(_oa, id) {
 let _o5;
-try { _o5 = await dataOf(_ob); } catch (e) { _o1.toast(_o7(e, 'Chưa mở được hồ sơ'), 'danger'); return; }
+try { _o5 = await dataOf(_oa); } catch (e) { _o1.toast(errText(e, 'Chưa mở được hồ sơ'), 'danger'); return; }
 const _o2 = _o5.objects.find((x) => x.id === id);
-if (!_o2) { _o1.toast('Khách này không còn ở chỗ ' + _of(_ob) + ' (đã chuyển hoặc đã xoá).', 'warn'); _os.cache.delete(_ob); return; }
-const _o8 = crm.eventsOf(_o5.events, id);
-const _om = _o5.reminders.filter((_ol) => _ol.object_id === id && !Number(_ol.done)).sort((a, b) => a.due_at - b.due_at);
-const _oe = _o5.quotes.filter((q) => q.object_id === id && Number(q.deleted) !== 1).length;
-let _or;
+if (!_o2) { _o1.toast('Khách này không còn ở chỗ ' + _oe(_oa) + ' (đã chuyển hoặc đã xoá).', 'warn'); _or.cache.delete(_oa); return; }
+const _o7 = crm.eventsOf(_o5.events, id);
+const _ol = _o5.reminders.filter((_ok) => _ok.object_id === id && !Number(_ok.done)).sort((a, b) => a.due_at - b.due_at);
+const _od = _o5.quotes.filter((q) => q.object_id === id && Number(q.deleted) !== 1).length;
+let _oq;
 const body = h('div', { class: 'bds-profile mx-ro', 'data-testid': 'ro-profile' },
-banner(_ob),
+banner(_oa),
 h('div', { class: 'bds-pf-top' },
 h('div', { class: 'bds-row' }, _o1.badge(_o2.status || 'Mới', crm.statusTone(_o2.status))),
 h('dl', { class: 'bds-dl' }, L.profileRows(_o2, (p) => _o1.projectName(p)).map(([k, v]) => [h('dt', null, k), h('dd', null, k === 'Điện thoại' && _o2.phone ? h('a', { href: _o1.tel(_o2.phone) }, _o1.phone(_o2.phone)) : v)]),
-_oe ? [h('dt', null, 'Báo giá'), h('dd', null, String(_oe))] : null),
+_od ? [h('dt', null, 'Báo giá'), h('dd', null, String(_od))] : null),
 _o2.note ? h('p', { class: 'bds-note' }, _o2.note) : null),
-_om.length ? h('h4', null, 'Việc sắp tới') : null,
-_om.length ? h('ul', { class: 'bds-rem' }, _om.slice(0, 8).map((_ol) => h('li', null, h('span', null, _o1.date(_ol.due_at)), ' ', _ol.title || _ol.kind))) : null,
+_ol.length ? h('h4', null, 'Việc sắp tới') : null,
+_ol.length ? h('ul', { class: 'bds-rem' }, _ol.slice(0, 8).map((_ok) => h('li', null, h('span', null, _o1.date(_ok.due_at)), ' ', _ok.title || _ok.kind))) : null,
 h('h4', null, 'Dòng thời gian'),
-_o8.length ? h('ol', { class: 'bds-timeline' }, _o8.slice(0, 100).map((e) => h('li', { 'data-type': e.type },
+_o7.length ? h('ol', { class: 'bds-timeline' }, _o7.slice(0, 100).map((e) => h('li', { 'data-type': e.type },
 h('span', { class: 'bds-ti' }, _o0[e.type] || '•'),
 h('div', null, h('small', { class: 'bds-muted' }, _o1.date(e.at) + ' ' + crm.hm(e.at)), h('div', null, e.text || e.type))))) : _o1.empty('Chưa có hoạt động.'),
 h('div', { class: 'bds-row bds-end' },
-F.move && _ob !== '' ? _o1.button('Chuyển khách này…', () => { _or.close(); _o1.afterClose(() => openReassign(ctx, { from: _ob, preIds: [id], onDone: () => _os.cache.delete(_ob) })); }, { kind: 'ghost', icon: 'send', testid: 'ro-reassign' }) : null,
-_o1.button('Đóng', () => _or.close(), { icon: 'x', testid: 'ro-close' })));
-_or = _o1.sheet({ title: _o2.name || 'Hồ sơ khách', body, testid: 'ro-profile-sheet' });
+F.move && _oa !== '' ? _o1.button('Chuyển khách này…', () => { _oq.close(); _o1.afterClose(() => openReassign(ctx, { from: _oa, preIds: [id], onDone: () => _or.cache.delete(_oa) })); }, { kind: 'ghost', icon: 'send', testid: 'ro-reassign' }) : null,
+_o1.button('Đóng', () => _oq.close(), { icon: 'x', testid: 'ro-close' })));
+_oq = _o1.sheet({ title: _o2.name || 'Hồ sơ khách', body, testid: 'ro-profile-sheet' });
 }
-function _oq(body) {
-const S = _os.search;
+function _op(body) {
+const S = _or.search;
 const input = h('input', { type: 'search', value: S.q, placeholder: 'Tên, số điện thoại, email, ghi chú…', 'aria-label': 'Tìm khách toàn công ty', 'data-testid': 'mx-q',
-onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); _o9(true); } } });
+onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); _o8(true); } } });
 const info = h('p', { class: 'bds-muted', 'data-testid': 'mx-search-info' });
 const list = h('div', { class: 'bds-list mx-ro', 'data-testid': 'mx-results' });
 const more = h('div', { class: 'mx-more' });
 body.append(h('div', { class: 'mx-banner', role: 'note' }, '🔒', h('div', null, 'Chỉ xem – khách của mọi nhân viên và kho chung', h('small', null, 'Máy chủ tìm trên Sheet riêng của từng người; app không lưu khách của người khác vào máy.'))),
-h('div', { class: 'bds-toolbar' }, input, _o1.button('Tìm', () => _o9(true), { kind: 'primary', icon: '🔎', testid: 'mx-search' })), info, list, more);
-_oi();
-async function _o9(reset) {
+h('div', { class: 'bds-toolbar' }, input, _o1.button('Tìm', () => _o8(true), { kind: 'primary', icon: '🔎', testid: 'mx-search' })), info, list, more);
+_oh();
+async function _o8(reset) {
 if (reset) { S.q = input.value.trim(); S.offset = 0; S.rows = []; }
 info.textContent = 'Đang tìm…';
-let _ol;
-try { _ol = await _ov('members.view', S.q ? { q: S.q, offset: S.offset, limit: L.PAGE } : { all: true, offset: S.offset, limit: L.PAGE }); } catch (e) { info.textContent = _o7(e, 'Chưa tìm được.'); return; }
-S.rows = S.rows.concat(_ol.rows || []); S.total = Number(_ol.total) || 0; S.more = !!_ol.more; S.offset = S.rows.length; S.done = true;
-_oi();
+let _ok;
+try { _ok = await _ou('members.view', S.q ? { q: S.q, offset: S.offset, limit: L.PAGE } : { all: true, offset: S.offset, limit: L.PAGE }); } catch (e) { info.textContent = errText(e, 'Chưa tìm được.'); return; }
+S.rows = S.rows.concat(_ok.rows || []); S.total = Number(_ok.total) || 0; S.more = !!_ok.more; S.offset = S.rows.length; S.done = true;
+_oh();
 }
-function _oi() {
+function _oh() {
 if (!S.done) { info.textContent = 'Gõ tên hoặc số rồi bấm Tìm (để trống = xem tất cả, 50 khách mỗi trang).'; return; }
 info.textContent = S.total ? 'Tìm thấy ' + S.total + ' khách' + (S.q ? ' khớp "' + S.q + '"' : '') + ' · đang hiện ' + S.rows.length : 'Không tìm thấy khách nào' + (S.q ? ' khớp "' + S.q + '"' : '') + '.';
-list.replaceChildren(...S.rows.map((_o2) => _oo(_o2, { owner: _o2._mn || _of(_o2._m), open: () => _og(_o2._m, _o2.id) })));
-more.replaceChildren(S.more ? _o1.button('Xem thêm', () => _o9(false), { icon: 'plus', testid: 'mx-search-more' }) : '');
+list.replaceChildren(...S.rows.map((_o2) => _on(_o2, { owner: _o2._mn || _oe(_o2._m), open: () => _of(_o2._m, _o2.id) })));
+more.replaceChildren(S.more ? _o1.button('Xem thêm', () => _o8(false), { icon: 'plus', testid: 'mx-search-more' }) : '');
 }
 }
-function _od(body) {
+function _oc(body) {
 body.append(_o1.card({ title: '🔁 Chuyển khách giữa nhân viên', testid: 'mx-move-card', body: [
 h('p', null, 'Chuyển khách của một người (vd nhân viên nghỉ việc) sang người khác: tất cả hoặc chọn từng khách. Lịch sử, lịch hẹn, báo giá đi theo khách; người cũ không còn thấy. Lý do được ghi vào nhật ký.'),
-h('div', { class: 'bds-row' }, _o1.button('Chuyển khách…', () => openReassign(ctx, { onDone: () => _os.cache.clear() }), { kind: 'primary', icon: 'send', testid: 'mx-move-open' }))] }));
+h('div', { class: 'bds-row' }, _o1.button('Chuyển khách…', () => openReassign(ctx, { onDone: () => _or.cache.clear() }), { kind: 'primary', icon: 'send', testid: 'mx-move-open' }))] }));
 }
-_on();
+_om();
 }
 export const manifest = {
 id: 'members', title: 'Khách toàn công ty', icon: '🏢', screen: 'customers', order: 11, version: '1.0.0', status: 'ready', requires: 'mx_view',

@@ -1,2 +1,2 @@
-{ "id": "g2_lich", "title": "Lịch xem nhà", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "📅", "order": 230, "status": "thu-nghiem",
+{ "id": "g2_lich", "title": "Lịch xem nhà", "pack": "core", "pack_group": "g2", "screen": "customers", "icon": "📅", "order": 230, "status": "ready",
   "items": ["F"], "desc": "Lịch tuần xem nhà, nhắc Telegram, nhắn khách nhắc lịch, tải .ics" }

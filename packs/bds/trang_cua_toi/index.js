@@ -96,7 +96,7 @@ info.published ? h('span', { class: 'tct-pill on', 'data-testid': 'site-state' }
 h('div', { class: 'tct-row' },
 _o5('Chép link', () => ui.copy(url), { kind: 'secondary', small: true, icon: 'copy', testid: 'site-copy' }),
 info.url && info.published ? h('a', { class: 'btn btn-ghost btn-sm', href: info.url, target: '_blank', rel: 'noopener', 'data-testid': 'site-open' }, ui.icon('external', 18), h('span', null, 'Mở trang')) : null),
-h('p', { class: 'tct-muted' }, 'Đổi địa chỉ: nhờ Quản trị (Cài đặt › Người dùng).'));
+h('p', { class: 'tct-muted' }, 'Đổi địa chỉ: nhờ Quản trị (Cài đặt › Nhân sự).'));
 return card;
 }
 const status = h('p', { class: 'tct-muted', 'aria-live': 'polite', 'data-testid': 'site-slug-status' });
@@ -151,7 +151,7 @@ if (c.checked && cur.projects.length >= SL.SITE_LIMITS.projects) { c.checked = f
 cur.projects = c.checked ? [...cur.projects, p.id] : cur.projects.filter((x) => x !== p.id); _o9();
 });
 return h('label', null, c, h('span', null, p.name + (p.loc || p.location ? ' · ' + (p.loc || p.location) : '')));
-}) : h('p', { class: 'tct-muted' }, 'Bảng hàng chưa có dự án nào – thêm ở Bán hàng › Bảng hàng dự án.'));
+}) : h('p', { class: 'tct-muted' }, 'Chưa có dự án nào – thêm ở Thông tin dự án.'));
 const _od = h('iframe', { title: 'Xem trước trang của tôi', 'data-testid': 'site-preview' });
 const phone = h('div', { class: 'tct-phone', hidden: true }, _od);
 let _ou = false, timer = 0;
@@ -184,7 +184,7 @@ _oh('cta', 'Tiêu đề phần để lại số', { attrs: { placeholder: 'Nhậ
 h('div', { class: 'tct-photo' }, photoImg, h('label', { class: 'tct-f' }, 'Ảnh chân dung (app tự cắt vuông, thu nhỏ)', _os),
 _o5('Bỏ ảnh', () => { cur.photo = ''; photoImg.src = 'assets/icon.svg'; _o9(); }, { kind: 'ghost', small: true, icon: 'x', testid: 'site-photo-remove' })),
 h('div', { class: 'tct-row' }, _o6('primary', 'Màu chính'), _o6('accent', 'Màu nhấn')),
-h('h3', null, 'Dự án tôi đang bán (tối đa ' + SL.SITE_LIMITS.projects + ', từ Bảng hàng)'), pj,
+h('h3', null, 'Dự án tôi đang bán (tối đa ' + SL.SITE_LIMITS.projects + ', từ Thông tin dự án)'), pj,
 errBox,
 h('div', { class: 'tct-row' },
 _o5('Xem trước', () => { _ou = !_ou; phone.hidden = !_ou; if (_ou) preview(); }, { kind: 'secondary', icon: 'layout', testid: 'site-preview-btn' }),

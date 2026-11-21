@@ -1,6 +1,6 @@
 import { safeProvider, MODES, WHERE, DEFAULT_STAFF } from './staff.js';
 import { normalizeSkill } from './staff_skills.js';
-const _o1 = 'Không hứa lợi nhuận, không hứa tăng giá; hạ tầng/dự án chưa xong ghi "dự kiến"; mọi số liệu, quy hoạch phải ghi nguồn, không bịa – thiếu nguồn ghi "(cần kiểm chứng)".';
+const _o1 = 'Không hứa lợi nhuận, không hứa tăng giá; hạ tầng/dự án chưa xong ghi "dự kiến"; mọi số liệu, quy hoạch phải ghi nguồn, không bịa – thiếu nguồn thì để trống và ghi "Em chưa tìm được, anh/chị tự nhập giúp em".';
 const _o3 = (id, name, description, body, always = false) => normalizeSkill({ id, name, description, body, source: 'builtin', always, created: 1, updated: 1, version: 1 });
 export const BUILTIN_SKILLS = [
 _o3('bi_caption_safe', 'Viết caption BĐS an toàn pháp lý', 'Viết chú thích đăng TikTok/Reels/Facebook cho video BĐS: ngắn, có nguồn, đúng Luật Quảng cáo', `# Viết caption BĐS an toàn pháp lý
@@ -29,10 +29,10 @@ _o3('bi_infra_tense', 'Viết đúng "dự kiến" cho hạ tầng', 'Soát và 
 1. Tìm mọi câu nói về công trình: đường, cầu, metro, trường, bệnh viện, khu đô thị.
 2. Đã hoàn thành (có nguồn xác nhận) → viết "đã"; chưa xong → thêm "dự kiến" + mốc thời gian theo nguồn.
 3. Ghi tên văn bản/nguồn (quyết định, cổng thông tin, báo chính thống) ngay sau câu.
-4. Không rõ trạng thái → ghi "(cần kiểm chứng)".
+4. Không rõ trạng thái (không có nguồn) → không viết như sự thật, để trống và ghi "Em chưa tìm được, anh/chị tự nhập giúp em".
 ## Ví dụ
 Vào: "Tuyến metro số 3 chạy qua đây năm 2027."
-Ra: "Tuyến metro số 3 đoạn ngầm dự kiến vận hành năm 2027 (nguồn: cần kiểm chứng theo thông báo của chủ đầu tư)."`),
+Ra: "Tuyến metro số 3 đoạn ngầm dự kiến vận hành năm 2027 (nguồn: <link thông báo của chủ đầu tư>)."`),
 _o3('bi_objection', 'Trả lời từ chối của khách', 'Gợi ý cách đáp khi khách chê giá, chưa có nhu cầu, đang cân nhắc, sợ pháp lý', `# Trả lời từ chối của khách
 ## Cách làm
 1. Ghi nhận cảm xúc của khách trước ("Dạ em hiểu anh/chị đang cân nhắc…").
@@ -77,7 +77,7 @@ Ra: "Ấm (60): nhu cầu rõ +25, ngân sách khớp +25, phản hồi nhanh +1
 _o3('bi_compare', 'So sánh căn/dự án khách quan', 'Lập bảng so sánh 2–3 căn hoặc dự án theo tiêu chí khách quan, có nguồn', `# So sánh căn/dự án khách quan
 ## Cách làm
 1. Tiêu chí: vị trí, diện tích, giá (theo bảng giá có ngày), pháp lý, tiến độ, phí quản lý, tiện ích.
-2. Mỗi ô ghi nguồn hoặc "(cần kiểm chứng)".
+2. Mỗi ô ghi nguồn; ô không có nguồn thì để trống và ghi "Em chưa tìm được, anh/chị tự nhập giúp em".
 3. Nêu cả ưu và nhược của từng lựa chọn; không chê dự án khác thiếu căn cứ.
 4. Kết luận theo nhu cầu của khách, không theo hoa hồng.
 ## Ví dụ
@@ -86,7 +86,7 @@ Ra: Bảng 7 tiêu chí + "Căn A hợp nếu ưu tiên không gian, căn B hợ
 _o3('bi_payment_explain', 'Giải thích tiến độ thanh toán', 'Diễn giải lịch thanh toán, chính sách vay của chủ đầu tư cho khách dễ hiểu, đúng văn bản', `# Giải thích tiến độ thanh toán
 ## Cách làm
 1. Chỉ dùng chính sách bán hàng có ngày hiệu lực; ghi rõ "theo chính sách ngày …".
-2. Liệt kê từng đợt: thời điểm, tỷ lệ, số tiền ước tính.
+2. Liệt kê từng đợt: thời điểm, tỷ lệ, số tiền = tỷ lệ × giá căn đã cho (chưa có giá căn thì để trống).
 3. Lãi suất/ân hạn: ghi đúng văn bản, nhắc khách hỏi ngân hàng để có số chính xác.
 4. Không khuyên khách vay, không nói "chắc được duyệt".
 ## Ví dụ

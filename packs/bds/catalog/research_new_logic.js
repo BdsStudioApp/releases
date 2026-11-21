@@ -33,7 +33,7 @@ const _o3 = G.parseFacts(text).map((f) => ({ ...f, conf_ai: confOf(text, f) }));
 const _o6 = G.matchSources(_o3, text, { sources: (r && r.sources) || [], segments: (r && r.segments) || [] });
 return G.researchDiff(null, _o6).map((d) => ({ ...d, conf: confidence(d.fact.status, d.fact.conf_ai) }));
 }
-export const canPick = (d, opened) => !!(d && d.ok && (d.fact.status === 'grounded' || (opened && opened.has(d.field))));
+export const canPick = (d, opened) => !!(d && d.ok && (d.fact.status === 'grounded' || (d.fact.status === 'ai_only' && !!G.safeUrl(d.fact.url)) || (opened && opened.has(d.field))));
 export const prePicked = (rows) => new Set((rows || []).filter((d) => d.ok && d.fact.status === 'grounded').map((d) => d.field));
 export function candidatesOf(r) {
 return ((r && r.candidates) || []).filter((_o2) => _o2 && _o2.name).slice(0, 5)
@@ -72,7 +72,7 @@ return has
 ? { label: 'Khôi phục mặc định', remove: false, title: 'Khôi phục dữ liệu mặc định?', ok: 'Khôi phục',
 text: `Bỏ mọi thông tin đã sửa / AI tìm cho "${name}" và quay về dữ liệu mặc định. Không hoàn tác được.`, done: 'Đã khôi phục dữ liệu mặc định' }
 : { label: 'Xoá dự án', remove: true, title: 'Xoá dự án?', ok: 'Xoá dự án',
-text: `"${name}" không có bản mặc định – xoá là mất hẳn dự án này khỏi Bảng hàng (giá, loại căn, nguồn đã lưu). Chắc chắn xoá?`, done: 'Đã xoá dự án' };
+text: `"${name}" không có bản mặc định – xoá là mất hẳn dự án này khỏi Thông tin dự án (giá, loại căn, nguồn đã lưu). Chắc chắn xoá?`, done: 'Đã xoá dự án' };
 }
 const _o4 = (_o9) => String(_o9 ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase()
 .replace(/[^a-z0-9]+/g, ' ').replace(/(^| )du an( |$)/g, ' ').replace(/\s+/g, '');

@@ -3,14 +3,7 @@ export const LABEL = 'Mẫu';
 export const IMAGES = ['assets/samples/mau-1.svg', 'assets/samples/mau-2.svg', 'assets/samples/mau-3.svg', 'assets/samples/mau-4.svg'];
 export const TABLES = ['projects', 'objects', 'events', 'reminders', 'quotes'];
 const DAY = 86400000;
-export const FALLBACK_PROJECTS = [
-{ id: 'a', dev: 'Chủ đầu tư Mẫu', name: 'Căn hộ Ven Hồ', area: 'Khu Mẫu A', loc: 'Địa chỉ mẫu – thay bằng vị trí thật', status: 'sale', handover: '2028-06', price: [50, 70],
-types: [{ n: '1N', a: [45, 55] }, { n: '2N', a: [65, 75] }, { n: '3N', a: [90, 110] }] },
-{ id: 'b', dev: 'Chủ đầu tư Mẫu', name: 'Khu đô thị Xanh', area: 'Khu Mẫu B', loc: 'Địa chỉ mẫu – thay bằng vị trí thật', status: 'soon', handover: null, price: [40, 55],
-types: [{ n: 'Studio', a: [28, 32] }, { n: '2N', a: [60, 70] }] },
-{ id: 'c', dev: 'Chủ đầu tư Mẫu', name: 'Nhà phố Bờ Sông', area: 'Khu Mẫu C', loc: 'Địa chỉ mẫu – thay bằng vị trí thật', status: 'ask', handover: '2027-12', price: null,
-types: [{ n: 'Nhà phố', ask: true }, { n: 'Biệt thự', ask: true }] }
-];
+export const FALLBACK_PROJECTS = [];
 export const isSample = (row) => !!row && String(row.id || '').startsWith(PREFIX);
 export const displayName = (name) => String(name == null ? '' : name).replace(/^\s*Mẫu\s*[·•\-–:]\s*/i, '').trim() || String(name || '');
 export function buildSampleProjects(source) {
@@ -18,7 +11,7 @@ const list = Array.isArray(source) && source.length ? source : FALLBACK_PROJECTS
 return list.filter((p) => p && p.id != null).map((p, i) => {
 const { id, name, dev, img, ...rest } = p;
 const data = { ...rest, img: IMAGES[i % IMAGES.length], sample: true, note: 'Dữ liệu mẫu – sửa hoặc xoá thoải mái' };
-return { id: PREFIX + String(id).replace(/^mau_/, ''), name: LABEL + ' · ' + String(name || 'Dự án'), dev: String(dev || 'Chủ đầu tư Mẫu'), data: JSON.stringify(data) };
+return { id: PREFIX + String(id).replace(/^mau_/, ''), name: LABEL + ' · ' + String(name || 'Dự án'), dev: String(dev || ''), data: JSON.stringify(data) };
 });
 }
 export function buildSampleCustomers(projectNames = [], now = Date.now()) {

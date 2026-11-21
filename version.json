@@ -1,8 +1,526 @@
 {
-  "web": "1.0.6",
-  "gas": "1.0.6",
+  "web": "1.1.15",
+  "gas": "1.1.0",
   "engine": "1.0.6",
   "notes": [
+    {
+      "version": "1.1.15",
+      "date": "",
+      "text": "Màn **Nhân sự** (Cài đặt › Nhân sự): mỗi người một dòng gọn, tìm và lọc theo vai trò, nhóm, trạng thái, chia trang; chọn nhiều người để đổi nhóm, đổi vai trò, khoá hoặc xoá một lần; Nhân sự › Nhóm & chia số: sơ đồ Quản trị › Trưởng nhóm › Sale, tạo nhóm và chọn trưởng nhóm ngay tại đây, dùng chung với Nhóm sale của Kho lead; Nhân sự › Phân quyền: bảng quyền theo vai trò và quyền của trưởng nhóm khi chia số; …",
+      "parts": [
+        "web",
+        "gas"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Màn **Nhân sự** (Cài đặt › Nhân sự): mỗi người một dòng gọn, tìm và lọc theo vai trò, nhóm, trạng thái, chia trang; chọn nhiều người để đổi nhóm, đổi vai trò, khoá hoặc xoá một lần.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nhân sự › Nhóm & chia số: sơ đồ Quản trị › Trưởng nhóm › Sale, tạo nhóm và chọn trưởng nhóm ngay tại đây, dùng chung với Nhóm sale của Kho lead.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nhân sự › Phân quyền: bảng quyền theo vai trò và quyền của trưởng nhóm khi chia số.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mời nhiều người một lần: dán danh sách email hoặc tải tệp CSV, chọn sẵn vai trò và nhóm.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Xoá người dùng; lời mời gắn sẵn nhóm sale.",
+            "parts": [
+              "gas"
+            ]
+          },
+          {
+            "text": "Bảng tin có thẻ **Cần anh/chị xử lý**: số công ty giao chờ gọi, số chờ trưởng nhóm nhận, tin Zalo nháp chờ gửi, việc AI chờ duyệt; không có việc thì thẻ ẩn.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trình tạo landing (Quản trị, bản Công ty): ô Lọc theo người tạo – xem riêng trang công ty hoặc trang của từng sale để sửa, đăng lại, gỡ.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Học mỗi ngày › **Luyện tình huống**: mỗi ngày một bộ 8 câu khách hỏi / phản đối mới do AI soạn, chọn 1 trong 4 cách trả lời, app tự chấm và hiện câu trả lời mẫu; bấm Luyện thêm để làm bộ tiếp theo; câu sai được hỏi lại ngày hôm sau. Chưa nối AI thì dùng 12 tình huống có sẵn.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Luyện tư vấn có **Khách ngẫu nhiên**: mỗi lần một vị khách mới (hoàn cảnh, khu vực, loại căn, băn khoăn, tính cách khác nhau); khách có sẵn cũng đổi câu mở đầu và băn khoăn ở mỗi phiên.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Kho lead (bản Công ty): đẩy số qua trưởng nhóm – trưởng nhóm bấm Đã nhận trong thời gian quy định, quá giờ số chuyển nhóm kế; sale bấm Đã gọi và ghi kết quả cuộc gọi đầu; báo cáo Đang chăm / Không quan tâm, nhắc báo cáo cuối ngày; nối Telegram bằng bot của công ty; nối landing ngoài gửi khách về Kho lead.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Khách hàng: nút ⋯ › **Xoá khách** trên mỗi thẻ, **Chọn để xoá** nhiều khách một lúc, hỏi lại trước khi xoá, **Hoàn tác** ngay, **Thùng rác** giữ 30 ngày (⋯ Thêm › Thùng rác › Khôi phục). Xoá đồng bộ cả Sheet. Quản trị xoá mọi khách; người phụ trách xoá khách của mình (CTV và số công ty cấp: chỉ Quản trị).",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Học mỗi ngày thành lộ trình 90 bài chia 8 nhóm: tư vấn và chốt, xử lý từ chối, pháp lý BĐS (Luật Đất đai 2024, Luật Kinh doanh BĐS 2023, Luật Nhà ở 2023), tài chính và vay, thuế phí, đọc quy hoạch, marketing và nguồn khách, phân tích dự án. Mỗi bài 5–8 câu ôn, nội dung có sẵn trong app, không tốn AI.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bài pháp lý, thuế, tài chính, quy hoạch có mục **Nguồn đối chiếu** ghi tên văn bản, số hiệu, điều khoản; lời giải từng câu ghi điều luật dựa vào. Bài hôm nay có ô Học theo nhóm; tab Lộ trình xếp bài theo nhóm, cấp độ.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Học mỗi ngày › Theo dự án: đã nối khoá Gemini thì AI soạn câu ôn từ thông tin dự án anh/chị đã nhập trong app (chỉ dùng dữ liệu đã nhập, không bịa); app tự chấm, câu vào lịch ôn.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Tư vấn › Gợi ý trả lời › **Phản biện lời chê**: khách chê xa trung tâm, đắt, vùng quê, chậm tiến độ, chưa có sổ, ngập, khó bán lại, chủ đầu tư, phí cao, đông đúc → mỗi lời chê 2–3 hướng phản biện (câu mẫu dùng dữ liệu dự án + cần chuẩn bị số liệu/nguồn gì), có nút Chép. Có khoá Gemini thì AI tự viết phản biện theo đúng câu khách. Không bịa số, không hứa lợi nhuận.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "fix": [
+          {
+            "text": "Safari / iPhone: hết lỗi khi lưu thao tác chờ gửi; ghi hỏng một lần thì tự thử lại, không mất thao tác.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Gọi Gemini nhanh hơn: việc soạn chữ thường ngày chỉ cho AI \"nghĩ\" ít (trước đây Trợ lý có lúc quá 25 giây).",
+            "parts": [
+              "gas"
+            ]
+          },
+          {
+            "text": "Nhập khách từ Sheet landing: dòng không có SĐT, Zalo hay email (dòng ghi chú, cột lệch) không còn tạo thẻ \"Khách landing\".",
+            "parts": [
+              "gas"
+            ]
+          },
+          {
+            "text": "Luyện tình huống AI nhiều ngày không còn làm tiến độ học vượt giới hạn đồng bộ.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "Bỏ tab **Chờ duyệt** (điện thoại và máy tính): việc cần bấm gom vào thẻ Cần anh/chị xử lý ở Bảng tin. Link cũ tự mở trang Việc cần duyệt.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nối landing có sẵn: bỏ ô chọn sale – số luôn về kho chung của Quản trị rồi chia số như thường; ngay dưới địa chỉ có tab \"Dán địa chỉ này vào đâu?\" cho LadiPage, Website, WordPress (Contact Form 7 / Elementor), Google Sheet, Google Forms, Facebook Lead Ads (Make / Zapier / Pabbly), mỗi tab có các bước, ô cần khớp và nút Gửi thử.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Lấy tin Bất động sản mới nhanh hơn: máy chủ tải các nguồn báo cùng lúc và nhớ tin 10 phút; mở màn là thấy ngay tin lần trước, app tự cập nhật ngầm; nút Làm mới luôn lấy tin mới.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Tư vấn › Gợi ý trả lời: nhận ý định cho câu hỏi phổ biến (vị trí, giá, pháp lý, tiến độ, chính sách, vay, loại căn, so sánh, chê đắt), kể cả câu cụt nhắc địa danh; câu trả lời dùng hồ sơ dự án (vị trí, chủ đầu tư, giá tham khảo, bàn giao, chính sách). Khách nhắc tên dự án thì app tự chọn dự án; câu chưa rõ ý mà đã có AI thì AI tự đọc ý.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Luyện tư vấn với AI: bỏ ô \"Dùng kịch bản có sẵn\", luôn dùng AI; chưa có khoá Gemini thì báo rõ kèm nút mở Cài đặt › Kết nối.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý (⌘K): chỉ còn **trợ lý trong app** – hướng dẫn dùng app, mở nhanh màn hình, trả lời ngay tại máy không cần AI. Bỏ Hỏi đáp chung, Soạn tin Zalo, Giải thích thuật ngữ.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Câu ôn ở Học mỗi ngày hỏi lại giãn dần 1, 3, 7, 16, 35, 80 ngày; mỗi lượt Ôn tập tối đa 22 câu, bấm Ôn tiếp để làm tiếp.",
+            "parts": [
+              "web"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.1.3",
+      "date": "2026-11-21",
+      "text": "Lấy tin Bất động sản mới tìm theo **địa phương**: anh/chị chọn Tỉnh/Thành (mặc định Hà Nội, có \"Cả nước\"), chọn thêm khu vực trong tỉnh hoặc gõ tên địa phương bất kỳ. App nhớ lựa chọn trên máy. Không dùng AI; Lấy tin Bất động sản mới: bỏ các ô khu vực theo dự án và ô \"Khu vực khác\".",
+      "parts": [
+        "web"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Lấy tin Bất động sản mới tìm theo **địa phương**: anh/chị chọn Tỉnh/Thành (mặc định Hà Nội, có \"Cả nước\"), chọn thêm khu vực trong tỉnh hoặc gõ tên địa phương bất kỳ. App nhớ lựa chọn trên máy. Không dùng AI.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "Lấy tin Bất động sản mới: bỏ các ô khu vực theo dự án và ô \"Khu vực khác\".",
+            "parts": [
+              "web"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.1.2",
+      "date": "2026-11-21",
+      "text": "Trình tạo landing: mỗi mẫu có ảnh xem trước và nút Xem thử (máy tính / điện thoại) trước khi chọn; Bản Công ty: quyền mới \"Tự tạo & đăng landing\" – Quản trị bật cho sale nào thì sale đó tự đăng trang riêng, khách về thẳng sale đó; mọi người có ô Link của tôi (chép, mã QR); có Link chạy quảng cáo gắn sẵn nguồn, chiến dịch. Gói Cơ bản: ngoài 1 landing công ty, mỗi sale được quyền đăng thêm 1 trang riêng; Cài xong, lần đầu mở app riêng: hiện ngay địa chỉ app, mã QR để mở trên điện thoại và từng bước đưa app ra màn hình chính (iPhone: Safari › Chia sẻ › Thêm vào MH chính; Android: Chrome › ⋮ › Thêm vào màn hình chính); …",
+      "parts": [
+        "web",
+        "gas"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Trình tạo landing: mỗi mẫu có ảnh xem trước và nút Xem thử (máy tính / điện thoại) trước khi chọn.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bản Công ty: quyền mới \"Tự tạo & đăng landing\" – Quản trị bật cho sale nào thì sale đó tự đăng trang riêng, khách về thẳng sale đó; mọi người có ô Link của tôi (chép, mã QR); có Link chạy quảng cáo gắn sẵn nguồn, chiến dịch. Gói Cơ bản: ngoài 1 landing công ty, mỗi sale được quyền đăng thêm 1 trang riêng.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Cài xong, lần đầu mở app riêng: hiện ngay địa chỉ app, mã QR để mở trên điện thoại và từng bước đưa app ra màn hình chính (iPhone: Safari › Chia sẻ › Thêm vào MH chính; Android: Chrome › ⋮ › Thêm vào màn hình chính).",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Thêm dự án bằng AI tìm nhanh hơn: thông tin chính của dự án hiện trước, phân khu / toà / tầng hiện ngay sau khi tìm xong. Vẫn chỉ lưu thông tin có link nguồn.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Màn Khách hàng có nút Mở Google Sheet (chỉ Quản trị) – mở đúng trang tính nơi khách từ landing đổ về.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "Trình tạo landing › Xuất bản: nút lớn \"Đăng ngay\" (một chạm, không cần tạo tài khoản lưu trang) lên đầu, đăng xong có link, mã QR và nút Chép link; tải gói .zip chuyển vào \"Nâng cao\" kèm các bước tự đưa lên dịch vụ lưu trang, đánh số; dòng cần sửa có nút Sửa gọn bên phải (cả dòng địa chỉ trang).",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mọi mẫu landing tối ưu cho điện thoại: không tràn ngang, nút đủ lớn, thanh Gọi/Zalo/Đăng ký dính đáy, ảnh tải nhanh, form dễ nhập khi bàn phím mở.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Tư vấn: Trả lời & Kịch bản: bỏ dòng \"Bản chung\" bị chồng lên chữ trên iPhone; các khung cảnh báo không còn đè lên nội dung.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bảng gợi ý AI gọn hơn: mỗi dòng chỉ còn link nguồn và ngày nguồn; dòng có link nguồn tick lưu được ngay; ô tick \"Lưu\" hiện rõ trên iPhone chế độ tối.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bỏ nút Gọn/Chi tiết ở thanh trên cùng; kiểu hiển thị mặc định chọn ở Cài đặt › Giao diện.",
+            "parts": [
+              "web"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.1.1",
+      "date": "2026-11-21",
+      "text": "Video AI có nút **Ghép nhanh ra MP4**: ghép clip, ảnh bản đồ, ảnh căn, chữ trên cảnh, phụ đề từ lời đọc, giọng đọc và nhạc nền thành tệp MP4 ngay trên máy tính của anh/chị (Chrome hoặc Edge), không cần cài thêm, không gửi tệp lên mạng. Sắp xếp, xoá, cắt đầu/cuối từng clip, chọn kiểu chuyển cảnh, khung dọc 9:16 hoặc ngang 16:9, chất lượng Nháp / Tốt / Cao; nhạc nền tự nhỏ lại khi có giọng đọc. Trình duyệt chưa hỗ trợ thì anh/chị vẫn tải bộ mảnh để ghép trong CapCut; Bảng tin › Cần gọi hôm nay: bấm **✓ Xong**, 📞 hoặc Zalo thì khách rời danh sách tới hết ngày (trước đây khách trạng thái Mới vẫn hiện lại). Số điện thoại không hợp lệ thì không hiện nút Zalo (trước đây mở Zalo báo \"trang không tồn tại\"); Nhân vật dẫn: bỏ nút \"Chép JSON\" ở bộ cảnh đã lưu.",
+      "parts": [
+        "web"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Video AI có nút **Ghép nhanh ra MP4**: ghép clip, ảnh bản đồ, ảnh căn, chữ trên cảnh, phụ đề từ lời đọc, giọng đọc và nhạc nền thành tệp MP4 ngay trên máy tính của anh/chị (Chrome hoặc Edge), không cần cài thêm, không gửi tệp lên mạng. Sắp xếp, xoá, cắt đầu/cuối từng clip, chọn kiểu chuyển cảnh, khung dọc 9:16 hoặc ngang 16:9, chất lượng Nháp / Tốt / Cao; nhạc nền tự nhỏ lại khi có giọng đọc. Trình duyệt chưa hỗ trợ thì anh/chị vẫn tải bộ mảnh để ghép trong CapCut.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "fix": [
+          {
+            "text": "Bảng tin › Cần gọi hôm nay: bấm **✓ Xong**, 📞 hoặc Zalo thì khách rời danh sách tới hết ngày (trước đây khách trạng thái Mới vẫn hiện lại). Số điện thoại không hợp lệ thì không hiện nút Zalo (trước đây mở Zalo báo \"trang không tồn tại\").",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "Nhân vật dẫn: bỏ nút \"Chép JSON\" ở bộ cảnh đã lưu.",
+            "parts": [
+              "web"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-11-21",
+      "text": "Gói 4 · Video & Nội dung: màn **Ý tưởng & Video AI** – anh/chị dán link hoặc chủ đề, app chấm điểm ý tưởng rồi giúp làm clip ngắn bằng AI online, kèm thư viện nhân vật. Chỉ dùng trên máy tính; cần khoá dịch vụ của hãng làm clip / giọng đọc do anh/chị tự đăng ký, phí trả riêng cho hãng; Sao lưu tự động chọn được **Hằng tuần**, **Hằng tháng** hoặc **Tắt**, chọn số bản giữ lại; có nút **Xuất toàn bộ dữ liệu ra Excel** lưu vào Google Drive của anh/chị; Lịch sao lưu theo lựa chọn ở Cài đặt (tuần / tháng / tắt) và giữ đúng số bản đã chọn; tạo tệp Excel toàn bộ dữ liệu trong Drive; …",
+      "parts": [
+        "web",
+        "gas"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Gói 4 · Video & Nội dung: màn **Ý tưởng & Video AI** – anh/chị dán link hoặc chủ đề, app chấm điểm ý tưởng rồi giúp làm clip ngắn bằng AI online, kèm thư viện nhân vật. Chỉ dùng trên máy tính; cần khoá dịch vụ của hãng làm clip / giọng đọc do anh/chị tự đăng ký, phí trả riêng cho hãng.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Sao lưu tự động chọn được **Hằng tuần**, **Hằng tháng** hoặc **Tắt**, chọn số bản giữ lại; có nút **Xuất toàn bộ dữ liệu ra Excel** lưu vào Google Drive của anh/chị.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Lịch sao lưu theo lựa chọn ở Cài đặt (tuần / tháng / tắt) và giữ đúng số bản đã chọn; tạo tệp Excel toàn bộ dữ liệu trong Drive.",
+            "parts": [
+              "gas"
+            ]
+          },
+          {
+            "text": "App riêng của công ty hiện **logo và tên công ty** do bên bán đặt cho đúng app đó.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "Sắp xếp lại các gói cho gọn: Cơ bản + 4 gói – **Gói 1 · Tìm khách online**, **Gói 2 · Tư vấn & Chốt** (thêm La bàn phong thuỷ, Hướng nắng), **Gói 3 · Chăm sóc & Bán lại**, **Gói 4 · Video & Nội dung** (Ý tưởng & Video AI, Nhân vật, Nhân vật dẫn, Căn hộ 3D, Dự toán nội thất, **Nhân viên AI**). **Lịch xem nhà** vào Gói Cơ bản – luôn có. Gói Dẫn khách xem nhà gộp vào Gói 2 và Gói 4. Anh/chị đã mua hoặc đã mở gói nào trước đây vẫn dùng đủ các chức năng của gói đó, dữ liệu giữ nguyên.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Bản Công ty: khi nhận lời mời, nhân viên đọc và tick **Tôi đã đọc và đồng ý**: khách nhập vào app (kể cả khách tự tìm) là dữ liệu của công ty, Quản trị xem và chuyển được, nghỉ việc không mang theo. App ghi lại lúc đồng ý. Thư mời và các màn thêm khách cũng nhắc điều này. Bản Cá nhân không đổi.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Kho lead: cảnh báo khách \"Mới nhận\" và tự thu hồi khách chưa liên hệ nay đặt theo **phút** (mặc định 120 phút; 0 = không tự thu hồi). Cài đặt cũ theo giờ được giữ nguyên thời gian. Quản trị tự điền số phút; máy chủ kiểm 5 phút một lần (trước 10 phút) nên khách tự về kho trễ tối đa khoảng 5 phút.",
+            "parts": []
+          },
+          {
+            "text": "**Tư vấn: Trả lời & Kịch bản** nay ở Bảng tin; link cũ ở Khách hàng tự mở chỗ mới. Bảng tin › **Cần gọi hôm nay** thu gọn/mở rộng được, mỗi dòng có **✓ Xong**; gọi hoặc nhắn Zalo xong, anh/chị chạm \"Đã gọi xong?\" là việc rời danh sách.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trình tạo landing, Trang của tôi, Tài liệu đổi số Zalo, Đưa trang lên Google, Ý tưởng & Video AI chỉ dùng trên máy tính (Windows/Mac); trên điện thoại, máy tính bảng các màn này ẩn, khách để lại thông tin qua trang của anh/chị vẫn về app như cũ.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Gói Cơ bản có thêm **Tư vấn: Trả lời & Kịch bản**, **Học mỗi ngày** và **Luyện tư vấn với AI** – luôn có, không cần cài gói, hết nhãn Thử nghiệm.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Gọn lại các gói chức năng: bỏ Theo dõi chính sách, Thuế phí chuyển nhượng, Khách & Phễu bán hàng, Thị trường quanh dự án, Chồng bản đồ quy hoạch, Giỏ hàng thứ cấp, Bảng giá thứ cấp, Kiểm tra pháp lý, Giữ chỗ & Hoa hồng, Nhật ký công trường và gói Nguồn hàng & Dự án. Link cũ tự mở màn gần nhất còn dùng (Bảng tin, Báo giá, Khách hàng, Lấy tin BĐS mới, Lên căn, Thông tin dự án, Sổ đối tác); dữ liệu cũ của anh/chị vẫn giữ nguyên.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "**Căn hộ 3D** và **Dự toán nội thất** chỉ dùng trên máy tính (Windows/Mac); trên điện thoại và máy tính bảng hai mục này không hiện, mở link thẳng thì app báo \"Chức năng này chỉ dùng trên máy tính\" kèm nút Chép link.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý AI: gõ tên chức năng đã bỏ, app trả lời rõ và mở màn gần nhất.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "**Báo giá** gọn lại cho điện thoại: chọn khách (hoặc thêm nhanh) → chụp hoặc chọn ảnh/PDF phiếu tính giá anh/chị đã có → Lưu vào hồ sơ khách, rồi gửi qua Zalo. App không còn tự tính giá và không dùng AI tính giá; báo giá cũ vẫn mở xem được.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Bỏ Cập nhật chính sách và Chính sách nâng cao & tài liệu; dữ liệu cũ giữ nguyên.",
+            "parts": [
+              "web"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0.7",
+      "date": "2026-11-20",
+      "text": "Thông tin dự án (trước gọi là Bảng hàng): mỗi dự án có trang **Phân khu · Toà · Trục căn**. Nhập tay dễ, mỗi ô ghi rõ \"Có nguồn\" (bấm mở link), \"Sale nhập\" hay \"Trống – cần nhập\". **Để AI tìm phân khu, toà, trục**: báo chi phí trước, chỉ điền ô có link nguồn. **Đọc ảnh layout tầng điển hình** ra bảng trục cho toà anh/chị chọn, soát từng dòng rồi lưu. **Tạo danh sách căn** theo tầng × trục: xem trước, bỏ tầng thương mại/kỹ thuật, không nhân đôi căn đã có. Có trong Gói Cơ bản; Thêm dự án mới bằng AI hỏi thêm phân khu, số toà, số tầng – dòng có nguồn được lưu kèm dự án. Trình tạo landing › \"＋ Thêm dự án bằng AI\" dùng cùng cách tìm này; **Lên căn** (bán thứ cấp, Gói Cơ bản): mỗi căn một thẻ (mã căn, dự án, tầng, hướng, số ngủ, m², giá, trạng thái – không ô nào bắt buộc). Ảnh chọn từ album hoặc chụp, app nén rồi lưu vào Google Drive của anh/chị theo mã căn, ảnh riêng tư trừ ảnh chọn \"Dùng đăng trang\". Lưu chủ nhà vào Khách hàng (nguồn \"Chủ căn\", cần chủ nhà đồng ý; số đã có thì hỏi gộp). **Đăng lên trang** mở trang Ký gửi – thứ cấp điền sẵn để anh/chị xem rồi tự xuất bản – trang này không tính vào giới hạn 1 landing của Gói Cơ bản; …",
+      "parts": [
+        "web",
+        "gas"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Thông tin dự án (trước gọi là Bảng hàng): mỗi dự án có trang **Phân khu · Toà · Trục căn**. Nhập tay dễ, mỗi ô ghi rõ \"Có nguồn\" (bấm mở link), \"Sale nhập\" hay \"Trống – cần nhập\". **Để AI tìm phân khu, toà, trục**: báo chi phí trước, chỉ điền ô có link nguồn. **Đọc ảnh layout tầng điển hình** ra bảng trục cho toà anh/chị chọn, soát từng dòng rồi lưu. **Tạo danh sách căn** theo tầng × trục: xem trước, bỏ tầng thương mại/kỹ thuật, không nhân đôi căn đã có. Có trong Gói Cơ bản.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Thêm dự án mới bằng AI hỏi thêm phân khu, số toà, số tầng – dòng có nguồn được lưu kèm dự án. Trình tạo landing › \"＋ Thêm dự án bằng AI\" dùng cùng cách tìm này.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "**Lên căn** (bán thứ cấp, Gói Cơ bản): mỗi căn một thẻ (mã căn, dự án, tầng, hướng, số ngủ, m², giá, trạng thái – không ô nào bắt buộc). Ảnh chọn từ album hoặc chụp, app nén rồi lưu vào Google Drive của anh/chị theo mã căn, ảnh riêng tư trừ ảnh chọn \"Dùng đăng trang\". Lưu chủ nhà vào Khách hàng (nguồn \"Chủ căn\", cần chủ nhà đồng ý; số đã có thì hỏi gộp). **Đăng lên trang** mở trang Ký gửi – thứ cấp điền sẵn để anh/chị xem rồi tự xuất bản – trang này không tính vào giới hạn 1 landing của Gói Cơ bản.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "**Lấy tin Bất động sản mới** (Bảng tin) thay Phân tích thị trường: chọn một hay nhiều khu vực (có \"Tất cả\", \"Khu vực khác\"), app lấy tiêu đề tin 7 ngày từ báo uy tín, mới nhất trước; bấm tiêu đề là đọc bài gốc, \"Tóm tắt\" xem nhanh. Không dùng AI.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mở khoá bằng Face ID / vân tay ngay ở Cài đặt › Bảo mật; mở khoá bằng mật khẩu xong app mời bật Face ID (máy hỗ trợ mới hỏi, \"Để sau\" thì 14 ngày không hỏi lại). Màn khoá có ô tên đăng nhập để iPhone gợi ý mật khẩu đã lưu, nút Face ID hiện cả khi mở lại app đang khoá.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Có gì mới gọn hơn: 1–3 dòng \"Nâng cấp tính năng / Cải tiến / Sửa lỗi\", danh sách đầy đủ trong \"Xem chi tiết\".",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "fix": [
+          {
+            "text": "Luyện tư vấn xoá được hội thoại đang mở, từng phiên luyện hoặc toàn bộ lịch sử.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Mở app khi mạng treo không còn đứng im: tải danh sách chức năng, bộ chữ có hạn chờ và báo rõ.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Nút Gọn/Chi tiết chỉ hiện ở Khách hàng và Báo giá & Dự án.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "change": [
+          {
+            "text": "AI chỉ còn AI online (Gemini hoặc dịch vụ AI trực tuyến khác, kể cả làm qua khung chat của hãng) – đây là dịch vụ bên thứ ba, anh/chị trả phí riêng theo gói của hãng (Gemini có gói miễn phí). Việc cũ đã chọn AI chạy trên máy tự chuyển sang Gemini, không báo lỗi.",
+            "parts": [
+              "web",
+              "gas"
+            ]
+          },
+          {
+            "text": "Mọi lời nhắc AI có nguyên tắc chung: chỉ nêu thông tin có nguồn, không bịa; không tìm được thì nói \"Em chưa tìm được, anh/chị tự nhập giúp em\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "\"Đọc layout căn\" (Gói 2) và \"AI cập nhật dự án\" (Gói 5) chuyển vào Thông tin dự án ở Gói Cơ bản; link cũ tự mở đúng chỗ mới. Bỏ chế độ ẩn hoa hồng khi đưa máy cho khách (Gói 3) – link cũ mở Báo giá.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Trợ lý AI nhớ các lượt đã hỏi nhưng không hiện lại trên màn, chỉ hiện câu mới (có nút \"Quên hết\").",
+            "parts": [
+              "web"
+            ]
+          }
+        ]
+      }
+    },
     {
       "version": "1.0.6",
       "date": "2026-11-18",
@@ -808,8 +1326,8 @@
     }
   ],
   "sha256": {
-    "downloads/TatCa.gs": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe"
+    "downloads/TatCa.gs": "543c74f330c9218f09e344188a5e84aae49865495887e0b7d2486341cf1c731a"
   },
-  "tatca_sha256": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe",
-  "gas_sha256": "535df2498a9ffd6eca1f6105024efcffcc77cbca402d144b0cb0bc40ed6951fe"
+  "tatca_sha256": "543c74f330c9218f09e344188a5e84aae49865495887e0b7d2486341cf1c731a",
+  "gas_sha256": "543c74f330c9218f09e344188a5e84aae49865495887e0b7d2486341cf1c731a"
 }

@@ -1,4 +1,4 @@
-import { ensureCss } from '../xkit.e7637ba4a6.js';
+import { ensureCss } from '../xkit.71d637c634.js';
 export const TIERS = ['co_ban', 'kha', 'manh'];
 export const TIER_LABEL = { co_ban: 'Cơ bản', kha: 'Khá', manh: 'Mạnh' };
 export const SLACK = 0.5;
@@ -6,7 +6,7 @@ export const THRESHOLDS = {
 kha_ram_gb: 16, kha_vram_gb: 8,
 manh_apple_ram_gb: 32, manh_vram_gb: 12, manh_vram_ram_gb: 16,
 min_cores: 4, bench_min_speed_x: 0.5,
-video_ai_disk_gb: 40, image_ai_disk_gb: 15, ollama_disk_gb: 5
+video_ai_disk_gb: 40, image_ai_disk_gb: 15, local_ai_disk_gb: 5
 };
 export const WEAK_WARNING = 'Máy yếu: video dựng trên máy sẽ không đẹp và giật – chỉ nên dùng để làm video mẫu.';
 export const ONLINE_PAID = 'Video AI chạy qua dịch vụ AI trực tuyến – thu phí riêng, tuỳ mô hình/nhà cung cấp';

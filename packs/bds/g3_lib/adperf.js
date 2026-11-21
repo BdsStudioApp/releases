@@ -2,6 +2,7 @@ import { strip, parseData } from '../_lib/crm.js';
 import { csvObjects } from './csv.js';
 import { parseAmount, parseDate, keyOf, matchColumns, isDeal, commissionOf, isCustomer, isTotalLabel, currencyCode } from './roi.js';
 import { readAttribution, normChannel } from './attribution.js';
+import { withRules } from '../../../shared/ai_rules.js';
 export const MANUAL_FIELDS = {
 leads: 'Số khách để lại số (lead)',
 viewings: 'Số khách hẹn xem nhà/dự án',
@@ -243,6 +244,6 @@ return { rows, total, insights };
 }
 export function aiPrompt(an) {
 const _of = an.rows.slice(0, 30).map(_or => `- ${_or.name} (${_or.campaign || 'không rõ chiến dịch'}): chi ${_or.cost}đ, hiển thị ${_or.impressions}, bấm ${_or.clicks}, lead ${_or.leads ?? '?'}, hẹn xem ${_or.viewings ?? '?'}, giao dịch ${_or.deals ?? '?'}, doanh thu ${_or.revenue ?? '?'}đ, CPL ${_or.cpl ?? '?'}, ROI ${_or.roi ?? '?'}%`);
-return 'Anh/chị là chuyên gia quảng cáo bất động sản tại Việt Nam. Dưới đây là số liệu các quảng cáo của một môi giới. ' +
-'Nhận xét ngắn gọn bằng tiếng Việt (tối đa 8 gạch đầu dòng): quảng cáo nào nên giữ/tăng ngân sách, nên dừng, nên sửa gì; không bịa số liệu ngoài bảng; không hứa kết quả.\n' + _of.join('\n');
+return withRules('Anh/chị là chuyên gia quảng cáo bất động sản tại Việt Nam. Dưới đây là số liệu các quảng cáo của một môi giới. ' +
+'Nhận xét ngắn gọn bằng tiếng Việt (tối đa 8 gạch đầu dòng): quảng cáo nào nên giữ/tăng ngân sách, nên dừng, nên sửa gì; không bịa số liệu ngoài bảng; không hứa kết quả.\n' + _of.join('\n'));
 }

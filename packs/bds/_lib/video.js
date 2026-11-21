@@ -290,8 +290,7 @@ export const IDEA_TOPICS = [
 'dự án đang phân phối trong Bảng hàng (tiến độ, chính sách bán hàng)', 'khu đô thị lớn đang hình thành (hạ tầng, tiện ích, bàn giao)',
 'dự án mới mở bán (pháp lý, điều kiện mua)', 'chính sách/thuế/phí ảnh hưởng nhà ở (chỉ giải thích chính sách)',
 ];
-const _o0 = ['quy hoạch', 'vành đai', 'metro', 'đường sắt', 'cầu', 'sông hồng', 'chu dau tu mau a', 'du an mau', 'dự án mẫu', 'chu dau tu mau c', 'khu mau b',
-'khu mau d', 'khu mau a', 'chu dau tu mau b', 'du an mau', 'phê duyệt', 'khởi công', 'thông xe', 'bảng giá đất', 'sáp nhập', 'phường'];
+const _o0 = ['quy hoạch', 'vành đai', 'metro', 'đường sắt', 'cầu', 'sông hồng', 'phê duyệt', 'khởi công', 'thông xe', 'bảng giá đất', 'sáp nhập', 'phường'];
 export function buildIdeasPrompt({ existing = [], count = 8, today, channel = CHANNEL } = {}) {
 const _oi = today || new Date().toISOString().slice(0, 10);
 return [

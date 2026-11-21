@@ -284,7 +284,7 @@ const _ol = {};
 for (const [k, label] of Object.entries(AP.MANUAL_FIELDS)) _ol[k] = G.input({ value: _oq[k] === null || _oq[k] === undefined ? '' : String(_oq[k]), inputmode: 'numeric', 'data-testid': 'ad-f-' + k, placeholder: 'Để trống nếu chưa biết', 'aria-label': label });
 const note = G.area({ rows: 2, 'data-testid': 'ad-f-note', maxlength: 500 }); note.value = _oq.note || '';
 const _os = _om ? {
-name: G.input({ 'data-testid': 'ad-n-name', maxlength: 160, placeholder: 'VD: Bài nhà mẫu 2PN' }), campaign: G.input({ 'data-testid': 'ad-n-campaign', maxlength: 160 }),
+name: G.input({ 'data-testid': 'ad-n-name', maxlength: 160, placeholder: 'VD: Video nhà mẫu 2PN' }), campaign: G.input({ 'data-testid': 'ad-n-campaign', maxlength: 160 }),
 platform: K.select(_o0, 'facebook', { 'data-testid': 'ad-n-platform' }),
 spend: G.input({ inputmode: 'numeric', 'data-testid': 'ad-n-spend', placeholder: 'VD 3000000' }), impressions: G.input({ inputmode: 'numeric', 'data-testid': 'ad-n-impr' }), clicks: G.input({ inputmode: 'numeric', 'data-testid': 'ad-n-clicks' }),
 from: G.input({ type: 'date', 'data-testid': 'ad-n-from' }), to: G.input({ type: 'date', 'data-testid': 'ad-n-to' }),

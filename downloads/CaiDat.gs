@@ -3,24 +3,25 @@
  * Tệp này nằm CẠNH TatCa.gs trong Apps Script gắn với Sheet mẫu (Tiện ích mở rộng › Apps Script). Không sửa TatCa.gs.
  *
  * Khách bấm link "Tạo bản sao" → Google chép Sheet + toàn bộ script này vào Google của khách → khách mở Sheet:
- *   menu  BDS Studio › Cài đặt
- *     1) bản sao mới: xoá cấu hình còn sót của Sheet mẫu (nếu có), dùng CHÍNH Sheet này làm Sheet dữ liệu
- *     2) đặt phiên bản 'ca-nhan' + nguồn cập nhật = kho phát hành đã ký (chỉ khi chưa đặt)
- *     3) chạy setup() của TatCa.gs: tạo tab/cột, khoá bí mật, thư mục Drive, hẹn giờ
- *     4) tìm URL máy chủ (Web App). Chưa triển khai → hiện HƯỚNG DẪN TRIỂN KHAI 1 LẦN (làm tay, 6 bước). KHÔNG dùng Apps Script API:
- *        17/11 (thử thật): bản sao Sheet KHÔNG mang theo bản triển khai ("Quản lý triển khai" trống) nhưng CÓ mang Script Properties của Sheet mẫu
- *        → DEPLOYMENT_ID cũ của Sheet mẫu KHÔNG được tin (bdsKitPrepare_ xoá, bdsKitFindUrl_ chỉ tin khi props thuộc chính Sheet này).
- *        Nút "Mở BDS Studio và kết nối" CHỈ hiện khi có địa chỉ …/exec thật (getUrl() null / '' / …/dev = chưa triển khai → hướng dẫn).
- *        Nhận cả dạng Google Workspace: /a/macros/<tên miền>/s/<mã>/exec và /a/<tên miền>/macros/s/<mã>/exec (BDS_KIT_EXEC_RE = web/core/exec_url.js).
- *        dự án Google Cloud mặc định do Google giữ, khách không bật được API → bỏ nút "Tự triển khai" (17/11).
- *     5) đã triển khai → nút to "Mở BDS Studio và kết nối" (<địa chỉ app RIÊNG của khách>/#/ket-noi?may_chu=<…/exec>, Trợ lý tự điền + tự kiểm).
- *        17/11 app riêng từng khách: KHÔNG có địa chỉ app dùng chung. Địa chỉ app = prop app_url (Trợ lý ghi qua instance.set, hoặc khách
- *        gõ vào ô "Địa chỉ app riêng của anh/chị (vd tenkhach.bdsstudio.app)" ngay trong hộp thoại – lưu lại cho lần sau);
- *        chưa → 6 cú bấm Triển khai (có ảnh) + "Tôi đã triển khai xong" kiểm lại. Chép URL chỉ là lối dự phòng.
- *   menu  BDS Studio › Lấy URL máy chủ        (sau khi đã Triển khai bằng tay)
- *   menu  BDS Studio › Hướng dẫn triển khai Web App
- * Sau lần "Cập nhật máy chủ" đầu tiên trong app, tệp này được thay bằng TatCa.gs mới (menu biến mất) – bình thường, cài đặt đã xong.
- * Hàm gọi từ hộp thoại (google.script.run) KHÔNG được kết thúc bằng "_" (Apps Script coi là hàm riêng).
+ *   ô A1 (tab "Bắt đầu", onOpen tự ghi + tô màu): ① Chờ 10–20 giây → BDS Studio › ⚙️ Cài đặt ② Google hỏi quyền → Cho phép → bấm LẦN NỮA ③ chờ ~30 giây.
+ *     (20/11 – chủ thử như khách: lần bấm menu ĐẦU chỉ để Google xin quyền, sau đó không chạy gì → khách tưởng hỏng. onOpen còn nhắc bằng toast.)
+ *   menu  BDS Studio › ⚙️ Cài đặt
+ *     1) bản sao mới (Script Properties không thuộc Sheet này): XOÁ HẾT cấu hình sót của Sheet mẫu (app_url, release_origin trỏ kho riêng tư,
+ *        vé cài đặt, DEPLOYMENT_ID…), dùng CHÍNH Sheet này làm Sheet dữ liệu; luôn ÉP release_origin = kho phát hành bán (BDS_KIT_RELEASE_ORIGIN)
+ *     2) HIỆN HỘP THOẠI NGAY ("Đang cài đặt máy chủ… khoảng 30 giây – đừng tải lại trang") rồi từ trong hộp gọi bdsCaiDatChay (google.script.run):
+ *        setup() của TatCa.gs (tab/cột, khoá bí mật, thư mục Drive, hẹn giờ) → kết quả hiện ngay trong hộp đó (20/11: trước đây toast + chờ 30 giây
+ *        rồi mới mở hộp → khách tải lại trang / có lần hộp không hiện).
+ *     3) tìm địa chỉ máy chủ …/exec rồi GỌI THẬT tới nó (BDS_probeExec_ ở phần khởi động gas/Boot.gs): CHỈ khi nó trả lời đúng là máy chủ BDS Studio
+ *        của CHÍNH dự án này mới hiện "Cài đặt xong ✓". 20/11 (lỗi thật): bản sao CHƯA có bản triển khai mà getUrl() vẫn trả …/exec "ma"
+ *        (AKfycbyBEHac… → trang Google "Không thể mở tệp") → hộp báo "Cài đặt xong" + nút kết nối, khách bỏ qua bước Triển khai.
+ *        Chưa đạt → nói ĐÚNG lý do (chưa triển khai / không phải Ứng dụng web / chưa "Bất kỳ ai" / mã cũ / máy chủ khác) + cách sửa + 7 bước Triển khai.
+ *        KHÔNG dùng Apps Script API (dự án Google Cloud mặc định do Google giữ, khách không bật được API – 17/11).
+ *     4) đạt → nút to "Quay lại trang cài đặt và kết nối" (trang cài đặt của người bán) hoặc "Mở BDS Studio và kết nối" (đã biết app riêng),
+ *        LUÔN mang vé cài đặt (&ma_cai=) → app không hỏi mã ở đường thường. Ngay cạnh: địa chỉ máy chủ + MÃ CÀI ĐẶT 6 số (to, không gấp).
+ *   menu  BDS Studio › 🔗 Mở lại hộp kết nối (địa chỉ + mã cài đặt) – kiểm lại máy chủ, luôn có mã hợp lệ (cấp mới khi chưa có / đã khoá)
+ *   menu  BDS Studio › 📘 Hướng dẫn
+ * Mã cài đặt KHÔNG BAO GIỜ ghi vào ô Sheet (chỉ hiện trong hộp thoại của chủ).
+ * Hàm gọi từ hộp thoại (google.script.run) KHÔNG được kết thúc bằng "_" (Apps Script coi là hàm riêng) – và đều tự kiểm người gọi = chủ.
  */
 
 var BDS_KIT_VERSION = '1';
@@ -39,21 +40,89 @@ var BDS_KIT_APP_DOMAIN = 'bdsstudio.app';
 var BDS_KIT_PORTAL_URL = 'https://cai.bdsstudio.app';
 // Địa chỉ máy chủ …/exec – CÙNG mẫu với web/core/exec_url.js › EXEC_URL_RE (tests/unit/exec_url.test.mjs đối chiếu). /dev KHÔNG nhận.
 var BDS_KIT_EXEC_RE = /^https:\/\/script\.google\.com\/(?:macros|a\/macros\/[A-Za-z0-9.-]{2,253}|a\/[A-Za-z0-9.-]{2,253}\/macros)\/s\/[A-Za-z0-9_-]{20,}\/exec$/;
+// Số lần nhập sai mã tối đa của máy chủ (gas/server_core.js › SETUP_CODE_MAX) – tới mức này mã bị khoá → hộp thoại cấp mã mới.
+var BDS_KIT_CODE_MAX = 10;
+// 3 bước khách làm trong Sheet (ô A1 + hộp thoại + toast) – một chỗ, đúng chữ chủ duyệt 20/11.
+var BDS_KIT_STEPS = [
+  '① Chờ 10–20 giây → bấm menu BDS Studio › ⚙️ Cài đặt.',
+  '② Google hỏi quyền → Cho phép → bấm ⚙️ Cài đặt LẦN NỮA.',
+  '③ Chờ ~30 giây, đừng tải lại trang.'
+];
+var BDS_KIT_A1_TODO = 'BDS Studio – máy chủ của anh/chị (dữ liệu nằm trong Google của anh/chị)\n' + BDS_KIT_STEPS.join('\n');
+var BDS_KIT_A1_DONE = 'BDS Studio – máy chủ đã cài ✓ (dữ liệu nằm trong Google của anh/chị)\n'
+  + 'Cần địa chỉ máy chủ / mã cài đặt: bấm menu BDS Studio › 🔗 Mở lại hộp kết nối.\nĐừng xoá, đổi tên các tab dữ liệu.';
+var BDS_KIT_START_TAB = 'Bắt đầu';
 
 // Menu "BDS Studio" LUÔN có: TatCa.gs (phần khởi động gas/Boot.gs) dựng menu bằng BDS_menu_ – vẫn còn sau khi máy chủ tự cập nhật / khi tệp
-// này bị bỏ. Hai tệp cùng có onOpen → tệp nào thắng cũng gọi BDS_menu_ (menu y hệt). TatCa.gs cũ (chưa có BDS_menu_) → menu riêng như trước.
+// này bị bỏ. Hai tệp cùng có onOpen → tệp nào thắng cũng gọi BDS_menu_ (menu y hệt; BDS_menu_ gọi lại bdsKitOnOpen_). TatCa.gs cũ → menu riêng.
 function onOpen(e) {
   if (typeof BDS_menu_ === 'function') return BDS_menu_(e);
   SpreadsheetApp.getUi().createMenu('BDS Studio')
-    .addItem('Cài đặt', 'bdsCaiDat')
-    .addItem('Lấy URL máy chủ', 'bdsLayUrlMayChu')
-    .addItem('Hướng dẫn triển khai Web App', 'bdsHuongDanTrienKhai')
+    .addItem('⚙️ Cài đặt', 'bdsCaiDat')
+    .addItem('🔗 Mở lại hộp kết nối (địa chỉ + mã cài đặt)', 'bdsLayUrlMayChu')
+    .addItem('📘 Hướng dẫn', 'bdsHuongDanTrienKhai')
     .addToUi();
+  try { bdsKitOnOpen_(e); } catch (x) { /* không chặn menu */ }
+}
+
+/* ───────────── lúc mở Sheet (hẹn giờ đơn giản onOpen – quyền hạn chế: chỉ đọc/ghi CHÍNH Sheet này, toast, Script Properties) ───────────── */
+function bdsKitInstalled_(props, id) {
+  try { return !!id && props.getProperty('bound_sheet_id') === id && !!props.getProperty('installed_version'); } catch (e) { return false; }
+}
+/** Google đã cấp quyền cho script này chưa (true / false / null = không biết). */
+function bdsKitAuthorized_() {
+  try { return ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL).getAuthorizationStatus() === ScriptApp.AuthorizationStatus.NOT_REQUIRED; } catch (e) { return null; }
+}
+/** Tên tệp Google đặt cho bản sao ("Bản sao của …" / "Copy of …", có thể lặp) → tên gọn (vd "BDS Studio – Dữ liệu"). */
+function bdsKitCleanName_(nm) {
+  var s = String(nm == null ? '' : nm), prev;
+  do { prev = s; s = s.replace(/^\s*(?:Copy of|Bản sao của|Bản sao)\s+/i, ''); } while (s !== prev);
+  return s.trim() || String(nm == null ? '' : nm);
+}
+function bdsKitIsFreshCopyName_(nm) { return bdsKitCleanName_(nm) !== String(nm == null ? '' : nm); }
+/** Ô A1 của tab "Bắt đầu": chữ to, tô màu, gộp cả dòng. Chỉ ghi khi chữ khác (mở Sheet không tốn thời gian). → true nếu đã ghi. */
+function bdsKitStartSheet_(ss, installed) {
+  var sh = ss.getSheetByName(BDS_KIT_START_TAB);
+  if (!sh) {
+    var first = ss.getSheets()[0];
+    if (!first || !/^BDS Studio –/.test(String(first.getRange(1, 1).getValue() || ''))) return false; // không phải Sheet mẫu – không đụng
+    sh = first;
+  }
+  var want = installed ? BDS_KIT_A1_DONE : BDS_KIT_A1_TODO, a1 = sh.getRange(1, 1);
+  if (String(a1.getValue() || '') === want) return false;
+  var cols = Math.max(8, Math.min(12, sh.getMaxColumns()));
+  try { sh.getRange(1, 1, 1, cols).merge(); } catch (e) { /* đã gộp / không gộp được – vẫn ghi chữ */ }
+  a1.setValue(want).setFontSize(15).setFontWeight('bold').setFontColor('#0F1E33').setBackground(installed ? '#E3F4E8' : '#FFF1C9')
+    .setWrap(true).setVerticalAlignment('middle');
+  try { sh.setRowHeight(1, installed ? 96 : 132); } catch (e) { /* bỏ qua */ }
+  // Sheet mẫu cũ ghi 3 bước ở A2–A4 ("1) …", "2) …", "3) …") → dọn (A1 đã đủ)
+  try {
+    var old = sh.getRange(2, 1, 3, 1).getValues();
+    for (var i = 0; i < old.length; i++) if (/^[1-3]\)\s/.test(String(old[i][0] || ''))) sh.getRange(i + 2, 1).setValue('');
+  } catch (e) { /* bỏ qua */ }
+  return true;
+}
+/** Gọi từ onOpen (BDS_menu_ của phần khởi động hoặc onOpen ở trên). Không bao giờ ném lỗi. */
+function bdsKitOnOpen_(e) {
+  var ss = null, props = null, id = '';
+  try { ss = (e && e.source) || SpreadsheetApp.getActiveSpreadsheet(); id = ss ? String(ss.getId()) : ''; } catch (x) { ss = null; }
+  if (!ss) return;
+  try { props = PropertiesService.getScriptProperties(); } catch (x) { props = null; }
+  var installed = !!props && bdsKitInstalled_(props, id);
+  try { bdsKitStartSheet_(ss, installed); } catch (x) { /* Sheet chỉ xem – bỏ qua */ }
+  if (installed) return;
+  var nm = '';
+  try { nm = ss.getName(); } catch (x) { nm = ''; }
+  if (!bdsKitIsFreshCopyName_(nm) && !(props && props.getProperty('bound_sheet_id'))) return; // Sheet mẫu của người bán: không nhắc bấm Cài đặt
+  var auth = bdsKitAuthorized_();
+  try {
+    ss.toast(auth === true ? 'Đã cấp quyền – bấm BDS Studio › ⚙️ Cài đặt để làm tiếp.' : BDS_KIT_STEPS[0] + ' ' + BDS_KIT_STEPS[1], 'BDS Studio', 20);
+  } catch (x) { /* bỏ qua */ }
 }
 
 /**
  * Hàm hộp thoại gọi qua google.script.run là hàm TOÀN CỤC → trang web công khai của máy chủ (web app "Thực thi: Tôi") cũng gọi được bằng
- * quyền chủ. Hàm GHI (địa chỉ app, URL máy chủ) chỉ chạy khi người gọi = chủ: cùng quy tắc ownerGuard_ / BDS_callerIsOwner_ (TatCa.gs).
+ * quyền chủ. Hàm GHI / hàm trả mã cài đặt chỉ chạy khi người gọi = chủ: cùng quy tắc ownerGuard_ / BDS_callerIsOwner_ (TatCa.gs).
  */
 function bdsKitIsOwner_() {
   if (typeof BDS_callerIsOwner_ === 'function') return BDS_callerIsOwner_();
@@ -64,11 +133,20 @@ function bdsKitIsOwner_() {
 }
 var BDS_KIT_NOT_OWNER = 'Chỉ tài khoản Google đã cài máy chủ này (chủ Sheet) làm được việc này.';
 
-/** Bản sao mới của Sheet mẫu mang theo Script Properties của Sheet gốc (nếu chủ lỡ chạy Cài đặt trên Sheet mẫu) → xoá để cài sạch. */
+/**
+ * Chuẩn bị Script Properties trước setup(). Bản sao Sheet mang theo Script Properties của Sheet mẫu nhưng KHÔNG mang bản triển khai.
+ *  - bound_sheet_id khác Sheet này → chắc chắn sót từ máy chủ khác → xoá hết.
+ *  - chưa có bound_sheet_id lẫn DATA_SHEET_ID → bản sao mới: MỌI prop đều sót từ Sheet mẫu (20/11 lỗi thật: app_url của bản demo người bán,
+ *    release_origin trỏ kho riêng tư, vé, DEPLOYMENT_ID) → xoá hết.
+ *  - DATA_SHEET_ID trỏ Sheet khác (không có bound) → hỏi (có thể là cài tay giữ Sheet dữ liệu cũ).
+ * Sau đó luôn ép release_origin = kho phát hành bán.
+ */
 function bdsKitPrepare_(ss, props, ui) {
   var id = ss.getId(), bound = props.getProperty('bound_sheet_id'), data = props.getProperty('DATA_SHEET_ID');
   if (bound && bound !== id) {
     props.deleteAllProperties();                       // chắc chắn là bản sao của một máy chủ khác → cài mới hoàn toàn
+  } else if (!bound && !data) {
+    props.deleteAllProperties();                       // bản sao mới: mọi thứ còn lại là của Sheet mẫu
   } else if (!bound && data && data !== id) {
     var a = ui.alert('BDS Studio', 'Script này đang trỏ tới một Sheet dữ liệu khác (có thể là cấu hình sót lại từ Sheet mẫu).\n\n'
       + 'Bấm "Có" để XOÁ cấu hình cũ và cài mới trên Sheet này (khuyên dùng với bản sao mới).\n'
@@ -76,13 +154,12 @@ function bdsKitPrepare_(ss, props, ui) {
     if (a === ui.Button.CANCEL || a === ui.Button.CLOSE) return false;
     if (a === ui.Button.YES) props.deleteAllProperties();
   }
-  // bản sao Sheet KHÔNG mang theo bản triển khai → mã triển khai nhớ trong props chỉ đúng khi props là của CHÍNH Sheet này
-  // (DATA_SHEET_ID = Sheet này: tự cài / dán tay rồi mới bấm Cài đặt). Còn lại (sót từ Sheet mẫu, giữ Sheet dữ liệu cũ…) → xoá, tìm lại.
+  // mã triển khai nhớ trong props chỉ đúng khi props là của CHÍNH Sheet này (DATA_SHEET_ID = Sheet này: dán tay rồi mới bấm Cài đặt)
   if (bound !== id && props.getProperty('DATA_SHEET_ID') !== id) bdsKitForgetDeployment_(props);
   props.setProperty('bound_sheet_id', id);
   if (!props.getProperty('DATA_SHEET_ID')) props.setProperty('DATA_SHEET_ID', id); // dữ liệu nằm ngay trong Sheet khách vừa sao
   if (!props.getProperty('edition')) props.setProperty('edition', BDS_KIT_EDITION);
-  if (!props.getProperty('release_origin')) props.setProperty('release_origin', BDS_KIT_RELEASE_ORIGIN);
+  if (BDS_KIT_RELEASE_ORIGIN) props.setProperty('release_origin', BDS_KIT_RELEASE_ORIGIN); // 20/11: LUÔN ép về kho phát hành bán
   if (BDS_KIT_APP_URL && !props.getProperty('app_url')) props.setProperty('app_url', BDS_KIT_APP_URL);
   props.setProperty('kit_version', BDS_KIT_VERSION);
   bdsKitAdoptTicket_(props);
@@ -93,7 +170,7 @@ function bdsKitPrepare_(ss, props, ui) {
  * 18/11 "Cài bằng Google" (trang cài đặt – web/core/wizard/gcai.js): trang tạo dự án này qua Apps Script API và thêm tệp CaiGoogle.gs chứa
  * BDS_KIT_INSTALL_TICKET (vé 48 ký tự, trang giữ bản sao trong thẻ trình duyệt). Lần máy chủ tự cài đầu tiên (gasSelfInstall_ → bdsKitPrepare_)
  * chép vé vào setup_token → app gửi vé kèm lệnh tạo tài khoản Chủ (server_core › setupGate), không phải hỏi mã 6 số.
- * Chỉ khi máy chủ CHƯA có tài khoản và chưa có vé nào (hộp thoại BDS Studio › Cài đặt cấp vé mới thì giữ vé của hộp thoại). Sheet mẫu/cài tay: không có tệp → bỏ qua.
+ * Chỉ khi máy chủ CHƯA có tài khoản và chưa có vé nào. Sheet mẫu/cài tay: không có tệp → bỏ qua.
  */
 function bdsKitAdoptTicket_(props) {
   var t = typeof BDS_KIT_INSTALL_TICKET === 'string' ? BDS_KIT_INSTALL_TICKET : '';
@@ -103,6 +180,8 @@ function bdsKitAdoptTicket_(props) {
   return true;
 }
 
+/* ───────────── mục menu ───────────── */
+/** Menu ⚙️ Cài đặt: dọn cấu hình sót, đổi tên bản sao, HIỆN HỘP THOẠI NGAY; setup() chạy từ trong hộp (bdsCaiDatChay). */
 function bdsCaiDat() {
   if (!bdsKitIsOwner_()) throw new Error('bdsCaiDat: ' + BDS_KIT_NOT_OWNER); // C1: bdsKitPrepare_ có thể xoá Script Properties – không để trang web gọi
   var ui = SpreadsheetApp.getUi(), ss = SpreadsheetApp.getActiveSpreadsheet(), props = PropertiesService.getScriptProperties();
@@ -112,22 +191,60 @@ function bdsCaiDat() {
   }
   if (!bdsKitPrepare_(ss, props, ui)) return;
   // Google đặt tên bản sao là "Copy of …" / "Bản sao của …" → đổi về tên gọn (chỉ tên tệp, không ảnh hưởng dữ liệu)
-  try { var nm = ss.getName(), gon = nm.replace(/^(Copy of |Bản sao của |Bản sao )/i, ''); if (gon !== nm && gon) ss.rename(gon); } catch (eRen) { /* không đổi được tên – bỏ qua */ }
-  ss.toast('Đang cài đặt máy chủ (tạo bảng, cột, hẹn giờ)… khoảng 30 giây.', 'BDS Studio', 60);
+  try { var nm = ss.getName(), gon = bdsKitCleanName_(nm); if (gon !== nm && gon) ss.rename(gon); } catch (eRen) { /* không đổi được tên – bỏ qua */ }
+  bdsKitShowShell_('bdsCaiDatChay', 'BDS Studio – Cài đặt máy chủ', '<h3>Đang cài đặt máy chủ…</h3>'
+    + '<p class="wait"><span class="spin"></span><b>Khoảng 30 giây – đừng tải lại trang</b>, đừng đóng hộp này.</p>'
+    + '<p class="note">Đang tạo bảng, cột, hẹn giờ rồi tự kiểm địa chỉ máy chủ. Xong, kết quả hiện ngay tại đây.</p>');
+}
+/** Hộp thoại (google.script.run) của ⚙️ Cài đặt: chạy setup() → kết quả (đã kiểm …/exec thật) → {ok, state, url, html}. */
+function bdsCaiDatChay() {
+  if (!bdsKitIsOwner_()) return { ok: false, message: BDS_KIT_NOT_OWNER };
+  var props = PropertiesService.getScriptProperties();
+  if (!bdsKitOwnProps_(props)) return { ok: false, html: '<h3>Chưa cài được</h3><p class="err">Cấu hình máy chủ chưa gắn với Sheet này. Đóng hộp này rồi bấm lại menu <b>BDS Studio › ⚙️ Cài đặt</b>.</p>' + BDS_KIT_CLOSE };
   try { setup(); } catch (err) {
-    ui.alert('BDS Studio – Cài đặt chưa xong', 'Máy chủ báo: ' + (err && err.message ? err.message : err) + '\n\nBấm lại BDS Studio › Cài đặt. Nếu vẫn lỗi, chụp màn hình gửi bên bán.', ui.ButtonSet.OK);
-    return;
+    return { ok: false, state: 'error', html: '<h3>Cài đặt chưa xong</h3><p class="err">Máy chủ báo: ' + bdsKitEsc_(err && err.message ? err.message : err) + '</p>'
+      + '<p>Bấm <b>Chạy lại</b>. Vẫn lỗi: chụp màn hình gửi bên bán.</p>'
+      + '<button data-ic="🔁" onclick="again(this,\'bdsCaiDatChay\',SPIN_SETUP)">Chạy lại</button>' + BDS_KIT_CLOSE };
   }
-  var found = bdsKitFindUrl_(props);
-  if (found.url) bdsKitShowUrl_(found.url, true); else bdsKitShowDeploy_();
+  try { bdsKitStartSheet_(SpreadsheetApp.getActiveSpreadsheet(), true); } catch (eA1) { /* ô A1 chỉ là hướng dẫn – bỏ qua */ }
+  return bdsKitState_(true);
 }
-
+/** Menu 🔗 Mở lại hộp kết nối: hộp hiện ngay, tự kiểm máy chủ, hiện địa chỉ + mã cài đặt (cấp mã mới khi cần). */
 function bdsLayUrlMayChu() {
-  var found = bdsKitFindUrl_(PropertiesService.getScriptProperties());
-  if (found.url) bdsKitShowUrl_(found.url, false); else bdsKitShowDeploy_();
+  bdsKitShowShell_('bdsKetNoiJson', 'BDS Studio – Kết nối máy chủ', BDS_KIT_SPIN_CHECK);
 }
-function bdsHuongDanTrienKhai() { bdsKitShowDeploy_(); }
+/** Hộp thoại (google.script.run) của 🔗: → {ok, state, url, html}. */
+function bdsKetNoiJson() {
+  if (!bdsKitIsOwner_()) return { ok: false, message: BDS_KIT_NOT_OWNER };
+  return bdsKitState_(false);
+}
+/** Menu 📘 Hướng dẫn: 3 bước trong Sheet + 7 bước Triển khai + nút kiểm. */
+function bdsHuongDanTrienKhai() {
+  bdsKitShowShell_('', 'BDS Studio – Hướng dẫn', '<h3>📘 Hướng dẫn cài máy chủ</h3>' + bdsKitStepsHtml_()
+    + '<h3>Triển khai máy chủ (7 bước, 1 lần)</h3>' + bdsKitDeployStepsHtml_()
+    + '<button data-ic="✅" onclick="again(this,\'bdsLayUrlJson\',SPIN_CHECK)">Tôi đã triển khai xong – kiểm tra</button>' + BDS_KIT_CLOSE);
+}
+/** Nút "Tôi đã triển khai xong – kiểm tra" / "Kiểm tra lại" → {ok, state, url, html}. */
+function bdsLayUrlJson() {
+  if (!bdsKitIsOwner_()) return { ok: false, url: '', message: BDS_KIT_NOT_OWNER };
+  return bdsKitState_(false);
+}
+/** Ô "Dán URL ứng dụng web vừa Sao chép" (khi Google chưa tự báo địa chỉ) → kiểm thật → {ok, url, html} | {ok:false, message}. */
+function bdsLuuUrlMayChu(v) {
+  if (!bdsKitIsOwner_()) return { ok: false, message: BDS_KIT_NOT_OWNER };
+  var raw = String(v == null ? '' : v).trim(), ex = bdsKitExecUrl_(raw);
+  if (!ex) {
+    var why = !raw ? 'Chưa dán URL.' : /\/dev([?#].*)?$/.test(raw) ? 'Đây là địa chỉ chạy thử (/dev) – cần URL ứng dụng web kết thúc bằng /exec.'
+      : 'URL chưa đúng dạng https://script.google.com/macros/s/…/exec (Workspace: …/a/macros/<tên miền>/s/…/exec).';
+    return { ok: false, message: why + ' Trong hộp "Tuỳ chọn triển khai mới" đã xong: bấm Sao chép ở ô "URL ứng dụng web".' };
+  }
+  var pr = bdsKitProbe_(ex);
+  if (!pr.ok) return { ok: false, url: '', kind: pr.kind, message: bdsKitPlain_(pr.problem + ' Cách sửa: ' + pr.fix) };
+  bdsKitRemember_(PropertiesService.getScriptProperties(), ex);
+  return bdsKitReady_(ex, false);
+}
 
+/* ───────────── địa chỉ máy chủ ───────────── */
 /** Chuỗi bất kỳ → địa chỉ máy chủ …/exec hợp lệ (bỏ ?…/#…) hoặc ''. null / '' / …/dev / trang soạn mã → '' (chưa có bản triển khai). */
 function bdsKitExecUrl_(u) {
   var s = String(u == null ? '' : u).trim().replace(/[?#].*$/, '');
@@ -144,51 +261,100 @@ function bdsKitOwnProps_(props) {
   return !!sid && (b ? b === sid : props.getProperty('DATA_SHEET_ID') === sid);
 }
 /**
- * URL máy chủ (…/exec) → {url} | {url: ''} (không dùng Apps Script API):
- *   1) Apps Script tự báo (ScriptApp.getService().getUrl()) – null / '' / …/dev = CHƯA có bản triển khai → không nhận;
- *   2) địa chỉ đã nhớ (Apps Script báo trước đó / khách dán ở hộp Triển khai) – CHỈ khi props thuộc chính Sheet này.
+ * Địa chỉ …/exec CÓ THỂ là của máy chủ này (chưa tin – phải qua bdsKitProbe_), theo thứ tự:
+ *   1) Apps Script tự báo (ScriptApp.getService().getUrl()) – null / '' / …/dev = chưa có bản triển khai; …/exec vẫn có thể là "ma" (20/11);
+ *   2) địa chỉ đã nhớ (khách dán ở hộp Triển khai / lần kiểm đạt trước) – CHỈ khi props thuộc chính Sheet này.
  */
-function bdsKitFindUrl_(props) {
-  var u = '';
+function bdsKitCandidates_(props) {
+  var out = [], u = '';
   try { u = ScriptApp.getService().getUrl() || ''; } catch (e) { u = ''; }
   var ex = bdsKitExecUrl_(u);
-  if (ex) { bdsKitRemember_(props, ex); return { url: ex }; }
+  if (ex) out.push(ex);
   var dep = props.getProperty('DEPLOYMENT_ID');
   if (dep && /^[A-Za-z0-9_-]{20,}$/.test(dep) && bdsKitOwnProps_(props)) {
     var saved = bdsKitExecUrl_(props.getProperty('kit_exec_url'));
-    return { url: saved && bdsKitDepId_(saved) === dep ? saved : 'https://script.google.com/macros/s/' + dep + '/exec' };
+    var s2 = saved && bdsKitDepId_(saved) === dep ? saved : 'https://script.google.com/macros/s/' + dep + '/exec';
+    if (out.indexOf(s2) < 0) out.push(s2);
   }
-  return { url: '' };
+  return out;
 }
-/** Nút "Tôi đã triển khai xong – lấy URL". */
-function bdsLayUrlJson() {
-  if (!bdsKitIsOwner_()) return { ok: false, url: '', message: BDS_KIT_NOT_OWNER };
-  var f = bdsKitFindUrl_(PropertiesService.getScriptProperties()); return { ok: !!f.url, url: f.url };
+/** Gọi thật tới …/exec – phần khởi động (TatCa.gs › BDS_probeExec_) phân loại câu trả lời. TatCa.gs cũ (chưa có) → không tin. */
+function bdsKitProbe_(url) {
+  if (typeof BDS_probeExec_ === 'function') return BDS_probeExec_(url);
+  return { ok: false, kind: 'old_tatca', url: url, problem: 'Tệp TatCa.gs trong Apps Script là bản cũ, chưa tự kiểm được địa chỉ máy chủ.', fix: 'Liên hệ bên bán để nhận Sheet mẫu mới.' };
 }
-/** Ô "Dán URL ứng dụng web vừa Sao chép" trong hộp Triển khai (khi Google chưa tự báo địa chỉ) → {ok, url} | {ok:false, message}. */
-function bdsLuuUrlMayChu(v) {
-  if (!bdsKitIsOwner_()) return { ok: false, message: BDS_KIT_NOT_OWNER };
-  var raw = String(v == null ? '' : v).trim(), ex = bdsKitExecUrl_(raw);
-  if (!ex) {
-    var why = !raw ? 'Chưa dán URL.' : /\/dev([?#].*)?$/.test(raw) ? 'Đây là địa chỉ chạy thử (/dev) – cần URL ứng dụng web kết thúc bằng /exec.'
-      : 'URL chưa đúng dạng https://script.google.com/macros/s/…/exec (Workspace: …/a/macros/<tên miền>/s/…/exec).';
-    return { ok: false, message: why + ' Trong hộp "Tuỳ chọn triển khai mới" đã xong: bấm Sao chép ở ô "URL ứng dụng web".' };
+/** Tìm + kiểm: → {url, pr} (url = '' khi chưa có địa chỉ nào trả lời đúng; pr = kết quả kiểm của địa chỉ đầu tiên hỏng, để nói lý do). */
+function bdsKitFindUrl_(props) {
+  var list = bdsKitCandidates_(props), first = null;
+  for (var i = 0; i < list.length; i++) {
+    var pr = bdsKitProbe_(list[i]);
+    if (pr && pr.ok) { bdsKitRemember_(props, list[i]); return { url: list[i], pr: pr }; }
+    if (!first) first = pr;
   }
-  bdsKitRemember_(PropertiesService.getScriptProperties(), ex);
-  return { ok: true, url: ex };
+  if (first && first.kind !== 'unreachable') bdsKitForgetDeployment_(props); // địa chỉ ma / của Sheet mẫu – không nhớ (lỗi mạng tạm: giữ)
+  return { url: '', pr: first };
+}
+/** Trạng thái cho hộp thoại: đã kiểm đạt → khối kết nối; chưa → lý do + 7 bước Triển khai. */
+function bdsKitState_(justInstalled) {
+  var props = PropertiesService.getScriptProperties(), f = bdsKitFindUrl_(props);
+  if (f.url) return bdsKitReady_(f.url, justInstalled);
+  return { ok: false, state: 'deploy', url: '', kind: f.pr ? f.pr.kind : 'none', html: bdsKitDeployHtml_(f.pr, justInstalled) };
+}
+function bdsKitReady_(url, justInstalled) {
+  bdsKitSetupTicket_(null, false); // vé + mã hợp lệ (cấp mới khi chưa có / đã khoá) – giữ vé cũ để link đã mở vẫn dùng được
+  var html = '<h3>' + (justInstalled ? 'Cài đặt xong ✓' : 'Máy chủ BDS Studio ✓') + '</h3>'
+    + '<p class="okline">✓ Đã kiểm: địa chỉ máy chủ trả lời đúng là BDS Studio của Sheet này.</p>' + bdsKitUrlBlock_(url, bdsKitAppUrl_()) + BDS_KIT_CLOSE;
+  return { ok: true, state: 'ready', url: url, html: html };
 }
 
 /* ───────────── hộp thoại ───────────── */
 var BDS_KIT_CSS = '<style>body{font:14px/1.5 Arial,sans-serif;color:#1b2533;margin:0 4px}h3{margin:6px 0 8px;color:#0F1E33}'
-  + 'ol{padding-left:20px;margin:6px 0}li{margin:4px 0}b{color:#0F1E33}code{background:#eef2f7;padding:1px 4px;border-radius:3px}'
-  + '.url{width:100%;box-sizing:border-box;padding:8px;font:13px monospace;border:1px solid #9fb0c6;border-radius:6px}'
-  + 'button{padding:8px 14px;margin:8px 6px 0 0;border:0;border-radius:6px;background:#0F1E33;color:#fff;cursor:pointer}'
-  + 'button.alt{background:#e3e9f1;color:#0F1E33}.note{color:#5b6b80;font-size:12px}.err{color:#b3261e}'
+  + 'ol{padding-left:20px;margin:6px 0}li{margin:6px 0}b{color:#0F1E33}code{background:#eef2f7;padding:1px 4px;border-radius:3px}'
+  + '.url{width:100%;box-sizing:border-box;padding:10px 8px;font:13px monospace;border:1px solid #9fb0c6;border-radius:6px}'
+  + 'button{min-height:44px;padding:8px 14px;margin:8px 6px 0 0;border:0;border-radius:6px;background:#0F1E33;color:#fff;cursor:pointer;font-size:14px}'
+  + 'button.alt{background:#e3e9f1;color:#0F1E33}button:disabled{opacity:.6}.note{color:#5b6b80;font-size:12px}.err{color:#b3261e}.okline{color:#1e7a3c;font-weight:bold}'
   // luật 17/11: nút khách bấm khi cài đặt đều có biểu tượng – data-ic="<biểu tượng>" hiện trước chữ (không cần thư viện)
   + '[data-ic]::before{content:attr(data-ic) "\\00a0\\00a0"}'
   + '.warn{background:#fff6e0;border:1px solid #e8c56a;border-radius:6px;padding:8px 10px;margin:6px 0}'
+  + '.steps3{background:#FFF1C9;border-radius:8px;padding:8px 12px;margin:6px 0;font-size:15px;font-weight:bold;color:#0F1E33}.steps3 p{margin:4px 0}'
   + 'a.big{display:block;text-align:center;margin:12px 0 6px;padding:14px 16px;border-radius:10px;background:#0F1E33;color:#fff;font-size:17px;font-weight:bold;text-decoration:none}'
+  + '.pair{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;margin:8px 0}.pair .addr{flex:1 1 300px;min-width:0}'
+  + '.pair .code{flex:0 0 auto;background:#eef6ff;border:2px solid #0F1E33;border-radius:10px;padding:6px 14px;text-align:center}'
+  + '.code .lbl{font-size:12px;color:#5b6b80}.code .num{font:bold 30px/1.2 monospace;letter-spacing:3px;color:#0F1E33}'
+  + '.spin{display:inline-block;width:22px;height:22px;border:4px solid #d5dbe3;border-top-color:#0F1E33;border-radius:50%;animation:sp 1s linear infinite;vertical-align:middle;margin-right:10px}'
+  + '@keyframes sp{to{transform:rotate(360deg)}}.wait{font-size:16px}'
   + 'li img{display:block;max-width:100%;margin:6px 0;border:1px solid #d5dbe3;border-radius:6px}</style>';
+var BDS_KIT_CLOSE = '<button class="alt" data-ic="✖" onclick="google.script.host.close()">Đóng</button>';
+var BDS_KIT_SPIN_CHECK = '<h3>Đang kiểm máy chủ…</h3><p class="wait"><span class="spin"></span><b>Vài giây – đừng tải lại trang.</b></p>';
+var BDS_KIT_SPIN_SETUP = '<h3>Đang cài đặt máy chủ…</h3><p class="wait"><span class="spin"></span><b>Khoảng 30 giây – đừng tải lại trang.</b></p>';
+
+/** 3 bước trong Sheet (giống ô A1). */
+function bdsKitStepsHtml_() {
+  return '<div class="steps3">' + BDS_KIT_STEPS.map(function (s) { return '<p>' + bdsKitEsc_(s) + '</p>'; }).join('') + '</div>';
+}
+/** HTML (đã thoát) → chữ thường cho thông báo lỗi ngắn. */
+function bdsKitPlain_(h) { return String(h || '').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'); }
+
+/**
+ * Khung hộp thoại hiện NGAY (20/11): chữ chờ + vòng quay; run = tên hàm google.script.run gọi ngay khi mở (trống = nội dung tĩnh).
+ * Kết quả (r.html do máy chủ dựng, mọi giá trị đã thoát) thay vào #main – nút trong đó gọi again()/paste()/bdsSaveApp() ở đây.
+ */
+function bdsKitShowShell_(run, title, firstHtml) {
+  var js = 'var RUN=' + JSON.stringify(run || '') + ',SPIN_CHECK=' + JSON.stringify(BDS_KIT_SPIN_CHECK) + ',SPIN_SETUP=' + JSON.stringify(BDS_KIT_SPIN_SETUP) + ';'
+    + 'function main(){return document.getElementById("main");}'
+    + 'function errBox(msg,fn){var m=main();m.innerHTML="";var h=document.createElement("h3");h.textContent="Chưa xong";m.appendChild(h);var p=document.createElement("p");p.className="err";p.textContent=msg;m.appendChild(p);'
+    + 'if(fn){var b=document.createElement("button");b.setAttribute("data-ic","🔁");b.textContent="Thử lại";b.onclick=function(){again(b,fn,fn==="bdsCaiDatChay"?SPIN_SETUP:SPIN_CHECK);};m.appendChild(b);}'
+    + 'var c=document.createElement("button");c.className="alt";c.setAttribute("data-ic","✖");c.textContent="Đóng";c.onclick=function(){google.script.host.close();};m.appendChild(c);}'
+    + 'function show(r,fn){if(r&&r.html){main().innerHTML=r.html;}else{errBox((r&&r.message)||"Máy chủ chưa trả lời. Bấm Thử lại.",fn);}}'
+    + 'function call(fn){google.script.run.withSuccessHandler(function(r){show(r,fn);}).withFailureHandler(function(e){errBox("Google báo: "+String(e&&e.message||e)+" – bấm Thử lại (không cần tải lại trang).",fn);})[fn]();}'
+    + 'function again(b,fn,spin){if(b)b.disabled=true;main().innerHTML=spin||SPIN_CHECK;call(fn);}'
+    + 'function paste(b){var v=document.getElementById("srvu").value,o=document.getElementById("pout");b.disabled=true;o.textContent="Đang kiểm…";'
+    + 'google.script.run.withSuccessHandler(function(r){b.disabled=false;if(r&&r.ok&&r.html){show(r);}else{o.textContent="";var p=document.createElement("p");p.className="err";p.textContent=(r&&r.message)||"URL chưa đúng.";o.appendChild(p);}})'
+    + '.withFailureHandler(function(e){b.disabled=false;o.textContent=String(e&&e.message||e);}).bdsLuuUrlMayChu(v);}'
+    + BDS_KIT_SAVE_JS + 'if(RUN)call(RUN);';
+  var html = BDS_KIT_CSS + '<div id="main">' + firstHtml + '</div><script>' + js + '</script>';
+  SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutput(html).setWidth(640).setHeight(700), title);
+}
 
 /**
  * Địa chỉ app khách nhập → https://tên-máy (không đường dẫn) hoặc '' nếu không hợp lệ. "tenkhach" → https://tenkhach.<BDS_KIT_APP_DOMAIN>.
@@ -223,60 +389,62 @@ function bdsLuuDiaChiApp(v, serverUrl) {
 
 function bdsKitEsc_(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
-/** Địa chỉ mở app kèm địa chỉ máy chủ: <app>/#/ket-noi?may_chu=<…/exec> – Trợ lý cài đặt tự điền, tự kiểm, tự sang bước kế. */
-var BDS_KIT_PH = 'bds:URL'; // chỗ giữ địa chỉ máy chủ trong mẫu HTML của hộp Triển khai (thay ở trình duyệt khi "Tôi đã triển khai xong" đạt)
+/** Địa chỉ mở app kèm địa chỉ máy chủ + vé: <app>/#/ket-noi?may_chu=<…/exec>&ma_cai=<vé> – Trợ lý tự điền, tự kiểm, không hỏi mã. */
 function bdsKitOpenHref_(base, url) {
-  if (url !== BDS_KIT_PH && !bdsKitExecUrl_(url)) return ''; // không có …/exec thật → không có link
+  if (!bdsKitExecUrl_(url)) return ''; // không có …/exec thật → không có link
   var tk = bdsKitSetupTicket_(null, false).tok;
   return String(base).replace(/\/+$/, '') + '/#/ket-noi?may_chu=' + encodeURIComponent(url) + (tk ? '&ma_cai=' + tk : '');
 }
 /**
  * R3 (18/11) VÉ CÀI ĐẶT: máy chủ CHƯA có tài khoản Chủ → người lạ biết địa chỉ /exec không được tạo tài khoản Chủ trước anh/chị.
- * Script Properties (cùng dự án với TatCa.gs): setup_token (vé dài, đi kèm link "Mở BDS Studio và kết nối" – 1 chạm, không gõ gì) +
- * setup_code (6 số, hiện ở lối "Chép URL" – app hỏi 1 lần). fresh = true: mỗi lần mở hộp thoại cấp vé MỚI (link / mã cũ hết hiệu lực,
- * đếm số lần nhập sai về 0). Máy chủ đã có tài khoản → không cấp (setup() của máy chủ xoá vé sau khi tạo tài khoản). → {tok, code}
+ * Script Properties (cùng dự án với TatCa.gs): setup_token (vé dài, đi kèm nút kết nối – 1 chạm, không gõ gì) + setup_code (6 số, hiện TO
+ * cạnh địa chỉ máy chủ). 20/11: GIỮ vé đang hợp lệ khi mở lại hộp thoại (trước: mỗi lần mở = vé mới → link khách đã mở ở trang cài đặt hết
+ * hiệu lực, app hỏi mã); chỉ cấp mới khi chưa có / sai định dạng / đã nhập sai ≥ BDS_KIT_CODE_MAX lần (máy chủ khoá mã) / fresh = true.
+ * Máy chủ đã có tài khoản → không cấp (setup() của máy chủ xoá vé sau khi tạo tài khoản). → {tok, code}
  */
 function bdsKitSetupTicket_(props, fresh) {
   var p = props || PropertiesService.getScriptProperties();
   if (p.getProperty('setup_done') === '1') return { tok: '', code: '' };
   var tok = p.getProperty('setup_token') || '', code = p.getProperty('setup_code') || '';
-  if (fresh || !/^[a-f0-9]{32,64}$/.test(tok) || !/^\d{6}$/.test(code)) {
+  var locked = (Number(p.getProperty('setup_code_fails')) || 0) >= BDS_KIT_CODE_MAX;
+  if (fresh || locked || !/^[a-f0-9]{32,64}$/.test(tok) || !/^\d{6}$/.test(code)) {
     var h = (Utilities.getUuid() + Utilities.getUuid()).replace(/[^a-f0-9]/gi, '').toLowerCase();
-    tok = h.slice(0, 48);
+    // vé từ "Cài bằng Google" (CaiGoogle.gs – trang cài đặt giữ bản sao) giữ nguyên khi chỉ thiếu mã
+    if (fresh || locked || !/^[a-f0-9]{32,64}$/.test(tok)) tok = h.slice(0, 48);
     code = ('00000' + (parseInt(h.slice(48, 56), 16) % 1000000)).slice(-6);
     p.setProperty('setup_token', tok); p.setProperty('setup_code', code); p.setProperty('setup_code_fails', '0');
   }
   return { tok: tok, code: code };
 }
 /**
- * Máy chủ đã triển khai. Đã biết địa chỉ app riêng (prop app_url) → nút to "Mở BDS Studio và kết nối" (app tự điền + tự kiểm).
- * 17/11 (QA khách mới): CHƯA biết địa chỉ app (khách mới, bên bán chưa tạo app riêng) → cách CHÍNH là "Chép URL" rồi dán vào ô "Địa chỉ máy
- * chủ" ở bước "Tạo máy chủ" của Trợ lý cài đặt (trang đang mở); ô "Địa chỉ app của anh/chị" là cách phụ (Trợ lý ghi sẵn địa chỉ này ở cùng bước).
+ * Máy chủ ĐÃ KIỂM ĐẠT. Nút to (LUÔN mang vé): trang cài đặt (khách mới) / app riêng (đã biết). Ngay dưới: địa chỉ máy chủ + mã cài đặt TO,
+ * không gấp (20/11: trước đây nằm trong <details> đóng). Không trang cài đặt, không app riêng → "Chép URL" là cách chính + ô địa chỉ app.
  * Bản bán không có link máy dựng 127.0.0.1:8765 (khách mới chưa cài máy dựng).
  */
 function bdsKitUrlBlock_(url, appUrl) {
   var ex = 'tenkhach.' + (BDS_KIT_APP_DOMAIN || 'bdsstudio.app');
-  var copy = '<input class="url" id="u" readonly value="' + bdsKitEsc_(url) + '" onclick="this.select()">'
-    + '<button data-ic="📋" onclick="var u=document.getElementById(\'u\');u.select();document.execCommand(\'copy\');this.textContent=\'Đã chép ✓\'">Chép URL</button>'
-    + '<p class="note">Dán vào ô <b>"Địa chỉ máy chủ (kết thúc bằng /exec)"</b> ở bước <b>"Tạo máy chủ"</b> của Trợ lý cài đặt → <b>Kiểm tra bước này</b>. '
-    + 'Máy khác đã có tài khoản: màn đăng nhập › <b>Đổi máy chủ kết nối</b>.</p>';
   var sc = bdsKitSetupTicket_(null, false).code;
-  if (sc) copy += '<p>Mã cài đặt: <b style="font-size:18px;letter-spacing:2px">' + sc.slice(0, 3) + ' ' + sc.slice(3) + '</b> – app hỏi mã này 1 lần khi tạo tài khoản (chống người lạ dùng máy chủ của anh/chị).</p>';
-  var keep = '<p class="note">Giữ địa chỉ này riêng tư. Dữ liệu nằm trong chính Sheet này, trong Google của anh/chị.</p>';
+  var pair = '<div class="pair"><div class="addr"><b>Địa chỉ máy chủ (kết thúc bằng /exec)</b>'
+    + '<input class="url" id="u" readonly value="' + bdsKitEsc_(url) + '" onclick="this.select()">'
+    + '<button data-ic="📋" onclick="var u=document.getElementById(\'u\');u.select();document.execCommand(\'copy\');this.textContent=\'Đã chép ✓\'">Chép URL</button></div>'
+    + (sc ? '<div class="code"><div class="lbl">Mã cài đặt</div><div class="num">' + sc.slice(0, 3) + ' ' + sc.slice(3) + '</div></div>' : '') + '</div>'
+    + (sc ? '<p class="note">Trang cài đặt hỏi <b>mã cài đặt</b> thì nhập 6 số này (chống người lạ dùng máy chủ của anh/chị). Bấm nút trên thì không phải nhập.</p>' : '')
+    + '<p class="note">Cách dán tay: dán địa chỉ vào ô <b>"Địa chỉ máy chủ (kết thúc bằng /exec)"</b> ở bước <b>"Tạo máy chủ"</b> của Trợ lý cài đặt → <b>Kiểm tra bước này</b>. '
+    + 'Máy khác đã có tài khoản: màn đăng nhập › <b>Đổi máy chủ kết nối</b>.</p>';
+  var keep = '<p class="note">Giữ địa chỉ + mã này riêng tư. Dữ liệu nằm trong chính Sheet này, trong Google của anh/chị.</p>';
   var portal = appUrl ? '' : bdsKitNormAppUrl_(BDS_KIT_PORTAL_URL);
   if (portal) {
-    return '<p>Máy chủ đã sẵn sàng. Bấm nút dưới – Trợ lý cài đặt tự nối máy chủ và mở màn đặt mật khẩu, không cần chép gì:</p>'
+    return '<p>Bấm nút dưới – Trợ lý cài đặt tự nối máy chủ và mở màn đặt mật khẩu, không cần chép gì:</p>'
       + '<a class="big" data-ic="🚀" target="_blank" rel="noopener" href="' + bdsKitEsc_(bdsKitOpenHref_(portal, url)) + '">Quay lại trang cài đặt và kết nối</a>'
       + '<p class="note">Mở bằng đúng trình duyệt đang mở trang cài đặt ' + bdsKitEsc_(portal.replace(/^https:\/\//, '')) + '. App riêng của anh/chị được tạo ngay sau bước đặt mật khẩu.</p>'
-      + '<details><summary>Không mở được? Chép địa chỉ máy chủ</summary>' + copy + '</details>' + keep;
+      + pair + keep;
   }
   if (appUrl) {
-    return '<p>Máy chủ đã sẵn sàng. Bấm nút dưới – app tự nối, không cần chép gì:</p>'
+    return '<p>Bấm nút dưới – app tự nối, không cần chép gì:</p>'
       + '<a class="big" data-ic="🚀" target="_blank" rel="noopener" href="' + bdsKitEsc_(bdsKitOpenHref_(appUrl, url)) + '">Mở BDS Studio và kết nối</a>'
-      + '<p class="note">Địa chỉ app riêng của anh/chị: <b>' + bdsKitEsc_(appUrl.replace(/^https:\/\//, '')) + '</b></p>'
-      + '<details><summary>Không mở được? Chép địa chỉ máy chủ</summary>' + copy + '</details>' + keep;
+      + '<p class="note">Địa chỉ app riêng của anh/chị: <b>' + bdsKitEsc_(appUrl.replace(/^https:\/\//, '')) + '</b></p>' + pair + keep;
   }
-  return '<p>Máy chủ đã sẵn sàng. <b>Bấm "Chép URL"</b> rồi dán vào Trợ lý cài đặt (trang BDS Studio đang mở):</p>' + copy
+  return '<p><b>Bấm "Chép URL"</b> rồi dán vào Trợ lý cài đặt (trang BDS Studio đang mở):</p>' + pair
     + '<p class="note">Hoặc nhập <b>địa chỉ app riêng của anh/chị</b> (vd <b>' + bdsKitEsc_(ex) + '</b> – Trợ lý cài đặt ghi ở bước "Tạo máy chủ", dòng "Địa chỉ app của anh/chị") để lần sau có nút mở app tự nối:</p>'
     + '<input class="url" id="appu" placeholder="' + bdsKitEsc_(ex) + '" autocomplete="off">'
     + '<button class="alt" data-ic="💾" data-srv="' + bdsKitEsc_(url) + '" onclick="bdsSaveApp(this)">Lưu và mở BDS Studio</button><div id="appo"></div>' + keep;
@@ -287,15 +455,12 @@ var BDS_KIT_SAVE_JS = 'function bdsSaveApp(b){var v=document.getElementById("app
   + 'a.href=r.href;a.setAttribute("data-ic","🚀");a.textContent="Mở BDS Studio và kết nối";o.appendChild(a);}else{var p=document.createElement("p");p.className=r&&r.ok?"note":"err";p.textContent=(r&&r.message)||"Địa chỉ chưa đúng.";o.appendChild(p);}})'
   + '.withFailureHandler(function(e){b.disabled=false;o.textContent=String(e&&e.message||e);}).bdsLuuDiaChiApp(v,b.getAttribute("data-srv"));}';
 
-function bdsKitShowUrl_(url, justInstalled) {
-  if (!bdsKitExecUrl_(url)) return bdsKitShowDeploy_(); // không có …/exec thật → KHÔNG có nút mở app, hiện hướng dẫn Triển khai
-  bdsKitSetupTicket_(null, true); // R3: vé cài đặt mới cho hộp thoại này
-  var html = BDS_KIT_CSS + '<h3>' + (justInstalled ? 'Cài đặt xong ✓' : 'Máy chủ BDS Studio') + '</h3>' + bdsKitUrlBlock_(url, bdsKitAppUrl_())
-    + '<button class="alt" data-ic="✖" onclick="google.script.host.close()">Đóng</button><script>' + BDS_KIT_SAVE_JS + '</script>';
-  SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutput(html).setWidth(600).setHeight(440), 'BDS Studio – Mở app');
-}
-
-/** 6 cú bấm Triển khai – mỗi dòng 1 việc, tên nút đúng như Google hiện (Việt + Anh), có ảnh khi biết địa chỉ web app. */
+/**
+ * 7 bước Triển khai – mỗi dòng 1 việc, tên nút đúng như Google hiện (Việt + Anh), có ảnh. 20/11: thêm bước Google hỏi quyền
+ * (Uỷ quyền truy cập → chọn Gmail → Nâng cao → Đi tới … (không an toàn) → Cho phép) + 2 dòng vì sao Google cảnh báo.
+ */
+var BDS_KIT_WARN_WHY = 'Vì sao Google cảnh báo "chưa xác minh"? Đây là bản sao của CHÍNH anh/chị, nằm trong Drive của anh/chị – Google chỉ xác minh ứng dụng phát hành cho nhiều người.<br>'
+  + 'Kiểm tra email Google hiện ra là email của anh/chị. Bên bán không xem được dữ liệu của anh/chị.';
 function bdsKitDeployStepsHtml_() {
   // ảnh minh hoạ: từ app riêng của khách (nếu đã biết), không thì từ kho phát hành công khai đã ký (cùng cây tệp với bản bán)
   var base = bdsKitAppUrl_() || BDS_KIT_RELEASE_ORIGIN;
@@ -307,29 +472,22 @@ function bdsKitDeployStepsHtml_() {
     + '<li>Góc phải: <b>Triển khai → Tuỳ chọn triển khai mới (New deployment)</b>.' + img('deploy-menu') + '</li>'
     + '<li>Bấm <b>⚙</b> cạnh <b>Chọn loại</b> → <b>Ứng dụng web</b> (Web app).' + img('deploy-type') + '</li>'
     + '<li><b>Thực thi: Tôi</b> (Me) · <b>Truy cập: Bất kỳ ai</b> (Who has access: Anyone).' + img('deploy-config') + '</li>'
-    + '<li>Bấm <b>Triển khai</b> (Deploy) → <b>Cho phép</b> (Allow) → <b>Sao chép URL</b> (Copy).</li>'
-    + '<li>Quay lại đây → bấm <b>Tôi đã triển khai xong</b>.</li>'
-    + '</ol><p class="note">Chỉ làm 1 lần. Google ghi "chưa xác minh": bấm <b>Nâng cao</b> (Advanced) → <b>Đi tới…</b> (Go to) → <b>Cho phép</b>. '
-    + 'Workspace công ty không cho chọn "Bất kỳ ai": nhờ quản trị viên cho phép.</p>';
+    + '<li>Bấm <b>Triển khai</b> (Deploy) → <b>Uỷ quyền truy cập</b> (Authorize access) → chọn Gmail của anh/chị.</li>'
+    + '<li><b>Nâng cao</b> (Advanced) → <b>Đi tới … (không an toàn)</b> (Go to … unsafe) → <b>Cho phép</b> (Allow).</li>'
+    + '<li>Bấm <b>Xong</b> (Done) → quay lại tab Sheet này → bấm <b>Tôi đã triển khai xong</b>.</li>'
+    + '</ol><p class="note">' + BDS_KIT_WARN_WHY + '</p>'
+    + '<p class="note">Chỉ làm 1 lần. Workspace công ty không cho chọn "Bất kỳ ai": nhờ quản trị viên cho phép.</p>';
 }
-function bdsKitShowDeploy_() {
-  bdsKitSetupTicket_(null, true); // R3: vé cài đặt mới (link / mã trong khối URL sau khi "Tôi đã triển khai xong")
-  var html = BDS_KIT_CSS + '<h3>Bước cuối: Triển khai máy chủ (6 cú bấm, 1 lần)</h3>'
+/** Chưa có máy chủ trả lời đúng → lý do (nếu đã thử 1 địa chỉ) + 7 bước + kiểm lại + dán URL (dự phòng). */
+function bdsKitDeployHtml_(pr, justInstalled) {
+  var why = pr && !pr.ok && pr.problem ? '<div class="warn"><b>⚠️ Chưa xong:</b> ' + pr.problem + '<br><b>Cách sửa:</b> ' + pr.fix + '</div>' : '';
+  return '<h3>Bước cuối: Triển khai máy chủ (7 bước, 1 lần)</h3>'
+    + (justInstalled ? '<p class="okline">✓ Đã tạo bảng, cột, hẹn giờ.</p>' : '') + why
     + '<p>Google cần anh/chị bấm <b>Triển khai → Tuỳ chọn triển khai mới (New deployment)</b> một lần:</p>'
-    + bdsKitDeployStepsHtml_() + '<div id="out"></div>'
-    + '<button data-ic="✅" onclick="go(\'bdsLayUrlJson\',this)">Tôi đã triển khai xong</button>'
-    + '<button class="alt" data-ic="✖" onclick="google.script.host.close()">Đóng</button>'
+    + bdsKitDeployStepsHtml_()
+    + '<button data-ic="✅" onclick="again(this,\'bdsLayUrlJson\',SPIN_CHECK)">Tôi đã triển khai xong</button>' + BDS_KIT_CLOSE
     // dự phòng: Google chưa tự báo địa chỉ (getUrl() trả …/dev hoặc trống) → khách dán URL vừa "Sao chép" ở hộp Tuỳ chọn triển khai mới
     + '<details id="paste"><summary>Đã triển khai mà vẫn chưa thấy nút? Dán URL ứng dụng web vừa Sao chép</summary>'
     + '<input class="url" id="srvu" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off">'
-    + '<button data-ic="🔗" onclick="go(\'bdsLuuUrlMayChu\',this,document.getElementById(\'srvu\').value)">Dùng URL này</button></details>'
-    + '<script>' + BDS_KIT_SAVE_JS + 'var PH=' + JSON.stringify(BDS_KIT_PH) + ',URLBLOCK=' + JSON.stringify(bdsKitUrlBlock_(BDS_KIT_PH, bdsKitAppUrl_()))
-    + ',ENC=' + JSON.stringify(encodeURIComponent(BDS_KIT_PH)) + ',EXRE=new RegExp(' + JSON.stringify(BDS_KIT_EXEC_RE.source) + ');'
-    + 'function go(fn,b,arg){b.disabled=true;var o=document.getElementById("out");o.innerHTML="Đang kiểm…";var run=google.script.run.withSuccessHandler(function(r){b.disabled=false;'
-    // CHỈ hiện nút "Mở BDS Studio và kết nối" khi máy chủ trả địa chỉ …/exec thật (kiểm lại cả ở trình duyệt)
-    + 'if(r&&r.url&&EXRE.test(r.url)){var u=r.url.replace(/[<>"\'&]/g,"");o.innerHTML=URLBLOCK.split(ENC).join(encodeURIComponent(u)).split(PH).join(u);document.getElementById("paste").open=false;}'
-    + 'else{o.innerHTML="";var p=document.createElement("p");p.className="err";p.textContent=(r&&r.message)||"Chưa thấy bản triển khai Web App. Mục \\"Quản lý triển khai\\" trống là bình thường – phải bấm Triển khai → Tuỳ chọn triển khai mới (New deployment), làm đủ các bước trên (nhớ chọn Bất kỳ ai) rồi bấm lại. Hoặc dán URL vừa Sao chép vào ô bên dưới.";o.appendChild(p);document.getElementById("paste").open=true;}})'
-    + '.withFailureHandler(function(e){b.disabled=false;o.innerHTML="";var p=document.createElement("p");p.className="err";p.textContent=String(e&&e.message||e);o.appendChild(p);});'
-    + 'if(arg===undefined)run[fn]();else run[fn](arg);}</script>';
-  SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutput(html).setWidth(640).setHeight(680), 'BDS Studio – Triển khai máy chủ');
+    + '<button data-ic="🔗" onclick="paste(this)">Dùng URL này</button><div id="pout"></div></details>';
 }

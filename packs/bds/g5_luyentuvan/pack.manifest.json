@@ -1,12 +1,12 @@
 {
   "id": "g5_luyentuvan",
   "title": "Luyện tư vấn với AI",
-  "pack": "care",
+  "pack": "core",
   "pack_group": "g5",
   "screen": "home",
   "icon": "🎭",
   "order": 510,
-  "status": "thu-nghiem",
+  "status": "ready",
   "version": "0.1.0",
   "items": [
     "52"

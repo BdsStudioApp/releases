@@ -1,2 +1,2 @@
-{ "id": "g2_tuvan", "title": "Tư vấn: Trả lời & Kịch bản", "pack": "care", "pack_group": "g2", "screen": "customers", "icon": "🗣️", "order": 220, "status": "thu-nghiem",
+{ "id": "g2_tuvan", "title": "Tư vấn: Trả lời & Kịch bản", "pack": "core", "pack_group": "g2", "screen": "home", "icon": "🗣️", "order": 30, "status": "ready",
   "items": ["D", "E", "77"], "desc": "Gợi ý trả lời bình luận/tin nhắn, kịch bản tư vấn & xử lý từ chối (sửa được), Đọc khách (chỉ khi khách đã đồng ý lưu dữ liệu cá nhân)" }

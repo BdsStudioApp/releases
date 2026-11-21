@@ -53,6 +53,9 @@ h('div', { class: 'sl-tabs', role: 'group' },
 ...[['price', 'Nhập giá căn'], ['project', 'Chọn dự án']].map(([_on, l]) => h('button', { type: 'button', class: 'sl-chip' + (_oj.mode === _on ? ' on' : ''), 'data-testid': 'loan-mode-' + _on, onclick: () => { _oj.mode = _on; _oe(); _o5(); } }, l))),
 _oj.mode === 'price'
 ? h('div', { class: 'sl-form' }, _o8('price', 'Giá căn (tỷ đồng)'))
+: !sellable.length
+? h('div', { class: 'sl-col' }, _o0.noSellable(env.projects.length > 0, { testid: 'loan-empty', text: 'Thêm dự án ở Thông tin dự án để chọn nhanh loại căn, đơn giá. Hoặc nhập diện tích và đơn giá ngay dưới đây.' }),
+h('div', { class: 'sl-form' }, _o8('area', 'Diện tích (m²)'), _o8('unitPrice', 'Đơn giá (triệu/m²)')))
 : h('div', { class: 'sl-form' },
 _oi('project', 'Dự án', sellable.map((x) => [x.id, x.name]), () => { _oj.type = ''; _oj.area = ''; _oj.unitPrice = ''; _oe(); _o5(); }),
 _oi('type', 'Loại căn', _oa ? _oa.types.filter((x) => !x.ask).map((x) => [x.n, `${x.n} (${S.fmtNum(x.a[0])}–${S.fmtNum(x.a[1])} m²)`]) : [], () => { _oj.area = ''; _oe(); _o5(); }),
