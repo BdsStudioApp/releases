@@ -3,7 +3,7 @@ import { setEntitlement, setModuleEntitlement, setBetaGate, packTitle, setPackCa
 import { giftBox, giftCardView, giftFor, giftText } from './license_gift.f85df7135e.js';
 import { qrElement } from './qr.aa623cdb09.js';
 import { ensureCss } from './xkit.71d637c634.js';
-import { supportContact, privacyLine } from './instance.ffcba07fb7.js';
+import { supportContact, privacyLine } from './instance.1eceeeedc8.js';
 export { supportContact };
 const _o1 = 'bds:license';
 const _o0 = L.DAY;

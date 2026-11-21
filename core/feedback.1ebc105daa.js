@@ -1,6 +1,6 @@
 import { addDefaults } from './xkit.71d637c634.js';
-import * as INST from './instance.ffcba07fb7.js';
-import { isSaleEdition, contactFor, mailtoLink, sellerMail, supportDiagnosticText, supportBlock } from './support.71fe59fd73.js';
+import * as INST from './instance.1eceeeedc8.js';
+import { isSaleEdition, contactFor, mailtoLink, sellerMail, supportDiagnosticText, supportBlock } from './support.818cd992ae.js';
 export const KINDS = [
 { value: 'add', label: 'Thêm chức năng', icon: '➕' },
 { value: 'remove', label: 'Bớt', icon: '➖' },

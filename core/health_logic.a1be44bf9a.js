@@ -1,4 +1,4 @@
-import { cmpVersion } from './updates.4992b5e758.js';
+import { cmpVersion } from './updates.a1be44bf9a.js';
 export const API_SETTINGS_URL = 'https://script.google.com/home/usersettings';
 export const SCRIPT_HOME_URL = 'https://script.google.com/home';
 export const MISSING_ACTION_TEXT = 'Máy chủ chưa có chức năng này – cần cập nhật máy chủ.';
@@ -20,10 +20,11 @@ export const REQUIRED_ACTIONS = [
 'server.version', 'server.self_update',
 'me.update'
 ];
-export function needServerUpdate({ server, target, actions, required = REQUIRED_ACTIONS } = {}) {
+export function needServerUpdate({ server, target, actions, required = REQUIRED_ACTIONS, build = null, signedBuild = null } = {}) {
 const missing = Array.isArray(actions) && actions.length ? required.filter((_oa) => !actions.includes(_oa)) : [];
 if (server && target && cmpVersion(server, target) < 0) return { need: true, reason: 'older', missing };
 if (missing.length) return { need: true, reason: 'missing', missing };
+if (server && target && cmpVersion(server, target) === 0 && build && signedBuild && String(build) !== String(signedBuild)) return { need: true, reason: 'build', missing };
 return { need: false, reason: null, missing };
 }
 export const DRIVE_STORAGE_URL = 'https://drive.google.com/settings/storage';

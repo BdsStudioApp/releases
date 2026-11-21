@@ -1,4 +1,4 @@
-import { h, modal, icon } from './ui.efd703fd85.js';
+import { h, modal, icon } from './ui.8741e19bae.js';
 export const SKIP_MAX_USD = 0.01;
 export const MEMO_KEY = 'bds:ai_ok';
 export const ROUGH_PRICES = { gemini: { in: 0.30, out: 2.50 }, claude_api: { in: 2.0, out: 10.0 } };

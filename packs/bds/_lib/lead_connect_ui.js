@@ -1,6 +1,6 @@
 import { h } from './kit.js';
 import * as LC from './lead_connect.js';
-import { paidBadge } from '../../../core/ai_cost.9624f9fc85.js';
+import { paidBadge } from '../../../core/ai_cost.e55e3f489e.js';
 const _o0 = `
 .lc{display:flex;flex-direction:column;gap:12px;min-width:0}
 .lc h3{margin:0;font-size:1.05rem}.lc h4{margin:0;font-size:.98rem}

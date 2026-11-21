@@ -1,8 +1,8 @@
 import { ensureCss, ls } from '../xkit.71d637c634.js';
-import { createApi, saveScriptUrl, scriptUrl } from '../api.c33f2ebbc5.js';
+import { createApi, saveScriptUrl, scriptUrl } from '../api.e356e031da.js';
 import { EXEC_URL_RE, isExecUrl } from '../exec_url.4b6ba956ed.js';
-import { API_SETTINGS_URL, verifiedReleaseFiles, publicBase } from '../updates.4992b5e758.js';
-import { publicUrl, releaseOrigin } from '../instance.ffcba07fb7.js';
+import { API_SETTINGS_URL, verifiedReleaseFiles, publicBase } from '../updates.a1be44bf9a.js';
+import { publicUrl, releaseOrigin } from '../instance.1eceeeedc8.js';
 import * as M from './machine.js';
 import { makeChecks, browserEnv, browserProblems, normHost } from './checks.js';
 import { diagnosticData, diagnosticText, handoverData } from './report.js';

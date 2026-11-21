@@ -1,6 +1,6 @@
 import { t } from './i18n.17f01a0b54.js';
 import { download, isMissingAction, ls } from './xkit.71d637c634.js';
-import { fingerprint, backupSource, importPending, isPendingFile, word as pendWord } from './pending_rescue.ea4ffbab34.js';
+import { fingerprint, backupSource, importPending, isPendingFile, word as pendWord } from './pending_rescue.b985ff7cb0.js';
 export const WORDS = {
 'mnt.title': 'Bảo trì & Sao lưu',
 'mnt.backup': 'Sao lưu & khôi phục',

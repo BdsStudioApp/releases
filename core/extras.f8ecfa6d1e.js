@@ -1,12 +1,12 @@
 import { t } from './i18n.17f01a0b54.js';
-import ui from './ui.efd703fd85.js';
+import ui from './ui.8741e19bae.js';
 import { addDefaults, ensureCss, word, words, ls } from './xkit.71d637c634.js';
 import * as memoryMod from './memory.0e46c2fde6.js';
 import * as personaMod from './persona.bfd2018cff.js';
 import * as packsMod from './packs.a4fe44641f.js';
 import * as onbMod from './onboarding.38818cd6f0.js';
-import * as mntMod from './maintenance.7e804063ae.js';
-import * as askMod from './ask.17ec9e4c47.js';
+import * as mntMod from './maintenance.ddac84e4e0.js';
+import * as askMod from './ask.36327f90ee.js';
 import { helpDocLink, helpPageForRoute } from './help_links.2d1b2d6d34.js';
 import { allowedBy } from './registry.dd6202705b.js';
 import { screenAllowed, settingsKeysFor } from './users.897a836e5b.js';

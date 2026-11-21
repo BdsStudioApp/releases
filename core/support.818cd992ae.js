@@ -1,5 +1,5 @@
-import { supportContact, edition as EDITION } from './instance.ffcba07fb7.js';
-import { scrubSecrets } from './health_logic.4992b5e758.js';
+import { supportContact, edition as EDITION } from './instance.1eceeeedc8.js';
+import { scrubSecrets } from './health_logic.a1be44bf9a.js';
 export function isSaleEdition(cfg) { return ((cfg && cfg.edition) || EDITION || 'owner') !== 'owner'; }
 export function contactFor(cfg) { return supportContact(cfg || undefined); }
 export function zaloLink(zalo) {

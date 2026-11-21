@@ -1,4 +1,4 @@
-import { rejectionMessage } from './health_logic.4992b5e758.js';
+import { rejectionMessage } from './health_logic.a1be44bf9a.js';
 export const TABLES = ['objects', 'events', 'reminders', 'policies', 'quotes', 'projects', 'jobs', 'ideas', 'characters', 'settings', 'devices', 'audit', 'errors'];
 function _o1l(row) { const v = row && (row.name || row.title || row.full_name || row.key || row.label); return v == null ? '' : String(v).slice(0, 60); }
 export const SYNC_TABLES = ['objects', 'events', 'reminders', 'policies', 'quotes', 'projects', 'jobs', 'ideas', 'characters', 'settings'];

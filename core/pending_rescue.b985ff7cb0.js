@@ -1,4 +1,4 @@
-import { scriptUrl } from './api.c33f2ebbc5.js';
+import { scriptUrl } from './api.e356e031da.js';
 export const PENDING_FORMAT = 'studio-pending';
 export function fingerprint(s) { let h = 0x811c9dc5; for (const _o1 of String(s || '')) { h ^= _o1.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); }
 export function backupSource(store, config) { let _o4 = ''; try { _o4 = scriptUrl(config); } catch { _o4 = ''; } return { server: fingerprint(_o4 || 'demo'), user: String((store && store.userId) || '') }; }

@@ -1,6 +1,6 @@
 import { t } from './i18n.17f01a0b54.js';
 import { mapLegacyProvider, connectedOnline, ONLINE_AI } from './ai_providers.596b40a694.js';
-import { aiConfirm, featureSpec, envFrom, cancelError, aiNote } from './ai_cost.9624f9fc85.js';
+import { aiConfirm, featureSpec, envFrom, cancelError, aiNote } from './ai_cost.e55e3f489e.js';
 const _oc = () => import('../shared/ai_rules.js');
 export { ONLINE_AI };
 export const PROVIDERS = ['gemini', 'handoff_claude', 'handoff_gemini', 'claude_api'];

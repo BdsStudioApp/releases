@@ -18,7 +18,7 @@ return { ...s, cur: firstPending(s) || FLOWS[flow][0] };
 export const steps = (state) => stepsFor(state && state.flow, { portal: !!(state && state.portal) });
 export const ids = (state) => flowIds(state && state.flow, { portal: !!(state && state.portal) });
 export const current = (state) => stepFor(state.cur, state.flow);
-export function canSkip(_ob) { return !!_ob && (!_ob.required || !!_ob.deferrable); }
+export function canSkip(_oc) { return !!_oc && (!_oc.required || !!_oc.deferrable); }
 export function isDone(state, id) {
 const _o9 = state.res[id];
 if (!_o9) return false;
@@ -45,14 +45,25 @@ s.updated = now;
 return s;
 }
 export function skip(state, id, kind = 'later', now = Date.now()) {
-const _ob = stepFor(id, state.flow);
-if (!_ob || !ids(state).includes(id)) throw new WizardError('BAD_STEP', 'Bước không có trong luồng: ' + id);
-if (!canSkip(_ob)) throw new WizardError('REQUIRED', 'Bước "' + _ob.title + '" bắt buộc – không bỏ qua được.');
-if (_ob.required && kind === 'skip') kind = 'later';
+const _oc = stepFor(id, state.flow);
+if (!_oc || !ids(state).includes(id)) throw new WizardError('BAD_STEP', 'Bước không có trong luồng: ' + id);
+if (!canSkip(_oc)) throw new WizardError('REQUIRED', 'Bước "' + _oc.title + '" bắt buộc – không bỏ qua được.');
+if (_oc.required && kind === 'skip') kind = 'later';
 const s = clone(state);
 s.res[id] = { s: kind === 'skip' ? 'skip' : 'later', at: now, msg: '' };
 s.updated = now;
 return next(s, { now });
+}
+export function skipOptional(state, { now = Date.now() } = {}) {
+const s = clone(state);
+for (const _ob of steps(s)) {
+if (_ob.phase !== 'post' || _ob.required || isDone(s, _ob.id)) continue;
+s.res[_ob.id] = { s: 'skip', at: now, msg: '' };
+}
+s.updated = now;
+const _o6 = firstPending(s);
+s.cur = _o6 || ids(s)[ids(s).length - 1];
+return s;
 }
 export function canNext(state) { return isDone(state, state.cur); }
 export function next(state, { now = Date.now() } = {}) {
@@ -104,16 +115,16 @@ return s;
 export const isDemo = (state) => !!(state && state.demo);
 export function progress(state) {
 const list = steps(state);
-const done = list.filter((st) => isDone(state, st.id)).length;
-const main = list.filter((st) => st.main);
-const mainDone = main.filter((st) => isDone(state, st.id)).length;
-const _oa = list.filter((st) => st.required && state.res[st.id]?.s !== 'ok').map((st) => st.id);
-return { done, total: list.length, pct: list.length ? Math.round((done / list.length) * 100) : 0, mainDone, mainTotal: main.length, index: list.findIndex((st) => st.id === state.cur) + 1, requiredLeft: _oa };
+const done = list.filter((_ob) => isDone(state, _ob.id)).length;
+const main = list.filter((_ob) => _ob.main);
+const mainDone = main.filter((_ob) => isDone(state, _ob.id)).length;
+const _oa = list.filter((_ob) => _ob.required && state.res[_ob.id]?.s !== 'ok').map((_ob) => _ob.id);
+return { done, total: list.length, pct: list.length ? Math.round((done / list.length) * 100) : 0, mainDone, mainTotal: main.length, index: list.findIndex((_ob) => _ob.id === state.cur) + 1, requiredLeft: _oa };
 }
 export function stepText(state) { const _o6 = progress(state); return 'Bước ' + _o6.index + '/' + _o6.total; }
 export function pendingRequired(state) {
 if (!state || !state.flow) return [];
-return steps(state).filter((st) => st.required && state.res[st.id] && state.res[st.id].s === 'later').map((st) => ({ id: st.id, title: st.title }));
+return steps(state).filter((_ob) => _ob.required && state.res[_ob.id] && state.res[_ob.id].s === 'later').map((_ob) => ({ id: _ob.id, title: _ob.title }));
 }
 export function beforeStep(state, id) {
 if (!state || !state.flow || state.finished || state.dismissed) return false;
@@ -177,4 +188,4 @@ export function isFinished(state) { return !!state && !!state.finished && !first
 export function setData(state, patch, now = Date.now()) {
 return { ...clone(state), data: { ...(state.data || {}), ...patch }, updated: now };
 }
-export default { start, steps, ids, current, canSkip, isDone, firstPending, record, skip, canNext, next, back, goTo, progress, stepText, pendingRequired, beforeStep, afterLogin, upgrade, downgrade, normalize, isFinished, setData, skipDemo, leaveDemo, isDemo, DEMO_SKIPPABLE, WizardError };
+export default { start, steps, ids, current, canSkip, isDone, firstPending, record, skip, skipOptional, canNext, next, back, goTo, progress, stepText, pendingRequired, beforeStep, afterLogin, upgrade, downgrade, normalize, isFinished, setData, skipDemo, leaveDemo, isDemo, DEMO_SKIPPABLE, WizardError };

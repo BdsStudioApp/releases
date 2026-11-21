@@ -1,7 +1,7 @@
 // BẢN MẪU ĐỂ BÁN (edition=sale) – không chứa thông tin của chủ. Người dùng tự nhập khi cài.
 export default {
   "SCRIPT_URL": "",
-  "APP_VERSION": "1.1.15",
+  "APP_VERSION": "1.1.16",
   "PACK": "bds",
   "LOCK_MINUTES": 10,
   "SYNC_INTERVAL_MS": 30000,

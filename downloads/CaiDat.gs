@@ -481,13 +481,18 @@ function bdsKitDeployStepsHtml_() {
 /** Chưa có máy chủ trả lời đúng → lý do (nếu đã thử 1 địa chỉ) + 7 bước + kiểm lại + dán URL (dự phòng). */
 function bdsKitDeployHtml_(pr, justInstalled) {
   var why = pr && !pr.ok && pr.problem ? '<div class="warn"><b>⚠️ Chưa xong:</b> ' + pr.problem + '<br><b>Cách sửa:</b> ' + pr.fix + '</div>' : '';
+  // 22/11 (chủ thử thật): bấm "Tôi đã triển khai xong" mà Google tự báo nhầm địa chỉ (bản "ma" → "Không thể mở tệp") → hộp hiện cảnh báo ở đầu,
+  // ô dán URL thu gọn tận cuối nên khách không thấy. Có cảnh báo → ô dán MỞ SẴN ngay dưới cảnh báo (cách chắc chắn nhất: dán URL vừa Sao chép).
+  var pasteBox = '<details id="paste"' + (why ? ' open' : '') + '><summary>' + (why ? '<b>Đã triển khai rồi? Dán URL ứng dụng web vừa Sao chép (đuôi /exec) vào đây</b>' : 'Đã triển khai mà vẫn chưa thấy nút? Dán URL ứng dụng web vừa Sao chép') + '</summary>'
+    + '<p class="note">Lấy URL: Apps Script › <b>Triển khai › Quản lý triển khai</b> (Deploy › Manage deployments) › bấm <b>Sao chép</b> ở ô <b>URL ứng dụng web</b>.</p>'
+    + '<input class="url" id="srvu" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off">'
+    + '<button data-ic="🔗" onclick="paste(this)">Dùng URL này</button><div id="pout"></div></details>';
   return '<h3>Bước cuối: Triển khai máy chủ (7 bước, 1 lần)</h3>'
     + (justInstalled ? '<p class="okline">✓ Đã tạo bảng, cột, hẹn giờ.</p>' : '') + why
-    + '<p>Google cần anh/chị bấm <b>Triển khai → Tuỳ chọn triển khai mới (New deployment)</b> một lần:</p>'
+    + (why ? pasteBox : '')
+    + '<p>' + (why ? 'Chưa triển khai: ' : '') + 'Google cần anh/chị bấm <b>Triển khai → Tuỳ chọn triển khai mới (New deployment)</b> một lần:</p>'
     + bdsKitDeployStepsHtml_()
     + '<button data-ic="✅" onclick="again(this,\'bdsLayUrlJson\',SPIN_CHECK)">Tôi đã triển khai xong</button>' + BDS_KIT_CLOSE
     // dự phòng: Google chưa tự báo địa chỉ (getUrl() trả …/dev hoặc trống) → khách dán URL vừa "Sao chép" ở hộp Tuỳ chọn triển khai mới
-    + '<details id="paste"><summary>Đã triển khai mà vẫn chưa thấy nút? Dán URL ứng dụng web vừa Sao chép</summary>'
-    + '<input class="url" id="srvu" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off">'
-    + '<button data-ic="🔗" onclick="paste(this)">Dùng URL này</button><div id="pout"></div></details>';
+    + (why ? '' : pasteBox);
 }

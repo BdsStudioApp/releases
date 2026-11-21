@@ -1,4 +1,4 @@
-import { contactFor, mailtoLink, supportDiagnosticText, isSaleEdition } from './support.71fe59fd73.js';
+import { contactFor, mailtoLink, supportDiagnosticText, isSaleEdition } from './support.818cd992ae.js';
 export const SLOW_MS = 60000;
 export const TABLE_LABEL = [['objects', 'khách hàng'], ['projects', 'dự án'], ['reminders', 'nhắc việc'], ['quotes', 'báo giá'], ['events', 'ghi chú'], ['settings', 'cài đặt']];
 export function words(you = 'anh') {

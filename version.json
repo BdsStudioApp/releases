@@ -1,11 +1,50 @@
 {
-  "web": "1.1.15",
+  "web": "1.1.16",
   "gas": "1.1.0",
   "engine": "1.0.6",
   "notes": [
     {
+      "version": "1.1.16",
+      "date": "2026-11-21",
+      "text": "Cài BDS Studio nhanh hơn trên máy tính: bấm **Cài bằng tài khoản Google**, trang tự tạo máy chủ trong Google Drive của anh/chị, không phải tự Triển khai Apps Script. Cách Tạo bản sao vẫn còn ở nút \"Cách thủ công\"; Tạo tài khoản xong có nút **Vào dùng app ngay**: các bước Telegram, mã dự phòng, địa chỉ riêng, AI để làm sau; Máy chủ chưa ở bản mới nhất thì app tự cập nhật khi Quản trị mở app; …",
+      "parts": [
+        "web",
+        "gas"
+      ],
+      "sections": {
+        "new": [
+          {
+            "text": "Cài BDS Studio nhanh hơn trên máy tính: bấm **Cài bằng tài khoản Google**, trang tự tạo máy chủ trong Google Drive của anh/chị, không phải tự Triển khai Apps Script. Cách Tạo bản sao vẫn còn ở nút \"Cách thủ công\".",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Tạo tài khoản xong có nút **Vào dùng app ngay**: các bước Telegram, mã dự phòng, địa chỉ riêng, AI để làm sau.",
+            "parts": [
+              "web"
+            ]
+          }
+        ],
+        "fix": [
+          {
+            "text": "Máy chủ chưa ở bản mới nhất thì app tự cập nhật khi Quản trị mở app.",
+            "parts": [
+              "web"
+            ]
+          },
+          {
+            "text": "Hộp Triển khai trong Sheet: ô dán địa chỉ máy chủ hiện ngay dưới dòng cảnh báo.",
+            "parts": [
+              "gas"
+            ]
+          }
+        ]
+      }
+    },
+    {
       "version": "1.1.15",
-      "date": "",
+      "date": "2026-11-21",
       "text": "Màn **Nhân sự** (Cài đặt › Nhân sự): mỗi người một dòng gọn, tìm và lọc theo vai trò, nhóm, trạng thái, chia trang; chọn nhiều người để đổi nhóm, đổi vai trò, khoá hoặc xoá một lần; Nhân sự › Nhóm & chia số: sơ đồ Quản trị › Trưởng nhóm › Sale, tạo nhóm và chọn trưởng nhóm ngay tại đây, dùng chung với Nhóm sale của Kho lead; Nhân sự › Phân quyền: bảng quyền theo vai trò và quyền của trưởng nhóm khi chia số; …",
       "parts": [
         "web",

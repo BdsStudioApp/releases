@@ -16,5 +16,5 @@ export function needsPcText(url) {
 const _o0 = String(url || '').replace(/^https?:\/\//, '').replace(/\/+$/, '') || 'cai.bdsstudio.app';
 return 'Bước cài cần máy tính, khoảng 10–15 phút. Mở ' + _o0 + ' trên máy tính để cài; cài xong dùng app trên điện thoại bình thường.';
 }
-export const DEVICE_LABEL = { phone: 'điện thoại', tablet: 'máy tính bảng' };
+export const DEVICE_LABEL = { phone: 'điện thoại', tablet: 'máy tính bảng', pc: 'máy tính' };
 export default { installDevice, installUrl, needsPcText, DEVICE_LABEL };

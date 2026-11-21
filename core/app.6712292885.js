@@ -1,27 +1,27 @@
 import config from '../config.js';
 import { brandLogo, brandName, refreshBrand } from './brand.eff65e4449.js';
 import { t, has as hasWord, setPackWords, addWords } from './i18n.17f01a0b54.js';
-import ui, { h, icon, button, toast, modal, mountTo, clear, segmented, help, progress, glyph, closeSheet, afterSheetBack } from './ui.efd703fd85.js';
-import { supportBlock } from './support.71fe59fd73.js';
+import ui, { h, icon, button, toast, modal, mountTo, clear, segmented, help, progress, glyph, closeSheet, afterSheetBack } from './ui.8741e19bae.js';
+import { supportBlock } from './support.818cd992ae.js';
 import { setHelpConfig, helpDocLink, helpPageForRoute } from './help_links.2d1b2d6d34.js';
-import { createApi, saveScriptUrl, scriptUrl } from './api.c33f2ebbc5.js';
+import { createApi, saveScriptUrl, scriptUrl } from './api.e356e031da.js';
 import { createAuth, strength, normUsername, validUsername, loginName, usernameFromEmail } from './auth.c3ca8814ab.js';
 import { tfaStepForm, postLoginPrompts, cssOnce as tfaCss } from './tfa.741f96ece0.js';
 import { createUsersApi, visibleScreens, screenAllowed, roleLabel, ROLE_TONE } from './users.897a836e5b.js';
 import { featureAllowed, screenPermitted, setPackInfo as setFeaturePackInfo } from './features.281cbd68f0.js';
 import { allowedBy } from './registry.dd6202705b.js';
-import { createStore } from './store.f614f3ad07.js';
+import { createStore } from './store.e9207018a5.js';
 import { createRegistry, stateWords, SCREENS, packModules, tileModules, movedHash, aliasHash, fetchWithin } from './registry.dd6202705b.js';
 import { createPacks, betaBar, packStatesKey, setOwnerAllPacks, WORDS as PACK_WORDS } from './packs.a4fe44641f.js';
 import { createVideoScreens, packsView, videoOffered, EVENT as VIDEO_EVENT, OFF_WORDS as VIDEO_OFF_WORDS } from './video_screens.b6afaa3e5c.js';
-import { createAI } from './ai.b88c9b07cf.js';
-import { createSettings, mountSettings, applyPrefs, densityFor, setDensityFor, prefs } from './settings.a0c1bd63cd.js';
-import { installExtras } from './extras.b09e327903.js';
-import { installWhatsNew } from './whatsnew.4992b5e758.js';
-import { installSelfHeal } from './selfheal.22a0c17102.js';
-import { rejectionMessage } from './health_logic.4992b5e758.js';
-import { installFeedback } from './feedback.bdcdf6545a.js';
-import { installLicense } from './license.1e06aa9325.js';
+import { createAI } from './ai.9ec2d0ad23.js';
+import { createSettings, mountSettings, applyPrefs, densityFor, setDensityFor, prefs } from './settings.5abc21d5b1.js';
+import { installExtras } from './extras.f8ecfa6d1e.js';
+import { installWhatsNew } from './whatsnew.a1be44bf9a.js';
+import { installSelfHeal } from './selfheal.73d2a7c4a2.js';
+import { rejectionMessage } from './health_logic.a1be44bf9a.js';
+import { installFeedback } from './feedback.1ebc105daa.js';
+import { installLicense } from './license.4eb6147238.js';
 import { unsentWarning } from './license_logic.3b3437c32e.js';
 import { installArchive } from './archive.58849a9946.js';
 import { installCheers } from './cheers.99ed76a70f.js';
@@ -33,16 +33,16 @@ import { adoptSetupToken, setSetupCodeAsker } from './setup_gate.d66104e8e0.js';
 import { EXEC_URL_RE, serverFromInput } from './exec_url.4b6ba956ed.js';
 import { pendingFrom, pendingFromServer, savePending, readPending, clearPending, HANDOFF_KEY } from './connect_confirm.30276237a3.js';
 import { greeting, vnDayText } from './greet.60b99ed569.js';
-import { privacyLine } from './instance.ffcba07fb7.js';
+import { privacyLine } from './instance.1eceeeedc8.js';
 import { deviceVerifyForm, kickedView, watchSession } from './device_slots.ecfe7d8f57.js';
-import { pendingCount, pendingPackage, pendingFileName, pendingDialog, backupSource } from './pending_rescue.ea4ffbab34.js';
+import { pendingCount, pendingPackage, pendingFileName, pendingDialog, backupSource } from './pending_rescue.b985ff7cb0.js';
 import { deviceKind, DESKTOP_ONLY_TEXT } from '../shared/device.js';
 import { offlineEligibility, actionAllowed, blockedMessage, bannerText, parseFails, recordFail, lockedUntil, triesLeft, fmtTime, RETRY_MS, LS_FAILS, LOGIN_TIMEOUT_MS, BOOT_STATUS_MS, DIAG_TIMEOUT_MS, isNetworkKind } from './offline_mode.59a2654a2e.js';
 const _o2t = () => import('./offline_ui.3e17e84ba2.js');
 const openDiagnosis = (_o2p) => _o2t().then((m) => m.openDiagnosis(_o2p));
 const classifyWithProbe = (e) => _o2t().then((m) => m.classifyWithProbe(e));
-import { ApiError } from './api.c33f2ebbc5.js';
-import { SYNC_TABLES } from './store.f614f3ad07.js';
+import { ApiError } from './api.e356e031da.js';
+import { SYNC_TABLES } from './store.e9207018a5.js';
 try { for (const _o23 of document.querySelectorAll('link[data-bds-font]')) _o23.media = 'all'; } catch { }
 const _o39 = new URLSearchParams(location.search);
 const PACK = config.PACK || 'bds';
@@ -143,7 +143,7 @@ if (await _o3d(root)) return;
 wizardEnabled({ config });
 const _o3x = _ob();
 const connectUrl = _oa();
-const _o1x = /^#\/moi\?/.test(location.hash || '') ? (await import('./invite_accept.7c682cd5b3.js')).takeInviteToken() : '';
+const _o1x = /^#\/moi\?/.test(location.hash || '') ? (await import('./invite_accept.aa2f1104f8.js')).takeInviteToken() : '';
 if (_o3x) { const _o4l = pendingFromServer(_o3x, _o1x); if (_o4l) savePending(_o4l); }
 S.api = createApi({ config });
 setSetupCodeAsker(_of);
@@ -166,7 +166,7 @@ document.documentElement.dataset.mode = S.api.mode;
 await _o31;
 if (_o39.get('action') === 'tfa.deny' && _o39.get('t')) { await _o40; return _o44(_o39.get('t')); }
 if (_o3x && !scriptUrl(config)) { const _o4l = readPending(); if (_o4l) { await _o40; return _o42(_o4l); } }
-if (_o1x) { await _o40; return (await import('./invite_accept.7c682cd5b3.js')).showInviteAccept({ ui, api: S.api, auth: S.auth, token: _o1x, root, afterLogin, showLogin }); }
+if (_o1x) { await _o40; return (await import('./invite_accept.aa2f1104f8.js')).showInviteAccept({ ui, api: S.api, auth: S.auth, token: _o1x, root, afterLogin, showLogin }); }
 if (_o4z()) { await _o40; return showConnect(); }
 const _o1n = !scriptUrl(config) ? readPending() : null;
 if (_o1n) { await _o40; return _o42(_o1n); }
@@ -933,11 +933,11 @@ S.baseGuard = (e) => allowedBy(e.manifest, S.user && S.user.perms) && screenAllo
 S.registry.setGuard((e) => S.baseGuard(e) && !S.video.moduleHidden(e.id));
 _o1v();
 S.registry.add({ id: 'settings', manifest: { id: 'settings', title: t('screen.settings'), icon: 'settings', screen: 'settings', order: 0, version: config.APP_VERSION, status: 'ready' }, mod: { mount: (el, ctx) => mountSettings(el, ctx, appHooks) } });
-S.registry.add({ id: 'users', manifest: { id: 'users', title: t('set.users'), icon: 'customers', screen: 'settings', order: 1, version: config.APP_VERSION, status: 'ready', hidden: true }, mod: { mount: (el, ctx) => import('./nhan_su.d8e6277273.js').then((m) => m.mountStaff(el, ctx, appHooks)) } });
+S.registry.add({ id: 'users', manifest: { id: 'users', title: t('set.users'), icon: 'customers', screen: 'settings', order: 1, version: config.APP_VERSION, status: 'ready', hidden: true }, mod: { mount: (el, ctx) => import('./nhan_su.d64914137b.js').then((m) => m.mountStaff(el, ctx, appHooks)) } });
 _o3l();
 if (S.offline) _o35();
 S.shellReady = true;
-const _o1e = S.store.status().lastSync ? null : await import('./firstload.e7eed02abe.js').then((m) => m.showFirstLoad({ ui, store: S.store, config,
+const _o1e = S.store.status().lastSync ? null : await import('./firstload.c4f7a8f078.js').then((m) => m.showFirstLoad({ ui, store: S.store, config,
 versions: { web: config.APP_VERSION, server: (S.status && S.status.version) || '', edition: config.edition || '' }, errors: () => errors.recent() })).catch(() => null);
 mountTo(document.getElementById('view'), h('div', { class: 'loading' }, ui.spinner(), h('span', null, t('common.loading'))));
 await S.registry.load(ctxFor, { skip: _o32 });

@@ -7,8 +7,8 @@ import { installDevice, installUrl, needsPcText, DEVICE_LABEL } from './device.j
 import { portalHost } from './provision.js';
 import { browserProblems, browserEnv, normHost } from './checks.js';
 import { handoverText, roleVi } from './report.js';
-import { copyText } from '../updates.4992b5e758.js';
-import { supportContact, privacyLine } from '../instance.ffcba07fb7.js';
+import { copyText } from '../updates.a1be44bf9a.js';
+import { supportContact, privacyLine } from '../instance.1eceeeedc8.js';
 import { diachiWidget, wishBox } from './diachi.js';
 import { gcaiWidget } from './gcai_view.js';
 import { available as gcaiAvailable, isPhone, loadProgress as gcaiProgress } from './gcai.js';
@@ -47,7 +47,7 @@ const size = b.classList.contains('btn') ? (b.classList.contains('btn-sm') ? 18 
 b.prepend(ui.icon(iconForLabel(b.textContent || b.getAttribute('aria-label')), size));
 }
 }
-function _o42(container, ui) {
+function _o43(container, ui) {
 if (container.__wizIcons || typeof MutationObserver === 'undefined' || typeof ui.icon !== 'function') return;
 container.__wizIcons = new MutationObserver(() => _oa(container, ui));
 container.__wizIcons.observe(container, { childList: true, subtree: true });
@@ -57,11 +57,11 @@ const { ui } = ctl;
 const { h, button } = ui;
 let _o4 = '';
 let _o33 = !!ctl.review;
-_o42(container, ui);
-const _o3x = ctl.mode === 'pre' && typeof history !== 'undefined' && typeof window !== 'undefined' && typeof history.pushState === 'function';
+_o43(container, ui);
+const _o3y = ctl.mode === 'pre' && typeof history !== 'undefined' && typeof window !== 'undefined' && typeof history.pushState === 'function';
 let _o2v = false;
 let _o1y = null;
-if (_o3x) {
+if (_o3y) {
 try { const _o1q = history.state; if (!_o1q || (!_o1q.bdsWiz && !_o1q.bdsWizBase)) history.replaceState({ ...(_o1q || {}), bdsWizBase: true }, ''); } catch { }
 window.addEventListener('popstate', _o2e);
 }
@@ -69,8 +69,8 @@ render();
 return { render };
 function set(s) { ctl.set(s); render(); }
 function _o1n(st) { return st && st.flow ? (st.finished && M.isFinished(st) ? '_done' : st.cur) : '_start'; }
-function _o3o(st) {
-if (!_o3x || _o2v) return;
+function _o3p(st) {
+if (!_o3y || _o2v) return;
 const key = _o1n(st);
 const cur = history.state && history.state.bdsWiz;
 if (cur === key) return;
@@ -91,7 +91,7 @@ const ok = await ui.confirm('Rời Trợ lý cài đặt? Các bước đã làm
 if (ok) { window.removeEventListener('popstate', _o2e); history.back(); return; }
 try { history.pushState({ bdsWiz: _o1n(ctl.state) }, ''); } catch { }
 }
-function _o3t() {
+function _o3u() {
 try {
 for (let _o12 = container; _o12 && _o12 !== document.body; _o12 = _o12.parentElement) {
 if (_o12.scrollHeight > _o12.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(_o12).overflowY)) _o12.scrollTop = 0;
@@ -106,14 +106,14 @@ const _o25 = _o1y !== null && _o3c !== _o1y;
 _o1y = _o3c;
 ui.clear(container);
 container.classList.add('wiz');
-_o3o(st);
-if (!st || !st.flow) { container.append(_ol()); if (_o25) _o3t(); return; }
-if (st.finished && M.isFinished(st) && !_o33) { container.append(_o11(st)); if (_o25) _o3t(); return; }
-container.append(_o1l(st), _o3l(st));
+_o3p(st);
+if (!st || !st.flow) { container.append(_ol()); if (_o25) _o3u(); return; }
+if (st.finished && M.isFinished(st) && !_o33) { container.append(_o11(st)); if (_o25) _o3u(); return; }
+container.append(_o1l(st), _o3m(st));
 const on = container.querySelector('.wiz-chip.on'); const _o35 = on && on.parentElement;
 if (_o35) _o35.scrollLeft = Math.max(0, on.offsetLeft - (_o35.clientWidth - on.offsetWidth) / 2);
 const t = container.querySelector('[data-testid="wiz-step-title"]');
-if (_o25) _o3t();
+if (_o25) _o3u();
 if (t && ctl.mode !== 'settings') try { t.focus({ preventScroll: _o25 }); } catch { }
 }
 function _o1z() {
@@ -122,11 +122,11 @@ if (!p) return null;
 return h('div', { class: 'wiz-result is-bad', role: 'alert', 'data-testid': 'wiz-link-hint' },
 h('p', null, h('strong', null, '❌ ' + p.cause)), h('p', { class: 'small' }, h('strong', null, 'Cách sửa: '), p.fix));
 }
-function _o18() { return installDevice() || (isPhone() ? 'phone' : ''); }
+function _o18() { return installDevice() || (isPhone() ? 'phone' : '') || 'pc'; }
 function _o19() {
 return ctl.mode === 'pre' && !!ctl.portal && gcaiAvailable(ctl.config, { portal: true }) && gcaiPlan(ctl.config).on && !!_o18();
 }
-function _o3k() {
+function _o3l() {
 if (!_o19()) return null;
 if (!ctl.gcaiSvc) ctl.gcaiSvc = slotService({ url: (ctl.config || {}).PROVISION_URL });
 if (!ctl.gslots) {
@@ -140,19 +140,21 @@ ctl.gcaiSvc.slots().then((_o32) => { ctl.gslots = slotStateOf(_o32); }, () => { 
 return ctl.gslots;
 }
 function _o1b() { const p = gcaiProgress(); return !!(p.claimed || p.fileId); }
-function _o1e() { const _o3j = _o3k(); return !!_o3j && (_o3j.st === 'con' || (_o3j.st !== 'cho' && _o1b())); }
-function _o1a() { const _o3j = _o3k(); return !!_o3j && _o3j.st === 'cho' && !_o1b(); }
+function _o1e() { const _o3k = _o3l(); return !!_o3k && (_o3k.st === 'con' || (_o3k.st !== 'cho' && _o1b())); }
+function _o1a() { const _o3k = _o3l(); return !!_o3k && _o3k.st === 'cho' && !_o1b(); }
 function _o2t() { return ctl.mode === 'pre' && !!installDevice() && !_o1e() && !_o1a(); }
 function _o2s(testid = 'wiz-pc-help', label = '📖 Xem cách cài trên máy tính (có ảnh)') {
 const href = helpUrl(helpPageForKey('cai_may_tinh'));
 return href ? h('a', { class: 'wiz-pc-help', href, target: '_blank', rel: 'noopener', 'data-testid': testid }, label) : null;
 }
 function _o1d() {
-const _o3j = ctl.gslots || {};
+const _o3k = ctl.gslots || {};
 return h('div', { class: 'wiz-pc wiz-gcai-card', role: 'note', 'data-testid': 'wiz-gcai-card' },
-h('p', { class: 'wiz-pc-title' }, h('span', { 'aria-hidden': 'true' }, '📱 '), h('strong', null, 'Cài ngay trên điện thoại bằng tài khoản Google')),
-h('p', { class: 'wiz-gcai-prio', 'data-testid': 'wiz-gcai-prio' }, '⭐ ' + slotsLabel(_o3j.tong || gcaiPlan(ctl.config).slots) + (_o3j.st === 'con' ? ' · ' + slotsLeftText(_o3j.con) : '')),
-h('p', { class: 'small' }, 'Khoảng 3–5 phút, không cần máy tính: đăng nhập Google, trang tự tạo máy chủ trong Google Drive của anh/chị. Chọn Cá nhân hoặc Công ty bên dưới để bắt đầu.'));
+h('p', { class: 'wiz-pc-title' }, h('span', { 'aria-hidden': 'true' }, '📱 '), h('strong', null, _o18() === 'pc' ? 'Cài nhanh bằng tài khoản Google' : 'Cài ngay trên điện thoại bằng tài khoản Google')),
+h('p', { class: 'wiz-gcai-prio', 'data-testid': 'wiz-gcai-prio' }, '⭐ ' + slotsLabel(_o3k.tong || gcaiPlan(ctl.config).slots) + (_o3k.st === 'con' ? ' · ' + slotsLeftText(_o3k.con) : '')),
+h('p', { class: 'small' }, _o18() === 'pc'
+? 'Khoảng 3–5 phút: đăng nhập Google, trang tự tạo máy chủ trong Google Drive của anh/chị – không phải tự Triển khai Apps Script. Chọn Cá nhân hoặc Công ty bên dưới để bắt đầu.'
+: 'Khoảng 3–5 phút, không cần máy tính: đăng nhập Google, trang tự tạo máy chủ trong Google Drive của anh/chị. Chọn Cá nhân hoặc Công ty bên dưới để bắt đầu.'));
 }
 function _o2u() {
 return h('div', { class: 'wiz-pc wiz-pc-wait', role: 'status', 'data-testid': 'wiz-gcai-wait' }, h('p', null, ui.spinner(), ' Đang kiểm tra cách cài trên ' + DEVICE_LABEL[_o18()] + '…'));
@@ -161,10 +163,10 @@ function _o2r({ inStep = false } = {}) {
 const _ov = installDevice();
 const url = installUrl({ portal: !!ctl.portal, origin: typeof location !== 'undefined' ? location.origin : '', host: portalHost(ctl.config || {}) });
 const share = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
-const _o3j = _o3k();
+const _o3k = _o3l();
 return h('div', { class: 'wiz-pc', role: 'note', 'data-testid': 'wiz-needs-pc', dataset: { device: _ov } },
 h('p', { class: 'wiz-pc-title' }, h('span', { 'aria-hidden': 'true' }, '💻 '), h('strong', null, 'Cài trên máy tính')),
-_o3j && _o3j.st === 'het' ? h('p', { class: 'small', 'data-testid': 'wiz-gcai-full' }, '⭐ Đã hết ' + (_o3j.tong || gcaiPlan(ctl.config).slots) + ' chỗ ưu tiên "Cài bằng Google" trên điện thoại – anh/chị cài trên máy tính nhé.') : null,
+_o3k && _o3k.st === 'het' ? h('p', { class: 'small', 'data-testid': 'wiz-gcai-full' }, '⭐ Đã hết ' + (_o3k.tong || gcaiPlan(ctl.config).slots) + ' chỗ ưu tiên "Cài bằng Google" trên điện thoại – anh/chị cài trên máy tính nhé.') : null,
 h('p', { 'data-testid': 'wiz-needs-pc-text' }, needsPcText(url)),
 h('code', { class: 'wiz-pc-url', 'data-testid': 'wiz-needs-pc-url' }, url),
 h('div', { class: 'wiz-pc-acts' },
@@ -188,25 +190,25 @@ const f = ui.field({ label: 'Hoặc gửi link về email (mở thư trên máy 
 onInput: (v) => { S.email = String(v || ''); } });
 const _o2i = h('div', { class: 'wiz-mail-out', 'aria-live': 'polite', 'data-testid': 'wiz-mail-result' });
 const ts = h('div', { class: 'wiz-turnstile', 'data-testid': 'wiz-mail-turnstile' });
-const _o3g = (_o32) => {
+const _o3h = (_o32) => {
 S.res = _o32;
 ui.mountTo(_o2i, _o32 ? h('p', { class: _o32.ok ? 'wiz-ok' : _o32.wait ? 'muted small' : 'wiz-bad', role: _o32.ok || _o32.wait ? 'status' : 'alert', dataset: { state: _o32.ok ? 'ok' : _o32.wait ? 'wait' : 'bad', code: _o32.code || '' } }, _o32.text) : null);
 };
 const send = button('Gửi link về email', async () => {
 const email = String(f.getValue() || '').trim();
 S.email = email;
-if (!MAIL_RE.test(email)) { _o3g({ ok: false, code: 'BAD_EMAIL', text: '❌ Email chưa đúng – kiểm tra lại (ví dụ ten@gmail.com).' }); try { f.input.focus(); } catch { } return; }
-_o3g({ wait: true, text: '⏳ Đang gửi…' + (String((ctl.config || {}).TURNSTILE_SITEKEY || '').trim() ? ' Nếu trang hỏi, đánh dấu ô kiểm tra bên dưới.' : '') });
+if (!MAIL_RE.test(email)) { _o3h({ ok: false, code: 'BAD_EMAIL', text: '❌ Email chưa đúng – kiểm tra lại (ví dụ ten@gmail.com).' }); try { f.input.focus(); } catch { } return; }
+_o3h({ wait: true, text: '⏳ Đang gửi…' + (String((ctl.config || {}).TURNSTILE_SITEKEY || '').trim() ? ' Nếu trang hỏi, đánh dấu ô kiểm tra bên dưới.' : '') });
 try {
 const turnstile = await captchaToken(ts, ctl.config || {}, { action: 'gui-link' });
 await ctl.gcaiSvc.sendLink({ email, turnstile });
-_o3g({ ok: true, code: 'SENT', text: '✅ Đã gửi link tới ' + maskEmail(email) + '. Mở thư trên máy tính (chưa thấy: xem cả mục Quảng cáo / Thư rác).' });
+_o3h({ ok: true, code: 'SENT', text: '✅ Đã gửi link tới ' + maskEmail(email) + '. Mở thư trên máy tính (chưa thấy: xem cả mục Quảng cáo / Thư rác).' });
 } catch (e) {
-_o3g({ ok: false, code: (e && e.code) || 'NETWORK', text: '❌ ' + ((e && e.message) || 'Chưa gửi được – bấm "Chép link" ở trên.') });
+_o3h({ ok: false, code: (e && e.code) || 'NETWORK', text: '❌ ' + ((e && e.message) || 'Chưa gửi được – bấm "Chép link" ở trên.') });
 }
 }, { kind: 'secondary', icon: 'mail', testid: 'wiz-mail-send' });
 f.input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); send.click(); } });
-if (S.res && !S.res.wait) _o3g(S.res);
+if (S.res && !S.res.wait) _o3h(S.res);
 return h('div', { class: 'wiz-mail', 'data-testid': 'wiz-mail' }, f, h('div', { class: 'wiz-pc-acts' }, send), ts, _o2i);
 }
 function _o3e(t) { return ctl.portal ? String(t == null ? '' : t).replace(/Mở BDS Studio và kết nối/g, 'Quay lại trang cài đặt và kết nối') : t; }
@@ -262,7 +264,7 @@ h('ol', { class: 'wiz-chips', 'aria-label': 'Các bước' }, _oj));
 }
 function _og(st, id) { try { M.goTo(st, id); return true; } catch { return false; } }
 function _oh(st) { return ctl.mode !== 'post' && !Object.keys(st.res).some((id) => id === 'account' && st.res[id].s === 'ok') && st.origin === 'new'; }
-function _o3l(st) {
+function _o3m(st) {
 const s = M.current(st);
 const resBox = h('div', { class: 'wiz-result', 'data-testid': 'wiz-result', 'aria-live': 'polite' });
 _o2o(resBox, ctl.last[s.id] || (st.res[s.id] && st.res[s.id].s === 'ok' ? { ok: true, msg: st.res[s.id].msg } : null));
@@ -270,34 +272,34 @@ const _o2a = s.id === 'diachi' && !(ctl.provision && ctl.provision.configured);
 const deferrable = s.deferrable && !(s.id === 'diachi' && !_o2a);
 const _oy = s.id === 'domain' && st.flow !== 'company' ? ((((st.data || {}).domain) || {}).mode || 'shared') : '';
 const _ot = _oy === 'shared' && ctl.defaultAddress ? ctl.defaultAddress() : null;
-const _o40 = !!(_ot && _ot.own === false);
+const _o41 = !!(_ot && _ot.own === false);
 const badge = s.noBadge ? null : s.required ? (deferrable ? ui.badge('Bắt buộc – làm sau được', 'gold') : ui.badge('Bắt buộc', 'gold')) : ui.badge('Tuỳ chọn', 'neutral');
 const _o1k = !!ctl.link('template');
 const gWay = s.id === 'allow' ? allowWay(st) : '';
 const _o1g = gWay === 'google';
-const _o34 = (t) => boldParts(_o3e(t)).map((_o45) => (_o45.b ? h('strong', null, _o45.t) : _o45.t));
+const _o34 = (t) => boldParts(_o3e(t)).map((_o46) => (_o46.b ? h('strong', null, _o46.t) : _o46.t));
 const _o31 = s.id === 'diachi' && !_o2a && st.flow !== 'company' && !M.isDone(st, s.id);
 const _o2q = s.id === 'allow' && ctl.mode === 'pre' && !!installDevice() && !((st.data || {}).url) && gWay !== 'google' && !(gWay === '' && _o1a());
 const _o1c = s.id === 'allow' && gWay === '' && _o1a() && !((st.data || {}).url);
-const _o3u = _o2q ? [] : (_o2a && s.todoNoService) || (_o31 && s.todoQuick) || (_oy === 'shared' && (_o40 ? s.todoSharedWait : s.todoShared)) || (_o1g && s.todoGoogle) || [];
-const _o3v = _o3u.length ? h('ol', { class: 'wiz-actions wiz-todo', 'data-testid': 'wiz-todo' }, _o3u.map((t) => h('li', { class: 'wiz-act' }, h('p', null, _o34(t))))) : null;
-const _o43 = s.actions.some((_o3) => _o3.way);
+const _o3v = _o2q ? [] : (_o2a && s.todoNoService) || (_o31 && s.todoQuick) || (_oy === 'shared' && (_o41 ? s.todoSharedWait : s.todoShared)) || (_o1g && s.todoGoogle) || [];
+const _o3w = _o3v.length ? h('ol', { class: 'wiz-actions wiz-todo', 'data-testid': 'wiz-todo' }, _o3v.map((t) => h('li', { class: 'wiz-act' }, h('p', null, _o34(t))))) : null;
+const _o44 = s.actions.some((_o3) => _o3.way);
 const _o23 = s.actions.filter((_o3) => !(_o3.alt && _o3.link && !ctl.link(_o3.link)) && (_o1k ? _o3.way !== 'manual' : _o3.way !== 'copy'));
-let _o3z;
-const _o3q = () => (_o3z === undefined ? (_o3z = widget(s, st)) : _o3z);
+let _o40;
+const _o3r = () => (_o40 === undefined ? (_o40 = widget(s, st)) : _o40);
 const _o8 = (acts, widgetEl = null) => h('ol', { class: 'wiz-actions', 'data-testid': 'wiz-actions' }, acts.map((_o3, i) => _o9(_o3, i, { widget: _o3.widget ? widgetEl : null })));
 const _o1s = _o23.some((_o3) => _o3.widget);
-const actions = _o23.length ? _o8(_o23, _o1s ? _o3q() : null) : null;
-const _o24 = _o43 && _o1k ? s.actions.filter((_o3) => _o3.way === 'manual') : [];
+const actions = _o23.length ? _o8(_o23, _o1s ? _o3r() : null) : null;
+const _o24 = _o44 && _o1k ? s.actions.filter((_o3) => _o3.way === 'manual') : [];
 const manualBox = _o24.length ? h('details', { class: 'wiz-manual', 'data-testid': 'wiz-manual' }, h('summary', null, 'Cách dự phòng: dán tay (khi link Tạo bản sao không mở được)'),
 h('ol', { class: 'wiz-actions' }, _o24.map((_o3, i) => _o9(_o3, i)))) : null;
-const noTplNote = _o43 && !_o1k ? h('p', { class: 'wiz-note', 'data-testid': 'wiz-no-template' }, 'Bên bán chưa cài link "Tạo bản sao" – tạo máy chủ bằng cách dán tay 3 tệp dưới đây (các nút Chép đã kiểm mã).') : null;
+const noTplNote = _o44 && !_o1k ? h('p', { class: 'wiz-note', 'data-testid': 'wiz-no-template' }, 'Bên bán chưa cài link "Tạo bản sao" – tạo máy chủ bằng cách dán tay 3 tệp dưới đây (các nút Chép đã kiểm mã).') : null;
 const runCheck = async () => {
 ui.mountTo(resBox, ui.spinner(), ' Đang kiểm tra…');
 const _o32 = await ctl.run(s.id, { ...argsFor(s.id), onProgress: (msg) => ui.mountTo(resBox, ui.spinner(), ' ' + msg) });
 _o2o(resBox, _o32);
 set(M.record(ctl.state, s.id, _o32));
-if (s.id === 'engine' && _o32 && _o32.ok) _o3y({ type: 'engine_ok' });
+if (s.id === 'engine' && _o32 && _o32.ok) _o3z({ type: 'engine_ok' });
 return _o32;
 };
 const goNext = async () => {
@@ -310,6 +312,10 @@ if (s.id === 'allow' && ctl.autoCheck && ((st.data || {}).url)) {
 ctl.autoCheck = false;
 setTimeout(async () => { const _o32 = await runCheck(); if (_o32 && _o32.ok) await goNext(); }, 0);
 }
+if (s.id === 'finish' && ctl.autoFinish) {
+ctl.autoFinish = false;
+setTimeout(async () => { const _o32 = await runCheck(); if (_o32 && _o32.ok && M.canNext(ctl.state)) await goNext(); }, 0);
+}
 const _o2d = (_o32) => {
 ctl.last[s.id] = _o32; _o2o(resBox, _o32);
 if (_o32 && _o32.ok) set(M.record(ctl.state, s.id, _o32)); else if (ctl.state.res[s.id] && ctl.state.res[s.id].s === 'ok') set(M.record(ctl.state, s.id, _o32)); else render();
@@ -321,11 +327,18 @@ const _o2g = choice === 'online';
 const _oi = s.id === 'finish' ? 'Kiểm tra toàn bộ' : 'Kiểm tra bước này';
 const _o2l = !!(s.required && st.res[s.id] && st.res[s.id].s === 'later');
 const _o10 = M.isDone(st, s.id) && !_o2l;
-const _o3i = M.canSkip(s) && (s.id !== 'diachi' || _o2a) && !_o2g;
-const _o3h = _o3i && (_on || _o2a || _o40) && !_o10;
+const _o3j = M.canSkip(s) && (s.id !== 'diachi' || _o2a) && !_o2g;
+const _o3i = _o3j && (_on || _o2a || _o41) && !_o10;
 const _o1v = s.id === 'account' && ctl.mode === 'pre';
 const _o1t = s.check === 'info';
-const _o17 = h('div', { class: 'wiz-foot' },
+const _o16 = st.flow === 'personal' && s.phase === 'post' && !s.required && !_o10
+? h('div', { class: 'wiz-fast', 'data-testid': 'wiz-fast-wrap' },
+button('Vào dùng app ngay', () => {
+try { ctl.autoFinish = true; set(M.skipOptional(ctl.state)); ui.toast('Đã để các bước tuỳ chọn lại – làm sau bằng nút Trợ lý cài đặt ở góc màn hình.', 'info', 5000); } catch (e) { ctl.autoFinish = false; ui.toast(e.message, 'warn'); }
+}, { kind: 'ghost', icon: 'next', testid: 'wiz-fast' }),
+h('p', { class: 'muted small' }, 'Các bước Telegram, mã dự phòng, địa chỉ riêng, AI đều không bắt buộc – làm sau lúc nào cũng được.'))
+: null;
+const foot = h('div', { class: 'wiz-foot' },
 (() => {
 const _o2x = M.back(st) !== st, toChooser = !_o2x && M.ids(st).indexOf(st.cur) <= 0 && _oh(st);
 return button('Quay lại', () => (_o2x ? set(M.back(ctl.state)) : set(null)), {
@@ -338,27 +351,27 @@ _o1v || _o1t || (s.inline && !_o2l) ? null
 : _o1g && !((st.data || {}).url) ? null
 : _o31 ? null
 : _o2q || _o1c ? null
-: button(_oi, runCheck, { kind: _o10 || _o3h ? 'secondary' : 'primary', icon: 'pulse', testid: 'wiz-check' }),
-_o3i ? button(s.required || _o40 ? (s.laterLabel || 'Làm sau') : 'Bỏ qua bước này', () => {
+: button(_oi, runCheck, { kind: _o10 || _o3i ? 'secondary' : 'primary', icon: 'pulse', testid: 'wiz-check' }),
+_o3j ? button(s.required || _o41 ? (s.laterLabel || 'Làm sau') : 'Bỏ qua bước này', () => {
 try {
 let _o37 = ctl.state;
 if (s.id === 'doingu') { _o37 = M.setData(_o37, { doingu: { ...((_o37.data || {}).doingu || {}), rows: [], sale: 0, manager: 0 } }); delete ctl.last.doingu; }
-set(M.skip(_o37, s.id, s.required || _o40 ? 'later' : 'skip')); if (s.id === 'engine') _o3y({ type: 'skip', mode: (ctl.state.data || {}).engineMode || 'skip' }); if (!s.required && s.skipNote) ui.toast(s.skipNote, 'info', 5000); if (s.required && s.laterNote) ui.toast(s.laterNote, 'info', 7000); } catch (e) { ui.toast(e.message, 'warn'); }
-}, { kind: _o3h ? 'primary' : 'ghost', testid: 'wiz-skip', icon: s.required || _o40 ? 'clock' : 'next' }) : null,
+set(M.skip(_o37, s.id, s.required || _o41 ? 'later' : 'skip')); if (s.id === 'engine') _o3z({ type: 'skip', mode: (ctl.state.data || {}).engineMode || 'skip' }); if (!s.required && s.skipNote) ui.toast(s.skipNote, 'info', 5000); if (s.required && s.laterNote) ui.toast(s.laterNote, 'info', 7000); } catch (e) { ui.toast(e.message, 'warn'); }
+}, { kind: _o3i ? 'primary' : 'ghost', testid: 'wiz-skip', icon: s.required || _o41 ? 'clock' : 'next' }) : null,
 button(_o1w(st) ? 'Hoàn tất' : _o1t ? 'Tiếp tục' : 'Tiếp', goNext, { kind: _o10 || _o1t ? 'primary' : 'secondary', testid: 'wiz-next', icon: _o1w(st) ? 'check' : 'next', disabled: !_o1t && !M.canNext(st) }));
 const _ox = s.id === 'domain' && st.flow !== 'company' && choice !== 'skip' ? _oz(st.data || {}, (p) => ctl.set(M.setData(ctl.state, p)), actions) : null;
 const gSeg = gWay ? h('div', { class: 'wiz-box wiz-domain-mode', 'data-testid': 'wiz-allow-way' }, ui.segmented([
-{ value: 'google', label: 'Cài bằng Google (ngay trên điện thoại)', icon: 'key' }, { value: 'sheet', label: installDevice() ? 'Cài trên máy tính' : 'Cài trên máy tính (cách cũ)', icon: 'monitor' }], gWay,
+{ value: 'google', label: installDevice() ? 'Cài bằng Google (ngay trên điện thoại)' : 'Cài nhanh bằng Google', icon: 'key' }, { value: 'sheet', label: _o3f(), icon: 'monitor' }], gWay,
 (v) => set(M.setData(ctl.state, { allowWay: v })), { label: 'Cách tạo máy chủ', name: 'wiz-allow-way' })) : null;
 const body = choice === 'skip' ? null
 : _o1c ? _o2u()
 : _o2q ? [_o2r({ inStep: true }), _ou()]
 : _o2g ? _o2f()
-: _ox ? [_ox.body, _o3v]
-: _o2a || _o31 ? [_o3q(), _o3v]
-: _o1g ? [_o1h(st), _o3v]
+: _ox ? [_ox.body, _o3w]
+: _o2a || _o31 ? [_o3r(), _o3w]
+: _o1g ? [_o1h(st), _o3w]
 : s.id === 'telegram' ? telegramBox(ctl, { ui, step: s, done: _o10, list: _o8, onResult: _o2d, patch: (p) => ctl.set(M.setData(ctl.state, p)) })
-: [s.widgetLast || _o1s ? null : _o3q(), s.id === 'allow' && st.flow === 'company' ? _o2s('wiz-allow-help') : null, noTplNote, actions, manualBox, s.widgetLast && !_o1s ? _o3q() : null];
+: [s.widgetLast || _o1s ? null : _o3r(), s.id === 'allow' && st.flow === 'company' ? _o2s('wiz-allow-help') : null, noTplNote, actions, manualBox, s.widgetLast && !_o1s ? _o3r() : null];
 return h('section', { class: 'wiz-step', dataset: { step: s.id }, 'data-testid': 'wiz-step' },
 h('h2', { class: 'wiz-h2', tabindex: '-1', 'data-testid': 'wiz-step-title' }, s.title, badge ? ' ' : null, badge),
 _ox ? _ox.seg : null, gSeg,
@@ -370,8 +383,9 @@ h('p', { class: 'wiz-headline' }, _o34(s.head)),
 s.note && !_o31 ? h('p', { class: 'muted small' }, _o34(s.note)) : null,
 !s.required && s.skipNote && choice !== 'skip' && !_o2g ? h('p', { class: 'muted small', 'data-testid': 'wiz-skip-note' }, h('strong', null, 'Bỏ qua thì sao? '), s.skipNote) : null),
 _o2q || _o1c ? null : h('p', { class: 'wiz-meta', 'data-testid': 'wiz-meta' }, '⏱ ' + (_o1g && s.timeGoogle ? s.timeGoogle : s.time) + ' · ' + s.cost),
-_o17);
+foot, _o16);
 }
+function _o3f() { return installDevice() ? 'Cài trên máy tính' : 'Cách thủ công (Tạo bản sao)'; }
 function allowWay(st) {
 if (!_o1e()) return '';
 const w = (st.data || {}).allowWay;
@@ -387,8 +401,8 @@ st.flow === 'company' ? h('p', { class: 'wiz-warn', role: 'note' }, '⚠️ Nên
 co,
 _or.url && !done ? h('p', { class: 'muted small', 'data-testid': 'wiz-gcai-url' }, 'Máy chủ: ', h('span', { class: 'mono' }, _or.url)) : null,
 done ? h('p', { class: 'muted small', 'data-testid': 'wiz-from-google' }, 'Máy chủ vừa tạo bằng Google – trợ lý tự kiểm. Chưa đạt: làm theo "Cách sửa" bên dưới rồi bấm "Kiểm tra bước này".')
-: gcaiWidget(ctl, { ui, onSwitch: () => set(M.setData(ctl.state, { allowWay: 'sheet' })), switchLabel: installDevice() ? 'Cài trên máy tính' : 'Cài trên máy tính (cách cũ)',
-onFull: () => { ui.toast('Vừa hết chỗ ưu tiên "Cài bằng Google" – anh/chị cài trên máy tính nhé.', 'warn', 6000); set(M.setData(ctl.state, { allowWay: 'sheet' })); },
+: gcaiWidget(ctl, { ui, onSwitch: () => set(M.setData(ctl.state, { allowWay: 'sheet' })), switchLabel: _o3f(),
+onFull: () => { ui.toast(installDevice() ? 'Vừa hết chỗ ưu tiên "Cài bằng Google" – anh/chị cài trên máy tính nhé.' : 'Vừa hết chỗ ưu tiên "Cài bằng Google" – anh/chị dùng cách Tạo bản sao nhé.', 'warn', 6000); set(M.setData(ctl.state, { allowWay: 'sheet' })); },
 onDone: ({ url }) => { ctl.autoCheck = true; ctl.fromGoogle = url; set(M.setData(ctl.state, { url, allowWay: 'google' })); } }));
 }
 function _o13(st) { const m = (st.data || {}).engineMode; return m === 'install' || m === 'online' ? m : 'skip'; }
@@ -397,7 +411,7 @@ let _o2c = M.setData(ctl.state, { engineMode: v });
 if (v === 'online') _o2c = M.record(_o2c, 'engine', { ok: true, msg: ENGINE_ONLINE_MSG });
 else if (_o2c.res.engine && _o2c.res.engine.msg === ENGINE_ONLINE_MSG) delete _o2c.res.engine;
 set(_o2c);
-_o3y({ type: 'choice', mode: v });
+_o3z({ type: 'choice', mode: v });
 }
 function _ok(s, choice) {
 const _o1 = [['skip', 'off'], ['online', 'online'], ['install', 'machine']];
@@ -420,7 +434,7 @@ h('li', null, VIDEO_MODE.online.cost),
 h('li', null, 'Bảng giá và khoá nhà cung cấp (Veo, Runway, Kling) nhập ở Video AI › Cài đặt.'),
 h('li', null, 'Muốn làm video bản đồ/quy hoạch sau: cài máy dựng rồi chọn "Dựng trên máy" ở Cài đặt › Gói chức năng › Video.')));
 }
-function _o3y(detail) { try { window.dispatchEvent(new CustomEvent(VIDEO_EVENT, { detail })); } catch { } }
+function _o3z(detail) { try { window.dispatchEvent(new CustomEvent(VIDEO_EVENT, { detail })); } catch { } }
 function _o1w(st) { const list = M.ids(st); return list.indexOf(st.cur) === list.length - 1 || !list.slice(list.indexOf(st.cur) + 1).some((id) => !M.isDone(st, id)); }
 function _o9(_o3, i, { widget: widgetEl = null } = {}) {
 const imgs = ctl.images ? ctl.images(_o3) : [];
@@ -428,7 +442,7 @@ const _od = actionBlocks(_o3, imgs, { portal: !!ctl.portal });
 const _o27 = _od.filter((b) => b.kind === 'img').length;
 const _o2b = (b) => {
 switch (b.kind) {
-case 'text': return h('p', null, boldParts(_o3e(b.text)).map((_o45) => (_o45.b ? h('strong', null, _o45.t) : _o45.t)));
+case 'text': return h('p', null, boldParts(_o3e(b.text)).map((_o46) => (_o46.b ? h('strong', null, _o46.t) : _o46.t)));
 case 'why': return h('p', { class: 'wiz-why-note small', 'data-testid': 'wiz-why-note' }, b.text);
 case 'link': {
 const url = ctl.link(b.key);
@@ -440,7 +454,7 @@ case 'caption': return h('p', { class: 'wiz-cap small', 'data-testid': 'wiz-cap'
 case 'img': return h('figure', { class: 'wiz-fig' },
 h('a', { href: b.src, target: '_blank', rel: 'noopener', class: 'wiz-shot-link', title: 'Mở ảnh cỡ lớn' },
 h('img', { src: b.src, alt: b.alt || ('Ảnh hướng dẫn bước ' + (i + 1) + (_o27 > 1 ? ' (' + (b.img + 1) + '/' + _o27 + ')' : '')), loading: 'lazy', class: 'wiz-shot', width: b.w, height: b.h })));
-case 'sub': return h('ol', { class: 'wiz-actions wiz-sub', 'data-testid': 'wiz-sub' }, b.items.map((_o45, k) => _o9(_o45, k)));
+case 'sub': return h('ol', { class: 'wiz-actions wiz-sub', 'data-testid': 'wiz-sub' }, b.items.map((_o46, k) => _o9(_o46, k)));
 default: return null;
 }
 };
@@ -448,34 +462,34 @@ return h('li', { class: ['wiz-act', _o3.alt && 'wiz-alt'], 'data-testid': _o3.al
 }
 function _o1u(kind) {
 const P = ctl.installer.paths, path = P[kind], fname = path.split('/').pop();
-const _o44 = { tatca: 'tệp Mã.gs/Code.gs (đổi tên TatCa)', caidat: 'tệp CaiDat', manifest: 'appsscript.json' }[kind] || fname;
+const _o45 = { tatca: 'tệp Mã.gs/Code.gs (đổi tên TatCa)', caidat: 'tệp CaiDat', manifest: 'appsscript.json' }[kind] || fname;
 const _o3a = h('p', { class: 'muted small', 'aria-live': 'polite', 'data-testid': 'wiz-inst-say-' + kind });
-const _o3p = (msg, code, bad) => { _o3a.textContent = msg; _o3a.className = bad === 'warn' ? 'small wiz-warn' : bad ? 'small form-err' : 'small'; _o3a.dataset.code = code; };
+const _o3q = (msg, code, bad) => { _o3a.textContent = msg; _o3a.className = bad === 'warn' ? 'small wiz-warn' : bad ? 'small form-err' : 'small'; _o3a.dataset.code = code; };
 const note = (_o32) => (_o32.warn ? ' ⚠️ ' + _o32.warn + '.' : '');
 const get = async () => {
-_o3p('Đang kiểm chữ ký số của ' + fname + '…', 'WAIT', false);
+_o3q('Đang kiểm chữ ký số của ' + fname + '…', 'WAIT', false);
 const _o32 = await ctl.installer.load();
-if (!_o32.ok) { _o3p(_o32.message, _o32.code, true); return null; }
+if (!_o32.ok) { _o3q(_o32.message, _o32.code, true); return null; }
 return _o32;
 };
 const copy = button('Chép ' + fname, async () => {
 const _o32 = await get(); if (!_o32) return;
 const f = _o32.files[path];
 const _o1p = await copyText(f.text);
-if (_o1p === 'copied') _o3p('Đã chép ' + fname + ' (' + (_o32.signed ? 'đã kiểm chữ ký: đúng bản phát hành' : 'đã kiểm mã sha256: tệp đủ, không hỏng') + ', sha256 ' + f.sha256.slice(0, 12) + '…). Dán vào ' + _o44 + ': Ctrl+A → Ctrl+V → Lưu.' + note(_o32), _o32.signed ? 'OK' : 'OK_UNSIGNED', _o32.signed ? false : 'warn');
-else _o3p('Trình duyệt chưa cho chép tự động – bấm nút lần nữa, hoặc bấm "Tải tệp" rồi mở tệp, chọn hết và chép.', 'NO_CLIPBOARD', true);
+if (_o1p === 'copied') _o3q('Đã chép ' + fname + ' (' + (_o32.signed ? 'đã kiểm chữ ký: đúng bản phát hành' : 'đã kiểm mã sha256: tệp đủ, không hỏng') + ', sha256 ' + f.sha256.slice(0, 12) + '…). Dán vào ' + _o45 + ': Ctrl+A → Ctrl+V → Lưu.' + note(_o32), _o32.signed ? 'OK' : 'OK_UNSIGNED', _o32.signed ? false : 'warn');
+else _o3q('Trình duyệt chưa cho chép tự động – bấm nút lần nữa, hoặc bấm "Tải tệp" rồi mở tệp, chọn hết và chép.', 'NO_CLIPBOARD', true);
 }, { kind: 'secondary', small: true, testid: 'wiz-inst-copy-' + kind, icon: 'content' });
 const _ow = h('a', { class: 'btn btn-ghost btn-sm', href: path, download: fname, rel: 'noopener', 'data-testid': 'wiz-inst-dl-' + kind }, ui.icon('disk', 18), h('span', null, 'Tải tệp ' + fname));
 _ow.addEventListener('click', async (ev) => {
 ev.preventDefault();
 const _o32 = await get(); if (!_o32) return;
 try {
-const _o3w = URL.createObjectURL(new Blob([_o32.files[path].text], { type: /\.json$/.test(fname) ? 'application/json;charset=utf-8' : 'text/plain;charset=utf-8' }));
-const _o3r = h('a', { href: _o3w, download: fname, hidden: true });
-document.body.appendChild(_o3r); _o3r.click(); _o3r.remove();
-setTimeout(() => URL.revokeObjectURL(_o3w), 30000);
-_o3p('Đã ' + (_o32.signed ? 'kiểm chữ ký' : 'kiểm mã sha256') + ' và tải ' + fname + ' – mở tệp, chọn hết (Ctrl+A), chép rồi dán vào ' + _o44 + '.' + note(_o32), _o32.signed ? 'OK' : 'OK_UNSIGNED', _o32.signed ? false : 'warn');
-} catch { _o3p('Chưa lưu được tệp – thử trình duyệt khác.', 'SAVE', true); }
+const _o3x = URL.createObjectURL(new Blob([_o32.files[path].text], { type: /\.json$/.test(fname) ? 'application/json;charset=utf-8' : 'text/plain;charset=utf-8' }));
+const _o3s = h('a', { href: _o3x, download: fname, hidden: true });
+document.body.appendChild(_o3s); _o3s.click(); _o3s.remove();
+setTimeout(() => URL.revokeObjectURL(_o3x), 30000);
+_o3q('Đã ' + (_o32.signed ? 'kiểm chữ ký' : 'kiểm mã sha256') + ' và tải ' + fname + ' – mở tệp, chọn hết (Ctrl+A), chép rồi dán vào ' + _o45 + '.' + note(_o32), _o32.signed ? 'OK' : 'OK_UNSIGNED', _o32.signed ? false : 'warn');
+} catch { _o3q('Chưa lưu được tệp – thử trình duyệt khác.', 'SAVE', true); }
 });
 ctl.installer.load();
 return h('div', { class: 'wiz-inst', 'data-testid': 'wiz-inst-' + kind }, h('div', { class: 'btn-row' }, copy, _ow), _o3a);
@@ -488,22 +502,22 @@ box.className = 'wiz-result ' + (_o32.ok ? 'is-ok' : 'is-bad');
 ui.mountTo(box,
 h('p', { class: 'wiz-res-main' }, _o32.ok ? (_o32.bad ? '⚠️ ' : '✅ ') : _o32.wait ? '⏳ ' : '❌ ', _o32.ok ? (_o32.msg || 'Đạt') : (_o32.cause || _o32.msg || 'Chưa đạt')),
 !_o32.ok && _o32.fix ? h('p', { class: 'wiz-fix', 'data-testid': 'wiz-fix' }, h('strong', null, 'Cách sửa: '), _o32.fix) : null,
-!_o32.ok && _o32.img ? _o16(_o32.img, !!_o32.fix) : null,
+!_o32.ok && _o32.img ? _o17(_o32.img, !!_o32.fix) : null,
 !_o32.ok && _o32.tech && (_o32.tech.ref || _o32.tech.reason) ? h('details', { class: 'wiz-tech', 'data-testid': 'wiz-tech' }, h('summary', { class: 'small' }, 'Chi tiết kỹ thuật'),
 h('p', { class: 'small mono' }, [_o32.tech.ref && 'Mã lỗi: ' + _o32.tech.ref, _o32.tech.reason && 'Lý do: ' + _o32.tech.reason].filter(Boolean).join(' · '))) : null,
 !_o32.ok && typeof _o32.url === 'string' && /^https:\/\//.test(_o32.url) ? h('div', { class: 'btn-row' }, h('a', { class: 'btn btn-secondary', href: _o32.url, target: '_blank', rel: 'noopener noreferrer', 'data-testid': 'wiz-fix-link' }, h('span', null, _o32.url_label || 'Mở trang'))) : null,
 _o32.warn ? h('p', { class: 'wiz-warn' }, '⚠️ ', _o32.warn) : null,
-Array.isArray(_o32.items) && _o32.items.length ? h('ul', { class: 'wiz-items', 'data-testid': 'wiz-items' }, _o32.items.map((_o45) => h('li', { class: _o45.skipped ? 'is-skip' : _o45.ok === false ? 'is-bad' : _o45.pending ? 'is-owe' : '', dataset: { item: _o45.id || '' } },
-_o45.skipped ? '⏭ ' : _o45.ok === true ? '✅ ' : _o45.ok === false ? '❌ ' : '⚠️ ', h('strong', null, _o45.label), _o45.skipped ? ' – Bỏ qua – không bắt buộc' : _o45.detail ? ' – ' + _o45.detail : '', _o45.ok === false && _o45.fix ? h('div', { class: 'muted small' }, 'Cách sửa: ' + _o45.fix) : null,
-_o45.pending && _o45.step ? h('div', { class: 'btn-row' }, button('Làm bước ' + _o45.label, () => _o1f(_o45.step), { kind: 'secondary', small: true, icon: 'next', testid: 'wiz-owe-go-' + _o45.step })) : null))) : null);
+Array.isArray(_o32.items) && _o32.items.length ? h('ul', { class: 'wiz-items', 'data-testid': 'wiz-items' }, _o32.items.map((_o46) => h('li', { class: _o46.skipped ? 'is-skip' : _o46.ok === false ? 'is-bad' : _o46.pending ? 'is-owe' : '', dataset: { item: _o46.id || '' } },
+_o46.skipped ? '⏭ ' : _o46.ok === true ? '✅ ' : _o46.ok === false ? '❌ ' : '⚠️ ', h('strong', null, _o46.label), _o46.skipped ? ' – Bỏ qua – không bắt buộc' : _o46.detail ? ' – ' + _o46.detail : '', _o46.ok === false && _o46.fix ? h('div', { class: 'muted small' }, 'Cách sửa: ' + _o46.fix) : null,
+_o46.pending && _o46.step ? h('div', { class: 'btn-row' }, button('Làm bước ' + _o46.label, () => _o1f(_o46.step), { kind: 'secondary', small: true, icon: 'next', testid: 'wiz-owe-go-' + _o46.step })) : null))) : null);
 }
-function _o1f(id) { const _o41 = _o33; _o33 = true; try { set(M.goTo(ctl.state, id)); } catch (e) { _o33 = _o41; ui.toast(e.message, 'warn'); } }
-function _o16(key, hasFix = false) {
-const _o45 = ctl.guideImage ? ctl.guideImage(key) : null;
-if (!_o45) return null;
+function _o1f(id) { const _o42 = _o33; _o33 = true; try { set(M.goTo(ctl.state, id)); } catch (e) { _o33 = _o42; ui.toast(e.message, 'warn'); } }
+function _o17(key, hasFix = false) {
+const _o46 = ctl.guideImage ? ctl.guideImage(key) : null;
+if (!_o46) return null;
 return h('figure', { class: 'wiz-fig', 'data-testid': 'wiz-fix-img' },
-_o45.caption && !hasFix ? h('figcaption', { class: 'wiz-cap small' }, _o45.caption) : null,
-h('a', { href: _o45.src, target: '_blank', rel: 'noopener', class: 'wiz-shot-link', title: 'Mở ảnh cỡ lớn' }, h('img', { src: _o45.src, alt: _o45.alt || 'Ảnh minh hoạ cách sửa', loading: 'lazy', class: 'wiz-shot', width: _o45.w, height: _o45.h })));
+_o46.caption && !hasFix ? h('figcaption', { class: 'wiz-cap small' }, _o46.caption) : null,
+h('a', { href: _o46.src, target: '_blank', rel: 'noopener', class: 'wiz-shot-link', title: 'Mở ảnh cỡ lớn' }, h('img', { src: _o46.src, alt: _o46.alt || 'Ảnh minh hoạ cách sửa', loading: 'lazy', class: 'wiz-shot', width: _o46.w, height: _o46.h })));
 }
 function _ou() {
 if (!(ctl.sale && ctl.demo && ctl.mode === 'pre') || ctl.portal) return null;
@@ -517,7 +531,7 @@ if (ok) { if (ctl.api && !ctl.evProbe) _o7(); set(M.skipDemo(ctl.state)); }
 }
 function _o7() {
 if (ctl.evNeed === undefined && ctl.api && !ctl.evProbe) {
-ctl.evProbe = ctl.api.call('status').then((_o32) => { const _o28 = !(_o32 && _o32.setup === false && !_o32.email_verify), _o41 = ctl.evNeed !== false; ctl.evNeed = _o28; if (_o41 !== _o28) render(); })
+ctl.evProbe = ctl.api.call('status').then((_o32) => { const _o28 = !(_o32 && _o32.setup === false && !_o32.email_verify), _o42 = ctl.evNeed !== false; ctl.evNeed = _o28; if (_o42 !== _o28) render(); })
 .catch(() => { ctl.evNeed = true; });
 }
 return ctl.evNeed !== false;
@@ -560,17 +574,17 @@ h('summary', null, 'Không thấy thư?'),
 h('ul', null, h('li', null, 'Xem mục Thư rác/Spam và Quảng cáo.'), h('li', null, 'Chờ 60 giây rồi bấm "Gửi lại mã".'),
 h('li', null, 'Gõ sai email? Sửa ô email ở trên rồi bấm "Gửi mã" lại.'),
 h('li', null, 'Máy chủ báo không gửi được thư: bấm "Dùng email …" (email tài khoản Google đang chạy máy chủ) nếu đó là email của anh/chị.')));
-const _o3f = () => {
+const _o3g = () => {
 const _o3d = box.dataset.state === 'sent';
 _o29.hidden = !_o3d;
 const _o1t = box.querySelector('[data-testid="wiz-ev-info"]');
 if (_o3d && _o1t && /^Đã gửi mã 6 số tới /.test(_o1t.textContent) && !_o1t.dataset.short) {
-const _o3s = _o1t.textContent.replace(/^Đã gửi mã 6 số tới /, '').split('. ')[0];
-_o1t.textContent = '📩 Đã gửi mã 6 số tới ' + _o3s + ' – mở hộp thư, gõ mã vào ô dưới (dùng được 15 phút).'; _o1t.dataset.short = '1';
+const _o3t = _o1t.textContent.replace(/^Đã gửi mã 6 số tới /, '').split('. ')[0];
+_o1t.textContent = '📩 Đã gửi mã 6 số tới ' + _o3t + ' – mở hộp thư, gõ mã vào ô dưới (dùng được 15 phút).'; _o1t.dataset.short = '1';
 } else if (!_o3d && _o1t) delete _o1t.dataset.short;
 };
-if (typeof MutationObserver !== 'undefined') new MutationObserver(_o3f).observe(box, { attributes: true, attributeFilter: ['data-state'], subtree: true, childList: true, characterData: true });
-_o3f();
+if (typeof MutationObserver !== 'undefined') new MutationObserver(_o3g).observe(box, { attributes: true, attributeFilter: ['data-state'], subtree: true, childList: true, characterData: true });
+_o3g();
 return h('div', { class: 'wiz-box', 'data-testid': 'wiz-account-box' }, box, _o29);
 }
 function _ob() {
@@ -611,7 +625,7 @@ case 'allow': {
 const co = st.flow === 'company' ? ui.field({ label: 'Tôi đang dùng tài khoản Google CÔNG TY (không phải Gmail cá nhân của nhân viên)', hint: 'Đang thử trước bằng Gmail cá nhân: để trống ô này – vẫn đi tiếp được, biên bản ghi "chưa làm".', type: 'checkbox', value: !!_or.companyAccount, id: 'wiz-company-account', onChange: (v) => patch({ companyAccount: !!v }) }) : null;
 const url = ui.field({ label: URL_FIELD_LABEL, value: _or.url || '', id: 'wiz-url', inputmode: 'url', autocomplete: 'off', placeholder: 'https://script.google.com/macros/s/…/exec',
 hint: _o3e('Dán địa chỉ vừa bấm "Chép URL" trong hộp của Sheet (Ctrl+V). Bấm "Mở BDS Studio và kết nối" trong Sheet thì app tự điền.'),
-onInput: (v) => { const _o45 = String(v || '').trim(); if (_o45 && ctl.linkProblem) ctl.linkProblem = null; patch({ url: _o45 }); } });
+onInput: (v) => { const _o46 = String(v || '').trim(); if (_o46 && ctl.linkProblem) ctl.linkProblem = null; patch({ url: _o46 }); } });
 return h('div', { class: 'wiz-box', 'data-testid': 'wiz-url-box' },
 _o1z(),
 ctl.fromLink && _or.url === ctl.fromLink ? h('p', { class: 'muted small', 'data-testid': 'wiz-from-link' }, _o3e('Địa chỉ máy chủ nhận từ nút "Mở BDS Studio và kết nối" trong Sheet') + ' – trợ lý tự kiểm. Chưa đạt: làm theo "Cách sửa" bên dưới rồi bấm "Kiểm tra bước này".') : null,
@@ -626,7 +640,7 @@ if (_o7()) { const w = _o6(_or, patch); if (_o30 && w) w.appendChild(_o30); retu
 const err = h('p', { class: 'small form-err', 'aria-live': 'polite', 'data-testid': 'wiz-email-err' });
 const em = ui.field({ label: 'Email nhận mã khi quên mật khẩu (tuỳ chọn)', type: 'email', value: _or.email || '', id: 'wiz-email', inputmode: 'email', autocomplete: 'email', placeholder: 'email của anh/chị',
 hint: 'Bỏ trống: mã đặt lại mật khẩu gửi về email của tài khoản Google đã cài máy chủ.',
-onInput: (v) => { const _o45 = String(v || '').trim(); patch({ email: _o45 }); err.textContent = _o45 && !EMAIL_RE.test(_o45) ? 'Email chưa đúng (cần đủ dạng tên, chữ @, tên miền).' : ''; } });
+onInput: (v) => { const _o46 = String(v || '').trim(); patch({ email: _o46 }); err.textContent = _o46 && !EMAIL_RE.test(_o46) ? 'Email chưa đúng (cần đủ dạng tên, chữ @, tên miền).' : ''; } });
 return h('div', { class: 'wiz-box', 'data-testid': 'wiz-account-box' }, em, err,
 h('div', { class: 'btn-row' }, _o5('Tạo tài khoản')), h('p', { class: 'muted small' }, 'Tạo xong, app tự quay lại trợ lý.'), _o30);
 }
@@ -663,9 +677,9 @@ render();
 if (!(_or.domain && _or.domain.mode)) patch({ domain: { ...(_or.domain || {}), mode } });
 function _o2n() {
 const _o1r = normHost(host.getValue());
-const _o3m = _o1r ? _o1r.split('.')[0] : 'app';
+const _o3n = _o1r ? _o1r.split('.')[0] : 'app';
 const target = (ctl.cnameTarget && ctl.cnameTarget()) || '';
-ui.mountTo(_oo, ui.table([{ k: 'Loại (Type)', v: 'CNAME – dòng trỏ tên miền con sang địa chỉ của app' }, { k: 'Tên (Name/Host)', v: _o3m },
+ui.mountTo(_oo, ui.table([{ k: 'Loại (Type)', v: 'CNAME – dòng trỏ tên miền con sang địa chỉ của app' }, { k: 'Tên (Name/Host)', v: _o3n },
 { k: 'Trỏ tới (Target/Value)', v: target || '(bên bán gửi qua email – xem dưới)' }, { k: 'TTL (thời gian lưu tạm)', v: 'Tự động (Auto)' }],
 [{ label: 'Ô cần điền', key: 'k' }, { label: 'Giá trị', key: 'v' }]),
 h('p', { class: 'muted small' }, 'Thêm xong có thể mất 5 phút đến 24 giờ mới chạy. Chưa chạy thì bấm "Làm sau", trợ lý nhắc lại.'));
@@ -742,7 +756,7 @@ _o35('Phiên bản', 'web ' + (_or.versions.web || '?') + ' · máy chủ ' + (_
 _o35('Kiểm tra toàn bộ', _or.check ? _or.check.text : 'chưa chạy'),
 _or.license ? _o35('Bản quyền', _or.license) : null)),
 h('h4', null, 'Người dùng (' + _or.users.length + ')'),
-_or.users.length ? h('ul', null, _or.users.map((_o3w) => h('li', null, '@' + _o3w.username + ' · ' + (_o3w.full_name || '') + ' · ' + (_o3w.role_label || roleVi(_o3w.role)) + ' · 2 lớp: ' + _o3w.tfa))) : h('p', null, '—'),
+_or.users.length ? h('ul', null, _or.users.map((_o3x) => h('li', null, '@' + _o3x.username + ' · ' + (_o3x.full_name || '') + ' · ' + (_o3x.role_label || roleVi(_o3x.role)) + ' · 2 lớp: ' + _o3x.tfa))) : h('p', null, '—'),
 h('h4', null, 'Các bước đã làm'),
 h('ul', { class: 'wiz-doc-steps' }, _or.steps.map((s) => h('li', null, (_o2[s.status] || '▫️') + ' ' + s.title + (s.msg ? ' – ' + s.msg : '')))),
 _or.pending.length ? h('p', null, h('strong', null, 'Còn để sau: '), _or.pending.join('; ')) : null,
@@ -780,15 +794,15 @@ ctl.goSettings && ctl.mode !== 'pre' ? button('Nối máy chủ thật', () => c
 ctl.close ? button('Vào xem thử app', () => ctl.close(), { kind: 'primary', testid: 'wiz-close' }) : null));
 }
 const _o2j = M.pendingRequired(st);
-const _o2k = new Set(_o2j.map((_o45) => _o45.id));
+const _o2k = new Set(_o2j.map((_o46) => _o46.id));
 const _o2h = later.filter((s) => !_o2k.has(s.id));
 return h('div', { class: 'wiz-done', 'data-testid': 'wiz-done' },
 h('div', { class: 'wiz-done-ico', 'aria-hidden': 'true' }, _o2j.length ? '⚠️' : '🎉'),
 h('h2', { class: 'wiz-h2', tabindex: '-1', 'data-testid': 'wiz-step-title' }, _o2j.length ? 'Dùng app được rồi – còn ' + _o2j.length + ' bước bắt buộc' : 'Cài đặt xong!'),
 h('p', null, 'Đã xong ' + p.done + '/' + p.total + ' bước' + (st.flow === 'company' ? ' – đã có biên bản bàn giao.' : '.')),
 _o2j.length ? h('div', { class: 'wiz-warn', role: 'note', 'data-testid': 'wiz-done-owe' },
-h('p', null, '⚠️ Chưa xong (bắt buộc): ', h('strong', null, _o2j.map((_o45) => _o45.title).join(' · ')), '. Làm nốt khi sẵn sàng – nút Trợ lý cài đặt ở góc màn hình đưa anh/chị quay lại.'),
-h('div', { class: 'btn-row' }, _o2j.map((_o45) => button('Làm bước ' + _o45.title, () => _o1f(_o45.id), { kind: 'secondary', small: true, icon: 'next', testid: 'wiz-done-go-' + _o45.id })))) : null,
+h('p', null, '⚠️ Chưa xong (bắt buộc): ', h('strong', null, _o2j.map((_o46) => _o46.title).join(' · ')), '. Làm nốt khi sẵn sàng – nút Trợ lý cài đặt ở góc màn hình đưa anh/chị quay lại.'),
+h('div', { class: 'btn-row' }, _o2j.map((_o46) => button('Làm bước ' + _o46.title, () => _o1f(_o46.id), { kind: 'secondary', small: true, icon: 'next', testid: 'wiz-done-go-' + _o46.id })))) : null,
 _o2h.length ? h('p', { class: 'muted small' }, 'Để sau: ' + _o2h.map((s) => s.title).join(' · ') + '. Mở lại bất kỳ lúc nào ở Cài đặt › Trợ lý cài đặt.') : null,
 _o1o(st),
 ctl.samples ? _o38(st) : null,
@@ -801,9 +815,9 @@ const text = await ctl.diagnostics();
 const ta = h('textarea', { class: 'wiz-report', readonly: true, rows: 12, 'data-testid': 'wiz-report', 'aria-label': 'Báo cáo cài đặt' });
 ta.value = text;
 const share = typeof navigator !== 'undefined' && navigator.share;
-let _o3n = ctl.config.SUPPORT_EMAIL || '';
-if (!_o3n && isSaleEdition(ctl.config)) { try { _o3n = supportContact(ctl.config).email; } catch { _o3n = ''; } _o3n = _o3n || supportEmail(ctl.config); }
-const _o21 = _o3n ? 'mailto:' + encodeURIComponent(_o3n) + '?subject=' + encodeURIComponent('Cần giúp cài BDS Studio') + '&body=' + encodeURIComponent(text.slice(0, 1800)) : '';
+let _o3o = ctl.config.SUPPORT_EMAIL || '';
+if (!_o3o && isSaleEdition(ctl.config)) { try { _o3o = supportContact(ctl.config).email; } catch { _o3o = ''; } _o3o = _o3o || supportEmail(ctl.config); }
+const _o21 = _o3o ? 'mailto:' + encodeURIComponent(_o3o) + '?subject=' + encodeURIComponent('Cần giúp cài BDS Studio') + '&body=' + encodeURIComponent(text.slice(0, 1800)) : '';
 ui.modal({
 title: 'Cần giúp?', wide: true, cls: 'wiz-help-modal',
 body: h('div', { class: 'stack' },

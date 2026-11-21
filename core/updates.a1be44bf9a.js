@@ -1,9 +1,9 @@
-import { releaseOrigin, publicUrl, edition as EDITION } from './instance.ffcba07fb7.js';
+import { releaseOrigin, publicUrl, edition as EDITION } from './instance.1eceeeedc8.js';
 import appConfig from '../config.js';
-import { classifySelfUpdate, techLines, supportDiagnostic, scriptApiVerdict, needsMigration, MIGRATE } from './health_logic.4992b5e758.js';
+import { classifySelfUpdate, techLines, supportDiagnostic, scriptApiVerdict, needsMigration, MIGRATE } from './health_logic.a1be44bf9a.js';
 import { officialState, WORDS as OFFICIAL_WORDS } from './oneclick.c9ce44d759.js';
-import { friendlyError } from './friendly_error.4992b5e758.js';
-import { supportContact } from './instance.ffcba07fb7.js';
+import { friendlyError } from './friendly_error.a1be44bf9a.js';
+import { supportContact } from './instance.1eceeeedc8.js';
 import { engineDownload } from './engine_dl.18c8a720c5.js';
 export const PUBLIC_URL = releaseOrigin() || publicUrl() || '';
 const _o5 = {
@@ -614,7 +614,7 @@ await _o7(_o1h.to, _o5.rolled);
 const notes = Array.isArray(latest.notes) ? latest.notes.slice(0, 3) : [];
 if (notes.length) {
 let sum = null;
-try { const W = await import('./whatsnew.4992b5e758.js'); const _o1l = W.summarizeNotes(notes); if (_o1l.lines.length) sum = h('div', { class: 'ver-sum', 'data-testid': 'ver-notes-sum' }, h('p', { class: 'muted small' }, 'v' + _o1l.versions.join(', v') + (notes[0].date ? ' · ' + notes[0].date : '')), W.summaryList(h, _o1l)); } catch { sum = null; }
+try { const W = await import('./whatsnew.a1be44bf9a.js'); const _o1l = W.summarizeNotes(notes); if (_o1l.lines.length) sum = h('div', { class: 'ver-sum', 'data-testid': 'ver-notes-sum' }, h('p', { class: 'muted small' }, 'v' + _o1l.versions.join(', v') + (notes[0].date ? ' · ' + notes[0].date : '')), W.summaryList(h, _o1l)); } catch { sum = null; }
 ui.mountTo(_o1a, h('h4', { class: 'section-title' }, _o5.notes), sum,
 h('details', { class: 'wn-more', 'data-testid': 'ver-notes-more' }, h('summary', null, 'Xem chi tiết'),
 h('ul', { class: 'ver-steps small' }, notes.map((_o17) => h('li', null, h('strong', null, 'v' + _o17.version), ' · ' + (_o17.date || '') + ' – ' + _o17.text)))),

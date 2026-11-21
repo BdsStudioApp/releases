@@ -1,5 +1,5 @@
-import { cmpVersion, fetchLatest, engineHealth, publicBase, scriptApiCheck } from './updates.4992b5e758.js';
-import { normalizeServerChecks, summarizeChecks, compactResult, isMissingActionError, MISSING_ACTION_TEXT, REQUIRED_ACTIONS } from './health_logic.4992b5e758.js';
+import { cmpVersion, fetchLatest, engineHealth, publicBase, scriptApiCheck } from './updates.a1be44bf9a.js';
+import { normalizeServerChecks, summarizeChecks, compactResult, isMissingActionError, MISSING_ACTION_TEXT, REQUIRED_ACTIONS } from './health_logic.a1be44bf9a.js';
 import { loadLocal, saveLocal, connHash } from './connections_logic.5d678ff0de.js';
 import { deviceKind } from '../shared/device.js';
 const LAST_KEY = 'bds:fullcheck:last';

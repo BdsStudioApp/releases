@@ -1,7 +1,7 @@
 import { t } from './i18n.17f01a0b54.js';
 import { fold, words, word, uid, ls } from './xkit.71d637c634.js';
 import { parseRemember } from './memory.0e46c2fde6.js';
-import { markAi, aiNote, PROVIDER_NAMES } from './ai_cost.9624f9fc85.js';
+import { markAi, aiNote, PROVIDER_NAMES } from './ai_cost.e55e3f489e.js';
 import { DESKTOP_ONLY_TEXT } from '../shared/device.js';
 let AP = null, KB = null, libsP = null;
 export function loadAskLibs() {

@@ -1,5 +1,5 @@
 import { kit, h } from './kit.js';
-import * as coreUi from '../../../core/ui.efd703fd85.js';
+import * as coreUi from '../../../core/ui.8741e19bae.js';
 const _o0 = 'bds-ghep-css';
 function ensureCss() {
 if (typeof document === 'undefined' || document.getElementById(_o0)) return;

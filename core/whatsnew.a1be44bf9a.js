@@ -1,8 +1,8 @@
 import {
 cmpVersion, fetchLatest, engineHealth, publicBase, classifyServerUpdateError, ENABLE_API_STEPS,
 serverUpdateButton, engineAutoButton, TEXT as UTXT, silentEngineUpdate
-} from './updates.4992b5e758.js';
-import { updateHints } from './health_logic.4992b5e758.js';
+} from './updates.a1be44bf9a.js';
+import { updateHints } from './health_logic.a1be44bf9a.js';
 import { engineDownload } from './engine_dl.18c8a720c5.js';
 export { cmpVersion, classifyServerUpdateError, ENABLE_API_STEPS };
 export const PART_LABEL = { web: 'Web', engine: 'Máy dựng', gas: 'Máy chủ', landing: 'Landing' };

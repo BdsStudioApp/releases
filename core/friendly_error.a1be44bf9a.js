@@ -1,4 +1,4 @@
-import { scrubSecrets } from './health_logic.4992b5e758.js';
+import { scrubSecrets } from './health_logic.a1be44bf9a.js';
 export const FRIENDLY = {
 network: 'Không kết nối được mạng hoặc máy chủ. Kiểm tra Internet (Wi-Fi/4G) rồi thử lại.',
 timeout: 'Máy chủ trả lời quá lâu. Đợi một lát rồi thử lại.',

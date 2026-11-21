@@ -1,12 +1,12 @@
 {
-  "version": "1.1.15",
-  "build_id": "6146f4c349d09bc4",
+  "version": "1.1.16",
+  "build_id": "f5612858eb7b0dca",
   "gas_build_id": "5c0e4749dac72b98",
   "boot_version": 2,
   "core_build_id": "d29b07e0cc710342",
   "core_requires_boot": 1,
   "parts": {
-    "web": "1.1.15",
+    "web": "1.1.16",
     "gas": "1.1.0",
     "engine": "1.0.6"
   },
@@ -23,13 +23,13 @@
     },
     {
       "path": "version.json",
-      "sha256": "a02c343f5aa6a3168c8132f7a0c56cd4cd393dca504d69bf1f22f21c63cf339d",
-      "size": 84439
+      "sha256": "2cbff777f047fc2ab22c2ec774fec14e0ec05469cd9d1832fe6d0aba32d52519",
+      "size": 86185
     },
     {
       "path": "downloads/CaiDat.gs",
-      "sha256": "24e22d4b889ba712b3da91725285fec9756a860c1026ccc4a3662062daee6c16",
-      "size": 43602
+      "sha256": "a43c47b7b86a4af69b6a3ac1184c5d948ad9d55758187f9515ef5a14860c935b",
+      "size": 44442
     },
     {
       "path": "downloads/sheet/appsscript.json",

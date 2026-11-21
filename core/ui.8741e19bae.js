@@ -1,5 +1,5 @@
 import { t } from './i18n.17f01a0b54.js';
-import { friendlyError } from './friendly_error.4992b5e758.js';
+import { friendlyError } from './friendly_error.a1be44bf9a.js';
 import { helpDocLink, helpPageForKey } from './help_links.2d1b2d6d34.js';
 const _o4 = 'http://www.w3.org/2000/svg';
 export function h(tag, attrs, ...children) {
@@ -629,4 +629,4 @@ h, clear, mountTo, icon, glyph, button, badge, empty, progress, spinner, money, 
 help, helpText, paragraphs, card, list, kv, field, segmented, copy, sheet, closeSheet, sheetDirty, confirmLeave, isWide, section, table, status, getDensity
 };
 export default ui;
-export { friendlyError, errorText } from './friendly_error.4992b5e758.js';
+export { friendlyError, errorText } from './friendly_error.a1be44bf9a.js';

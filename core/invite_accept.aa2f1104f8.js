@@ -2,7 +2,7 @@ import { t } from './i18n.17f01a0b54.js';
 import { hashPassword, randomSalt, normUsername, validUsername } from './auth.c3ca8814ab.js';
 import { cleanCode6, demoCodeFrom } from './email_verify.4f5a65756b.js';
 import { ensureCss } from './xkit.71d637c634.js';
-import { privacyLine } from './instance.ffcba07fb7.js';
+import { privacyLine } from './instance.1eceeeedc8.js';
 import { brandLogo, brandName } from './brand.eff65e4449.js';
 export const INVITE_RE = /^#\/moi\?(.*)$/;
 export const TOKEN_RE = /^[0-9a-f]{16}\.[A-Za-z0-9_-]{16,64}$/;
